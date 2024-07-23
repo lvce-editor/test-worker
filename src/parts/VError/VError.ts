@@ -1,2 +1,1 @@
-// @ts-ignore
-export { VError } from '/static/js/lvce-editor-verror.js'
+export { VError } from '@lvce-editor/verror'

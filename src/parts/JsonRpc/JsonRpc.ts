@@ -1,2 +1,1 @@
-// @ts-ignore
-export { handleJsonRpcMessage, invoke, resolve, send } from '/static/js/lvce-editor-json-rpc.js'
+export { handleJsonRpcMessage, invoke, resolve, send } from '@lvce-editor/json-rpc'
