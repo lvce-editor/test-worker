@@ -1,7 +1,11 @@
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { babel } from '@rollup/plugin-babel'
 import pluginTypeScript from '@babel/preset-typescript'
 
-export default {
+/**
+ * @type {import('rollup').RollupOptions}
+ */
+const options = {
   input: 'src/testWorkerMain.ts',
   preserveEntrySignatures: 'strict',
   treeshake: {
@@ -10,6 +14,11 @@ export default {
   output: {
     file: 'dist/dist/index.js',
     format: 'es',
+    freeze: false,
+    generatedCode: {
+      constBindings: true,
+      objectShorthand: true,
+    },
   },
   plugins: [
     babel({
@@ -17,5 +26,8 @@ export default {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       presets: [pluginTypeScript],
     }),
+    nodeResolve(),
   ],
 }
+
+export default options
