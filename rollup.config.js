@@ -12,7 +12,7 @@ const options = {
     propertyReadSideEffects: false,
   },
   output: {
-    file: 'dist/dist/index.js',
+    file: 'dist/dist/testWorkerMain.js',
     format: 'es',
     freeze: false,
     generatedCode: {
