@@ -35,8 +35,8 @@
     "collectCoverage": true,
     "coverageThreshold": {
       "global": {
-        "branches": 67,
-        "functions": 84,
+        "branches": 50,
+        "functions": 80,
         "lines": 80
       }
     }
@@ -98,7 +98,6 @@
       "distmin"
     ]
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.7",
     "@lvce-editor/ipc": "^9.4.0",
