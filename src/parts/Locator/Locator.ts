@@ -13,7 +13,8 @@ const Locator = function (selector, { nth = -1, hasText = '' } = {}) {
 }
 
 const performAction = async (locator, fnName, options) => {
-  return Rpc.invoke('TestFrameWork.performAction', locator, fnName, options)
+  const { invoke } = locator.webView || Rpc
+  return invoke('TestFrameWork.performAction', locator, fnName, options)
 }
 
 const toButtonNumber = (buttonType) => {

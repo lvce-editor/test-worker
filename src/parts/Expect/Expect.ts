@@ -16,13 +16,15 @@ const Assert = {
 }
 
 export const expect = (locator) => {
+  const { invoke } = locator.webView || Rpc
   return {
     async checkSingleElementCondition(fnName, options) {
       Assert.string(fnName)
-      return Rpc.invoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
+      // TODO add rpcId property to locator instead
+      return invoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
     },
     async checkMultiElementCondition(fnName, options) {
-      return Rpc.invoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
+      return invoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
     },
     async toBeVisible() {
       if (this.negated) {
