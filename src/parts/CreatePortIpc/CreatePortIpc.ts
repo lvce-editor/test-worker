@@ -18,7 +18,7 @@ const requiresSocket = () => {
 
 export const createPortIpc = async (webViewId: string) => {
   const { port1, port2 } = GetPortTuple.getPortTuple()
-  const firstEventPromise = await new Promise((resolve) => {
+  const firstEventPromise = new Promise((resolve) => {
     port1.onmessage = resolve
   })
   await SendPortToWebView.sendPortToWebView(webViewId, port2)
