@@ -1,7 +1,10 @@
+import * as CreatePortIpc from '../CreatePortIpc/CreatePortIpc.ts'
 import * as Expect from '../Expect/Expect.ts'
+import * as JsonRpc from '../JsonRpc/JsonRpc.ts'
 import * as Locator from '../Locator/Locator.ts'
 
 export const fromId = async (webViewId: string) => {
+  const ipc = CreatePortIpc.createPortIpc(webViewId)
   // TODO
   // 1. create messagechannel
   // 2. send one message port to webview
@@ -9,7 +12,7 @@ export const fromId = async (webViewId: string) => {
   // 4. send test commands like locator.toBeVisible to webview
   const webViewRpc = {
     invoke(method: string, ...params: any[]) {
-      console.log('invoke called', method, params)
+      return JsonRpc.invoke(ipc, method, ...params)
     },
   }
   return {
