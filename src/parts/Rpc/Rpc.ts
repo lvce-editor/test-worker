@@ -6,6 +6,11 @@ export const invoke = (method: string, ...params: any[]) => {
   return JsonRpc.invoke(ipc, method, ...params)
 }
 
+export const invokeAndTransfer = (transfer: any, method: string, ...params: any[]) => {
+  const ipc = IpcState.get()
+  return JsonRpc.invokeAndTransfer(ipc, transfer, method, ...params)
+}
+
 export const listen = (ipc: any) => {
   IpcState.set(ipc)
 }
