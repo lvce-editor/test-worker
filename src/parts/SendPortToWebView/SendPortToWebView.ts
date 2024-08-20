@@ -1,5 +1,7 @@
 import * as Rpc from '../Rpc/Rpc.ts'
 
-export const sendPortToWebView = (webviewId: string, port: MessagePort) => {
-  return Rpc.invokeAndTransfer([port], 'SendPortToWebView.sendPortToWebView', webviewId, port)
+export const sendPortToWebView = async (webviewId: string, port: MessagePort) => {
+  await Rpc.invokeAndTransfer([port], 'Transferrable.transferToRendererProcess', webviewId, port)
+  console.log('did send port to renderer process')
+  // TODO ask renderer process to transfer the port to the webview
 }
