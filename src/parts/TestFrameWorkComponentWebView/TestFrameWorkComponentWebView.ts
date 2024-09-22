@@ -4,7 +4,9 @@ import * as JsonRpc from '../JsonRpc/JsonRpc.ts'
 import * as Locator from '../Locator/Locator.ts'
 
 export const fromId = async (webViewId: string) => {
+  console.log('before ipc')
   const ipc = await CreatePortIpc.createPortIpc(webViewId)
+  console.log('after ipc')
   // TODO
   // 1. create messagechannel
   // 2. send one message port to webview
