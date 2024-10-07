@@ -103,3 +103,15 @@ export const openSourceActions = async () => {
 export const sourceActionsSelectCurrent = async () => {
   await Rpc.invoke('EditorSourceActions.selectCurrent')
 }
+
+export const openCompletionDetails = async () => {
+  await Rpc.invoke('EditorCompletion.openDetails')
+}
+
+export const closeCompletionDetails = async () => {
+  await Rpc.invoke('EditorCompletion.closeDetails')
+}
+
+export const toggleCompletionDetails = async () => {
+  await Rpc.invoke('EditorCompletion.toggleDetails')
+}
