@@ -171,3 +171,7 @@ export const copyLineUp = async () => {
 export const closeColorPicker = async () => {
   await Rpc.invoke('Editor.closeColorPicker')
 }
+
+export const openContextMenu = async () => {
+  await Rpc.invoke('Editor.contextMenu')
+}
