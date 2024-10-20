@@ -177,5 +177,5 @@ export const openContextMenu = async () => {
 }
 
 export const getText = async () => {
-  await Rpc.invoke('Editor.getText')
+  return Rpc.invoke('Editor.getText')
 }
