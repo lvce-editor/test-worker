@@ -115,3 +115,59 @@ export const closeCompletionDetails = async () => {
 export const toggleCompletionDetails = async () => {
   await Rpc.invoke('EditorCompletion.toggleDetails')
 }
+
+export const organizeImports = async () => {
+  await Rpc.invoke('Editor.organizeImports')
+}
+
+export const toggleLineComment = async () => {
+  await Rpc.invoke('Editor.toggleLineComment')
+}
+
+export const toggleBlockComment = async () => {
+  await Rpc.invoke('Editor.toggleBlockComment')
+}
+
+export const selectAll = async () => {
+  await Rpc.invoke('Editor.toggleBlockComment')
+}
+
+export const openColorPicker = async () => {
+  await Rpc.invoke('Editor.openColorPicker')
+}
+
+export const openFind = async () => {
+  await Rpc.invoke('Editor.openFind2')
+}
+
+export const deleteAllLeft = async () => {
+  await Rpc.invoke('Editor.deleteAllLeft')
+}
+
+export const deleteAllRight = async () => {
+  await Rpc.invoke('Editor.deleteAllRight')
+}
+
+export const cursorWordPartLeft = async () => {
+  await Rpc.invoke('Editor.cursorWordPartLeft')
+}
+
+export const cursorWordPartRight = async () => {
+  await Rpc.invoke('Editor.cursorWordPartRight')
+}
+
+export const cursorEnd = async () => {
+  await Rpc.invoke('Editor.cursorEnd')
+}
+
+export const cursorHome = async () => {
+  await Rpc.invoke('Editor.cursorHome')
+}
+
+export const copyLineUp = async () => {
+  await Rpc.invoke('Editor.copyLineUp')
+}
+
+export const closeColorPicker = async () => {
+  await Rpc.invoke('Editor.closeColorPicker')
+}
