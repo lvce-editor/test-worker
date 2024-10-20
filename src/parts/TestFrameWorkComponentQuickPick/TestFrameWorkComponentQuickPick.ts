@@ -24,3 +24,9 @@ export const focusPrevious = async () => {
 export const selectItem = async (label: string) => {
   await Rpc.invoke('QuickPick.selectItem', label)
 }
+
+export const executeCommand = async (label: string) => {
+  await Rpc.invoke('QuickPick.showCommands')
+  await Rpc.invoke('QuickPick.handleInput', label, 0)
+  await Rpc.invoke('QuickPick.selectItem', label)
+}
