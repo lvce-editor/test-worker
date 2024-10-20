@@ -195,3 +195,7 @@ export const getText = async () => {
 export const rename = async () => {
   await Rpc.invoke('Editor.rename')
 }
+
+export const showHover = async () => {
+  await Rpc.invoke('Editor.showHover2')
+}
