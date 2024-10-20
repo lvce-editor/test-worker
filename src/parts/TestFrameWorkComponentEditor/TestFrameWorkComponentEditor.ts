@@ -120,6 +120,14 @@ export const organizeImports = async () => {
   await Rpc.invoke('Editor.organizeImports')
 }
 
+export const addAllMissingImports = async () => {
+  await Rpc.invoke('Editor.addAllMissingImports')
+}
+
+export const sortImports = async () => {
+  await Rpc.invoke('Editor.sortImports')
+}
+
 export const toggleLineComment = async () => {
   await Rpc.invoke('Editor.toggleLineComment')
 }
@@ -168,6 +176,10 @@ export const copyLineUp = async () => {
   await Rpc.invoke('Editor.copyLineUp')
 }
 
+export const copy = async () => {
+  await Rpc.invoke('Editor.copy')
+}
+
 export const closeColorPicker = async () => {
   await Rpc.invoke('Editor.closeColorPicker')
 }
@@ -178,4 +190,8 @@ export const openContextMenu = async () => {
 
 export const getText = async () => {
   return Rpc.invoke('Editor.getText')
+}
+
+export const rename = async () => {
+  await Rpc.invoke('Editor.rename')
 }
