@@ -199,3 +199,7 @@ export const rename = async () => {
 export const showHover = async () => {
   await Rpc.invoke('Editor.showHover2')
 }
+
+export const openRename = async () => {
+  await Rpc.invoke('Editor.openRename')
+}
