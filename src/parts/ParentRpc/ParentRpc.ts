@@ -1,16 +1,25 @@
 import * as IpcState from '../IpcState/IpcState.ts'
-import * as JsonRpc from '../JsonRpc/JsonRpc.ts'
 
-export const invoke = (method: string, ...params: any[]) => {
-  const ipc = IpcState.get()
-  return JsonRpc.invoke(ipc, method, ...params)
+const state = {
+  rpc: undefined,
+}
+
+export const invoke = (method: string, ...params: any[]): Promise<any> => {
+  const rpc = state.rpc
+  // @ts-ignore
+  return rpc.invoke(method, ...params)
 }
 
 export const invokeAndTransfer = (method: string, ...params: any[]) => {
-  const ipc = IpcState.get()
-  return JsonRpc.invokeAndTransfer(ipc, method, ...params)
+  const rpc = state.rpc
+  // @ts-ignore
+  return rpc.invokeAndTransfer(method, ...params)
 }
 
-export const listen = (ipc: any) => {
+export const listen = (ipc: any): void => {
   IpcState.set(ipc)
+}
+
+export const setRpc = (rpc: any): void => {
+  state.rpc = rpc
 }
