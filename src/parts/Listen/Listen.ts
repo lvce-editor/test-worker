@@ -1,13 +1,10 @@
-import * as Command from '@lvce-editor/command'
+import { WebWorkerRpcClient } from '@lvce-editor/rpc'
 import * as CommandMap from '../CommandMap/CommandMap.ts'
-import * as HandleIpc from '../HandleIpc/HandleIpc.ts'
-import * as IpcChild from '../IpcChild/IpcChild.ts'
-import * as IpcChildType from '../IpcChildType/IpcChildType.ts'
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as ParentRpc from '../ParentRpc/ParentRpc.ts'
 
-export const listen = async () => {
-  Command.register(CommandMap.commandMap)
-  const ipc = await IpcChild.listen({ method: IpcChildType.Auto() })
-  HandleIpc.handleIpc(ipc)
-  Rpc.listen(ipc)
+export const listen = async (): Promise<void> => {
+  const rpc = await WebWorkerRpcClient.create({
+    commandMap: CommandMap.commandMap,
+  })
+  ParentRpc.setRpc(rpc)
 }
