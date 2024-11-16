@@ -1,5 +1,5 @@
 import * as GetKeyOptions from '../GetKeyOptions/GetKeyOptions.ts'
-import * as Rpc from '../Rpc/Rpc.ts'
+import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 export const press = async (key: string) => {
   const keyOptions = GetKeyOptions.getKeyOptions(key)

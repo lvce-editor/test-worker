@@ -4,14 +4,14 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
-jest.unstable_mockModule('../src/parts/Rpc/Rpc.ts', () => {
+jest.unstable_mockModule('../src/parts/ParentRpc/ParentRpc.ts', () => {
   return {
     invoke: jest.fn(() => {}),
   }
 })
 
 const Locator = await import('../src/parts/Locator/Locator.ts')
-const Rpc = await import('../src/parts/Rpc/Rpc.ts')
+const Rpc = await import('../src/parts/ParentRpc/ParentRpc.ts')
 
 test('create', () => {
   const selector = 'button'
