@@ -1,6 +1,6 @@
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
-import * as Rpc from '../Rpc/Rpc.ts'
+import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 export const writeFile = async (path: string, content: string) => {
   await Rpc.invoke('FileSystem.writeFile', path, content)

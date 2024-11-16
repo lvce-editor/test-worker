@@ -1,4 +1,4 @@
-import * as Rpc from '../Rpc/Rpc.ts'
+import * as Rpc from '../ParentRpc/ParentRpc.ts'
 import * as TestType from '../TestType/TestType.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'
 import { VError } from '../VError/VError.ts'

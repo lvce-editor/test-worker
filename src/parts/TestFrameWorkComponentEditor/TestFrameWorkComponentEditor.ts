@@ -1,4 +1,4 @@
-import * as Rpc from '../Rpc/Rpc.ts'
+import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 export const setCursor = async (rowIndex: number, columnIndex: number) => {
   await Rpc.invoke('Editor.cursorSet', rowIndex, columnIndex)

@@ -1,4 +1,4 @@
-import * as Rpc from '../Rpc/Rpc.ts'
+import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 export const setValue = async (value: string) => {
   await Rpc.invoke('Search.handleInput', value)

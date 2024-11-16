@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import * as Rpc from '../Rpc/Rpc.ts'
+import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 const Assert = {
   string(value, message) {
