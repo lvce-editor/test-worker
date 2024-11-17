@@ -13,7 +13,7 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ['dist', 'coverage', 'scripts', 'rollup.config.js', 'eslint.config.js', 'src/iframeWorkerMain.ts'],
+    ignores: ['dist', 'coverage', 'scripts', 'rollup.config.js', 'eslint.config.js', 'src/testWorkerMain.ts'],
   },
   {
     rules: {
@@ -24,7 +24,7 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/no-unsafe-argument':'off'
+      '@typescript-eslint/no-unsafe-argument': 'off',
     },
   },
 )
