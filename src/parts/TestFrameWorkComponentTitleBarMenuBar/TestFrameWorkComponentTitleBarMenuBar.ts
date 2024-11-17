@@ -48,21 +48,22 @@ export const handleKeyEnd = async () => {
   await Rpc.invoke('TitleBarMenuBar.handleKeyEnd')
 }
 
-export const handleKeyHome = async () => {
+export const handleKeyHome = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.handleKeyHome')
 }
-export const handleKeySpace = async () => {
+
+export const handleKeySpace = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.handleKeySpace')
 }
 
-export const handleKeyEscape = async () => {
+export const handleKeyEscape = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.handleKeyEscape')
 }
 
-export const toggleIndex = async (index: number) => {
+export const toggleIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.toggleIndex', index)
 }
 
-export const toggleMenu = async () => {
+export const toggleMenu = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.toggleMenu')
 }

@@ -30,22 +30,21 @@ const toButtonNumber = (buttonType) => {
   }
 }
 
-Locator.prototype.click = async function ({ button = 'left' } = {}) {
-  const options = {
-    cancable: true,
+Locator.prototype.click = async function (options: any = {}): Promise<void> {
+  return performAction(this, 'click', {
     bubbles: true,
-    button: toButtonNumber(button),
+    button: 0,
+    cancable: true,
     detail: 1,
-  }
-  return performAction(this, 'click', options)
+    ...options,
+  })
 }
 
-Locator.prototype.hover = async function () {
-  const options = {
-    cancable: true,
+Locator.prototype.hover = async function (): Promise<void> {
+  return performAction(this, 'hover', {
     bubbles: true,
-  }
-  return performAction(this, 'hover', options)
+    cancable: true,
+  })
 }
 
 Locator.prototype.first = function () {

@@ -18,32 +18,31 @@ const Assert = {
 export const expect = (locator: any): any => {
   const { invoke } = locator.webView || Rpc
   return {
-    async checkSingleElementCondition(fnName, options) {
+    async checkSingleElementCondition(fnName: string, options: any): Promise<void> {
       Assert.string(fnName)
-      // TODO add rpcId property to locator instead
       return invoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
     },
-    async checkMultiElementCondition(fnName, options) {
+    async checkMultiElementCondition(fnName: string, options: any): Promise<void> {
       return invoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
     },
-    async toBeVisible() {
+    async toBeVisible(): Promise<void> {
       if (this.negated) {
         throw new Error('use toBeHidden instead of not.toBeVisible')
       }
       return this.checkSingleElementCondition('toBeVisible', {})
     },
-    async toHaveText(text) {
+    async toHaveText(text: string): Promise<void> {
       Assert.string(text, 'text must be of type string')
       return this.checkSingleElementCondition('toHaveText', { text })
     },
-    async toHaveValue(value) {
+    async toHaveValue(value: string): Promise<void> {
       Assert.string(value, 'value must be of type string')
       return this.checkSingleElementCondition('toHaveValue', { value })
     },
-    async toBeFocused() {
+    async toBeFocused(): Promise<void> {
       return this.checkSingleElementCondition('toBeFocused')
     },
-    async toHaveCSS(key, value) {
+    async toHaveCSS(key: string, value: string): Promise<void> {
       return this.checkSingleElementCondition('toHaveCss', {
         key,
         value,
