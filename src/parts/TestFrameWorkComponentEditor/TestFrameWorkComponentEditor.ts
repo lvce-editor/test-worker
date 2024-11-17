@@ -1,10 +1,10 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const setCursor = async (rowIndex: number, columnIndex: number) => {
+export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
   await Rpc.invoke('Editor.cursorSet', rowIndex, columnIndex)
 }
 
-export const openCompletion = async () => {
+export const openCompletion = async (): Promise<void> => {
   await Rpc.invoke('Editor.openCompletion')
 }
 
