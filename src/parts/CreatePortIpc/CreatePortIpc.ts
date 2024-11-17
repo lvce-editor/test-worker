@@ -1,6 +1,7 @@
 import * as GetPortTuple from '../GetPortTuple/GetPortTuple.ts'
 import * as JsonRpc from '../JsonRpc/JsonRpc.ts'
 import * as SendPortToWebView from '../SendPortToWebView/SendPortToWebView.ts'
+import * as WaitForReadyEvent from '../WaitForReadyEvent/WaitForReadyEvent.ts'
 
 const preparePrettyError = (error: any) => {
   return error
@@ -18,12 +19,9 @@ const requiresSocket = () => {
 
 export const createPortIpc = async (webViewId: string) => {
   const { port1, port2 } = GetPortTuple.getPortTuple()
-  const firstEventPromise = new Promise((resolve) => {
-    port1.onmessage = resolve
-  })
+  const firstEventPromise = WaitForReadyEvent.waitForFirstEventEvent(port1)
   await SendPortToWebView.sendPortToWebView(webViewId, port2)
   const firstEvent = await firstEventPromise
-  // @ts-ignore
   if (firstEvent.data !== 'ready') {
     throw new Error('unexpected first message')
   }
