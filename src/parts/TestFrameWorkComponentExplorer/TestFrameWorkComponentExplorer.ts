@@ -1,14 +1,14 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const openContextMenu = async (index: number) => {
+export const openContextMenu = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.handleContextMenuKeyboard', index)
 }
 
-export const focus = async () => {
+export const focus = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusIndex', -1)
 }
 
-export const focusNext = async () => {
+export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusNext')
 }
 

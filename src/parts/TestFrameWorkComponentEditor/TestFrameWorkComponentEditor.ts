@@ -48,23 +48,23 @@ export const cursorWordLeft = async () => {
   await Rpc.invoke('Editor.cursorWordLeft')
 }
 
-export const cursorWordRight = async () => {
+export const cursorWordRight = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorWordRight')
 }
 
-export const goToDefinition = async () => {
+export const goToDefinition = async (): Promise<void> => {
   await Rpc.invoke('Editor.goToDefinition')
 }
 
-export const openHover = async () => {
+export const openHover = async (): Promise<void> => {
   await Rpc.invoke('Editor.showHover2')
 }
 
-export const goToTypeDefinition = async () => {
+export const goToTypeDefinition = async (): Promise<void> => {
   await Rpc.invoke('Editor.goToTypeDefinition')
 }
 
-export const type = async (text: string) => {
+export const type = async (text: string): Promise<void> => {
   await Rpc.invoke('Editor.type')
 }
 
