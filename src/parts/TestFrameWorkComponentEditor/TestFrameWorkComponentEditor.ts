@@ -8,19 +8,19 @@ export const openCompletion = async (): Promise<void> => {
   await Rpc.invoke('Editor.openCompletion')
 }
 
-export const openEditorContextMenu = async () => {
+export const openEditorContextMenu = async (): Promise<void> => {
   await Rpc.invoke('Editor.handleContextMenu', 0, 0)
 }
 
-export const invokeTabCompletion = async () => {
+export const invokeTabCompletion = async (): Promise<void> => {
   await Rpc.invoke('Editor.tabCompletion')
 }
 
-export const executeTabCompletion = async () => {
+export const executeTabCompletion = async (): Promise<void> => {
   await Rpc.invoke('Editor.tabCompletion')
 }
 
-export const invokeBraceCompletion = async (text: string) => {
+export const invokeBraceCompletion = async (text: string): Promise<void> => {
   await Rpc.invoke('Editor.braceCompletion', text)
 }
 
@@ -48,23 +48,23 @@ export const cursorWordLeft = async () => {
   await Rpc.invoke('Editor.cursorWordLeft')
 }
 
-export const cursorWordRight = async () => {
+export const cursorWordRight = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorWordRight')
 }
 
-export const goToDefinition = async () => {
+export const goToDefinition = async (): Promise<void> => {
   await Rpc.invoke('Editor.goToDefinition')
 }
 
-export const openHover = async () => {
+export const openHover = async (): Promise<void> => {
   await Rpc.invoke('Editor.showHover2')
 }
 
-export const goToTypeDefinition = async () => {
+export const goToTypeDefinition = async (): Promise<void> => {
   await Rpc.invoke('Editor.goToTypeDefinition')
 }
 
-export const type = async (text: string) => {
+export const type = async (text: string): Promise<void> => {
   await Rpc.invoke('Editor.type')
 }
 
@@ -188,7 +188,7 @@ export const openContextMenu = async () => {
   await Rpc.invoke('Editor.contextMenu')
 }
 
-export const getText = async () => {
+export const getText = async (): Promise<string> => {
   return Rpc.invoke('Editor.getText')
 }
 
