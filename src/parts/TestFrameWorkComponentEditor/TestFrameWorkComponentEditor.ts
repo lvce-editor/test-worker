@@ -24,15 +24,15 @@ export const invokeBraceCompletion = async (text: string): Promise<void> => {
   await Rpc.invoke('Editor.braceCompletion', text)
 }
 
-export const cursorCharacterRight = async () => {
+export const cursorCharacterRight = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorCharacterRight')
 }
 
-export const cursorCharacterLeft = async () => {
+export const cursorCharacterLeft = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorCharacterLeft')
 }
 
-export const copyLineDown = async () => {
+export const copyLineDown = async (): Promise<void> => {
   await Rpc.invoke('Editor.copyLineDown')
 }
 

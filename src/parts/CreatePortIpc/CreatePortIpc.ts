@@ -17,7 +17,12 @@ const requiresSocket = (): boolean => {
   return false
 }
 
-export const createPortIpc = async (webViewId: string): Promise<any> => {
+export const createPortIpc = async (
+  webViewId: string,
+): Promise<{
+  port: MessagePort
+  send(message: any): void
+}> => {
   const { port1, port2 } = GetPortTuple.getPortTuple()
   const firstEventPromise = WaitForReadyEvent.waitForFirstEventEvent(port1)
   await SendPortToWebView.sendPortToWebView(webViewId, port2)
@@ -35,5 +40,10 @@ export const createPortIpc = async (webViewId: string): Promise<any> => {
       port1.postMessage(message)
     },
   }
-  return ipc
+  return {
+    port: port1,
+    send(message: any) {
+      port1.postMessage(message)
+    },
+  }
 }
