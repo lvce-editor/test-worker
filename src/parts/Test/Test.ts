@@ -20,7 +20,7 @@ export const execute = async (href: string): Promise<void> => {
   }
   if (module.test) {
     if (module.skip) {
-      await TestFrameWork.test.skip(module.name, () => {})
+      await TestFrameWork.test.skip(module.name)
     } else {
       await ExecuteTest.executeTest(module.name, module.test, globals)
     }
