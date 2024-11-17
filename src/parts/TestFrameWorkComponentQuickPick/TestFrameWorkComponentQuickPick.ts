@@ -17,11 +17,11 @@ export const focusIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('QuickPick.focusIndex', index)
 }
 
-export const focusPrevious = async () => {
+export const focusPrevious = async (): Promise<void> => {
   await Rpc.invoke('QuickPick.focusPrevious')
 }
 
-export const selectItem = async (label: string) => {
+export const selectItem = async (label: string): Promise<void> => {
   await Rpc.invoke('QuickPick.selectItem', label)
 }
 
