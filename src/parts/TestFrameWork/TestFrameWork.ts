@@ -14,7 +14,7 @@ export const test = async (name: string, fn: any): Promise<void> => {
   TestState.addTest(name, fn)
 }
 
-test.skip = async (id: string, fn: any): Promise<void> => {
+test.skip = async (id: string): Promise<void> => {
   const state = 'skip'
   const background = 'yellow'
   const text = `test skipped ${id}`
