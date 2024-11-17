@@ -8,7 +8,7 @@ export const focus = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusIndex', -1)
 }
 
-export const focusNext = async () => {
+export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusNext')
 }
 
