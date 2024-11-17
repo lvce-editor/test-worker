@@ -1,14 +1,14 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const openContextMenu = async (index: number) => {
+export const openContextMenu = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.handleContextMenuKeyboard', index)
 }
 
-export const focus = async () => {
+export const focus = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusIndex', -1)
 }
 
-export const focusNext = async () => {
+export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusNext')
 }
 
@@ -52,18 +52,18 @@ export const rename = async () => {
   await Rpc.invoke('Explorer.rename')
 }
 
-export const cancelEdit = async () => {
+export const cancelEdit = async (): Promise<void> => {
   await Rpc.invoke('Explorer.cancelEdit')
 }
 
-export const acceptEdit = async () => {
+export const acceptEdit = async (): Promise<void> => {
   await Rpc.invoke('Explorer.acceptEdit')
 }
 
-export const updateEditingValue = async (value: string) => {
+export const updateEditingValue = async (value: string): Promise<void> => {
   await Rpc.invoke('Explorer.updateEditingValue', value)
 }
 
-export const expandAll = async (value: string) => {
+export const expandAll = async (value: string): Promise<void> => {
   await Rpc.invoke('Explorer.expandAll', value)
 }

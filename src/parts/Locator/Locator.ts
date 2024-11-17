@@ -2,7 +2,7 @@
 
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const create = (selector, options) => {
+export const create = (selector: string, options: any = {}): any => {
   return new Locator(selector, options)
 }
 
@@ -12,9 +12,9 @@ const Locator = function (selector, { nth = -1, hasText = '' } = {}) {
   this._hasText = hasText
 }
 
-const performAction = async (locator, fnName, options) => {
+const performAction = async (locator: any, action: string, options: any): Promise<any> => {
   const { invoke } = locator.webView || Rpc
-  return invoke('TestFrameWork.performAction', locator, fnName, options)
+  return invoke('TestFrameWork.performAction', locator, action, options)
 }
 
 const toButtonNumber = (buttonType) => {
@@ -30,7 +30,7 @@ const toButtonNumber = (buttonType) => {
   }
 }
 
-Locator.prototype.click = async function ({ button = 'left' } = {}) {
+Locator.prototype.click = async function ({ button = 'left' } = {}): Promise<void> {
   const options = {
     cancable: true,
     bubbles: true,
@@ -54,22 +54,22 @@ Locator.prototype.first = function () {
   })
 }
 
-Locator.prototype.locator = function (subSelector) {
+Locator.prototype.locator = function (subSelector: string): any {
   if (this._nth !== -1) {
     return create(`${this._selector}:nth-of-type(${this._nth + 1}) ${subSelector}`)
   }
   return create(`${this._selector} ${subSelector}`)
 }
 
-Locator.prototype.nth = function (nth) {
+Locator.prototype.nth = function (nth: number): any {
   return create(this._selector, { nth })
 }
 
-Locator.prototype.type = async function (text) {
+Locator.prototype.type = async function (text: string): Promise<void> {
   const options = { text }
   return performAction(this, 'type', options)
 }
 
-Locator.prototype.dispatchEvent = async function (type, init) {
+Locator.prototype.dispatchEvent = async function (type: string, init: any): Promise<void> {
   return performAction(this, 'dispatchEvent', { type, init })
 }

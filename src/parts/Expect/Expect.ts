@@ -3,19 +3,19 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 const Assert = {
-  string(value, message) {
+  string(value: any, message: string): void {
     if (typeof value !== 'string') {
       throw new TypeError(message)
     }
   },
-  number(value, message) {
+  number(value: any, message: string): void {
     if (typeof value !== 'number' || isNaN(value)) {
       throw new TypeError(message)
     }
   },
 }
 
-export const expect = (locator) => {
+export const expect = (locator: any): any => {
   const { invoke } = locator.webView || Rpc
   return {
     async checkSingleElementCondition(fnName, options) {

@@ -2,7 +2,7 @@
 
 import * as PlatformType from '../PlatformType/PlatformType.ts'
 
-const getPlatform = () => {
+const getPlatform = (): string => {
   // @ts-expect-error
   if (typeof PLATFORM !== 'undefined') {
     // @ts-expect-error

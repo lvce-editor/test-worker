@@ -3,21 +3,21 @@ import * as JsonRpc from '../JsonRpc/JsonRpc.ts'
 import * as SendPortToWebView from '../SendPortToWebView/SendPortToWebView.ts'
 import * as WaitForReadyEvent from '../WaitForReadyEvent/WaitForReadyEvent.ts'
 
-const preparePrettyError = (error: any) => {
+const preparePrettyError = (error: any): any => {
   return error
 }
 
-const logError = () => {
+const logError = (): void => {
   // ignore
 }
 
-const execute = () => {}
+const execute = (): void => {}
 
-const requiresSocket = () => {
+const requiresSocket = (): boolean => {
   return false
 }
 
-export const createPortIpc = async (webViewId: string) => {
+export const createPortIpc = async (webViewId: string): Promise<any> => {
   const { port1, port2 } = GetPortTuple.getPortTuple()
   const firstEventPromise = WaitForReadyEvent.waitForFirstEventEvent(port1)
   await SendPortToWebView.sendPortToWebView(webViewId, port2)

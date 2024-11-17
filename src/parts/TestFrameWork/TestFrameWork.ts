@@ -5,16 +5,16 @@ import * as TestState from '../TestState/TestState.ts'
 
 export { create as Locator } from '../Locator/Locator.ts'
 
-export const getTmpDir = async () => {
+export const getTmpDir = async (): Promise<string> => {
   return 'memfs://'
 }
 
-export const test = async (name: string, fn: any) => {
+export const test = async (name: string, fn: any): Promise<void> => {
   NameAnonymousFunction.nameAnonymousFunction(fn, `test/${name}`)
   TestState.addTest(name, fn)
 }
 
-test.skip = async (id: string, fn: any) => {
+test.skip = async (id: string): Promise<void> => {
   const state = 'skip'
   const background = 'yellow'
   const text = `test skipped ${id}`

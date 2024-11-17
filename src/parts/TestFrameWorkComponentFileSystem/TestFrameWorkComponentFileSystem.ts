@@ -2,15 +2,15 @@ import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const writeFile = async (path: string, content: string) => {
+export const writeFile = async (path: string, content: string): Promise<void> => {
   await Rpc.invoke('FileSystem.writeFile', path, content)
 }
 
-export const mkdir = async (path: string) => {
+export const mkdir = async (path: string): Promise<void> => {
   await Rpc.invoke('FileSystem.mkdir', path)
 }
 
-export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs } = {}) => {
+export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs } = {}): Promise<string> => {
   switch (scheme) {
     case FileSystemProtocol.Memfs:
       return 'memfs:///workspace'
@@ -19,11 +19,11 @@ export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs } = {}) => {
   }
 }
 
-export const chmod = async (uri: string, permissions: any) => {
+export const chmod = async (uri: string, permissions: any): Promise<void> => {
   await Rpc.invoke('FileSystem.chmod', uri, permissions)
 }
 
-export const createExecutable = async (content: string) => {
+export const createExecutable = async (content: string): Promise<string> => {
   const tmpDir = await getTmpDir({ scheme: 'file' })
   const nodePath = await Rpc.invoke('PlatformPaths.getNodePath')
   const gitPath = `${tmpDir}/git`
@@ -36,7 +36,7 @@ export const createExecutable = async (content: string) => {
   return gitPath
 }
 
-export const createExecutableFrom = async (path: string) => {
+export const createExecutableFrom = async (path: string): Promise<string> => {
   const testPath = await Rpc.invoke('PlatformPaths.getTestPath')
   const absolutePath = testPath + PathSeparatorType.Slash + path
   const content = await Rpc.invoke('Ajax.getText', absolutePath)

@@ -4,7 +4,7 @@ import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as TestFrameWorkComponent from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
 import * as TestState from '../TestState/TestState.ts'
 
-export const execute = async (href: string) => {
+export const execute = async (href: string): Promise<void> => {
   const globals = {
     ...TestFrameWorkComponent,
     ...TestFrameWork,
@@ -20,7 +20,7 @@ export const execute = async (href: string) => {
   }
   if (module.test) {
     if (module.skip) {
-      await TestFrameWork.test.skip(module.name, () => {})
+      await TestFrameWork.test.skip(module.name)
     } else {
       await ExecuteTest.executeTest(module.name, module.test, globals)
     }
