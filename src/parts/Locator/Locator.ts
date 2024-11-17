@@ -12,9 +12,9 @@ const Locator = function (selector, { nth = -1, hasText = '' } = {}) {
   this._hasText = hasText
 }
 
-const performAction = async (locator, fnName, options) => {
+const performAction = async (locator: any, action: string, options: any): Promise<any> => {
   const { invoke } = locator.webView || Rpc
-  return invoke('TestFrameWork.performAction', locator, fnName, options)
+  return invoke('TestFrameWork.performAction', locator, action, options)
 }
 
 const toButtonNumber = (buttonType) => {
@@ -30,7 +30,7 @@ const toButtonNumber = (buttonType) => {
   }
 }
 
-Locator.prototype.click = async function ({ button = 'left' } = {}) {
+Locator.prototype.click = async function ({ button = 'left' } = {}): Promise<void> {
   const options = {
     cancable: true,
     bubbles: true,
