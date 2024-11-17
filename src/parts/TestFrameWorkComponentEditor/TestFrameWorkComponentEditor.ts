@@ -65,7 +65,7 @@ export const goToTypeDefinition = async (): Promise<void> => {
 }
 
 export const type = async (text: string): Promise<void> => {
-  await Rpc.invoke('Editor.type')
+  await Rpc.invoke('Editor.type', text)
 }
 
 export const findAllReferences = async () => {

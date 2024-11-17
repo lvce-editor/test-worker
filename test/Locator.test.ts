@@ -60,7 +60,7 @@ test('type', async () => {
   })
 })
 
-test('first', async () => {
+test('first', () => {
   const selector = 'button'
   const options = {}
   const locator = Locator.create(selector, options)
