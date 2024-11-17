@@ -36,7 +36,7 @@ export const createExecutable = async (content: string): Promise<string> => {
   return gitPath
 }
 
-export const createExecutableFrom = async (path: string) => {
+export const createExecutableFrom = async (path: string): Promise<string> => {
   const testPath = await Rpc.invoke('PlatformPaths.getTestPath')
   const absolutePath = testPath + PathSeparatorType.Slash + path
   const content = await Rpc.invoke('Ajax.getText', absolutePath)
