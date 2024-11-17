@@ -68,19 +68,19 @@ export const type = async (text: string): Promise<void> => {
   await Rpc.invoke('Editor.type')
 }
 
-export const findAllReferences = async () => {
+export const findAllReferences = async (): Promise<void> => {
   await Rpc.invoke('SideBar.show', 'References', /* focus */ true)
 }
 
-export const findAllImplementations = async () => {
+export const findAllImplementations = async (): Promise<void> => {
   await Rpc.invoke('SideBar.show', 'Implementations', /* focus */ true)
 }
 
-export const setSelections = async (selections: any) => {
+export const setSelections = async (selections: any): Promise<void> => {
   await Rpc.invoke('Editor.setSelections', selections)
 }
 
-export const openFindWidget = async () => {
+export const openFindWidget = async (): Promise<void> => {
   await Rpc.invoke('Editor.openFind')
 }
 

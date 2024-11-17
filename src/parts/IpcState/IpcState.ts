@@ -5,10 +5,10 @@ const state = {
   ipc: undefined,
 }
 
-export const get = () => {
+export const getIpc = (): any | null => {
   return state.ipc
 }
 
-export const set = (ipc: any) => {
+export const setIpc = (ipc: any): void => {
   state.ipc = ipc
 }
