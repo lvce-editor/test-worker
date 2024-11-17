@@ -1,3 +1,3 @@
-export const now = () => {
+export const now = (): number => {
   return performance.now()
 }
