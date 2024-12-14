@@ -1,3 +1,4 @@
+export * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 export * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 export * as BaseUrl from '../TestFrameWorkComponentBaseUrl/TestFrameWorkComponentBaseUrl.ts'
 export * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
