@@ -15,3 +15,11 @@ export const handleClickClose = async () => {
 export const handleClickCopy = async () => {
   return Rpc.invoke('About.handleClickCopy')
 }
+
+export const focusNext = async () => {
+  return Rpc.invoke('About.focusNext')
+}
+
+export const focusPrevious = async () => {
+  return Rpc.invoke('About.focusPrevious')
+}
