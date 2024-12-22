@@ -203,3 +203,10 @@ export const showHover = async () => {
 export const openRename = async () => {
   await Rpc.invoke('Editor.openRename')
 }
+
+export const shouldHaveText = async (expectedText: string) => {
+  const text = await Rpc.invoke('Editor.getText')
+  if (text !== expectedText) {
+    throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
+  }
+}
