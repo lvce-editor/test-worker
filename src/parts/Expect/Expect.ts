@@ -36,6 +36,10 @@ export const expect = (locator: any): any => {
       Assert.string(text, 'text must be of type string')
       return this.checkSingleElementCondition('toHaveText', { text })
     },
+    async toContainText(text) {
+      Assert.string(text, 'text must be of type string')
+      return this.checkSingleElementCondition('toContainText', { text })
+    },
     async toHaveValue(value) {
       Assert.string(value, 'value must be of type string')
       return this.checkSingleElementCondition('toHaveValue', { value })
