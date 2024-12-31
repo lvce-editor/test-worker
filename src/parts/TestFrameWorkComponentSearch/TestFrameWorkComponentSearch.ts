@@ -64,3 +64,7 @@ export const togglePreserveCase = async () => {
 export const toggleUseRegularExpression = async () => {
   await Rpc.invoke('Search.toggleUseRegularExpression')
 }
+
+export const toggleReplace = async () => {
+  await Rpc.invoke('Search.toggleReplace')
+}
