@@ -49,6 +49,10 @@ export const focusPrevious = async () => {
   await Rpc.invoke('Search.focusPrevious')
 }
 
+export const toggleSearchDetails = async () => {
+  await Rpc.invoke('Search.toggleSearchDetails')
+}
+
 export const toggleMatchCase = async () => {
   await Rpc.invoke('Search.toggleMatchCase')
 }
