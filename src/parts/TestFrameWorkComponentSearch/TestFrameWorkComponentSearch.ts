@@ -13,6 +13,10 @@ export const setExcludeValue = async (value: string) => {
   await Rpc.invoke('Search.handleExcludeInput', value, InputSource.Script)
 }
 
+export const replaceAll = async () => {
+  await Rpc.invoke('Search.replaceAll')
+}
+
 export const setIncludeValue = async (value: string) => {
   await Rpc.invoke('Search.handleIncludeInput', value, InputSource.Script)
 }
