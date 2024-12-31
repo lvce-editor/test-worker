@@ -1,7 +1,20 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 
 export const setValue = async (value: string) => {
-  await Rpc.invoke('Search.handleInput', value)
+  await Rpc.invoke('Search.handleInput', value, InputSource.Script)
+}
+
+export const setReplaceValue = async (value: string) => {
+  await Rpc.invoke('Search.handleReplaceInput', value, InputSource.Script)
+}
+
+export const setExcludeValue = async (value: string) => {
+  await Rpc.invoke('Search.handleExcludeInput', value, InputSource.Script)
+}
+
+export const setIncludeValue = async (value: string) => {
+  await Rpc.invoke('Search.handleIncludeInput', value, InputSource.Script)
 }
 
 export const clearSearchResults = async () => {
