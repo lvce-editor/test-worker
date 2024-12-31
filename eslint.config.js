@@ -1,9 +1,10 @@
 import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
+import perfectionist from 'eslint-plugin-perfectionist'
 
 export default tseslint.config(
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.strictTypeChecked,
   {
     languageOptions: {
       parserOptions: {
@@ -29,6 +30,23 @@ export default tseslint.config(
       '@typescript-eslint/explicit-function-return-type': 'off',
       'no-ex-assign': 'off',
       '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/restrict-plus-operands': 'off',
+    },
+  },
+  {
+    plugins: {
+      perfectionist,
+    },
+    rules: {
+      'perfectionist/sort-imports': [
+        'error',
+        {
+          type: 'natural',
+          order: 'asc',
+          newlinesBetween: 'never',
+        },
+      ],
     },
   },
 )
