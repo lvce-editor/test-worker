@@ -37,6 +37,10 @@ export const focusIndex = async (index: number) => {
   await Rpc.invoke('Search.focusIndex', index)
 }
 
+export const selectIndex = async (index: number): Promise<void> => {
+  await Rpc.invoke('Search.selectIndex', index)
+}
+
 export const focusNext = async () => {
   await Rpc.invoke('Search.focusNext')
 }
