@@ -46,7 +46,7 @@ export const focusNext = async () => {
 }
 
 export const handleWheel = async (deltaMode: number, deltaY: number): Promise<void> => {
-  await Rpc.invoke('Search.handleWheel')
+  await Rpc.invoke('Search.handleWheel', deltaMode, deltaY)
 }
 
 export const focusNextPage = async () => {
