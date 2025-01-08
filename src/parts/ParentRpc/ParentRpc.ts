@@ -1,25 +1,12 @@
-import * as IpcState from '../IpcState/IpcState.ts'
-
-const state = {
-  rpc: undefined,
-}
+import * as RpcId from '../RpcId/RpcId.ts'
+import * as RpcRegistry from '../RpcRegistry/RpcRegistry.ts'
 
 export const invoke = (method: string, ...params: any[]): Promise<any> => {
-  const rpc = state.rpc
-  // @ts-ignore
+  const rpc = RpcRegistry.get(RpcId.RendererWorker)
   return rpc.invoke(method, ...params)
 }
 
 export const invokeAndTransfer = (method: string, ...params: any[]) => {
-  const rpc = state.rpc
-  // @ts-ignore
+  const rpc = RpcRegistry.get(RpcId.RendererWorker)
   return rpc.invokeAndTransfer(method, ...params)
-}
-
-export const listen = (ipc: any): void => {
-  IpcState.set(ipc)
-}
-
-export const setRpc = (rpc: any): void => {
-  state.rpc = rpc
 }
