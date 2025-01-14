@@ -6,7 +6,7 @@ export const create = (selector: string, options: any = {}): any => {
   return new Locator(selector, options)
 }
 
-const Locator = function (selector, { nth = -1, hasText = '' } = {}) {
+const Locator = function (selector, { nth = -1, hasText = '' }: { nth?: number; hasText?: string } = {}) {
   this._selector = selector
   this._nth = nth
   this._hasText = hasText
