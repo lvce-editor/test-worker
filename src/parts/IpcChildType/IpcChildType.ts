@@ -3,7 +3,7 @@ export const ModuleWorker = 2
 const ReferencePort = 3
 export const ModuleWorkerAndMessagePort = 8
 
-export const Auto = () => {
+export const Auto = (): number => {
   // @ts-ignore
   if (globalThis.acceptPort) {
     return MessagePort

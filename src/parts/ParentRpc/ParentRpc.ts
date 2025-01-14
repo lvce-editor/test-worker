@@ -6,7 +6,7 @@ export const invoke = (method: string, ...params: any[]): Promise<any> => {
   return rpc.invoke(method, ...params)
 }
 
-export const invokeAndTransfer = (method: string, ...params: any[]) => {
+export const invokeAndTransfer = (method: string, ...params: any[]): Promise<any> => {
   const rpc = RpcRegistry.get(RpcId.RendererWorker)
   return rpc.invokeAndTransfer(method, ...params)
 }
