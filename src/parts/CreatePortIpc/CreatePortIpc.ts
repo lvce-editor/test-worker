@@ -32,13 +32,13 @@ export const createPortIpc = async (webViewId: string): Promise<any> => {
   if (firstEvent.data !== 'ready') {
     throw new Error('unexpected first message')
   }
-  const handleOtherMessage = async (event: any) => {
+  const handleOtherMessage = async (event: any): Promise<void> => {
     // @ts-ignore
     await JsonRpc.handleJsonRpcMessage(ipc, event.data, JsonRpc.resolve, preparePrettyError, execute, logError, requiresSocket)
   }
   port1.onmessage = handleOtherMessage
   const ipc = {
-    send(message: any) {
+    send(message: any): void {
       port1.postMessage(message)
     },
   }

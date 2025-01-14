@@ -1,4 +1,4 @@
-export const getKeyOptions = (rawKey: string) => {
+export const getKeyOptions = (rawKey: string): any => {
   if (rawKey.includes('+')) {
     const parts = rawKey.split('+')
     let ctrlKey = false
