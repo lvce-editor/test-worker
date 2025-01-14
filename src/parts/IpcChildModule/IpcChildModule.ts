@@ -1,5 +1,4 @@
-// @ts-ignore
-import { IpcChildWithModuleWorker, IpcChildWithModuleWorkerAndMessagePort } from '@lvce-editor/ipc/dist/browser.js'
+import { IpcChildWithModuleWorker, IpcChildWithModuleWorkerAndMessagePort } from '@lvce-editor/ipc'
 import * as IpcChildType from '../IpcChildType/IpcChildType.ts'
 
 export const getModule = (method: any): any => {
