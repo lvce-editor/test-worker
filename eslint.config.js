@@ -11,7 +11,7 @@ export default [
     },
   },
   {
-    ignores: ['dist', 'coverage', 'scripts', 'rollup.config.js', 'eslint.config.js', 'src/testWorkerMain.ts'],
+    ignores: ['src/testWorkerMain.ts'],
   },
   {
     rules: {
