@@ -10,7 +10,7 @@ export const mkdir = async (path: string): Promise<void> => {
   await Rpc.invoke('FileSystem.mkdir', path)
 }
 
-export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs } = {}): Promise<string> => {
+export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: { readonly scheme?: string } = {}): Promise<string> => {
   switch (scheme) {
     case FileSystemProtocol.Memfs:
       return 'memfs:///workspace'

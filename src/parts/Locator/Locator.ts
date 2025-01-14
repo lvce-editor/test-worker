@@ -6,7 +6,7 @@ export const create = (selector: string, options: any = {}): any => {
   return new Locator(selector, options)
 }
 
-const Locator = function (selector, { nth = -1, hasText = '' } = {}) {
+const Locator = function (selector, { nth = -1, hasText = '' }: { readonly nth?: number; readonly hasText?: string } = {}) {
   this._selector = selector
   this._nth = nth
   this._hasText = hasText
@@ -30,7 +30,7 @@ const toButtonNumber = (buttonType) => {
   }
 }
 
-Locator.prototype.click = async function ({ button = 'left' } = {}): Promise<void> {
+Locator.prototype.click = async function ({ button = 'left' }: { readonly button?: string } = {}): Promise<void> {
   const options = {
     cancable: true,
     bubbles: true,

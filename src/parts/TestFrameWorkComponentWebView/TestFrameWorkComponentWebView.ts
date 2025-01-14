@@ -6,7 +6,7 @@ import * as Locator from '../Locator/Locator.ts'
 export const fromId = async (webViewId: string): Promise<any> => {
   const ipc = await CreatePortIpc.createPortIpc(webViewId)
   const webViewRpc = {
-    invoke(method: string, ...params: any[]): Promise<any> {
+    invoke(method: string, ...params: readonly any[]): Promise<any> {
       return JsonRpc.invoke(ipc, method, ...params)
     },
   }
