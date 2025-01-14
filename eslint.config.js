@@ -1,10 +1,7 @@
-import eslint from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import perfectionist from 'eslint-plugin-perfectionist'
+import config from '@lvce-editor/eslint-config'
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
+export default [
+  ...config,
   {
     languageOptions: {
       parserOptions: {
@@ -34,19 +31,4 @@ export default tseslint.config(
       '@typescript-eslint/restrict-plus-operands': 'off',
     },
   },
-  {
-    plugins: {
-      perfectionist,
-    },
-    rules: {
-      'perfectionist/sort-imports': [
-        'error',
-        {
-          type: 'natural',
-          order: 'asc',
-          newlinesBetween: 'never',
-        },
-      ],
-    },
-  },
-)
+]
