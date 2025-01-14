@@ -21,4 +21,4 @@ test.skip = async (id: string): Promise<void> => {
   await Rpc.invoke('TestFrameWork.showOverlay', state, background, text)
 }
 
-export const expect = Expect.expect
+export const { expect } = Expect
