@@ -30,7 +30,7 @@ const toButtonNumber = (buttonType) => {
   }
 }
 
-Locator.prototype.click = async function ({ button = 'left' } = {}): Promise<void> {
+Locator.prototype.click = async function ({ button = 'left' }: { readonly button?: string } = {}): Promise<void> {
   const options = {
     cancable: true,
     bubbles: true,
