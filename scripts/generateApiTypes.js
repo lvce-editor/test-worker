@@ -26,6 +26,8 @@ const getActualContent = (content) => {
       case 'export':
         if (line.startsWith('};')) {
           state = 'after-export'
+          newLines.push('  readonly expect: any')
+          newLines.push('  readonly Locator: (selector: string) => any')
           newLines.push('}')
         } else {
           const word = line.match(RE_WORD)
