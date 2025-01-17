@@ -55,6 +55,8 @@ await mkdir(dist, { recursive: true })
 
 await execa(`npx`, ['rollup', '-c'])
 
+await execa('npx', ['dts-bundle-generator', '-o', 'dist/dist/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'])
+
 const version = await getVersion()
 
 const packageJson = await readJson(join(root, 'package.json'))
