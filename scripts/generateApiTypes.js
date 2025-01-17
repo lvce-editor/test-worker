@@ -18,7 +18,7 @@ const getActualContent = (content) => {
       case 'default':
         if (line.startsWith('export')) {
           state = 'export'
-          newLines.push('export interface Test {')
+          newLines.push('export interface TestApi {')
         } else {
           newLines.push(line)
         }
@@ -28,6 +28,10 @@ const getActualContent = (content) => {
           state = 'after-export'
           newLines.push('  readonly expect: any')
           newLines.push('  readonly Locator: (selector: string) => any')
+          newLines.push('}')
+          newLines.push('')
+          newLines.push('export interface Test {')
+          newLines.push('  (api: TestApi): Promise<void>')
           newLines.push('}')
         } else {
           const word = line.match(RE_WORD)
