@@ -2,6 +2,7 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import path, { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execa } from 'execa'
+import { generateApiTypes } from './generateApiTypes.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = path.join(__dirname, '..')
@@ -55,8 +56,6 @@ await mkdir(dist, { recursive: true })
 
 await execa(`npx`, ['rollup', '-c'])
 
-await execa('npx', ['dts-bundle-generator', '-o', 'dist/dist/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'])
-
 const version = await getVersion()
 
 const packageJson = await readJson(join(root, 'package.json'))
@@ -69,6 +68,8 @@ packageJson.version = version
 packageJson.main = 'dist/testWorkerMain.js'
 
 await writeJson(join(dist, 'package.json'), packageJson)
+
+await generateApiTypes()
 
 await cp(join(root, 'README.md'), join(dist, 'README.md'))
 await cp(join(root, 'LICENSE'), join(dist, 'LICENSE'))
