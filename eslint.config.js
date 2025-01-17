@@ -6,7 +6,7 @@ export default [
     ignores: ['src/testWorkerMain.ts'],
   },
   {
-    files:['**/*.ts'],
+    files: ['**/*.ts'],
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
@@ -24,6 +24,7 @@ export default [
       'n/no-unsupported-features/es-syntax': 'off',
       'n/no-unpublished-import': 'off',
       'n/no-unsupported-features/node-builtins': 'off',
+      'no-console': 'off',
     },
   },
 ]

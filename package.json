@@ -2,25 +2,34 @@
   "name": "@lvce-editor/test-worker",
   "version": "0.0.0-dev",
   "description": "",
-  "main": "src/testWorkerMain.ts",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
   "type": "module",
+  "main": "src/testWorkerMain.ts",
   "directories": {
     "test": "test"
   },
   "scripts": {
+    "build": "node scripts/build.js",
+    "build:watch": "nodemon",
     "lint": "eslint .",
     "test": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
-    "type-check": "tsc",
-    "build": "node scripts/build.js",
-    "build:watch": "nodemon"
+    "type-check": "tsc"
   },
-  "engines": {
-    "node": ">=22"
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts,js",
+    "exec": "node scripts/build.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 150
+  },
   "jest": {
     "injectGlobals": false,
     "extensionsToTreatAsEsm": [
@@ -69,16 +78,7 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.3"
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "printWidth": 150
-  },
-  "nodemonConfig": {
-    "watch": [
-      "src"
-    ],
-    "ext": "ts,js",
-    "exec": "node scripts/build.js"
+  "engines": {
+    "node": ">=22"
   }
 }
