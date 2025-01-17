@@ -30,7 +30,7 @@ const getActualContent = (content) => {
           newLines.push('}')
         } else {
           const word = line.match(RE_WORD)
-          newLines.push(`  ${word}: typeof ${word},`)
+          newLines.push(`  readonly ${word}: typeof ${word},`)
         }
         break
       case 'after-export':
