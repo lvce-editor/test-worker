@@ -27,7 +27,7 @@ const getActualContent = (content) => {
       case 'export':
         if (line.startsWith('};')) {
           state = 'after-export'
-          newLines.push(line)
+          newLines.push('}')
         } else {
           const word = line.match(RE_WORD)
           newLines.push(`  ${word}: typeof ${word},`)
