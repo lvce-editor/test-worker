@@ -1,50 +1,50 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const closeMenu = async () => {
+export const closeMenu = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.closeMenu')
 }
 
-export const focus = async () => {
+export const focus = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.focus')
 }
 
-export const focusFirst = async () => {
+export const focusFirst = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.focusFirst')
 }
 
-export const focusIndex = async (index: number) => {
+export const focusIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.focusIndex', index)
 }
 
-export const focusLast = async () => {
+export const focusLast = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.focusLast')
 }
 
-export const focusNext = async () => {
+export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.focusNext')
 }
 
-export const focusPrevious = async () => {
+export const focusPrevious = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.focusPrevious')
 }
 
-export const handleKeyArrowDown = async () => {
+export const handleKeyArrowDown = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.handleKeyArrowDown')
 }
 
-export const handleKeyArrowLeft = async () => {
+export const handleKeyArrowLeft = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.handleKeyArrowLeft')
 }
 
-export const handleKeyArrowRight = async () => {
+export const handleKeyArrowRight = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.handleKeyArrowRight')
 }
 
-export const handleKeyArrowUp = async () => {
+export const handleKeyArrowUp = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.handleKeyArrowUp')
 }
 
-export const handleKeyEnd = async () => {
+export const handleKeyEnd = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.handleKeyEnd')
 }
 
