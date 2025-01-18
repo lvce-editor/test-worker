@@ -6,6 +6,7 @@ export * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWork
 export * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 export * as Explorer from '../TestFrameWorkComponentExplorer/TestFrameWorkComponentExplorer.ts'
 export * as Extension from '../TestFrameWorkComponentExtension/TestFrameWorkComponentExtension.ts'
+export * as ExtensionDetail from '../TestFrameWorkComponentExtensionDetail/TestFrameWorkComponentExtensionDetail.ts'
 export * as FileSystem from '../TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 export * as FindWidget from '../TestFrameWorkComponentFindWidget/TestFrameWorkComponentFindWidget.ts'
 export * as IconTheme from '../TestFrameWorkComponentIconTheme/TestFrameWorkComponentIconTheme.ts'
