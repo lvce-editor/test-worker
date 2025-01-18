@@ -9,7 +9,7 @@ const Assert = {
     }
   },
   number(value: any, message: string): void {
-    if (typeof value !== 'number' || isNaN(value)) {
+    if (typeof value !== 'number' ||Number. isNaN(value)) {
       throw new TypeError(message)
     }
   },
