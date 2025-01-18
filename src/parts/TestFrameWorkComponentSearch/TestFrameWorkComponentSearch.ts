@@ -1,39 +1,39 @@
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const setValue = async (value: string) => {
+export const setValue = async (value: string): Promise<void> => {
   await Rpc.invoke('Search.handleInput', value, InputSource.Script)
 }
 
-export const setReplaceValue = async (value: string) => {
+export const setReplaceValue = async (value: string): Promise<void> => {
   await Rpc.invoke('Search.handleReplaceInput', value, InputSource.Script)
 }
 
-export const setExcludeValue = async (value: string) => {
+export const setExcludeValue = async (value: string): Promise<void> => {
   await Rpc.invoke('Search.handleExcludeInput', value, InputSource.Script)
 }
 
-export const replaceAll = async () => {
+export const replaceAll = async (): Promise<void> => {
   await Rpc.invoke('Search.replaceAll')
 }
 
-export const setIncludeValue = async (value: string) => {
+export const setIncludeValue = async (value: string): Promise<void> => {
   await Rpc.invoke('Search.handleIncludeInput', value, InputSource.Script)
 }
 
-export const clearSearchResults = async () => {
+export const clearSearchResults = async (): Promise<void> => {
   await Rpc.invoke('Search.clearSearchResults')
 }
 
-export const dismissItem = async () => {
+export const dismissItem = async (): Promise<void> => {
   await Rpc.invoke('Search.dismissItem')
 }
 
-export const focusFirst = async () => {
+export const focusFirst = async (): Promise<void> => {
   await Rpc.invoke('Search.focusFirst')
 }
 
-export const focusIndex = async (index: number) => {
+export const focusIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('Search.focusIndex', index)
 }
 
@@ -41,7 +41,7 @@ export const selectIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('Search.selectIndex', index)
 }
 
-export const focusNext = async () => {
+export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('Search.focusNext')
 }
 
@@ -49,38 +49,38 @@ export const handleWheel = async (deltaMode: number, deltaY: number): Promise<vo
   await Rpc.invoke('Search.handleWheel', deltaMode, deltaY)
 }
 
-export const focusNextPage = async () => {
+export const focusNextPage = async (): Promise<void> => {
   await Rpc.invoke('Search.focusPage')
 }
 
-export const focusPreviousPage = async () => {
+export const focusPreviousPage = async (): Promise<void> => {
   await Rpc.invoke('Search.focusPreviousPage')
 }
 
-export const focusPrevious = async () => {
+export const focusPrevious = async (): Promise<void> => {
   await Rpc.invoke('Search.focusPrevious')
 }
 
-export const toggleSearchDetails = async () => {
+export const toggleSearchDetails = async (): Promise<void> => {
   await Rpc.invoke('Search.toggleSearchDetails')
 }
 
-export const toggleMatchCase = async () => {
+export const toggleMatchCase = async (): Promise<void> => {
   await Rpc.invoke('Search.toggleMatchCase')
 }
 
-export const toggleMatchWholeWord = async () => {
+export const toggleMatchWholeWord = async (): Promise<void> => {
   await Rpc.invoke('Search.toggleMatchWholeWord')
 }
 
-export const togglePreserveCase = async () => {
+export const togglePreserveCase = async (): Promise<void> => {
   await Rpc.invoke('Search.togglePreserveCase')
 }
 
-export const toggleUseRegularExpression = async () => {
+export const toggleUseRegularExpression = async (): Promise<void> => {
   await Rpc.invoke('Search.toggleUseRegularExpression')
 }
 
-export const toggleReplace = async () => {
+export const toggleReplace = async (): Promise<void> => {
   await Rpc.invoke('Search.toggleReplace')
 }

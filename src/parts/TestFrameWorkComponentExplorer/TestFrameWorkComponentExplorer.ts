@@ -16,31 +16,31 @@ export const focusIndex = async (index: number) => {
   await Rpc.invoke('Explorer.focusIndex', index)
 }
 
-export const clickCurrent = async () => {
+export const clickCurrent = async (): Promise<void> => {
   await Rpc.invoke('Explorer.handleClickCurrent')
 }
 
-export const handleArrowLeft = async () => {
+export const handleArrowLeft = async (): Promise<void> => {
   await Rpc.invoke('Explorer.handleArrowLeft')
 }
 
-export const focusLast = async () => {
+export const focusLast = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusLast')
 }
 
-export const focusFirst = async () => {
+export const focusFirst = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusFirst')
 }
 
-export const removeDirent = async () => {
+export const removeDirent = async (): Promise<void> => {
   await Rpc.invoke('Explorer.removeDirent')
 }
 
-export const expandRecursively = async () => {
+export const expandRecursively = async (): Promise<void> => {
   await Rpc.invoke('Explorer.expandRecursively')
 }
 
-export const newFile = async () => {
+export const newFile = async (): Promise<void> => {
   await Rpc.invoke('Explorer.newFile')
 }
 
@@ -48,7 +48,7 @@ export const handleClick = async (index: number) => {
   await Rpc.invoke('Explorer.handleClick', index)
 }
 
-export const rename = async () => {
+export const rename = async (): Promise<void> => {
   await Rpc.invoke('Explorer.rename')
 }
 

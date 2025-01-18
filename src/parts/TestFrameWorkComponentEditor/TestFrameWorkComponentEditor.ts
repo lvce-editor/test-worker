@@ -36,15 +36,15 @@ export const copyLineDown = async (): Promise<void> => {
   await Rpc.invoke('Editor.copyLineDown')
 }
 
-export const cursorDown = async () => {
+export const cursorDown = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorDown')
 }
 
-export const cursorUp = async () => {
+export const cursorUp = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorUp')
 }
 
-export const cursorWordLeft = async () => {
+export const cursorWordLeft = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorWordLeft')
 }
 
@@ -84,107 +84,107 @@ export const openFindWidget = async (): Promise<void> => {
   await Rpc.invoke('Editor.openFind')
 }
 
-export const setDeltaY = async (deltaY: number) => {
+export const setDeltaY = async (deltaY: number): Promise<void> => {
   await Rpc.invoke('Editor.setDeltaY', deltaY)
 }
 
-export const format = async () => {
+export const format = async (): Promise<void> => {
   await Rpc.invoke('Editor.format')
 }
 
-export const insertLineBreak = async () => {
+export const insertLineBreak = async (): Promise<void> => {
   await Rpc.invoke('Editor.insertLineBreak')
 }
 
-export const openSourceActions = async () => {
+export const openSourceActions = async (): Promise<void> => {
   await Rpc.invoke('Editor.showSourceActions2')
 }
 
-export const sourceActionsSelectCurrent = async () => {
+export const sourceActionsSelectCurrent = async (): Promise<void> => {
   await Rpc.invoke('EditorSourceActions.selectCurrent')
 }
 
-export const openCompletionDetails = async () => {
+export const openCompletionDetails = async (): Promise<void> => {
   await Rpc.invoke('EditorCompletion.openDetails')
 }
 
-export const closeCompletionDetails = async () => {
+export const closeCompletionDetails = async (): Promise<void> => {
   await Rpc.invoke('EditorCompletion.closeDetails')
 }
 
-export const toggleCompletionDetails = async () => {
+export const toggleCompletionDetails = async (): Promise<void> => {
   await Rpc.invoke('EditorCompletion.toggleDetails')
 }
 
-export const organizeImports = async () => {
+export const organizeImports = async (): Promise<void> => {
   await Rpc.invoke('Editor.organizeImports')
 }
 
-export const addAllMissingImports = async () => {
+export const addAllMissingImports = async (): Promise<void> => {
   await Rpc.invoke('Editor.addAllMissingImports')
 }
 
-export const sortImports = async () => {
+export const sortImports = async (): Promise<void> => {
   await Rpc.invoke('Editor.sortImports')
 }
 
-export const toggleLineComment = async () => {
+export const toggleLineComment = async (): Promise<void> => {
   await Rpc.invoke('Editor.toggleLineComment')
 }
 
-export const toggleBlockComment = async () => {
+export const toggleBlockComment = async (): Promise<void> => {
   await Rpc.invoke('Editor.toggleBlockComment')
 }
 
-export const selectAll = async () => {
+export const selectAll = async (): Promise<void> => {
   await Rpc.invoke('Editor.toggleBlockComment')
 }
 
-export const openColorPicker = async () => {
+export const openColorPicker = async (): Promise<void> => {
   await Rpc.invoke('Editor.openColorPicker')
 }
 
-export const openFind = async () => {
+export const openFind = async (): Promise<void> => {
   await Rpc.invoke('Editor.openFind2')
 }
 
-export const deleteAllLeft = async () => {
+export const deleteAllLeft = async (): Promise<void> => {
   await Rpc.invoke('Editor.deleteAllLeft')
 }
 
-export const deleteAllRight = async () => {
+export const deleteAllRight = async (): Promise<void> => {
   await Rpc.invoke('Editor.deleteAllRight')
 }
 
-export const cursorWordPartLeft = async () => {
+export const cursorWordPartLeft = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorWordPartLeft')
 }
 
-export const cursorWordPartRight = async () => {
+export const cursorWordPartRight = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorWordPartRight')
 }
 
-export const cursorEnd = async () => {
+export const cursorEnd = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorEnd')
 }
 
-export const cursorHome = async () => {
+export const cursorHome = async (): Promise<void> => {
   await Rpc.invoke('Editor.cursorHome')
 }
 
-export const copyLineUp = async () => {
+export const copyLineUp = async (): Promise<void> => {
   await Rpc.invoke('Editor.copyLineUp')
 }
 
-export const copy = async () => {
+export const copy = async (): Promise<void> => {
   await Rpc.invoke('Editor.copy')
 }
 
-export const closeColorPicker = async () => {
+export const closeColorPicker = async (): Promise<void> => {
   await Rpc.invoke('Editor.closeColorPicker')
 }
 
-export const openContextMenu = async () => {
+export const openContextMenu = async (): Promise<void> => {
   await Rpc.invoke('Editor.contextMenu')
 }
 
@@ -192,19 +192,19 @@ export const getText = async (): Promise<string> => {
   return Rpc.invoke('Editor.getText')
 }
 
-export const rename = async () => {
+export const rename = async (): Promise<void> => {
   await Rpc.invoke('Editor.rename')
 }
 
-export const showHover = async () => {
+export const showHover = async (): Promise<void> => {
   await Rpc.invoke('Editor.showHover2')
 }
 
-export const openRename = async () => {
+export const openRename = async (): Promise<void> => {
   await Rpc.invoke('Editor.openRename')
 }
 
-export const shouldHaveText = async (expectedText: string) => {
+export const shouldHaveText = async (expectedText: string): Promise<void> => {
   const text = await Rpc.invoke('Editor.getText')
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)

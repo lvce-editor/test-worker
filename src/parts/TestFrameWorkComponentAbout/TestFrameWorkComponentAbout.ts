@@ -1,25 +1,25 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const show = async () => {
+export const show = async (): Promise<void> => {
   return Rpc.invoke('About.showAbout')
 }
 
-export const handleClickOk = async () => {
+export const handleClickOk = async (): Promise<void> => {
   return Rpc.invoke('About.handleClickOk')
 }
 
-export const handleClickClose = async () => {
+export const handleClickClose = async (): Promise<void> => {
   return Rpc.invoke('About.handleClickClose')
 }
 
-export const handleClickCopy = async () => {
+export const handleClickCopy = async (): Promise<void> => {
   return Rpc.invoke('About.handleClickCopy')
 }
 
-export const focusNext = async () => {
+export const focusNext = async (): Promise<void> => {
   return Rpc.invoke('About.focusNext')
 }
 
-export const focusPrevious = async () => {
+export const focusPrevious = async (): Promise<void> => {
   return Rpc.invoke('About.focusPrevious')
 }
