@@ -8,14 +8,6 @@ export default [
   {
     files: ['**/*.ts'],
     rules: {
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off',
-      '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
       'no-useless-catch': 'off',
       'no-ex-assign': 'off',
       '@typescript-eslint/require-await': 'off',
@@ -24,6 +16,7 @@ export default [
       'n/no-unsupported-features/es-syntax': 'off',
       'n/no-unpublished-import': 'off',
       'n/no-unsupported-features/node-builtins': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
       'no-console': 'off',
     },
   },
