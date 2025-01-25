@@ -27,7 +27,7 @@ const getActualContent = (content) => {
         if (line.startsWith('};')) {
           state = 'after-export'
           newLines.push('  readonly expect: any')
-          newLines.push('  readonly Locator: (selector: string) => any')
+          newLines.push('  readonly Locator: (selector: string, options?: any) => any')
           newLines.push('}')
           newLines.push('')
           newLines.push('export interface Test {')
