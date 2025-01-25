@@ -64,6 +64,6 @@ export const updateEditingValue = async (value: string): Promise<void> => {
   await Rpc.invoke('Explorer.updateEditingValue', value)
 }
 
-export const expandAll = async (value: string): Promise<void> => {
-  await Rpc.invoke('Explorer.expandAll', value)
+export const expandAll = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.expandAll')
 }
