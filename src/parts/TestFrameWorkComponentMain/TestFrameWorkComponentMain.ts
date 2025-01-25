@@ -7,3 +7,7 @@ export const openUri = async (uri: string) => {
 export const splitRight = async () => {
   await Rpc.invoke('Main.splitRight')
 }
+
+export const openKeyBindings = async () => {
+  await Rpc.invoke('Main.openKeyBindings')
+}
