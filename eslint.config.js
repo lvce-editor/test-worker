@@ -16,7 +16,6 @@ export default [
       'n/no-unsupported-features/es-syntax': 'off',
       'n/no-unpublished-import': 'off',
       'n/no-unsupported-features/node-builtins': 'off',
-      '@typescript-eslint/explicit-function-return-type': 'off',
       'no-console': 'off',
     },
   },

@@ -12,7 +12,7 @@ export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusNext')
 }
 
-export const focusIndex = async (index: number) => {
+export const focusIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.focusIndex', index)
 }
 
@@ -44,7 +44,7 @@ export const newFile = async (): Promise<void> => {
   await Rpc.invoke('Explorer.newFile')
 }
 
-export const handleClick = async (index: number) => {
+export const handleClick = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.handleClick', index)
 }
 

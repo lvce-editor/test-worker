@@ -6,7 +6,7 @@ export const create = (selector: string, options: any = {}): any => {
   return new Locator(selector, options)
 }
 
-const Locator = function (selector, { nth = -1, hasText = '' }: { readonly nth?: number; readonly hasText?: string } = {}) {
+const Locator = function (selector, { nth = -1, hasText = '' }: { readonly nth?: number; readonly hasText?: string } = {}): any {
   this._selector = selector
   this._nth = nth
   this._hasText = hasText
@@ -17,7 +17,7 @@ const performAction = async (locator: any, action: string, options: any): Promis
   return invoke('TestFrameWork.performAction', locator, action, options)
 }
 
-const toButtonNumber = (buttonType) => {
+const toButtonNumber = (buttonType): number => {
   switch (buttonType) {
     case 'left':
       return 0
@@ -40,7 +40,7 @@ Locator.prototype.click = async function ({ button = 'left' }: { readonly button
   return performAction(this, 'click', options)
 }
 
-Locator.prototype.hover = async function () {
+Locator.prototype.hover = async function (): Promise<void> {
   const options = {
     cancable: true,
     bubbles: true,
@@ -48,7 +48,7 @@ Locator.prototype.hover = async function () {
   return performAction(this, 'hover', options)
 }
 
-Locator.prototype.first = function () {
+Locator.prototype.first = function (): any {
   return create(this._selector, {
     nth: 0,
   })

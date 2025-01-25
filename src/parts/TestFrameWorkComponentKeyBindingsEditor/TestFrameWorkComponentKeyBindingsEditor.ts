@@ -1,8 +1,7 @@
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
-export const open = () => {
-  // TODO
-  throw new Error('not implemented')
+export const open = async (): Promise<void> => {
+  await Rpc.invoke('Main.openUri', 'app://keybindings')
 }
 
 export const handleInput = (value: string): Promise<void> => {
