@@ -36,6 +36,26 @@ export const focusLast = (): Promise<void> => {
   return Rpc.invoke('KeyBindings.focusLast')
 }
 
+export const toggleRecordingKeys = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.toggleRecordingKeys')
+}
+
+export const startRecordingKeys = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.startRecordingKeys')
+}
+
+export const clearInput = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.clearInput')
+}
+
+export const sortByPrecedence = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.sortByPrecedence')
+}
+
+export const stopRecordingKeys = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.stopRecordingKeys')
+}
+
 export const handleContextMenu = (button: number, x: number, y: number): Promise<void> => {
   return Rpc.invoke('KeyBindings.handleContextMenu', button, x, y)
 }
