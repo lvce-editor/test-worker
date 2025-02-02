@@ -59,3 +59,31 @@ export const stopRecordingKeys = (): Promise<void> => {
 export const handleContextMenu = (button: number, x: number, y: number): Promise<void> => {
   return Rpc.invoke('KeyBindings.handleContextMenu', button, x, y)
 }
+
+export const copyCommandId = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.copyCommandId')
+}
+
+export const copyCommandTitle = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.copyCommandTitle')
+}
+
+export const addKeyBinding = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.addKeyBinding')
+}
+
+export const removeKeyBinding = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.removeKeyBinding')
+}
+
+export const changeWhenExpression = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.changeWhenExpression')
+}
+
+export const showSameKeyBindings = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.showSameKeyBindings')
+}
+
+export const resetKeyBinding = (): Promise<void> => {
+  return Rpc.invoke('KeyBindings.resetKeyBinding')
+}
