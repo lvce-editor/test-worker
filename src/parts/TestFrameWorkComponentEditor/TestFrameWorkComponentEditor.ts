@@ -185,7 +185,10 @@ export const closeColorPicker = async (): Promise<void> => {
 }
 
 export const openContextMenu = async (): Promise<void> => {
-  await Rpc.invoke('Editor.contextMenu')
+  const button=0
+  const x=0
+  const y=0
+  await Rpc.invoke('Editor.contextMenu', button, x, y)
 }
 
 export const getText = async (): Promise<string> => {
