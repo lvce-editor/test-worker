@@ -4,6 +4,7 @@ export * as BaseUrl from '../TestFrameWorkComponentBaseUrl/TestFrameWorkComponen
 export * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 export * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 export * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
+export * as EditorCompletion from '../TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
 export * as Explorer from '../TestFrameWorkComponentExplorer/TestFrameWorkComponentExplorer.ts'
 export * as Extension from '../TestFrameWorkComponentExtension/TestFrameWorkComponentExtension.ts'
 export * as ExtensionDetail from '../TestFrameWorkComponentExtensionDetail/TestFrameWorkComponentExtensionDetail.ts'
