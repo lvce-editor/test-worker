@@ -1,14 +1,17 @@
-// @ts-nocheck
-
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export const create = (selector: string, options: any = {}): any => {
+  // @ts-ignore
   return new Locator(selector, options)
 }
 
-const Locator = function (selector, { nth = -1, hasText = '' }: { readonly nth?: number; readonly hasText?: string } = {}): any {
+const Locator = function (selector: any, { nth = -1, hasText = '' }: { readonly nth?: number; readonly hasText?: string } = {}): any {
+  // @ts-ignore
   this._selector = selector
+  // @ts-ignore
   this._nth = nth
+  // @ts-ignore
   this._hasText = hasText
 }
 
@@ -17,24 +20,11 @@ const performAction = async (locator: any, action: string, options: any): Promis
   return invoke('TestFrameWork.performAction', locator, action, options)
 }
 
-const toButtonNumber = (buttonType): number => {
-  switch (buttonType) {
-    case 'left':
-      return 0
-    case 'middle':
-      return 1
-    case 'right':
-      return 2
-    default:
-      throw new Error(`unsupported button type: ${buttonType}`)
-  }
-}
-
 Locator.prototype.click = async function ({ button = 'left' }: { readonly button?: string } = {}): Promise<void> {
   const options = {
     cancable: true,
     bubbles: true,
-    button: toButtonNumber(button),
+    button: ToButtonNumber.toButtonNumber(button),
     detail: 1,
   }
   return performAction(this, 'click', options)
