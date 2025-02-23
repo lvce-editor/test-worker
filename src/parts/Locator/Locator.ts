@@ -1,4 +1,4 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as GetLocatorRpc from '../GetLocatorRpc/GetLocatorRpc.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export const create = (selector: string, options: any = {}): any => {
@@ -16,8 +16,8 @@ const Locator = function (selector: any, { nth = -1, hasText = '' }: { readonly 
 }
 
 const performAction = async (locator: any, action: string, options: any): Promise<any> => {
-  const { invoke } = locator.webView || Rpc
-  return invoke('TestFrameWork.performAction', locator, action, options)
+  const rpc = GetLocatorRpc.getLocatorRpc(locator)
+  return rpc.invoke('TestFrameWork.performAction', locator, action, options)
 }
 
 Locator.prototype.click = async function ({ button = 'left' }: { readonly button?: string } = {}): Promise<void> {

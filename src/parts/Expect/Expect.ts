@@ -1,5 +1,6 @@
 // @ts-nocheck
 
+import * as GetLocatorRpc from '../GetLocatorRpc/GetLocatorRpc.ts'
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
 
 const Assert = {
@@ -16,7 +17,7 @@ const Assert = {
 }
 
 export const expect = (locator: any): any => {
-  const { invoke } = locator.webView || Rpc
+  const { invoke } = GetLocatorRpc.getLocatorRpc(locator)
   return {
     async checkSingleElementCondition(fnName, options): Promise<void> {
       Assert.string(fnName)
