@@ -9,13 +9,13 @@ import { root } from './root.js'
  * @type {import('rollup').RollupOptions}
  */
 const options = {
-  input: join(root, 'packages/title-bar-worker/src/titleBarWorkerMain.ts'),
+  input: join(root, 'packages/test-worker/src/testWorkerMain.ts'),
   preserveEntrySignatures: 'strict',
   treeshake: {
     propertyReadSideEffects: false,
   },
   output: {
-    file: join(root, '.tmp/dist/dist/titleBarWorkerMain.js'),
+    file: join(root, '.tmp/dist/dist/testWorkerMain.js'),
     format: 'es',
     freeze: false,
     generatedCode: {
