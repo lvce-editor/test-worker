@@ -14,6 +14,7 @@
     "build:watch": "nodemon",
     "format": "prettier --write .",
     "lint": "eslint .",
+    "postinstall": "lerna bootstrap --ci",
     "test": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "type-check": "tsc"
@@ -74,7 +75,7 @@
     "lerna": "^8.2.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.5.2",
-    "rollup": "^4.30.1",
+    "rollup": "^4.34.9",
     "ts-jest": "^29.2.6",
     "typescript": "^5.8.2"
   },
