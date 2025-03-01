@@ -5,8 +5,12 @@ export const open = async (): Promise<void> => {
   await Rpc.invoke('Viewlet.openWidget', ViewletModuleId.QuickPick, 'everything')
 }
 
-export const setValue = async (value: string): Promise<void> => {
+export const handleInput = async (value: string): Promise<void> => {
   await Rpc.invoke('QuickPick.handleInput', value, 0)
+}
+
+export const setValue = async (value: string): Promise<void> => {
+  await Rpc.invoke('QuickPick.setValue', value)
 }
 
 export const focusNext = async (): Promise<void> => {
