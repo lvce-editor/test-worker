@@ -1,1 +1,1 @@
-import '../packages/build/src/generateApiTypes.js'
+export * from '../packages/build/src/generateApiTypes.js'
