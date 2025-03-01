@@ -1,10 +1,11 @@
 import { execa } from 'execa'
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { bundleJs } from './bundleJs.js'
+import { generateApiTypes } from './generateApiTypes.js'
 import { root } from './root.js'
+import { bundleJs } from './bundleJs.js'
 
-const dist = join(root, '.tmp', 'dist')
+const dist = join(root, 'dist')
 
 const readJson = async (path) => {
   const content = await readFile(path, 'utf8')
@@ -56,19 +57,18 @@ await bundleJs()
 
 const version = await getVersion()
 
-const packageJson = await readJson(join(root, 'packages', 'title-bar-worker', 'package.json'))
+const packageJson = await readJson(join(root, 'package.json'))
 
 delete packageJson.scripts
 delete packageJson.devDependencies
 delete packageJson.prettier
 delete packageJson.jest
-delete packageJson.xo
-delete packageJson.directories
-delete packageJson.nodemonConfig
 packageJson.version = version
-packageJson.main = 'dist/titleBarWorkerMain.js'
+packageJson.main = 'dist/testWorkerMain.js'
 
 await writeJson(join(dist, 'package.json'), packageJson)
+
+await generateApiTypes()
 
 await cp(join(root, 'README.md'), join(dist, 'README.md'))
 await cp(join(root, 'LICENSE'), join(dist, 'LICENSE'))
