@@ -46,7 +46,13 @@ const getActualContent = (content) => {
 }
 
 export const generateApiTypes = async () => {
-  await execa('npx', ['dts-bundle-generator', '-o', 'dist/dist/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'])
+  await execa(
+    'npx',
+    ['dts-bundle-generator', '-o', 'dist/dist/api.d.ts', 'packages/test-worker/src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'],
+    {
+      cwd: root,
+    },
+  )
   const content = await readFile(join(root, 'dist', 'dist', 'api.d.ts'), 'utf8')
   const actual = getActualContent(content)
   await writeFile(join(root, 'dist', 'dist', 'api.d.ts'), actual)
