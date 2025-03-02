@@ -25,6 +25,14 @@ export const clearSearchResults = async (): Promise<void> => {
   await Rpc.invoke('Search.clearSearchResults')
 }
 
+export const openDetails = async (): Promise<void> => {
+  await Rpc.invoke('Search.openDetails')
+}
+
+export const collapseDetails = async (): Promise<void> => {
+  await Rpc.invoke('Search.collapseDetails')
+}
+
 export const dismissItem = async (): Promise<void> => {
   await Rpc.invoke('Search.dismissItem')
 }
