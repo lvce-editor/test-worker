@@ -46,7 +46,7 @@ const getActualContent = (content) => {
 }
 
 export const generateApiTypes = async () => {
-  const ext = process.platform === 'win32' ? '.exe' : ''
+  const ext = process.platform === 'win32' ? '' : ''
   const bundleGeneratorPath = join(root, 'packages', 'build', 'node_modules', '.bin', 'dts-bundle-generator' + ext)
   await execa(bundleGeneratorPath, ['-o', '../../dist/dist/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'], {
     cwd: join(root, 'packages', 'test-worker'),
