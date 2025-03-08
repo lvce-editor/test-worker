@@ -1,5 +1,5 @@
+import type { IElementAction } from '../IElementAction/IElementAction.ts'
 import * as DomEventType from '../DomEventType/DomEventType.ts'
-import { IElementAction } from '../IElementAction/IElementAction.ts'
 
 export const mouseEvent = (eventType: string, options: any): IElementAction => {
   return {
