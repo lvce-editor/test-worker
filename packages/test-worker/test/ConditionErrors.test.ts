@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
+import type { Locator } from '../src/parts/ConditionErrors/ConditionErrors.ts'
 import * as ConditionErrors from '../src/parts/ConditionErrors/ConditionErrors.ts'
-import { Locator } from '../src/parts/ConditionErrors/ConditionErrors.ts'
 
 test('toBeVisible', () => {
   const locator: Locator = {
