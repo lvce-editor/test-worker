@@ -15,7 +15,7 @@ beforeEach(() => {
 test('open', async () => {
   await QuickPick.open()
   expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Viewlet.openWidget', 'quickPick', 'everything')
+  expect(mockRpc.invoke).toHaveBeenCalledWith('Viewlet.openWidget', 'QuickPick', 'everything')
 })
 
 test('handleInput', async () => {
