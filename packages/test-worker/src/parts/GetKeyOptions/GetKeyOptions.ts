@@ -1,3 +1,5 @@
+import * as Key from '../Key/Key.ts'
+
 export const getKeyOptions = (rawKey: string): any => {
   if (rawKey.includes('+')) {
     const parts = rawKey.split('+')
@@ -6,13 +8,13 @@ export const getKeyOptions = (rawKey: string): any => {
     let key = ''
     for (const part of parts) {
       switch (part) {
-        case 'Control':
+        case Key.Control:
           ctrlKey = true
           break
-        case 'Space':
+        case Key.Space:
           key = ' '
           break
-        case 'Alt':
+        case Key.Alt:
           altKey = true
           break
         default:
