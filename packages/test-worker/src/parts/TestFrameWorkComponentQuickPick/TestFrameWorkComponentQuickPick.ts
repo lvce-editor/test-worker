@@ -33,6 +33,10 @@ export const selectIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('QuickPick.selectIndex', index)
 }
 
+export const selectCurrentIndex = async (): Promise<void> => {
+  await Rpc.invoke('QuickPick.selectCurrentIndex')
+}
+
 export const executeCommand = async (label: string): Promise<void> => {
   await Rpc.invoke('QuickPick.showCommands')
   await Rpc.invoke('QuickPick.handleInput', label, 0)
