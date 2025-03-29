@@ -9,6 +9,10 @@ export const handleInput = async (value: string): Promise<void> => {
   await Rpc.invoke('QuickPick.handleInput', value, 0)
 }
 
+export const handleClickAt = async (x: number, y: number): Promise<void> => {
+  await Rpc.invoke('QuickPick.handleClickAt', x, y)
+}
+
 export const setValue = async (value: string): Promise<void> => {
   await Rpc.invoke('QuickPick.setValue', value)
 }
