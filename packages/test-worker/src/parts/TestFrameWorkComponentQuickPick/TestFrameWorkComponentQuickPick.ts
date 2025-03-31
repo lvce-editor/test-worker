@@ -21,6 +21,14 @@ export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('QuickPick.focusNext')
 }
 
+export const focusFirst = async (): Promise<void> => {
+  await Rpc.invoke('QuickPick.focusFirst')
+}
+
+export const focusLast = async (): Promise<void> => {
+  await Rpc.invoke('QuickPick.focusLast')
+}
+
 export const focusIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('QuickPick.focusIndex', index)
 }
