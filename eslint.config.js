@@ -17,6 +17,7 @@ export default [
       'n/no-unpublished-import': 'off',
       'n/no-unsupported-features/node-builtins': 'off',
       'no-console': 'off',
+      '@typescript-eslint/prefer-readonly-parameter-types': 'off',
     },
   },
 ]
