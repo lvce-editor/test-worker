@@ -82,3 +82,7 @@ export const updateEditingValue = async (value: string): Promise<void> => {
 export const expandAll = async (): Promise<void> => {
   await Rpc.invoke('Explorer.expandAll')
 }
+
+export const handleDragOver = async (x: number, y: number): Promise<void> => {
+  await Rpc.invoke('Explorer.handleDragOver', x, y)
+}
