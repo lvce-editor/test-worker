@@ -57,7 +57,11 @@ export const handleClick = async (index: number): Promise<void> => {
 }
 
 export const rename = async (): Promise<void> => {
-  await Rpc.invoke('Explorer.rename')
+  await Rpc.invoke('Explorer.renameDirent')
+}
+
+export const renameDirent = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.renameDirent')
 }
 
 export const cancelEdit = async (): Promise<void> => {

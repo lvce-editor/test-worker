@@ -89,7 +89,7 @@ test('handleClick', async () => {
 test('rename', async () => {
   await Explorer.rename()
   expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Explorer.rename')
+  expect(mockInvoke).toHaveBeenCalledWith('Explorer.renameDirent')
 })
 
 test('cancelEdit', async () => {
