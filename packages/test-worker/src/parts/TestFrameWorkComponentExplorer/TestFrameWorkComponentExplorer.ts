@@ -12,6 +12,10 @@ export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusNext')
 }
 
+export const refresh = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.refresh')
+}
+
 export const focusIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.focusIndex', index)
 }
