@@ -10,6 +10,10 @@ export const mkdir = async (path: string): Promise<void> => {
   await Rpc.invoke('FileSystem.mkdir', path)
 }
 
+export const remove = async (uri: string): Promise<void> => {
+  await Rpc.invoke('FileSystem.remove', uri)
+}
+
 export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: { readonly scheme?: string } = {}): Promise<string> => {
   switch (scheme) {
     case FileSystemProtocol.Memfs:
