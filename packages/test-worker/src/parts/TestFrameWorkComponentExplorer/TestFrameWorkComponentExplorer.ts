@@ -44,6 +44,10 @@ export const newFile = async (): Promise<void> => {
   await Rpc.invoke('Explorer.newFile')
 }
 
+export const newFolder = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.newFolder')
+}
+
 export const handleClick = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.handleClick', index)
 }
