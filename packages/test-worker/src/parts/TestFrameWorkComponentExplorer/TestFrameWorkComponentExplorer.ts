@@ -4,6 +4,10 @@ export const openContextMenu = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.handleContextMenuKeyboard', index)
 }
 
+export const handleDragLeave = async (index: number): Promise<void> => {
+  await Rpc.invoke('Explorer.handleDragLeave', index)
+}
+
 export const focus = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusIndex', -1)
 }
