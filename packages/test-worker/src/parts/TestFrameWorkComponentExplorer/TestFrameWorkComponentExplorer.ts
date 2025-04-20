@@ -67,6 +67,11 @@ export const newFolder = async (): Promise<void> => {
 export const handleClick = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.handleClick', index)
 }
+
+export const handleClickAt = async (button: number, ctrlKey: boolean, shiftKey: boolean, x: number, y: number): Promise<void> => {
+  await Rpc.invoke('Explorer.handleClickAt', button, ctrlKey, shiftKey, x, y)
+}
+
 export const handleDrop = async (x: number, y: number, fileIds: readonly number[], fileList: FileList | readonly File[]): Promise<void> => {
   await Rpc.invoke('Explorer.handleDrop', x, y, fileIds, fileIds)
 }
