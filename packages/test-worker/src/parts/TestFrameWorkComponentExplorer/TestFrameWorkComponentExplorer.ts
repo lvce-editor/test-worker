@@ -16,6 +16,14 @@ export const focusNext = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusNext')
 }
 
+export const selectUp = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.selectUp')
+}
+
+export const selectDown = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.selectDown')
+}
+
 export const refresh = async (): Promise<void> => {
   await Rpc.invoke('Explorer.refresh')
 }
