@@ -107,3 +107,7 @@ export const expandAll = async (): Promise<void> => {
 export const handleDragOver = async (x: number, y: number): Promise<void> => {
   await Rpc.invoke('Explorer.handleDragOver', x, y)
 }
+
+export const selectIndices = async (indices: readonly number[]): Promise<void> => {
+  await Rpc.invoke('Explorer.selectIndices', indices)
+}
