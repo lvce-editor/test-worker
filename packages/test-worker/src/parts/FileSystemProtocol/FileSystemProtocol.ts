@@ -1,3 +1,1 @@
-
-
 export const Memfs = 'memfs'

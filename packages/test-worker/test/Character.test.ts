@@ -5,8 +5,6 @@ test('Backslash', () => {
   expect(Character.Backslash).toBe('\\')
 })
 
-
-
 test('Slash', () => {
   expect(Character.Slash).toBe('/')
 })
