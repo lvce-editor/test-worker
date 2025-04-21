@@ -80,6 +80,10 @@ export const rename = async (): Promise<void> => {
   await Rpc.invoke('Explorer.renameDirent')
 }
 
+export const selectAll = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.selectAll')
+}
+
 export const renameDirent = async (): Promise<void> => {
   await Rpc.invoke('Explorer.renameDirent')
 }
