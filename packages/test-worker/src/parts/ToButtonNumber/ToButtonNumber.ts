@@ -1,6 +1,4 @@
-
-
-export const toButtonNumber = (buttonType:string): number => {
+export const toButtonNumber = (buttonType: string): number => {
   switch (buttonType) {
     case 'left':
       return 0
