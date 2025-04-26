@@ -1,3 +1,5 @@
+import { AssertionError } from '../AssertionError/AssertionError.ts'
+import * as ConditionErrorMap from '../ConditionErrorMap/ConditionErrorMap.ts'
 import * as GetLocatorRpc from '../GetLocatorRpc/GetLocatorRpc.ts'
 import * as Assert from '../TestAssert/TestAssert.ts'
 
@@ -8,13 +10,17 @@ export const expect = (locator: any): any => {
       // TODO add rpcId property to locator instead
       const result = await invoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
       if (result && result.error) {
-        // TODO construct error
+        const fn = ConditionErrorMap.getFunction(fnName)
+        const errorInfo = await fn(locator, options)
+        throw new AssertionError(errorInfo)
       }
     },
     async checkMultiElementCondition(fnName: string, options: any): Promise<void> {
       const result = await invoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
       if (result && result.error) {
-        // TODO construct error
+        const fn = ConditionErrorMap.getFunction(fnName)
+        const errorInfo = await fn(locator, options)
+        throw new AssertionError(errorInfo)
       }
     },
     async toBeVisible(): Promise<void> {
