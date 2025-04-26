@@ -1,29 +1,11 @@
+import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import { printError } from '../PrintError/PrintError.ts'
+import { stringifyError } from '../StringifyError/StringifyError.ts'
 import * as TestType from '../TestType/TestType.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'
 import { VError } from '../VError/VError.ts'
 
-const printError = (error: any): void => {
-  if (error && error.constructor.name === 'AssertionError') {
-    console.error(error.message)
-  } else {
-    console.error(error)
-  }
-}
-
-const stringifyError = (error: any): string => {
-  if (!error) {
-    return `${error}`
-  }
-  if (error && error.message && error.constructor.name && error.constructor.name !== 'Error' && error.constructor.name !== 'VError') {
-    return `${error}`
-  }
-  return `${error.message}`
-}
-
-const formatDuration = (duration: number): string => {
-  return duration.toFixed(2) + 'ms'
-}
 export const executeTest = async (name: string, fn: any, globals = {}): Promise<void> => {
   let _error
   let _start
@@ -46,12 +28,10 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
       console.error(error)
       return
     }
-    // @ts-ignore
     _error = stringifyError(error)
     if (!(error instanceof VError)) {
       error = new VError(error, `Test failed: ${name}`)
     }
-    // @ts-ignore
     printError(error)
   }
   let state
