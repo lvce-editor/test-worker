@@ -1,27 +1,21 @@
 import * as GetLocatorRpc from '../GetLocatorRpc/GetLocatorRpc.ts'
-
-const Assert = {
-  string(value: any, message: string): void {
-    if (typeof value !== 'string') {
-      throw new TypeError(message)
-    }
-  },
-  number(value: any, message: string): void {
-    if (typeof value !== 'number' || Number.isNaN(value)) {
-      throw new TypeError(message)
-    }
-  },
-}
+import * as Assert from '../TestAssert/TestAssert.ts'
 
 export const expect = (locator: any): any => {
   const { invoke } = GetLocatorRpc.getLocatorRpc(locator)
   return {
     async checkSingleElementCondition(fnName: string, options: any): Promise<void> {
       // TODO add rpcId property to locator instead
-      return invoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
+      const result = await invoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
+      if (result && result.error) {
+        // TODO construct error
+      }
     },
     async checkMultiElementCondition(fnName: string, options: any): Promise<void> {
-      return invoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
+      const result = await invoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
+      if (result && result.error) {
+        // TODO construct error
+      }
     },
     async toBeVisible(): Promise<void> {
       if (this.negated) {
