@@ -19,7 +19,7 @@ export const toHaveValue = (
 
 export const toHaveText = async (locator: ILocator, options: { readonly text: string }): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.conditionToHaveAttribute', locator, options)
+  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, options)
   const { text } = options
   if (!wasFound) {
     return `expected selector ${locatorString} to have text "${text}" element was not found`
@@ -35,7 +35,7 @@ export const toHaveAttribute = async (
   },
 ): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.conditionToHaveAttribute', locator, options)
+  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveAttribute', locator, options)
   const { key, value } = options
   if (!wasFound) {
     return `expected ${locatorString} to have attribute ${key} ${value} but element was not found`
