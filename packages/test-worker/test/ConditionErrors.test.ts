@@ -1,9 +1,9 @@
 import { test, expect } from '@jest/globals'
-import type { Locator } from '../src/parts/ConditionErrors/ConditionErrors.ts'
 import * as ConditionErrors from '../src/parts/ConditionErrors/ConditionErrors.ts'
+import { ILocator } from '../src/parts/ILocator/ILocator.ts'
 
 test('toBeVisible', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -12,7 +12,7 @@ test('toBeVisible', () => {
 })
 
 test('toHaveValue', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.input',
     _nth: -1,
     _hasText: '',
@@ -21,7 +21,7 @@ test('toHaveValue', () => {
 })
 
 test('toHaveText - element not found', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.text',
     _nth: -1,
     _hasText: '',
@@ -30,7 +30,7 @@ test('toHaveText - element not found', () => {
 })
 
 test('toHaveText - wrong text', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.text',
     _nth: -1,
     _hasText: '',
@@ -39,7 +39,7 @@ test('toHaveText - wrong text', () => {
 })
 
 test('toHaveText - with nth selector', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.item',
     _nth: 2,
     _hasText: '',
@@ -50,7 +50,7 @@ test('toHaveText - with nth selector', () => {
 })
 
 test('toHaveText - with hasText selector', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.item',
     _nth: -1,
     _hasText: 'hello',
@@ -61,7 +61,7 @@ test('toHaveText - with hasText selector', () => {
 })
 
 test('toHaveAttribute - element not found', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.link',
     _nth: -1,
     _hasText: '',
@@ -72,7 +72,7 @@ test('toHaveAttribute - element not found', () => {
 })
 
 test('toHaveAttribute - wrong value', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.link',
     _nth: -1,
     _hasText: '',
@@ -83,7 +83,7 @@ test('toHaveAttribute - wrong value', () => {
 })
 
 test('toHaveCount', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.items',
     _nth: -1,
     _hasText: '',
@@ -92,7 +92,7 @@ test('toHaveCount', () => {
 })
 
 test('toBeFocused', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.input',
     _nth: -1,
     _hasText: '',
@@ -104,7 +104,7 @@ test('toBeFocused', () => {
 })
 
 test('toBeFocused - with document.body', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.input',
     _nth: -1,
     _hasText: '',
@@ -114,7 +114,7 @@ test('toBeFocused - with document.body', () => {
 })
 
 test('toBeHidden', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.modal',
     _nth: -1,
     _hasText: '',
@@ -123,7 +123,7 @@ test('toBeHidden', () => {
 })
 
 test('toHaveClass - element not found', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -134,7 +134,7 @@ test('toHaveClass - element not found', () => {
 })
 
 test('toHaveClass - wrong class', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -143,7 +143,7 @@ test('toHaveClass - wrong class', () => {
 })
 
 test('toHaveId - element not found', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -152,7 +152,7 @@ test('toHaveId - element not found', () => {
 })
 
 test('toHaveId - wrong id', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -161,7 +161,7 @@ test('toHaveId - wrong id', () => {
 })
 
 test('toHaveCss - element not found', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -172,7 +172,7 @@ test('toHaveCss - element not found', () => {
 })
 
 test('toHaveCss - wrong value', () => {
-  const locator: Locator = {
+  const locator: ILocator = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
