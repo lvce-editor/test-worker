@@ -46,7 +46,7 @@ test('toHaveText - element not found', async () => {
   const result = await ConditionErrors.toHaveText(locator, { text: 'hello' })
   expect(result).toBe('expected selector .text to have text "hello" element was not found')
   expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.conditionToHaveAttribute', locator, { text: 'hello' })
+  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'hello' })
 })
 
 test('toHaveText - wrong text', async () => {
@@ -59,7 +59,7 @@ test('toHaveText - wrong text', async () => {
   const result = await ConditionErrors.toHaveText(locator, { text: 'hello' })
   expect(result).toBe('expected selector .text to have text "hello" but was "world"')
   expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.conditionToHaveAttribute', locator, { text: 'hello' })
+  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'hello' })
 })
 
 test('toHaveText - with hasText selector', async () => {
@@ -72,7 +72,7 @@ test('toHaveText - with hasText selector', async () => {
   const result = await ConditionErrors.toHaveText(locator, { text: 'test' })
   expect(result).toBe('expected selector .item "hello" to have text "test" but was "wrong"')
   expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.conditionToHaveAttribute', locator, { text: 'test' })
+  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'test' })
 })
 
 test('toHaveAttribute - element not found', async () => {
@@ -85,7 +85,10 @@ test('toHaveAttribute - element not found', async () => {
   const result = await ConditionErrors.toHaveAttribute(locator, { key: 'href', value: '#' })
   expect(result).toBe('expected .link to have attribute href # but element was not found')
   expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.conditionToHaveAttribute', locator, { key: 'href', value: '#' })
+  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveAttribute', locator, {
+    key: 'href',
+    value: '#',
+  })
 })
 
 test('toHaveAttribute - wrong value', async () => {
@@ -98,7 +101,10 @@ test('toHaveAttribute - wrong value', async () => {
   const result = await ConditionErrors.toHaveAttribute(locator, { key: 'href', value: '#' })
   expect(result).toBe('expected .link to have attribute href # but was /test')
   expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.conditionToHaveAttribute', locator, { key: 'href', value: '#' })
+  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveAttribute', locator, {
+    key: 'href',
+    value: '#',
+  })
 })
 
 test('toHaveCount', async () => {
