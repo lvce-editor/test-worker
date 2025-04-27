@@ -1,6 +1,6 @@
-import type { Locator } from '../ConditionErrors/ConditionErrors.ts'
+import { ILocator } from '../ILocator/ILocator.ts'
 
-export const printLocator = (locator: Locator): string => {
+export const printLocator = (locator: ILocator): string => {
   if (locator._nth !== -1) {
     return `${locator._selector}:nth(${locator._nth})`
   }
