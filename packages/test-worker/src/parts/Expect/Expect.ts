@@ -1,14 +1,13 @@
 import { AssertionError } from '../AssertionError/AssertionError.ts'
 import * as ConditionErrorMap from '../ConditionErrorMap/ConditionErrorMap.ts'
-import * as GetLocatorRpc from '../GetLocatorRpc/GetLocatorRpc.ts'
+import * as LocatorInvoke from '../LocatorInvoke/LocatorInvoke.ts'
 import * as Assert from '../TestAssert/TestAssert.ts'
 
 export const expect = (locator: any): any => {
-  const { invoke } = GetLocatorRpc.getLocatorRpc(locator)
   return {
     async checkSingleElementCondition(fnName: string, options: any): Promise<void> {
       // TODO add rpcId property to locator instead
-      const result = await invoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
+      const result = await LocatorInvoke.locatorInvoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
       if (result && result.error) {
         const fn = ConditionErrorMap.getFunction(fnName)
         const errorInfo = await fn(locator, options)
@@ -16,7 +15,7 @@ export const expect = (locator: any): any => {
       }
     },
     async checkMultiElementCondition(fnName: string, options: any): Promise<void> {
-      const result = await invoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
+      const result = await LocatorInvoke.locatorInvoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
       if (result && result.error) {
         const fn = ConditionErrorMap.getFunction(fnName)
         const errorInfo = await fn(locator, options)
