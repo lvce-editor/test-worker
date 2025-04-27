@@ -1,5 +1,5 @@
 import type { ILocator } from '../ILocator/ILocator.ts'
-import { invoke } from '../ParentRpc/ParentRpc.ts'
+import { locatorInvoke } from '../LocatorInvoke/LocatorInvoke.ts'
 import { printLocator } from '../PrintLocator/PrintLocator.ts'
 
 export const toBeVisible = (locator: ILocator): string => {
@@ -19,7 +19,7 @@ export const toHaveValue = (
 
 export const toHaveText = async (locator: ILocator, options: { readonly text: string }): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { wasFound, actual } = await invoke('TestFrameWork.conditionToHaveAttribute', locator, options)
+  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.conditionToHaveAttribute', locator, options)
   const { text } = options
   if (!wasFound) {
     return `expected selector ${locatorString} to have text "${text}" element was not found`
@@ -35,7 +35,7 @@ export const toHaveAttribute = async (
   },
 ): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { wasFound, actual } = await invoke('TestFrameWork.conditionToHaveAttribute', locator, options)
+  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.conditionToHaveAttribute', locator, options)
   const { key, value } = options
   if (!wasFound) {
     return `expected ${locatorString} to have attribute ${key} ${value} but element was not found`
@@ -52,13 +52,13 @@ export const toHaveCount = async (
   },
 ): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { actual } = await invoke('TestFrameWork.conditionToHaveCount', locator)
+  const { actual } = await locatorInvoke(locator, 'TestFrameWork.conditionToHaveCount', locator)
   return `expected ${locatorString} to have count ${count} but was ${actual}`
 }
 
 export const toBeFocused = async (locator: ILocator): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { actual } = await invoke('TestFrameWork.conditionToBeFocused', locator)
+  const { actual } = await locatorInvoke(locator, 'TestFrameWork.conditionToBeFocused', locator)
   return `expected ${locatorString} to be focused but active element is ${actual}`
 }
 
@@ -69,7 +69,7 @@ export const toHaveClass = async (
   },
 ): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { wasFound } = await invoke('TestFrameWork.conditionToHaveCss', locator, options)
+  const { wasFound } = await locatorInvoke(locator, 'TestFrameWork.conditionToHaveCss', locator, options)
   const { className } = options
   if (!wasFound) {
     return `expected ${locatorString} to have class ${className} but element was not found`
@@ -83,7 +83,7 @@ export const toHaveId = async (
     readonly id: string
   },
 ): Promise<string> => {
-  const { wasFound, actual } = await invoke('TestFrameWork.conditionToHaveId', locator, options)
+  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.conditionToHaveId', locator, options)
   const locatorString = printLocator(locator)
   const { id } = options
   if (!wasFound) {
@@ -104,7 +104,7 @@ export const toHaveCss = async (
     readonly value: string
   },
 ): Promise<string> => {
-  const { wasFound, actual } = await invoke('TestFrameWork.conditionToHaveCss', locator, options)
+  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.conditionToHaveCss', locator, options)
   const locatorString = printLocator(locator)
   const { key, value } = options
   if (!wasFound) {
