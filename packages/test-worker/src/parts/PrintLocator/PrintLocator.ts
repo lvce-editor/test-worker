@@ -1,4 +1,4 @@
-import { ILocator } from '../ILocator/ILocator.ts'
+import type { ILocator } from '../ILocator/ILocator.ts'
 
 export const printLocator = (locator: ILocator): string => {
   if (locator._nth !== -1) {

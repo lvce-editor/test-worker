@@ -1,5 +1,5 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
-import { ILocator } from '../src/parts/ILocator/ILocator.ts'
+import type { ILocator } from '../src/parts/ILocator/ILocator.ts'
 
 type MockReturnType = {
   wasFound?: boolean
