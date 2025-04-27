@@ -7,7 +7,7 @@ export const expect = (locator: any): any => {
   return {
     async checkSingleElementCondition(fnName: string, options: any): Promise<void> {
       // TODO add rpcId property to locator instead
-      const result = await LocatorInvoke.locatorInvoke('TestFrameWork.checkSingleElementCondition', locator, fnName, options)
+      const result = await LocatorInvoke.locatorInvoke(locator, 'TestFrameWork.checkSingleElementCondition', locator, fnName, options)
       if (result && result.error) {
         const fn = ConditionErrorMap.getFunction(fnName)
         const errorInfo = await fn(locator, options)
@@ -15,7 +15,7 @@ export const expect = (locator: any): any => {
       }
     },
     async checkMultiElementCondition(fnName: string, options: any): Promise<void> {
-      const result = await LocatorInvoke.locatorInvoke('TestFrameWork.checkMultiElementCondition', locator, fnName, options)
+      const result = await LocatorInvoke.locatorInvoke(locator, 'TestFrameWork.checkMultiElementCondition', locator, fnName, options)
       if (result && result.error) {
         const fn = ConditionErrorMap.getFunction(fnName)
         const errorInfo = await fn(locator, options)
