@@ -1,7 +1,6 @@
-import { test, expect, beforeEach, jest } from '@jest/globals'
+import { beforeEach, expect, jest, test } from '@jest/globals'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import * as ParentRpc from '../src/parts/ParentRpc/ParentRpc.ts'
 import * as Search from '../src/parts/TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 
 const mockInvoke = jest.fn()
@@ -11,7 +10,7 @@ const mockRpc = {
 } as any
 
 beforeEach(() => {
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  ParentRpc.set(mockRpc)
   mockInvoke.mockReset()
 })
 
