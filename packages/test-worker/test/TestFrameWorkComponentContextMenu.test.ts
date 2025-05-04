@@ -1,6 +1,5 @@
-import { test, expect, beforeEach, jest } from '@jest/globals'
-import * as RpcId from '../src/parts/RpcId/RpcId.ts'
-import * as RpcRegistry from '../src/parts/RpcRegistry/RpcRegistry.ts'
+import { beforeEach, expect, jest, test } from '@jest/globals'
+import * as ParentRpc from '../src/parts/ParentRpc/ParentRpc.ts'
 import * as ContextMenu from '../src/parts/TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 
 const mockRpc = {
@@ -8,7 +7,7 @@ const mockRpc = {
 } as any
 
 beforeEach(() => {
-  RpcRegistry.set(RpcId.RendererWorker, mockRpc)
+  ParentRpc.set(mockRpc)
   mockRpc.invoke.mockReset()
 })
 
