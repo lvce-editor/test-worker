@@ -4,4 +4,4 @@ export const { set } = RendererWorker
 
 export const invoke = RendererWorker.invoke as any
 
-export const invokeAndTransfer = RendererWorker.invoke as any
+export const invokeAndTransfer = RendererWorker.invokeAndTransfer as any
