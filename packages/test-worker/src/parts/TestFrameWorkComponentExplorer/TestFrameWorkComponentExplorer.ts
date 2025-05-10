@@ -8,6 +8,10 @@ export const handleDragLeave = async (): Promise<void> => {
   await Rpc.invoke('Explorer.handleDragLeave')
 }
 
+export const handleBlur = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.handleBlur')
+}
+
 export const focus = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusIndex', -1)
 }
