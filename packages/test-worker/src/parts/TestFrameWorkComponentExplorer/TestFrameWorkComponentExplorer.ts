@@ -12,6 +12,10 @@ export const handleBlur = async (): Promise<void> => {
   await Rpc.invoke('Explorer.handleBlur')
 }
 
+export const handleInputBlur = async (): Promise<void> => {
+  await Rpc.invoke('Explorer.handleInputBlur')
+}
+
 export const focus = async (): Promise<void> => {
   await Rpc.invoke('Explorer.focusIndex', -1)
 }
