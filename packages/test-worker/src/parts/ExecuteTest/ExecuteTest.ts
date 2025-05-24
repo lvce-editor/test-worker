@@ -46,5 +46,6 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
     text = `test passed in ${_formattedDuration}`
     state = TestType.Pass
   }
+  // @ts-ignore
   await Rpc.invoke('TestFrameWork.showOverlay', state, background, text)
 }
