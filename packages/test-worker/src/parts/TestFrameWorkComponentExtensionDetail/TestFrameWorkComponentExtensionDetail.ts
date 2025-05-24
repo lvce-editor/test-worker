@@ -1,4 +1,4 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const selectFeature = (name: string): Promise<void> => {
   return Rpc.invoke('ExtensionDetail.selectFeature', name)

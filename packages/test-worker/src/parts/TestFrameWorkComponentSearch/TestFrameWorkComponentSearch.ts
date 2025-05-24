@@ -1,5 +1,5 @@
 import * as InputSource from '../InputSource/InputSource.ts'
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const setValue = async (value: string): Promise<void> => {
   await Rpc.invoke('Search.handleInput', value, InputSource.Script)

@@ -1,6 +1,6 @@
 import * as Expect from '../Expect/Expect.ts'
 import * as NameAnonymousFunction from '../NameAnonymousFunction/NameAnonymousFunction.ts'
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 import * as TestState from '../TestState/TestState.ts'
 
 export { create as Locator } from '../Locator/Locator.ts'

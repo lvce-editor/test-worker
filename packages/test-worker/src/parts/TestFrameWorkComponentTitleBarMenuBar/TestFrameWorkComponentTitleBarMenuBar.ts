@@ -1,4 +1,4 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const closeMenu = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.closeMenu')
