@@ -1,6 +1,6 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
-import * as ParentRpc from '../src/parts/ParentRpc/ParentRpc.ts'
+import * as ParentRpc from '../src/parts/RendererWorker/RendererWorker.ts'
 import * as Search from '../src/parts/TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 
 const mockInvoke = jest.fn()

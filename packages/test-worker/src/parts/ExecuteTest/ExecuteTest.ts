@@ -1,5 +1,5 @@
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 import { printError } from '../PrintError/PrintError.ts'
 import { stringifyError } from '../StringifyError/StringifyError.ts'
 import * as TestType from '../TestType/TestType.ts'

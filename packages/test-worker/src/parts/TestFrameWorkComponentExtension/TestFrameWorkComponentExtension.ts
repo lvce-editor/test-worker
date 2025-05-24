@@ -1,4 +1,4 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const addWebExtension = async (relativePath: string): Promise<void> => {
   // TODO compute absolutePath

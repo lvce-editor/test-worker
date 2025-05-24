@@ -11,7 +11,7 @@ jest.unstable_mockModule('../src/parts/ParentRpc/ParentRpc.ts', () => {
 })
 
 const Locator = await import('../src/parts/Locator/Locator.ts')
-const Rpc = await import('../src/parts/ParentRpc/ParentRpc.ts')
+const Rpc = await import('../src/parts/RendererWorker/RendererWorker.ts')
 
 test('create', () => {
   const selector = 'button'

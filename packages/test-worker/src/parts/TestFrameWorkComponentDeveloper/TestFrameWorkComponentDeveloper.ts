@@ -1,4 +1,4 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const openIframeInspector = async (): Promise<void> => {
   return Rpc.invoke('Developer.openIframeInspector')

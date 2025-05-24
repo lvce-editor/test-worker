@@ -1,4 +1,4 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 import * as WebViewState from '../WebViewState/WebViewState.ts'
 
 export const getLocatorRpc = (locator: any): any => {

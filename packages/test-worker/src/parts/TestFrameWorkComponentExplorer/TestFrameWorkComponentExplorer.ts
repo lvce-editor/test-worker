@@ -1,4 +1,4 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const openContextMenu = async (index: number): Promise<void> => {
   await Rpc.invoke('Explorer.handleContextMenuKeyboard', index)

@@ -1,5 +1,5 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
-import * as ParentRpc from '../src/parts/ParentRpc/ParentRpc.ts'
+import * as ParentRpc from '../src/parts/RendererWorker/RendererWorker.ts'
 import * as ContextMenu from '../src/parts/TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 
 const mockRpc = {

@@ -1,4 +1,4 @@
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const open = async (): Promise<void> => {
   await Rpc.invoke('Main.openUri', 'app://keybindings')

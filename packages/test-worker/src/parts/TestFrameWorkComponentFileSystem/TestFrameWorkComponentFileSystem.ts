@@ -1,5 +1,5 @@
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
-import * as Rpc from '../ParentRpc/ParentRpc.ts'
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 
 export const writeFile = async (path: string, content: string): Promise<void> => {
