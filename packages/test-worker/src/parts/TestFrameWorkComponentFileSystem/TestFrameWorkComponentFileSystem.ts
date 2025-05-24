@@ -19,16 +19,19 @@ export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: { readonl
     case FileSystemProtocol.Memfs:
       return 'memfs:///workspace'
     default:
+      // @ts-ignore
       return Rpc.invoke('PlatformPaths.getTmpDir')
   }
 }
 
 export const chmod = async (uri: string, permissions: any): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('FileSystem.chmod', uri, permissions)
 }
 
 export const createExecutable = async (content: string): Promise<string> => {
   const tmpDir = await getTmpDir({ scheme: 'file' })
+  // @ts-ignore
   const nodePath = await Rpc.invoke('PlatformPaths.getNodePath')
   const gitPath = `${tmpDir}/git`
   await writeFile(
@@ -41,8 +44,10 @@ export const createExecutable = async (content: string): Promise<string> => {
 }
 
 export const createExecutableFrom = async (path: string): Promise<string> => {
+  // @ts-ignore
   const testPath = await Rpc.invoke('PlatformPaths.getTestPath')
   const absolutePath = testPath + PathSeparatorType.Slash + path
+  // @ts-ignore
   const content = await Rpc.invoke('Ajax.getText', absolutePath)
   return createExecutable(content)
 }

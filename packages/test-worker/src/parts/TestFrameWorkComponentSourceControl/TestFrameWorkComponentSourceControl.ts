@@ -1,6 +1,7 @@
 import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const selectIndex = async (index: number): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Source Control.selectIndex')
 }
 

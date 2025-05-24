@@ -18,6 +18,7 @@ test.skip = async (id: string): Promise<void> => {
   const state = 'skip'
   const background = 'yellow'
   const text = `test skipped ${id}`
+  // @ts-ignore
   await Rpc.invoke('TestFrameWork.showOverlay', state, background, text)
 }
 

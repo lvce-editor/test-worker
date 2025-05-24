@@ -73,10 +73,12 @@ export const type = async (text: string): Promise<void> => {
 }
 
 export const findAllReferences = async (): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('SideBar.show', 'References', /* focus */ true)
 }
 
 export const findAllImplementations = async (): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('SideBar.show', 'Implementations', /* focus */ true)
 }
 
@@ -113,10 +115,12 @@ export const openCompletionDetails = async (): Promise<void> => {
 }
 
 export const closeCompletionDetails = async (): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('EditorCompletion.closeDetails')
 }
 
 export const toggleCompletionDetails = async (): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('EditorCompletion.toggleDetails')
 }
 
@@ -149,6 +153,7 @@ export const openColorPicker = async (): Promise<void> => {
 }
 
 export const openFind = async (): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Editor.openFind2')
 }
 

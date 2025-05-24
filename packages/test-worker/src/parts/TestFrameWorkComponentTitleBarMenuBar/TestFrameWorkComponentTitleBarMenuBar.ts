@@ -13,6 +13,7 @@ export const focusFirst = async (): Promise<void> => {
 }
 
 export const focusIndex = async (index: number): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('TitleBarMenuBar.focusIndex', index)
 }
 
