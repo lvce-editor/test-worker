@@ -9,7 +9,7 @@ export const openCompletion = async (): Promise<void> => {
 }
 
 export const closeCompletion = async (): Promise<void> => {
-  await Rpc.invoke('Editor.closeCompletion')
+  await Rpc.invoke('EditorCompletion.close')
 }
 
 export const openEditorContextMenu = async (): Promise<void> => {
