@@ -9,6 +9,7 @@ export const openCompletion = async (): Promise<void> => {
 }
 
 export const closeCompletion = async (): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('EditorCompletion.close')
 }
 
