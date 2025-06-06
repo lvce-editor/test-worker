@@ -2,14 +2,17 @@ import * as InputSource from '../InputSource/InputSource.ts'
 import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const setValue = async (value: string): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Search.handleInput', value, InputSource.Script)
 }
 
 export const setReplaceValue = async (value: string): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Search.handleReplaceInput', value, InputSource.Script)
 }
 
 export const setExcludeValue = async (value: string): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Search.handleExcludeInput', value, InputSource.Script)
 }
 
@@ -18,6 +21,7 @@ export const replaceAll = async (): Promise<void> => {
 }
 
 export const setIncludeValue = async (value: string): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Search.handleIncludeInput', value, InputSource.Script)
 }
 
@@ -58,6 +62,7 @@ export const handleWheel = async (deltaMode: number, deltaY: number): Promise<vo
 }
 
 export const focusNextPage = async (): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Search.focusPage')
 }
 

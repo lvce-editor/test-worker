@@ -1,6 +1,7 @@
 import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const openContextMenu = async (index: number): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Explorer.handleContextMenuKeyboard', index)
 }
 
@@ -21,6 +22,7 @@ export const focus = async (): Promise<void> => {
 }
 
 export const focusNext = async (): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Explorer.focusNext')
 }
 
@@ -84,10 +86,12 @@ export const handleClickAt = async (
   x: number,
   y: number,
 ): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Explorer.handleClickAt', preventDefault, button, ctrlKey, shiftKey, x, y)
 }
 
 export const handleDrop = async (x: number, y: number, fileIds: readonly number[], fileList: FileList | readonly File[]): Promise<void> => {
+  // @ts-ignore
   await Rpc.invoke('Explorer.handleDrop', x, y, fileIds, fileIds)
 }
 

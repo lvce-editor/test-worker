@@ -1,5 +1,5 @@
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
-import { printError } from '../PrintError/PrintError.ts'
+import { printTestError } from '../PrintTestError/PrintTestError.ts'
 import * as Rpc from '../RendererWorker/RendererWorker.ts'
 import { stringifyError } from '../StringifyError/StringifyError.ts'
 import * as TestType from '../TestType/TestType.ts'
@@ -32,7 +32,7 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
     if (!(error instanceof VError)) {
       error = new VError(error, `Test failed: ${name}`)
     }
-    printError(error)
+    await printTestError(error)
   }
   let state
   let background
@@ -46,5 +46,6 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
     text = `test passed in ${_formattedDuration}`
     state = TestType.Pass
   }
+  // @ts-ignore
   await Rpc.invoke('TestFrameWork.showOverlay', state, background, text)
 }
