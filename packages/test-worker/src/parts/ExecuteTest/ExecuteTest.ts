@@ -25,6 +25,7 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
       // @ts-ignore
       error.message.startsWith('Failed to load command TestFrameWork.')
     ) {
+       
       console.error(error)
       return
     }
