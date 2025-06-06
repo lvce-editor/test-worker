@@ -26,7 +26,7 @@ test('openCompletion', async () => {
 test('closeCompletion', async () => {
   await Editor.closeCompletion()
   expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.closeCompletion')
+  expect(mockRpc.invoke).toHaveBeenCalledWith('EditorCompletion.close')
 })
 
 test('openEditorContextMenu', async () => {
