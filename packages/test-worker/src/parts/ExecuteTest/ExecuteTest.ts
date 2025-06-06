@@ -18,6 +18,7 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
     _end = Timestamp.now()
     _duration = _end - _start
     _formattedDuration = formatDuration(_duration)
+    // eslint-disable-next-line no-console
     console.info(`PASS ${name} in ${_formattedDuration}`)
   } catch (error) {
     if (
