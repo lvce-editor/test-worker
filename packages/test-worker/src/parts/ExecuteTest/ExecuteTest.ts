@@ -18,6 +18,7 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
     _end = Timestamp.now()
     _duration = _end - _start
     _formattedDuration = formatDuration(_duration)
+    // eslint-disable-next-line no-console
     console.info(`PASS ${name} in ${_formattedDuration}`)
   } catch (error) {
     if (
@@ -25,7 +26,6 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
       // @ts-ignore
       error.message.startsWith('Failed to load command TestFrameWork.')
     ) {
-      // eslint-disable-next-line no-console
       console.error(error)
       return
     }
