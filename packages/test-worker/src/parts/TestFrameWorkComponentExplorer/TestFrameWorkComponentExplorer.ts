@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import * as Rpc from '../RendererWorker/RendererWorker.ts'
 
 export const openContextMenu = async (index: number): Promise<void> => {
