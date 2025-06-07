@@ -1,6 +1,6 @@
-import { printError } from '../PrintError/PrintError.ts'
-import * as ErrorWorker from '../ErrorWorker/ErrorWorker.ts'
 import * as CreateErrorWorkerRpc from '../CreateErrorWorkerRpc/CreateErrorWorkerRpc.ts'
+import * as ErrorWorker from '../ErrorWorker/ErrorWorker.ts'
+import { printError } from '../PrintError/PrintError.ts'
 
 const ensureRpc = async (): Promise<void> => {
   // TODO create rpc only once
