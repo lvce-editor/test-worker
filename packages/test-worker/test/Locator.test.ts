@@ -29,6 +29,7 @@ test('click', async () => {
   const locator = Locator.create(selector, options)
   await locator.click()
   expect(Rpc.invoke).toHaveBeenCalledTimes(1)
+  // @ts-ignore
   expect(Rpc.invoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'click', {
     bubbles: true,
     button: 0,
@@ -43,6 +44,7 @@ test('hover', async () => {
   const locator = Locator.create(selector, options)
   await locator.hover()
   expect(Rpc.invoke).toHaveBeenCalledTimes(1)
+  // @ts-ignore
   expect(Rpc.invoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'hover', {
     bubbles: true,
     cancable: true,
@@ -55,6 +57,7 @@ test('type', async () => {
   const locator = Locator.create(selector, options)
   await locator.type('a')
   expect(Rpc.invoke).toHaveBeenCalledTimes(1)
+  // @ts-ignore
   expect(Rpc.invoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'type', {
     text: 'a',
   })
