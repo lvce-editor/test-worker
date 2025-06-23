@@ -1,0 +1,21 @@
+import * as Rpc from '../RendererWorker/RendererWorker.ts'
+
+export const handleClickSectionWatch = async (): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.handleClickSectionWatch')
+}
+
+export const addWatchExpression = async (expression: string): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.addWatchExpression', expression)
+}
+
+export const handleWatchValueChange = async (): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.handleWatchValueChange')
+}
+
+export const acceptWatchExpressionEdit = async (): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.acceptWatchExpressionEdit')
+}
