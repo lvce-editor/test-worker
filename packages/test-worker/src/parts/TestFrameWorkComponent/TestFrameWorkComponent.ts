@@ -20,6 +20,7 @@ export * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPan
 export * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
 export * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 export * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
+export * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 export * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 export * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 export * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
