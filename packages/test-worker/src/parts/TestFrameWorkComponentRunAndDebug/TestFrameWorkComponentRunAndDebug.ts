@@ -19,3 +19,13 @@ export const acceptWatchExpressionEdit = async (): Promise<void> => {
   // @ts-ignore
   await Rpc.invoke('Run And Debug.acceptWatchExpressionEdit')
 }
+
+export const selectIndex = async (index: number): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.selectIndex', index)
+}
+
+export const handleRename = async (): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.handleRename')
+}
