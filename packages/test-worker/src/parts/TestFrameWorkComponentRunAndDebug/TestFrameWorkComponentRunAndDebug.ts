@@ -29,3 +29,8 @@ export const handleRename = async (): Promise<void> => {
   // @ts-ignore
   await Rpc.invoke('Run And Debug.handleRename')
 }
+
+export const handleSpace = async (): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.handleSpace')
+}
