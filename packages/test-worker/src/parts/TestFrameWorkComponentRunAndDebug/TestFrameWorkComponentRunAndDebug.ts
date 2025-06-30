@@ -25,6 +25,11 @@ export const selectIndex = async (index: number): Promise<void> => {
   await Rpc.invoke('Run And Debug.selectIndex', index)
 }
 
+export const setPauseOnExceptions = async (value: number): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.setPauseOnExceptions', value)
+}
+
 export const handleRename = async (): Promise<void> => {
   // @ts-ignore
   await Rpc.invoke('Run And Debug.handleRename')
