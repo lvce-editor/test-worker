@@ -133,6 +133,11 @@ export const handleCut = async (): Promise<void> => {
   await Rpc.invoke('Explorer.handleCut')
 }
 
+export const handleCopy = async (): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Explorer.handleCopy')
+}
+
 export const handlePaste = async (): Promise<void> => {
   // @ts-ignore
   await Rpc.invoke('Explorer.handlePaste')
