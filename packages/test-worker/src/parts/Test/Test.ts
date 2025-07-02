@@ -2,6 +2,7 @@ import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as TestFrameWorkComponent from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
+import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestState from '../TestState/TestState.ts'
 
 export const execute = async (href: string): Promise<void> => {
@@ -13,6 +14,7 @@ export const execute = async (href: string): Promise<void> => {
   // 0. wait for page to be ready
   // 1. get script to import from renderer process (url or from html)
   const scriptUrl = href
+  TestFrameWorkComponentUrl.setUrl(scriptUrl)
   // 2. import that script
   const module = await ImportTest.importTest(scriptUrl)
   if (module.mockRpc) {
