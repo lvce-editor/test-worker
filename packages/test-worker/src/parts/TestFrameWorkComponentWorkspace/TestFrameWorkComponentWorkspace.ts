@@ -1,5 +1,12 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import * as TestFrameWorkComponentFileSystem from '../TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 
 export const setPath = async (path: string): Promise<void> => {
-  await Rpc.invoke('Workspace.setPath', path)
+  await RendererWorker.invoke('Workspace.setPath', path)
+}
+
+export const openTmpDir = async (): Promise<string> => {
+  const tmpDir = await TestFrameWorkComponentFileSystem.getTmpDir()
+  await setPath(tmpDir)
+  return tmpDir
 }
