@@ -2,6 +2,7 @@ import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as TestFrameWorkComponent from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
+import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestState from '../TestState/TestState.ts'
 
 export const execute = async (href: string): Promise<void> => {
@@ -9,6 +10,7 @@ export const execute = async (href: string): Promise<void> => {
     ...TestFrameWorkComponent,
     ...TestFrameWork,
   }
+  TestFrameWorkComponentUrl.setUrl(scriptUrl)
   // TODO
   // 0. wait for page to be ready
   // 1. get script to import from renderer process (url or from html)
