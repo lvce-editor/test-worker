@@ -10,11 +10,11 @@ export const execute = async (href: string): Promise<void> => {
     ...TestFrameWorkComponent,
     ...TestFrameWork,
   }
-  TestFrameWorkComponentUrl.setUrl(scriptUrl)
   // TODO
   // 0. wait for page to be ready
   // 1. get script to import from renderer process (url or from html)
   const scriptUrl = href
+  TestFrameWorkComponentUrl.setUrl(scriptUrl)
   // 2. import that script
   const module = await ImportTest.importTest(scriptUrl)
   if (module.mockRpc) {
