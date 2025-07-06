@@ -31,6 +31,11 @@ export const selectUp = async (): Promise<void> => {
   await Rpc.invoke('Explorer.selectUp')
 }
 
+export const handleDragOverIndex = async (index: number): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Explorer.handleDragOverIndex', index)
+}
+
 export const selectDown = async (): Promise<void> => {
   await Rpc.invoke('Explorer.selectDown')
 }
