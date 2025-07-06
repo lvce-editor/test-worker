@@ -146,3 +146,8 @@ export const handlePaste = async (): Promise<void> => {
 export const selectIndices = async (indices: readonly number[]): Promise<void> => {
   await Rpc.invoke('Explorer.selectIndices', indices)
 }
+
+export const toggleIndividualSelection = async (index: number): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Explorer.toggleIndividualSelection', index)
+}
