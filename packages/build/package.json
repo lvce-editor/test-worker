@@ -16,6 +16,6 @@
     "dts-bundle-generator": "^9.5.1",
     "esbuild": "^0.25.5",
     "execa": "^9.6.0",
-    "rollup": "^4.44.1"
+    "rollup": "^4.44.2"
   }
 }
