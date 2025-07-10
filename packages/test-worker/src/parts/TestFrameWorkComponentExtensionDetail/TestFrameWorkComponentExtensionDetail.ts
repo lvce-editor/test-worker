@@ -14,6 +14,7 @@ export const open = (extensionId: string): Promise<void> => {
 }
 
 export const openFeature = (featureName: string): Promise<void> => {
+  // @ts-ignore
   return Rpc.invoke('ExtensionDetail.handleFeaturesClick', featureName)
 }
 
