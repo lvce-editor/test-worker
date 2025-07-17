@@ -29,3 +29,8 @@ export const openCommands = async (): Promise<void> => {
 export const openWebViews = async (): Promise<void> => {
   await openFeature('WebView')
 }
+
+export const handleScroll = async (scrollTop: number): Promise<void> => {
+  // @ts-ignore
+  return Rpc.invoke('ExtensionDetail.handleScroll', scrollTop)
+}
