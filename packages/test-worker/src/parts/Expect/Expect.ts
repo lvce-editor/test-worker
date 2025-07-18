@@ -57,6 +57,13 @@ export const expect = (locator: any): any => {
         value,
       })
     },
+    async toHaveJSProperty(key: string, value: any): Promise<void> {
+      Assert.string(key, 'key must be of type string')
+      return this.checkSingleElementCondition('toHaveJSProperty', {
+        key,
+        value,
+      })
+    },
     async toHaveClass(className: string): Promise<void> {
       Assert.string(className, 'className must be of type string')
       return this.checkSingleElementCondition('toHaveClass', {
