@@ -31,7 +31,7 @@ export const openFeature = (featureName: string): Promise<void> => {
 }
 
 export const openThemes = async (): Promise<void> => {
-  await openFeature('Themes')
+  await openFeature('Theme')
 }
 
 export const openCommands = async (): Promise<void> => {
@@ -40,6 +40,18 @@ export const openCommands = async (): Promise<void> => {
 
 export const openWebViews = async (): Promise<void> => {
   await openFeature('WebView')
+}
+
+export const openRuntimeStatus = async (): Promise<void> => {
+  await openFeature('RuntimeStatus')
+}
+
+export const openJsonValidation = async (): Promise<void> => {
+  await openFeature('JsonValidation')
+}
+
+export const openSettings = async (): Promise<void> => {
+  await openFeature('Settings')
 }
 
 export const handleScroll = async (scrollTop: number): Promise<void> => {
