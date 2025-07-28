@@ -24,6 +24,7 @@ export * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComp
 export * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 export * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 export * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
+export * as SettingsView from '../TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
 export * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 export * as SourceControl from '../TestFrameWorkComponentSourceControl/TestFrameWorkComponentSourceControl.ts'
 export * as StatusBar from '../TestFrameWorkComponentStatusBar/TestFrameWorkComponentStatusBar.ts'
