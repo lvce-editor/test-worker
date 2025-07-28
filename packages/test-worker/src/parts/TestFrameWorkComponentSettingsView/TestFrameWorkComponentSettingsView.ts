@@ -1,5 +1,5 @@
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const show = async (): Promise<void> => {
   return RendererWorker.invoke('Main.openUri', 'settings://')
