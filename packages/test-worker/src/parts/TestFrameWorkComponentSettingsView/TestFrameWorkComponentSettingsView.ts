@@ -10,6 +10,16 @@ export const handleInput = async (searchValue: string): Promise<void> => {
   return RendererWorker.invoke('Settings.handleInput', searchValue, InputSource.Script)
 }
 
+export const usePreviousSearchValue = async (): Promise<void> => {
+  // @ts-ignore
+  return RendererWorker.invoke('Settings.usePreviousSearchValue')
+}
+
+export const useNextSearchValue = async (): Promise<void> => {
+  // @ts-ignore
+  return RendererWorker.invoke('Settings.useNextSearchValue')
+}
+
 export const clear = async (searchValue: string): Promise<void> => {
   // @ts-ignore
   return RendererWorker.invoke('Settings.clear', searchValue, InputSource.Script)
