@@ -31,3 +31,8 @@ export const selectTextEditor = async (): Promise<void> => {
 export const selectExtensions = async (): Promise<void> => {
   await selectTab('extensions')
 }
+
+export const handleScroll = async (scrollTop: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Settings.handleScroll', scrollTop, InputSource.Script)
+}
