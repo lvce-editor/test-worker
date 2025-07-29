@@ -22,6 +22,8 @@ export const getFunction = (fnName: string): any => {
       return ConditionErrors.toHaveCss
     case 'toHaveClass':
       return ConditionErrors.toHaveClass
+    case 'toHaveJSProperty':
+      return ConditionErrors.toHaveJSProperty
     default:
       throw new Error(`unexpected function name ${fnName}`)
   }
