@@ -1,4 +1,4 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
+import { beforeEach, test, expect, jest } from '@jest/globals'
 import * as ParentRpc from '../src/parts/RendererWorker/RendererWorker.ts'
 import * as QuickPick from '../src/parts/TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 
@@ -23,6 +23,12 @@ test('handleInput', async () => {
   expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.handleInput', 'test', 0)
 })
 
+test('handleClickAt', async () => {
+  await QuickPick.handleClickAt(100, 200)
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.handleClickAt', 100, 200)
+})
+
 test('setValue', async () => {
   await QuickPick.setValue('test')
   expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
@@ -33,6 +39,18 @@ test('focusNext', async () => {
   await QuickPick.focusNext()
   expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
   expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.focusNext')
+})
+
+test('focusFirst', async () => {
+  await QuickPick.focusFirst()
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.focusFirst')
+})
+
+test('focusLast', async () => {
+  await QuickPick.focusLast()
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.focusLast')
 })
 
 test('focusIndex', async () => {
@@ -57,6 +75,12 @@ test('selectIndex', async () => {
   await QuickPick.selectIndex(1)
   expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
   expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.selectIndex', 1)
+})
+
+test('selectCurrentIndex', async () => {
+  await QuickPick.selectCurrentIndex()
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.selectCurrentIndex')
 })
 
 test('executeCommand', async () => {

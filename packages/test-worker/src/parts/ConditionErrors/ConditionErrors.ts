@@ -112,3 +112,19 @@ export const toHaveCss = async (
   }
   return `expected ${locatorString} to have css ${key} ${value} but was ${actual}`
 }
+
+export const toHaveJSProperty = async (
+  locator: ILocator,
+  options: {
+    readonly key: string
+    readonly value: string
+  },
+): Promise<string> => {
+  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveJSProperty', locator, options)
+  const locatorString = printLocator(locator)
+  const { key, value } = options
+  if (!wasFound) {
+    return `expected ${locatorString} to have js property ${key} ${value} but element was not found`
+  }
+  return `expected ${locatorString} to have js property ${key} ${value} but was ${actual}`
+}

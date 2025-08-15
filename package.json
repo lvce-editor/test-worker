@@ -9,9 +9,9 @@
     "build:watch": "./packages/build/node_modules/.bin/esbuild --format=esm --bundle --external:node:buffer --external:electron --external:ws --external:node:worker_threads --watch packages/test-worker/src/testWorkerMain.ts --outfile=dist/dist/testWorkerMain.js",
     "dev": "node packages/build/src/dev.js",
     "format": "prettier --write .",
+    "postinstall": "lerna bootstrap --ci",
     "lint": "eslint .",
     "measure": "cd packages/memory && npm run measure",
-    "postinstall": "lerna bootstrap --ci",
     "test": "lerna run test",
     "type-check": "tsc -b"
   },
@@ -21,12 +21,12 @@
     "printWidth": 150
   },
   "devDependencies": {
-    "@lerna/legacy-package-management": "^8.2.2",
-    "@lvce-editor/eslint-config": "^1.51.0",
-    "eslint": "9.30.0",
-    "lerna": "^8.2.2",
+    "@lerna/legacy-package-management": "^8.2.4",
+    "@lvce-editor/eslint-config": "^1.58.0",
+    "eslint": "9.33.0",
+    "lerna": "^8.2.3",
     "prettier": "^3.6.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "engines": {
     "node": ">=22"
