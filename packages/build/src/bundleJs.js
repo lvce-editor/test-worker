@@ -15,7 +15,7 @@ const options = {
     propertyReadSideEffects: false,
   },
   output: {
-    file: join(root, 'dist/dist/testWorkerMain.js'),
+    file: join(root, '.tmp/dist/dist/testWorkerMain.js'),
     format: 'es',
     freeze: false,
     generatedCode: {
