@@ -1,16 +1,22 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 
 export const show = async (): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Panel.selectIndex', 1)
+  await RendererWorker.invoke('Panel.selectIndex', 1)
 }
 
 export const handleFilterInput = async (text: string): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Output.handleFilterInput', text)
+  await RendererWorker.invoke('Output.handleFilterInput', text, InputSource.Script)
 }
 
 export const selectChannel = async (channelId: string): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Output.selectChannel', channelId)
+  await RendererWorker.invoke('Output.selectChannel', channelId)
+}
+
+export const clear = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Output.clear')
 }
