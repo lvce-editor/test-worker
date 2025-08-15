@@ -1,5 +1,4 @@
 import { getLocatorInvoke } from '../GetLocatorInvoke/GetLocatorInvoke.ts'
-import * as GetLocatorRpc from '../GetLocatorRpc/GetLocatorRpc.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export const create = (selector: string, options: any = {}): any => {
