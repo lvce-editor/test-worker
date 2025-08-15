@@ -1,154 +1,144 @@
-import { test } from '@jest/globals'
+import { test, jest, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.js'
 import * as Problems from '../src/parts/TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 
 test('show', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Panel.selectIndex') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.show()
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Panel.selectIndex', 0)
 })
 
 test('handleFilterInput', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string, text?: string) => {
-      if (method === 'Problems.handleFilterInput') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.handleFilterInput('test filter')
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleFilterInput', 'test filter')
 })
 
 test('copyMessage', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Problems.copyMessage') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.copyMessage()
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.copyMessage')
 })
 
 test('focusIndex', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string, index?: number) => {
-      if (method === 'Problems.focusIndex') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.focusIndex(5)
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.focusIndex', 5)
 })
 
 test('handleArrowLeft', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Problems.handleArrowLeft') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.handleArrowLeft()
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleArrowLeft')
 })
 
 test('handleArrowRight', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Problems.handleArrowRight') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.handleArrowRight()
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleArrowRight')
 })
 
 test('handleClickAt', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string, x?: number, y?: number) => {
-      if (method === 'Problems.handleClickAt') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.handleClickAt(100, 200)
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleClickAt', 100, 200)
 })
 
 test('handleIconThemeChange', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Problems.handleIconThemeChange') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.handleIconThemeChange()
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleIconThemeChange')
 })
 
 test('viewAsList', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Problems.viewAsList') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.viewAsList()
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.viewAsList')
 })
 
 test('viewAsTable', async () => {
+  const mockInvoke = jest.fn()
   const mockRpc = MockRpc.create({
     commandMap: {},
-    invoke: (method: string) => {
-      if (method === 'Problems.viewAsTable') {
-        return Promise.resolve()
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    invoke: mockInvoke,
   })
   RendererWorker.set(mockRpc)
 
   await Problems.viewAsTable()
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.viewAsTable')
 })
