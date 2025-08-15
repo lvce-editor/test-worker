@@ -17,6 +17,7 @@ export * as IframeInspector from '../TestFrameWorkComponentIframeInspector/TestF
 export * as KeyBindingsEditor from '../TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
 export * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkComponentKeyBoard.ts'
 export * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
+export * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 export * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 export * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
 export * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
