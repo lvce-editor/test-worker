@@ -10,8 +10,6 @@ export default [
     rules: {
       'no-useless-catch': 'off',
       'no-ex-assign': 'off',
-      '@typescript-eslint/require-await': 'off',
-      '@typescript-eslint/restrict-template-expressions': 'off',
       'jest/no-restricted-jest-methods': 'off',
     },
   },
