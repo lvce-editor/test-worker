@@ -28,7 +28,7 @@ test('handleFilterInput', async () => {
   await Output.handleFilterInput('test filter')
 
   expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Output.handleFilterInput', 'test filter')
+  expect(mockInvoke).toHaveBeenCalledWith('Output.handleFilterInput', 'test filter', 2)
 })
 
 test('selectChannel', async () => {
