@@ -5,6 +5,10 @@ import * as TestFrameWorkComponent from '../TestFrameWorkComponent/TestFrameWork
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestState from '../TestState/TestState.ts'
 
+// TODO move this into three steps:
+// 1. import test module
+// 2. execute test
+// 3. print out results
 export const execute = async (href: string): Promise<void> => {
   const globals = {
     ...TestFrameWorkComponent,
