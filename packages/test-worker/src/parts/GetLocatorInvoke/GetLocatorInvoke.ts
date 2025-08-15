@@ -1,4 +1,4 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 import * as WebViewState from '../WebViewState/WebViewState.ts'
 
 export const getLocatorInvoke = (locator: any): any => {
@@ -6,5 +6,5 @@ export const getLocatorInvoke = (locator: any): any => {
     const module = WebViewState.get(locator.webViewId)
     return module.invoke
   }
-  return Rpc.invoke
+  return RendererWorker.invoke
 }
