@@ -5,7 +5,7 @@ import { generateApiTypes } from './generateApiTypes.js'
 import { root } from './root.js'
 import { bundleJs } from './bundleJs.js'
 
-const dist = join(root, 'dist')
+const dist = join(root, '.tmp', 'dist')
 
 const readJson = async (path) => {
   const content = await readFile(path, 'utf8')

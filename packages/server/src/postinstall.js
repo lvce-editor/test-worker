@@ -13,7 +13,7 @@ export const getRemoteUrl = (path) => {
 
 const nodeModulesPath = join(root, 'packages', 'server', 'node_modules')
 
-const workerPath = join(root, '.tmp', 'dist', 'dist', 'titleBarWorkerMain.js')
+const workerPath = join(root, '.tmp', 'dist', 'dist', 'testWorkerMain.js')
 
 const serverStaticPath = join(nodeModulesPath, '@lvce-editor', 'static-server', 'static')
 
@@ -28,11 +28,11 @@ const rendererWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'r
 
 const content = await readFile(rendererWorkerMainPath, 'utf-8')
 const remoteUrl = getRemoteUrl(workerPath)
-if (!content.includes('// const titleBarWorkerUrl = ')) {
+if (!content.includes('// const testWorkerUrl = ')) {
   await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')
-  const occurrence = `const titleBarWorkerUrl = \`\${assetDir}/packages/title-bar-worker/dist/titleBarWorkerMain.js\``
-  const replacement = `// const titleBarWorkerUrl = \`\${assetDir}/packages/title-bar-worker/dist/titleBarWorkerMain.js\`
-  const titleBarWorkerUrl = \`${remoteUrl}\``
+  const occurrence = `const testWorkerUrl = \`\${assetDir}/packages/test-worker/dist/testWorkerMain.js\``
+  const replacement = `// const testWorkerUrl = \`\${assetDir}/packages/test-worker/dist/testWorkerMain.js\`
+  const testWorkerUrl = \`${remoteUrl}\``
 
   const newContent = content.replace(occurrence, replacement)
   await writeFile(rendererWorkerMainPath, newContent)

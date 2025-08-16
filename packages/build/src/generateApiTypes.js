@@ -48,11 +48,11 @@ const getActualContent = (content) => {
 export const generateApiTypes = async () => {
   const ext = process.platform === 'win32' ? '' : ''
   const bundleGeneratorPath = join(root, 'packages', 'build', 'node_modules', '.bin', 'dts-bundle-generator' + ext)
-  await execa(bundleGeneratorPath, ['-o', '../../dist/dist/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'], {
+  await execa(bundleGeneratorPath, ['-o', '../../.tmp/dist/dist/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'], {
     cwd: join(root, 'packages', 'test-worker'),
     reject: false,
   })
-  const content = await readFile(join(root, 'dist', 'dist', 'api.d.ts'), 'utf8')
+  const content = await readFile(join(root, '.tmp', 'dist', 'dist', 'api.d.ts'), 'utf8')
   const actual = getActualContent(content)
-  await writeFile(join(root, 'dist', 'dist', 'api.d.ts'), actual)
+  await writeFile(join(root, '.tmp', 'dist', 'dist', 'api.d.ts'), actual)
 }
