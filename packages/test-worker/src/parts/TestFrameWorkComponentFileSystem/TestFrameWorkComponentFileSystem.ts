@@ -6,8 +6,8 @@ export const writeFile = async (uri: string, content: string): Promise<void> => 
   await RendererWorker.invoke('FileSystem.writeFile', uri, content)
 }
 
-export const readFile = async (uri: string): Promise<void> => {
-  await RendererWorker.invoke('FileSystem.readFile', uri)
+export const readFile = async (uri: string): Promise<string> => {
+  return RendererWorker.invoke('FileSystem.readFile', uri)
 }
 
 export const mkdir = async (uri: string): Promise<void> => {
