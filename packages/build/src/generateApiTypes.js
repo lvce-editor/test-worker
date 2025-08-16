@@ -52,7 +52,7 @@ export const generateApiTypes = async () => {
     cwd: join(root, 'packages', 'test-worker'),
     reject: false,
   })
-  const content = await readFile(join(root, 'dist', 'dist', 'api.d.ts'), 'utf8')
+  const content = await readFile(join(root, '.tmp', 'dist', 'dist', 'api.d.ts'), 'utf8')
   const actual = getActualContent(content)
-  await writeFile(join(root, 'dist', 'dist', 'api.d.ts'), actual)
+  await writeFile(join(root, '.tmp', 'dist', 'dist', 'api.d.ts'), actual)
 }
