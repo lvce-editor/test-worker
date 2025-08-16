@@ -1,5 +1,5 @@
+import type { MockFn } from '../MockFn/MockFn.ts'
 import { createId } from '../CreateId/CreateId.ts'
-import { MockFn } from '../MockFn/MockFn.ts'
 
 const mocks: Record<string, MockFn> = Object.create(null)
 

@@ -5,6 +5,7 @@ export * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComp
 export * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 export * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 export * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
+export * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 export * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 export * as EditorCompletion from '../TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
 export * as Explorer from '../TestFrameWorkComponentExplorer/TestFrameWorkComponentExplorer.ts'
