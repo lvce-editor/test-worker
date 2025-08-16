@@ -15,6 +15,9 @@ const { commitHash } = await sharedProcess.exportStatic({
   extensionPath: '',
 })
 
-await cp(join(root, 'dist', 'dist', 'testWorkerMain.js'), join(root, 'dist', commitHash, 'packages', 'test-worker', 'dist', 'testWorkerMain.js'))
+await cp(
+  join(root, '.tmp', 'dist', 'dist', 'testWorkerMain.js'),
+  join(root, 'dist', commitHash, 'packages', 'test-worker', 'dist', 'testWorkerMain.js'),
+)
 
 await cp(join(root, 'dist'), join(root, '.tmp', 'static'), { recursive: true })
