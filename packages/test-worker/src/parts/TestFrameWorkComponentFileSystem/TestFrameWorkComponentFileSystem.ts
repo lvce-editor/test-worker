@@ -1,17 +1,21 @@
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
-export const writeFile = async (path: string, content: string): Promise<void> => {
-  await Rpc.invoke('FileSystem.writeFile', path, content)
+export const writeFile = async (uri: string, content: string): Promise<void> => {
+  await RendererWorker.invoke('FileSystem.writeFile', uri, content)
 }
 
-export const mkdir = async (path: string): Promise<void> => {
-  await Rpc.invoke('FileSystem.mkdir', path)
+export const readFile = async (uri: string): Promise<void> => {
+  await RendererWorker.invoke('FileSystem.readFile', uri)
+}
+
+export const mkdir = async (uri: string): Promise<void> => {
+  await RendererWorker.invoke('FileSystem.mkdir', uri)
 }
 
 export const remove = async (uri: string): Promise<void> => {
-  await Rpc.invoke('FileSystem.remove', uri)
+  await RendererWorker.invoke('FileSystem.remove', uri)
 }
 
 export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: { readonly scheme?: string } = {}): Promise<string> => {
@@ -20,19 +24,19 @@ export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: { readonl
       return 'memfs:///workspace'
     default:
       // @ts-ignore
-      return Rpc.invoke('PlatformPaths.getTmpDir')
+      return RendererWorker.invoke('PlatformPaths.getTmpDir')
   }
 }
 
 export const chmod = async (uri: string, permissions: any): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('FileSystem.chmod', uri, permissions)
+  await RendererWorker.invoke('FileSystem.chmod', uri, permissions)
 }
 
 export const createExecutable = async (content: string): Promise<string> => {
   const tmpDir = await getTmpDir({ scheme: 'file' })
   // @ts-ignore
-  const nodePath = await Rpc.invoke('PlatformPaths.getNodePath')
+  const nodePath = await RendererWorker.invoke('PlatformPaths.getNodePath')
   const gitPath = `${tmpDir}/git`
   await writeFile(
     gitPath,
@@ -43,11 +47,11 @@ export const createExecutable = async (content: string): Promise<string> => {
   return gitPath
 }
 
-export const createExecutableFrom = async (path: string): Promise<string> => {
+export const createExecutableFrom = async (uri: string): Promise<string> => {
   // @ts-ignore
-  const testPath = await Rpc.invoke('PlatformPaths.getTestPath')
-  const absolutePath = testPath + PathSeparatorType.Slash + path
+  const testPath = await RendererWorker.invoke('PlatformPaths.getTestPath')
+  const absolutePath = testPath + PathSeparatorType.Slash + uri
   // @ts-ignore
-  const content = await Rpc.invoke('Ajax.getText', absolutePath)
+  const content = await RendererWorker.invoke('Ajax.getText', absolutePath)
   return createExecutable(content)
 }
