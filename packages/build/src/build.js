@@ -65,6 +65,7 @@ delete packageJson.prettier
 delete packageJson.jest
 packageJson.version = version
 packageJson.main = 'dist/testWorkerMain.js'
+packageJson.types = 'dist/api.d.ts'
 
 await writeJson(join(dist, 'package.json'), packageJson)
 
