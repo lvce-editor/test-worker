@@ -7,6 +7,6 @@ export const instantiations = 30_000
 
 export const instantiationsPath = join(root, 'packages', 'test-worker')
 
-export const workerPath = join(root, 'dist/dist/testWorkerMain.js')
+export const workerPath = join(root, '.tmp/dist/dist/testWorkerMain.js')
 
 export const playwrightPath = new URL('../../e2e/node_modules/playwright/index.mjs', import.meta.url).toString()
