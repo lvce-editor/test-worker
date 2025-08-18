@@ -1,3 +1,5 @@
+import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
+import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
 import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
@@ -223,13 +225,27 @@ export const growSelection = async (): Promise<void> => {
 }
 
 export const getSelections = async (): Promise<Uint32Array> => {
+  const keys = await EditorWorker.invoke('Editor.getKeys')
+  const key = keys.at(-1)
+  const numeric = Number.parseInt(key)
   // @ts-ignore
-  return RendererWorker.invoke('Editor.getSelections')
+  return EditorWorker.invoke('Editor.getSelections', numeric)
 }
 
 export const shouldHaveText = async (expectedText: string): Promise<void> => {
   const text = await RendererWorker.invoke('Editor.getText')
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
+  }
+}
+
+export const shouldHaveSelections = async (expectedSelections: Uint32Array): Promise<void> => {
+  const keys = await EditorWorker.invoke('Editor.getKeys')
+  const key = keys.at(-1)
+  const numeric = Number.parseInt(key)
+  // @ts-ignore
+  const selections = await EditorWorker.invoke('Editor.getSelections', numeric)
+  if (!areSelectionsEqual(selections, expectedSelections)) {
+    throw new Error(`Expected editor to have selections ${expectedSelections} but was ${selections}`)
   }
 }
