@@ -217,6 +217,16 @@ export const openRename = async (): Promise<void> => {
   await Rpc.invoke('Editor.openRename')
 }
 
+export const growSelection = async (): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Editor.selectionGrow')
+}
+
+export const getSelections = async (): Promise<Uint32Array> => {
+  // @ts-ignore
+  return Rpc.invoke('Editor.getSelections')
+}
+
 export const shouldHaveText = async (expectedText: string): Promise<void> => {
   const text = await Rpc.invoke('Editor.getText')
   if (text !== expectedText) {
