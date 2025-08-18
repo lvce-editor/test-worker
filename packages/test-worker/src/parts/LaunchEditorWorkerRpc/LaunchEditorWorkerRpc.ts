@@ -1,4 +1,4 @@
-import { TransferMessagePortRpcParent } from '@lvce-editor/rpc'
+import { Rpc, TransferMessagePortRpcParent } from '@lvce-editor/rpc'
 import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 const send = async (port: MessagePort): Promise<void> => {
@@ -6,7 +6,7 @@ const send = async (port: MessagePort): Promise<void> => {
   await RendererWorker.sendMessagePortToEditorWorker(port, rpcId)
 }
 
-export const launchEditorWorkerRpc = async () => {
+export const launchEditorWorkerRpc = async (): Promise<Rpc> => {
   const rpc = await TransferMessagePortRpcParent.create({
     commandMap: {},
     send,
