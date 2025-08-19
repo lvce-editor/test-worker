@@ -1,5 +1,6 @@
 import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
 import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
+import * as InputSource from '../InputSource/InputSource.ts'
 import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
@@ -217,6 +218,14 @@ export const showHover = async (): Promise<void> => {
 
 export const openRename = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.openRename')
+}
+
+export const rename2 = async (newName: string): Promise<void> => {
+  await openRename()
+  // @ts-ignore
+  await RendererWorker.invoke('EditorRename.handleInput', newName, InputSource.Script)
+  // @ts-ignore
+  await RendererWorker.invoke('EditorRename.accept')
 }
 
 export const growSelection = async (): Promise<void> => {
