@@ -1,9 +1,15 @@
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { stringifyJson } from '../StringifyJson/StringifyJson.ts'
 
 export const writeFile = async (uri: string, content: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.writeFile', uri, content)
+}
+
+export const writeJson = async (uri: string, data: any): Promise<void> => {
+  const content = stringifyJson(data)
+  await writeFile(uri, content)
 }
 
 export const readFile = async (uri: string): Promise<string> => {
