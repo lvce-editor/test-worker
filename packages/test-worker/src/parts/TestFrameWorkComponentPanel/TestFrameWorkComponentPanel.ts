@@ -1,5 +1,11 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const open = async (id: string): Promise<void> => {
-  await Rpc.invoke('Layout.showPanel', id)
+  await RendererWorker.invoke('Layout.showPanel', id)
+}
+
+export const openProblems = async (): Promise<void> => {
+  await open('Problems')
+  // @ts-ignore
+  await RendererWorker.invoke('Panel.selectIndex', 0)
 }
