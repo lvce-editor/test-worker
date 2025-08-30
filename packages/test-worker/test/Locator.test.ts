@@ -10,13 +10,13 @@ jest.unstable_mockModule('../src/parts/RendererWorker/RendererWorker.ts', () => 
   }
 })
 
-const Locator = await import('../src/parts/Locator/Locator.ts')
+const { createLocator } = await import('../src/parts/CreateLocator/CreateLocator.ts')
 const Rpc = await import('../src/parts/RendererWorker/RendererWorker.ts')
 
 test('create', () => {
   const selector = 'button'
   const options = {}
-  expect(Locator.create(selector, options)).toMatchObject({
+  expect(createLocator(selector, options)).toMatchObject({
     _selector: 'button',
     _nth: -1,
     _hasText: '',
@@ -26,7 +26,7 @@ test('create', () => {
 test('click', async () => {
   const selector = 'button'
   const options = {}
-  const locator = Locator.create(selector, options)
+  const locator = createLocator(selector, options)
   await locator.click()
   expect(Rpc.invoke).toHaveBeenCalledTimes(1)
   // @ts-ignore
@@ -41,7 +41,7 @@ test('click', async () => {
 test('hover', async () => {
   const selector = 'button'
   const options = {}
-  const locator = Locator.create(selector, options)
+  const locator = createLocator(selector, options)
   await locator.hover()
   expect(Rpc.invoke).toHaveBeenCalledTimes(1)
   // @ts-ignore
@@ -54,7 +54,7 @@ test('hover', async () => {
 test('type', async () => {
   const selector = 'button'
   const options = {}
-  const locator = Locator.create(selector, options)
+  const locator = createLocator(selector, options)
   await locator.type('a')
   expect(Rpc.invoke).toHaveBeenCalledTimes(1)
   // @ts-ignore
@@ -66,7 +66,7 @@ test('type', async () => {
 test('first', () => {
   const selector = 'button'
   const options = {}
-  const locator = Locator.create(selector, options)
+  const locator = createLocator(selector, options)
   expect(locator.first()).toMatchObject({
     _nth: 0,
   })
