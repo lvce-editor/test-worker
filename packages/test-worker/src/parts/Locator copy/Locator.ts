@@ -1,5 +1,4 @@
 import { getLocatorInvoke } from '../GetLocatorInvoke/GetLocatorInvoke.ts'
-import { ILocator } from '../ILocator/ILocator.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export const create = (selector: string, options: any = {}): any => {
@@ -12,7 +11,7 @@ const performAction = async (locator: any, action: string, options: any): Promis
   return invoke('TestFrameWork.performAction', locator, action, options)
 }
 
-class Locator implements ILocator {
+class Locator {
   readonly _selector: any
   readonly _nth: number
   readonly _hasText: string
