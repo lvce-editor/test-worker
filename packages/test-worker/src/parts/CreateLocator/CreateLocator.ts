@@ -1,5 +1,1 @@
-
-
-
-
-export {create as createLocator} from '../Locator/Locator.ts'
+export { create as createLocator } from '../Locator/Locator.ts'
