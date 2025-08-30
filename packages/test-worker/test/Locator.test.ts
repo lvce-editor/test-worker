@@ -15,7 +15,6 @@ jest.unstable_mockModule('@lvce-editor/rpc-registry', () => {
 })
 
 const { createLocator } = await import('../src/parts/CreateLocator/CreateLocator.ts')
-const Rpc = await import('@lvce-editor/rpc-registry')
 
 test('create', () => {
   const selector = 'button'
