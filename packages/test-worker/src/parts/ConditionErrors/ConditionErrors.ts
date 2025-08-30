@@ -1,13 +1,13 @@
-import type { ILocator } from '../ILocator/ILocator.ts'
+import type { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
 import { locatorInvoke } from '../LocatorInvoke/LocatorInvoke.ts'
 import { printLocator } from '../PrintLocator/PrintLocator.ts'
 
-export const toBeVisible = (locator: ILocator): string => {
+export const toBeVisible = (locator: ILocatorInternal): string => {
   return `expected selector to be visible ${locator._selector}`
 }
 
 export const toHaveValue = (
-  locator: ILocator,
+  locator: ILocatorInternal,
   {
     value,
   }: {
@@ -17,7 +17,7 @@ export const toHaveValue = (
   return `expected selector ${locator._selector} to have value ${value}`
 }
 
-export const toHaveText = async (locator: ILocator, options: { readonly text: string }): Promise<string> => {
+export const toHaveText = async (locator: ILocatorInternal, options: { readonly text: string }): Promise<string> => {
   const locatorString = printLocator(locator)
   const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, options)
   const { text } = options
@@ -28,7 +28,7 @@ export const toHaveText = async (locator: ILocator, options: { readonly text: st
 }
 
 export const toHaveAttribute = async (
-  locator: ILocator,
+  locator: ILocatorInternal,
   options: {
     readonly key: string
     readonly value: string
@@ -44,7 +44,7 @@ export const toHaveAttribute = async (
 }
 
 export const toHaveCount = async (
-  locator: ILocator,
+  locator: ILocatorInternal,
   {
     count,
   }: {
@@ -56,14 +56,14 @@ export const toHaveCount = async (
   return `expected ${locatorString} to have count ${count} but was ${actual}`
 }
 
-export const toBeFocused = async (locator: ILocator): Promise<string> => {
+export const toBeFocused = async (locator: ILocatorInternal): Promise<string> => {
   const locatorString = printLocator(locator)
   const { actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toBeFocused', locator)
   return `expected ${locatorString} to be focused but active element is ${actual}`
 }
 
 export const toHaveClass = async (
-  locator: ILocator,
+  locator: ILocatorInternal,
   options: {
     readonly className: string
   },
@@ -78,7 +78,7 @@ export const toHaveClass = async (
 }
 
 export const toHaveId = async (
-  locator: ILocator,
+  locator: ILocatorInternal,
   options: {
     readonly id: string
   },
@@ -92,13 +92,13 @@ export const toHaveId = async (
   return `expected ${locatorString} to have id ${id} but was ${actual}`
 }
 
-export const toBeHidden = (locator: ILocator): string => {
+export const toBeHidden = (locator: ILocatorInternal): string => {
   const locatorString = printLocator(locator)
   return `expected ${locatorString} to be hidden`
 }
 
 export const toHaveCss = async (
-  locator: ILocator,
+  locator: ILocatorInternal,
   options: {
     readonly key: string
     readonly value: string
@@ -114,7 +114,7 @@ export const toHaveCss = async (
 }
 
 export const toHaveJSProperty = async (
-  locator: ILocator,
+  locator: ILocatorInternal,
   options: {
     readonly key: string
     readonly value: string

@@ -1,5 +1,4 @@
-export interface ILocator {
-  readonly _selector: string
-  readonly _nth: number
-  readonly _hasText: string
-}
+import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
+import type { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
+
+export interface ILocator extends ILocatorInternal, ILocatorExternal {}
