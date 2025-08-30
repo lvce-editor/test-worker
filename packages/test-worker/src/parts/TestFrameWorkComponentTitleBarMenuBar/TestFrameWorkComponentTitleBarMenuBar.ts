@@ -1,4 +1,4 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
 
 export const closeMenu = async (): Promise<void> => {
   await Rpc.invoke('TitleBarMenuBar.closeMenu')

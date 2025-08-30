@@ -1,5 +1,5 @@
 import * as GetKeyOptions from '../GetKeyOptions/GetKeyOptions.ts'
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
 
 export const press = async (key: string): Promise<void> => {
   const keyOptions = GetKeyOptions.getKeyOptions(key)

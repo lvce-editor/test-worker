@@ -1,6 +1,6 @@
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
 import { stringifyError } from '../StringifyError/StringifyError.ts'
 import * as TestType from '../TestType/TestType.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'

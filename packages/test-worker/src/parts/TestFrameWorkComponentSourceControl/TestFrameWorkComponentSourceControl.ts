@@ -1,4 +1,4 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
 
 export const selectIndex = async (index: number): Promise<void> => {
   // @ts-ignore

@@ -1,4 +1,4 @@
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const handleClickCategory = async (categoryId: string): Promise<void> => {
   // @ts-ignore
