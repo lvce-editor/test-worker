@@ -10,7 +10,7 @@ export const expect = (locator: ILocatorExternal): LocatorExpect => {
 }
 
 class Expect {
-  negated: boolean = false;
+  negated: boolean = false
   readonly locator: ILocatorExternal
 
   constructor(locator: ILocatorExternal) {
