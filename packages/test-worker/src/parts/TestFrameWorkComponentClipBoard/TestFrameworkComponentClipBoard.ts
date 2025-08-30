@@ -1,5 +1,5 @@
-import { AssertionError } from '../AssertionError/AssertionError.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { AssertionError } from '../AssertionError/AssertionError.ts'
 
 export const readNativeFiles = async (): Promise<void> => {
   await RendererWorker.invoke('ClipBoard.readNativeFiles')

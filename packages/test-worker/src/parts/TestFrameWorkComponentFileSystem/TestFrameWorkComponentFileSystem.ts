@@ -1,6 +1,6 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { stringifyJson } from '../StringifyJson/StringifyJson.ts'
 
 export const writeFile = async (uri: string, content: string): Promise<void> => {
