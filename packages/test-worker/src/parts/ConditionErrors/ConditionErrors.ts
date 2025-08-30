@@ -1,5 +1,4 @@
 import type { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
-import { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
 import { locatorInvoke } from '../LocatorInvoke/LocatorInvoke.ts'
 import { printLocator } from '../PrintLocator/PrintLocator.ts'
 

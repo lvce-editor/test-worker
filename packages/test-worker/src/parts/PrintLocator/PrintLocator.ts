@@ -1,4 +1,4 @@
-import { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
+import type { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
 
 export const printLocator = (locator: ILocatorInternal): string => {
   if (locator._nth !== -1) {
