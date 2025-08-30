@@ -1,6 +1,6 @@
-import type { ILocator } from '../ILocator/ILocator.ts'
+import { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
 
-export const printLocator = (locator: ILocator): string => {
+export const printLocator = (locator: ILocatorInternal): string => {
   if (locator._nth !== -1) {
     return `${locator._selector}:nth(${locator._nth})`
   }
