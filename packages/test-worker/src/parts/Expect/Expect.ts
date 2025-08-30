@@ -10,11 +10,12 @@ export const expect = (locator: ILocatorExternal): LocatorExpect => {
 }
 
 class Expect {
-  negated: boolean = false
+  readonly negated: boolean = false
   readonly locator: ILocatorExternal
 
-  constructor(locator: ILocatorExternal) {
+  constructor(locator: ILocatorExternal, negated: boolean = false) {
     this.locator = locator
+    this.negated = negated
   }
 
   async checkSingleElementCondition(fnName: string, options?: any): Promise<void> {
@@ -95,8 +96,7 @@ class Expect {
   async toBeHidden(): Promise<void> {
     return this.checkMultiElementCondition('toBeHidden', {})
   }
-  get not(): any {
-    this.negated = true
-    return this
+  get not(): Expect {
+    return new Expect(this.locator, !this.negated)
   }
 }
