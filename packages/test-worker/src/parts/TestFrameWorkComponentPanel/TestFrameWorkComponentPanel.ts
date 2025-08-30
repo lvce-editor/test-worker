@@ -1,4 +1,4 @@
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const open = async (id: string): Promise<void> => {
   await RendererWorker.invoke('Layout.showPanel', id)

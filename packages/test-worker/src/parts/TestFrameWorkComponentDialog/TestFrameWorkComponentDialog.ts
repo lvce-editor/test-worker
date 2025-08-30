@@ -1,5 +1,5 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Mock from '../Mock/Mock.ts'
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const showSaveFilePicker = async (): Promise<void> => {
   // @ts-ignore

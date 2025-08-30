@@ -1,5 +1,5 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
-import * as ParentRpc from '../src/parts/RendererWorker/RendererWorker.ts'
+import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
 import * as About from '../src/parts/TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 
 const mockRpc = {

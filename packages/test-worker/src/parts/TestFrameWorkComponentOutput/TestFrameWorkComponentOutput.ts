@@ -1,5 +1,5 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as InputSource from '../InputSource/InputSource.ts'
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const show = async (): Promise<void> => {
   // @ts-ignore

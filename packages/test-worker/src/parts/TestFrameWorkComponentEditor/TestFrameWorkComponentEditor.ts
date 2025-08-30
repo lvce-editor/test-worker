@@ -1,7 +1,7 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
 import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
 
 export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
   await RendererWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)

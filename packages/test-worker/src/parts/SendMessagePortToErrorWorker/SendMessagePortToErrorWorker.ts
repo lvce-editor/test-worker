@@ -1,4 +1,4 @@
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const sendMessagePortToErrorWorker = async (port: MessagePort): Promise<void> => {
   const command = 'Errors.handleMessagePort'

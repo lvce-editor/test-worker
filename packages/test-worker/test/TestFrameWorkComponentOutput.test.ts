@@ -1,6 +1,6 @@
 import { test, jest, expect } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
-import * as RendererWorker from '../src/parts/RendererWorker/RendererWorker.js'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Output from '../src/parts/TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 
 test('show', async () => {

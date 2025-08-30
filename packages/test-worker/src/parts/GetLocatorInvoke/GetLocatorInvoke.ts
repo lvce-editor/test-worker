@@ -1,4 +1,4 @@
-import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as WebViewState from '../WebViewState/WebViewState.ts'
 
 export const getLocatorInvoke = (locator: any): any => {

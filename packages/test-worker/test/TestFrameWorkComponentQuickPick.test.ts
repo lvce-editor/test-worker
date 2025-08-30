@@ -1,5 +1,5 @@
 import { beforeEach, test, expect, jest } from '@jest/globals'
-import * as ParentRpc from '../src/parts/RendererWorker/RendererWorker.ts'
+import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
 import * as QuickPick from '../src/parts/TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 
 const mockRpc = {

@@ -1,4 +1,4 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.ts'
 
 export const open = async (): Promise<void> => {

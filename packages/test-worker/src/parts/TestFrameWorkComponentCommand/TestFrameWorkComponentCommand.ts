@@ -1,4 +1,4 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
 
 export const execute = async (id: string, ...args: readonly any[]): Promise<any> => {
   // @ts-ignore
