@@ -23,5 +23,5 @@ export interface LocatorExpect {
   readonly toHaveId: (id: string) => Promise<void>
   readonly toHaveCount: (count: number) => Promise<void>
   readonly toBeHidden: () => Promise<void>
-  readonly not: () => any
+  readonly not: LocatorExpect
 }
