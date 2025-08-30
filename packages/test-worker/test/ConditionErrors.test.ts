@@ -1,5 +1,6 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
-import type { ILocator } from '../src/parts/ILocator/ILocator.ts'
+import type { ILocatorInternal } from '../src/parts/ILocatorInternal/ILocatorInternal.ts'
+import { ILocatorInternal } from '../src/parts/ILocatorInternal/ILocatorInternal.ts'
 
 type MockReturnType = {
   wasFound?: boolean
@@ -19,7 +20,7 @@ beforeEach(() => {
 })
 
 test('toBeVisible', () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -28,7 +29,7 @@ test('toBeVisible', () => {
 })
 
 test('toHaveValue', () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.input',
     _nth: -1,
     _hasText: '',
@@ -37,7 +38,7 @@ test('toHaveValue', () => {
 })
 
 test('toHaveText - element not found', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.text',
     _nth: -1,
     _hasText: '',
@@ -51,7 +52,7 @@ test('toHaveText - element not found', async () => {
 })
 
 test('toHaveText - wrong text', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.text',
     _nth: -1,
     _hasText: '',
@@ -65,7 +66,7 @@ test('toHaveText - wrong text', async () => {
 })
 
 test('toHaveText - with hasText selector', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.item',
     _nth: -1,
     _hasText: 'hello',
@@ -79,7 +80,7 @@ test('toHaveText - with hasText selector', async () => {
 })
 
 test('toHaveAttribute - element not found', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.link',
     _nth: -1,
     _hasText: '',
@@ -96,7 +97,7 @@ test('toHaveAttribute - element not found', async () => {
 })
 
 test('toHaveAttribute - wrong value', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.link',
     _nth: -1,
     _hasText: '',
@@ -113,7 +114,7 @@ test('toHaveAttribute - wrong value', async () => {
 })
 
 test('toHaveCount', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.items',
     _nth: -1,
     _hasText: '',
@@ -127,7 +128,7 @@ test('toHaveCount', async () => {
 })
 
 test('toBeFocused', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.input',
     _nth: -1,
     _hasText: '',
@@ -141,7 +142,7 @@ test('toBeFocused', async () => {
 })
 
 test('toBeFocused - with document.body', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.input',
     _nth: -1,
     _hasText: '',
@@ -155,7 +156,7 @@ test('toBeFocused - with document.body', async () => {
 })
 
 test('toBeHidden', () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.modal',
     _nth: -1,
     _hasText: '',
@@ -164,7 +165,7 @@ test('toBeHidden', () => {
 })
 
 test('toHaveClass - element not found', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -178,7 +179,7 @@ test('toHaveClass - element not found', async () => {
 })
 
 test('toHaveClass - wrong class', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -192,7 +193,7 @@ test('toHaveClass - wrong class', async () => {
 })
 
 test('toHaveId - element not found', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -206,7 +207,7 @@ test('toHaveId - element not found', async () => {
 })
 
 test('toHaveId - wrong id', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -220,7 +221,7 @@ test('toHaveId - wrong id', async () => {
 })
 
 test('toHaveCss - element not found', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
@@ -237,7 +238,7 @@ test('toHaveCss - element not found', async () => {
 })
 
 test('toHaveCss - wrong value', async () => {
-  const locator: ILocator = {
+  const locator: ILocatorInternal = {
     _selector: '.button',
     _nth: -1,
     _hasText: '',
