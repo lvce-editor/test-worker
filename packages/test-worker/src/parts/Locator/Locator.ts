@@ -3,7 +3,6 @@ import { ILocator } from '../ILocator/ILocator.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export const create = (selector: string, options: any = {}): any => {
-  // @ts-ignore
   return new Locator(selector, options)
 }
 
