@@ -4,14 +4,18 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
-jest.unstable_mockModule('../src/parts/RendererWorker/RendererWorker.ts', () => {
+const mockInvoke = jest.fn()
+
+jest.unstable_mockModule('@lvce-editor/rpc-registry', () => {
   return {
-    invoke: jest.fn(() => {}),
+    RendererWorker: {
+      invoke: mockInvoke,
+    },
   }
 })
 
 const { createLocator } = await import('../src/parts/CreateLocator/CreateLocator.ts')
-const Rpc = await import('../src/parts/RendererWorker/RendererWorker.ts')
+const Rpc = await import('@lvce-editor/rpc-registry')
 
 test('create', () => {
   const selector = 'button'
@@ -28,9 +32,9 @@ test('click', async () => {
   const options = {}
   const locator = createLocator(selector, options)
   await locator.click()
-  expect(Rpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
   // @ts-ignore
-  expect(Rpc.invoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'click', {
+  expect(mockInvoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'click', {
     bubbles: true,
     button: 0,
     cancable: true,
@@ -43,9 +47,9 @@ test('hover', async () => {
   const options = {}
   const locator = createLocator(selector, options)
   await locator.hover()
-  expect(Rpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
   // @ts-ignore
-  expect(Rpc.invoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'hover', {
+  expect(mockInvoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'hover', {
     bubbles: true,
     cancable: true,
   })
@@ -56,9 +60,9 @@ test('type', async () => {
   const options = {}
   const locator = createLocator(selector, options)
   await locator.type('a')
-  expect(Rpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
   // @ts-ignore
-  expect(Rpc.invoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'type', {
+  expect(mockInvoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'type', {
     text: 'a',
   })
 })
