@@ -1,11 +1,16 @@
-import * as Rpc from '../RendererWorker/RendererWorker.ts'
+import * as RendererWorker from '../RendererWorker/RendererWorker.ts'
+
+export const handleClickCategory = async (categoryId: string): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('ExtensionDetail.handleClickCategory', categoryId)
+}
 
 export const selectFeature = (name: string): Promise<void> => {
-  return Rpc.invoke('ExtensionDetail.selectFeature', name)
+  return RendererWorker.invoke('ExtensionDetail.selectFeature', name)
 }
 
 export const selectTab = (name: string): Promise<void> => {
-  return Rpc.invoke('ExtensionDetail.selectTab', name)
+  return RendererWorker.invoke('ExtensionDetail.selectTab', name)
 }
 
 export const selectDetails = async (): Promise<void> => {
@@ -22,12 +27,12 @@ export const selectChangelog = async (): Promise<void> => {
 
 export const open = (extensionId: string): Promise<void> => {
   const uri = `extension-detail://${extensionId}`
-  return Rpc.invoke('Main.openUri', uri)
+  return RendererWorker.invoke('Main.openUri', uri)
 }
 
 export const openFeature = (featureName: string): Promise<void> => {
   // @ts-ignore
-  return Rpc.invoke('ExtensionDetail.handleFeaturesClick', featureName)
+  return RendererWorker.invoke('ExtensionDetail.handleFeaturesClick', featureName)
 }
 
 export const openThemes = async (): Promise<void> => {
@@ -56,5 +61,5 @@ export const openSettings = async (): Promise<void> => {
 
 export const handleScroll = async (scrollTop: number): Promise<void> => {
   // @ts-ignore
-  return Rpc.invoke('ExtensionDetail.handleScroll', scrollTop)
+  return RendererWorker.invoke('ExtensionDetail.handleScroll', scrollTop)
 }
