@@ -5,6 +5,7 @@ import * as SetWebViewPort from '../SetWebViewPort/SetWebViewPort.ts'
 import * as WaitForReadyEvent from '../WaitForReadyEvent/WaitForReadyEvent.ts'
 
 export const createPortIpc = async (webViewId: string): Promise<any> => {
+  // TODO use transforpemssageportrpc
   const { port1, port2 } = GetPortTuple.getPortTuple()
   const firstEventPromise = WaitForReadyEvent.waitForFirstEventEvent(port1)
   // TODO ask extension host worker about webview uid
