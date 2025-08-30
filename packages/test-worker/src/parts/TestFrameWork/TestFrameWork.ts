@@ -3,7 +3,7 @@ import * as NameAnonymousFunction from '../NameAnonymousFunction/NameAnonymousFu
 import * as Rpc from '../RendererWorker/RendererWorker.ts'
 import * as TestState from '../TestState/TestState.ts'
 
-export { create as Locator } from '../Locator/Locator.ts'
+export { createLocator as Locator } from '../CreateLocator/CreateLocator.ts'
 
 export const getTmpDir = async (): Promise<string> => {
   return 'memfs://'
