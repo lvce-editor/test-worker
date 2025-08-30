@@ -1,5 +1,15 @@
 export interface LocatorExpect {
-  readonly checkSingleElementCondition: (fnName: string, options: any) => Promise<void>
+  /**
+   * @internal
+   */
+  negated: boolean
+  /**
+   * @internal
+   */
+  readonly checkSingleElementCondition: (fnName: string, options?: any) => Promise<void>
+  /**
+   * @internal
+   */
   readonly checkMultiElementCondition: (fnName: string, options: any) => Promise<void>
   readonly toBeVisible: () => Promise<void>
   readonly toHaveText: (text: string) => Promise<void>

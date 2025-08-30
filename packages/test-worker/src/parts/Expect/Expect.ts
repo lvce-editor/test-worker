@@ -1,10 +1,13 @@
+import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
+import type { LocatorExpect } from '../LocatorExpect/LocatorExpect.ts'
 import { AssertionError } from '../AssertionError/AssertionError.ts'
 import * as ConditionErrorMap from '../ConditionErrorMap/ConditionErrorMap.ts'
 import * as LocatorInvoke from '../LocatorInvoke/LocatorInvoke.ts'
 import * as Assert from '../TestAssert/TestAssert.ts'
 
-export const expect = (locator: any): any => {
+export const expect = (locator: ILocatorExternal): LocatorExpect => {
   return {
+    negated: false,
     async checkSingleElementCondition(fnName: string, options: any): Promise<void> {
       // TODO add rpcId property to locator instead
       const result = await LocatorInvoke.locatorInvoke(locator, 'TestFrameWork.checkSingleElementCondition', locator, fnName, options)
