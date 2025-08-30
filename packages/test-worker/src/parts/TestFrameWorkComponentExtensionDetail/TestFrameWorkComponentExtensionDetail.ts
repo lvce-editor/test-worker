@@ -5,6 +5,16 @@ export const handleClickCategory = async (categoryId: string): Promise<void> => 
   await RendererWorker.invoke('ExtensionDetail.handleClickCategory', categoryId)
 }
 
+export const handleClickEnable = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('ExtensionDetail.handleClickEnable')
+}
+
+export const handleClickDisable = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('ExtensionDetail.handleClickDisable')
+}
+
 export const handleClickSetColorTheme = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.handleClickSetColorTheme')
