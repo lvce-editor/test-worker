@@ -242,7 +242,7 @@ export const getSelections = async (): Promise<Uint32Array> => {
 }
 
 export const shouldHaveText = async (expectedText: string): Promise<void> => {
-  const text = await RendererWorker.invoke('Editor.getText')
+  const text = await EditorWorker.invoke('Editor.getText')
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
   }
