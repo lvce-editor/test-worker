@@ -113,5 +113,3 @@ test('createExecutableFrom', async () => {
   expect(mockInvoke).toHaveBeenCalledWith('PlatformPaths.getTestPath')
   expect(mockInvoke).toHaveBeenCalledWith('Ajax.getText', '/tests/fixtures/script.js')
 })
-
-

@@ -24,5 +24,3 @@ test('setValue', async () => {
   expect(mockInvoke).toHaveBeenCalledTimes(1)
   expect(mockInvoke).toHaveBeenCalledWith('FindWidget.handleInput', 'hello')
 })
-
-

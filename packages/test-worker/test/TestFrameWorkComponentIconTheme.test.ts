@@ -16,5 +16,3 @@ test('setIconTheme', async () => {
   expect(mockInvoke).toHaveBeenCalledTimes(1)
   expect(mockInvoke).toHaveBeenCalledWith('IconTheme.setIconTheme', 'vs-code-icon-theme')
 })
-
-

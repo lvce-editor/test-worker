@@ -15,5 +15,3 @@ test('getBaseUrl', () => {
   // @ts-ignore
   globalThis.location = location
 })
-
-

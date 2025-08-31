@@ -36,5 +36,3 @@ test('locatorInvoke: asserts', async () => {
     LocatorInvoke.locatorInvoke({}, 123)
   }).toThrow(/expected value to be of type string/i)
 })
-
-

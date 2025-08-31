@@ -24,5 +24,3 @@ test('selectCurrentIndex', async () => {
   expect(mockInvoke).toHaveBeenCalledTimes(1)
   expect(mockInvoke).toHaveBeenCalledWith('EditorCompletion.selectCurrentIndex')
 })
-
-

@@ -24,5 +24,3 @@ test('addNodeExtension', async () => {
   expect(mockInvoke).toHaveBeenCalledTimes(1)
   expect(mockInvoke).toHaveBeenCalledWith('ExtensionMeta.addNodeExtension', 'extensions/node')
 })
-
-

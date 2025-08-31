@@ -6,5 +6,3 @@ test('resolve', () => {
   const result: string = Url.resolve('path/file.txt')
   expect(result).toBe('https://example.com/base/path/file.txt')
 })
-
-

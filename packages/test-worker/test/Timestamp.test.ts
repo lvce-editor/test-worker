@@ -7,5 +7,3 @@ test('now returns a number', () => {
   expect(Number.isFinite(value)).toBe(true)
   expect(value).toBeGreaterThanOrEqual(0)
 })
-
-
