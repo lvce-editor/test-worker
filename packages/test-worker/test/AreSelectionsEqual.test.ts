@@ -18,4 +18,3 @@ test('areSelectionsEqual: same length but one different element', () => {
   const b = new Uint32Array([1, 2, 5, 4])
   expect(areSelectionsEqual(a, b)).toBe(false)
 })
-

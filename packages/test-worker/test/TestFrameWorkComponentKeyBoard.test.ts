@@ -36,4 +36,3 @@ test('press: with modifiers Control+Alt+Space', async () => {
     altKey: true,
   })
 })
-

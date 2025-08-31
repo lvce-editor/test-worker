@@ -24,4 +24,3 @@ test('setMockRpc and getMockRpc by name', () => {
   expect(TestState.getMockRpc('B')).toBe(rpcB)
   expect(TestState.getMockRpc('C')).toBeUndefined()
 })
-
