@@ -40,5 +40,5 @@ test('stringifyError with standard Error', () => {
 
 test('stringifyError with VError', () => {
   const err = new VErrorExact('wrapped')
-  expect(StringifyError.stringifyError(err)).toBe('wrapped')
+  expect(StringifyError.stringifyError(err)).toBe('VError: wrapped')
 })
