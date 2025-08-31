@@ -16,5 +16,3 @@ test('number: ok', () => {
 test('number: throws', () => {
   expect(() => TestAssert.number('1' as any, 'message')).toThrow(new TypeError('message'))
 })
-
-

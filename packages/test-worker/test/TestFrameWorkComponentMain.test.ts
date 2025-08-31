@@ -66,5 +66,3 @@ test('closeTabsLeft/Right and others', async () => {
   expect(mockInvoke).toHaveBeenCalledWith('Main.focusPrevious')
   expect(mockInvoke).toHaveBeenCalledWith('Main.focusLast')
 })
-
-

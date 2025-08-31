@@ -54,5 +54,3 @@ test('reloadColorTheme and reloadIconTheme and toggleDeveloperTools', async () =
   expect(mockInvoke).toHaveBeenCalledWith('Developer.reloadIconTheme')
   expect(mockInvoke).toHaveBeenCalledWith('Developer.toggleDeveloperTools')
 })
-
-

@@ -17,5 +17,3 @@ test('getLocatorInvoke: default to RendererWorker', () => {
   // @ts-ignore
   expect(result).toBe(RendererWorker.invoke)
 })
-
-

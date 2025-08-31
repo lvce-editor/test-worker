@@ -50,5 +50,3 @@ test('toBeVisible: negated throws guidance', async () => {
   const expectLocator = ExpectMod.expect(locator).not
   await expect(expectLocator.toBeVisible()).rejects.toThrow('use toBeHidden instead of not.toBeVisible')
 })
-
-

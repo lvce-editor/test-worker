@@ -13,5 +13,3 @@ test('execute', async () => {
   expect(result).toBe('ok')
   expect(mockInvoke).toHaveBeenCalledWith('Some.command', 1, 2)
 })
-
-

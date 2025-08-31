@@ -10,5 +10,3 @@ test('importScript: success', async () => {
 test('importScript: failure', async () => {
   await expect(ImportScript.importScript('/does-not-exist.js')).rejects.toBeTruthy()
 })
-
-
