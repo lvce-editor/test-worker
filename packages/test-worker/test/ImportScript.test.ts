@@ -1,4 +1,4 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import * as ImportScript from '../src/parts/ImportScript/ImportScript.ts'
 
 test('importScript: success', async () => {

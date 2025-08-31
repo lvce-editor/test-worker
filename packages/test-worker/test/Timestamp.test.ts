@@ -1,4 +1,4 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import * as Timestamp from '../src/parts/Timestamp/Timestamp.ts'
 
 test('now returns a number', () => {
