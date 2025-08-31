@@ -1,8 +1,8 @@
 import { expect, jest, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 import * as LocatorInvoke from '../src/parts/LocatorInvoke/LocatorInvoke.ts'
+import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
 test('locatorInvoke: with WebViewState', async () => {
   const invoke = jest.fn().mockResolvedValue('ok')

@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 import * as GetLocatorInvoke from '../src/parts/GetLocatorInvoke/GetLocatorInvoke.ts'
+import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
 test('getLocatorInvoke: webView locator', () => {
   const invoke = () => {}

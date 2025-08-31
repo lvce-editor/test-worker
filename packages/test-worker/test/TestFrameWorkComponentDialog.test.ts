@@ -1,8 +1,8 @@
 import { expect, jest, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as Dialog from '../src/parts/TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 import * as Mock from '../src/parts/Mock/Mock.ts'
+import * as Dialog from '../src/parts/TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 
 const setup = () => {
   const invoke = jest.fn()
