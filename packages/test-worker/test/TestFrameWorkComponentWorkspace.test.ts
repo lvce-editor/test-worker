@@ -3,8 +3,8 @@ import { MockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Workspace from '../src/parts/TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
 
-const setup = () => {
-  const invoke = jest.fn()
+const setup = (): jest.Mock => {
+  const invoke: jest.Mock = jest.fn()
   const mockRpc = MockRpc.create({ commandMap: {}, invoke })
   RendererWorker.set(mockRpc)
   return invoke
@@ -17,7 +17,7 @@ test('setPath forwards to rpc', async () => {
 })
 
 test('openTmpDir sets workspace path and returns it', async () => {
-  const invoke = jest.fn(async (method: string) => {
+  const invoke = jest.fn(async (method: string): Promise<any> => {
     if (method === 'FileSystem.readFile' || method === 'FileSystem.writeFile' || method === 'FileSystem.mkdir' || method === 'FileSystem.remove') {
       return undefined
     }

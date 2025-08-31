@@ -4,7 +4,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Command from '../src/parts/TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 test('execute', async () => {
-  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue('ok')
+  const mockInvoke = jest.fn<(...args: readonly any[]) => Promise<any>>().mockResolvedValue('ok')
   const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
   RendererWorker.set(mockRpc)
 

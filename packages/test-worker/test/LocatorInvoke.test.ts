@@ -5,7 +5,7 @@ import * as LocatorInvoke from '../src/parts/LocatorInvoke/LocatorInvoke.ts'
 import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
 test('locatorInvoke: with WebViewState', async () => {
-  const invoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue('ok')
+  const invoke = jest.fn<(...args: readonly any[]) => Promise<any>>().mockResolvedValue('ok')
   const locator: any = { webViewId: 'web' }
   WebViewState.set('web', { invoke })
 
@@ -15,7 +15,7 @@ test('locatorInvoke: with WebViewState', async () => {
 })
 
 test('locatorInvoke: with RendererWorker', async () => {
-  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue('ok')
+  const mockInvoke = jest.fn<(...args: readonly any[]) => Promise<any>>().mockResolvedValue('ok')
   const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
   RendererWorker.set(mockRpc)
   const locator: any = {}
@@ -26,13 +26,15 @@ test('locatorInvoke: with RendererWorker', async () => {
 })
 
 test('locatorInvoke: asserts', async () => {
-  await expect(() => {
+  // object assertion
+  await expect(
     // @ts-ignore
-    LocatorInvoke.locatorInvoke(undefined, 'click')
-  }).toThrow(/expected value to be of type object/i)
+    LocatorInvoke.locatorInvoke(undefined, 'click'),
+  ).rejects.toThrow(/expected value to be of type object/i)
 
-  await expect(() => {
+  // string assertion
+  await expect(
     // @ts-ignore
-    LocatorInvoke.locatorInvoke({}, 123)
-  }).toThrow(/expected value to be of type string/i)
+    LocatorInvoke.locatorInvoke({}, 123),
+  ).rejects.toThrow(/expected value to be of type string/i)
 })

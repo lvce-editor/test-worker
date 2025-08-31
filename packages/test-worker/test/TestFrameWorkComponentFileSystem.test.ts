@@ -26,7 +26,7 @@ test('writeJson', async () => {
 })
 
 test('readFile', async () => {
-  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue('content')
+  const mockInvoke = jest.fn<(...args: readonly any[]) => Promise<any>>().mockResolvedValue('content')
   const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
   RendererWorker.set(mockRpc)
 
@@ -64,7 +64,7 @@ test('getTmpDir: memfs default', async () => {
 })
 
 test('getTmpDir: file scheme', async () => {
-  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue('/tmp')
+  const mockInvoke = jest.fn<(...args: readonly any[]) => Promise<any>>().mockResolvedValue('/tmp')
   const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
   RendererWorker.set(mockRpc)
 
@@ -83,7 +83,7 @@ test('chmod', async () => {
 })
 
 test('createExecutable', async () => {
-  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>()
+  const mockInvoke = jest.fn<(...args: readonly any[]) => Promise<any>>()
   // getTmpDir(file) => '/tmp', getNodePath => '/usr/bin/node'
   mockInvoke.mockResolvedValueOnce('/tmp')
   mockInvoke.mockResolvedValueOnce('/usr/bin/node')
@@ -100,7 +100,7 @@ test('createExecutable', async () => {
 })
 
 test('createExecutableFrom', async () => {
-  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>()
+  const mockInvoke = jest.fn<(...args: readonly any[]) => Promise<any>>()
   mockInvoke.mockResolvedValueOnce('/tests') // getTestPath
   mockInvoke.mockResolvedValueOnce("console.log('ok')") // Ajax.getText
   mockInvoke.mockResolvedValueOnce('/tmp') // getTmpDir

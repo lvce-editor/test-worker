@@ -3,8 +3,8 @@ import { MockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as IframeInspector from '../src/parts/TestFrameWorkComponentIframeInspector/TestFrameWorkComponentIframeInspector.ts'
 
-const setup = () => {
-  const invoke = jest.fn()
+const setup = (): jest.Mock => {
+  const invoke: jest.Mock = jest.fn()
   const mockRpc = MockRpc.create({ commandMap: {}, invoke })
   RendererWorker.set(mockRpc)
   return invoke

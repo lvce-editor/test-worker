@@ -4,8 +4,8 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Mock from '../src/parts/Mock/Mock.ts'
 import * as Dialog from '../src/parts/TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 
-const setup = () => {
-  const invoke = jest.fn()
+const setup = (): jest.Mock => {
+  const invoke: jest.Mock = jest.fn()
   const mockRpc = MockRpc.create({ commandMap: {}, invoke })
   RendererWorker.set(mockRpc)
   return invoke

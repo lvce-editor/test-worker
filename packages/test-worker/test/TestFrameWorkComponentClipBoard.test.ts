@@ -3,8 +3,8 @@ import { MockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
-const setup = () => {
-  const invoke = jest.fn()
+const setup = (): jest.Mock => {
+  const invoke: jest.Mock = jest.fn()
   const mockRpc = MockRpc.create({ commandMap: {}, invoke })
   RendererWorker.set(mockRpc)
   return invoke
@@ -36,7 +36,7 @@ test('disableMemoryClipBoard', async () => {
 })
 
 test('shouldHaveText - correct', async () => {
-  const invoke = jest.fn(async (method: string) => {
+  const invoke = jest.fn(async (method: string): Promise<any> => {
     if (method === 'ClipBoard.readMemoryText') {
       return 'hello'
     }
@@ -49,7 +49,7 @@ test('shouldHaveText - correct', async () => {
 })
 
 test('shouldHaveText - wrong', async () => {
-  const invoke = jest.fn(async (method: string) => {
+  const invoke = jest.fn(async (method: string): Promise<any> => {
     if (method === 'ClipBoard.readMemoryText') {
       return 'world'
     }
