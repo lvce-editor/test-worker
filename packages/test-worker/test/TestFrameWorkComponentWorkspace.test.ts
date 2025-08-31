@@ -33,5 +33,6 @@ test('openTmpDir sets workspace path and returns it', async () => {
   RendererWorker.set(mockRpc)
   const result = await Workspace.openTmpDir()
   expect(result).toBe('memfs:///workspace')
+  // @ts-ignore
   expect(invoke).toHaveBeenCalledWith('Workspace.setPath', 'memfs:///workspace')
 })

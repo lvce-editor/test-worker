@@ -1,5 +1,4 @@
 import { expect, test } from '@jest/globals'
-
 import * as GetPortTuple from '../src/parts/GetPortTuple/GetPortTuple.ts'
 
 test('getPortTuple returns two connected MessagePorts', () => {
