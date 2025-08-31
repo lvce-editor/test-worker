@@ -1,6 +1,6 @@
 import { expect, jest, test } from '@jest/globals'
 
-await jest.unstable_mockModule('../src/parts/PrintError/PrintError.ts', () => ({
+jest.unstable_mockModule('../src/parts/PrintError/PrintError.ts', () => ({
   printError: jest.fn(),
 }))
 

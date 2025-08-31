@@ -19,3 +19,4 @@ test('getFunction: known mappings', () => {
 test('getFunction: unknown throws', () => {
   expect(() => ConditionErrorMap.getFunction('unknown')).toThrow('unexpected function name unknown')
 })
+

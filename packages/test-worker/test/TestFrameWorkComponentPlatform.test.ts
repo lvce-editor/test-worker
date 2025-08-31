@@ -1,9 +1,9 @@
 import { expect, jest, test } from '@jest/globals'
 
-await jest.unstable_mockModule('../src/parts/PlatformPaths/PlatformPaths.ts', () => ({
+jest.unstable_mockModule('../src/parts/PlatformPaths/PlatformPaths.ts', () => ({
   getNodePath: jest.fn(),
 }))
-await jest.unstable_mockModule('../src/parts/IsFirefox/IsFirefox.ts', () => ({
+jest.unstable_mockModule('../src/parts/IsFirefox/IsFirefox.ts', () => ({
   isFirefox: true,
 }))
 

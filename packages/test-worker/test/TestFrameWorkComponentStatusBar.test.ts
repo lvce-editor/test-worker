@@ -11,3 +11,4 @@ test('update calls StatusBar.updateStatusBarItems', async () => {
   expect(invoke).toHaveBeenCalledTimes(1)
   expect(invoke).toHaveBeenCalledWith('StatusBar.updateStatusBarItems')
 })
+

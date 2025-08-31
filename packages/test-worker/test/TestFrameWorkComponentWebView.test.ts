@@ -5,7 +5,7 @@ import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 const invoke: jest.Mock = jest.fn()
 const mockRpc = MockRpc.create({ commandMap: {}, invoke })
 
-await jest.unstable_mockModule('../src/parts/CreatePortIpc/CreatePortIpc.ts', () => ({
+jest.unstable_mockModule('../src/parts/CreatePortIpc/CreatePortIpc.ts', () => ({
   // @ts-ignore
   createPortIpc: jest.fn().mockResolvedValue(mockRpc as any),
 }))

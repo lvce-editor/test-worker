@@ -1,6 +1,6 @@
 import { expect, jest, test } from '@jest/globals'
 
-await jest.unstable_mockModule('../src/parts/ImportScript/ImportScript.ts', () => ({
+jest.unstable_mockModule('../src/parts/ImportScript/ImportScript.ts', () => ({
   importScript: jest.fn(),
 }))
 

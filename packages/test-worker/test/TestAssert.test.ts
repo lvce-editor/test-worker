@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import * as TestAssert from '../src/parts/TestAssert/TestAssert.ts'
 
 test('string: ok', () => {
-  TestAssert.string('a', 'msg')
+  expect(() => TestAssert.string('a', 'msg')).not.toThrow()
 })
 
 test('string: throws', () => {
@@ -10,7 +10,7 @@ test('string: throws', () => {
 })
 
 test('number: ok', () => {
-  TestAssert.number(1, 'msg')
+  expect(() => TestAssert.number(1, 'msg')).not.toThrow()
 })
 
 test('number: throws', () => {
