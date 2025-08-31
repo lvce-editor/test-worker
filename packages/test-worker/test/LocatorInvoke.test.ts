@@ -1,11 +1,11 @@
 import { expect, jest, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as LocatorInvoke from '../src/parts/LocatorInvoke/LocatorInvoke.ts'
 import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
+import * as LocatorInvoke from '../src/parts/LocatorInvoke/LocatorInvoke.ts'
 
 test('locatorInvoke: with WebViewState', async () => {
-  const invoke = jest.fn<Promise<any>, any[]>().mockResolvedValue('ok')
+  const invoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue('ok')
   const locator: any = { webViewId: 'web' }
   WebViewState.set('web', { invoke })
 
@@ -15,7 +15,7 @@ test('locatorInvoke: with WebViewState', async () => {
 })
 
 test('locatorInvoke: with RendererWorker', async () => {
-  const mockInvoke = jest.fn<Promise<any>, any[]>().mockResolvedValue('ok')
+  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue('ok')
   const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
   RendererWorker.set(mockRpc)
   const locator: any = {}

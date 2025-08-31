@@ -12,7 +12,7 @@ const createLocator = (selector: string = 'button'): any => {
 }
 
 test('toHaveText: ok path', async () => {
-  const mockInvoke = jest.fn<Promise<any>, any[]>().mockResolvedValue({})
+  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue({})
   const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
   RendererWorker.set(mockRpc)
 
@@ -24,7 +24,7 @@ test('toHaveText: ok path', async () => {
 })
 
 test('toHaveText: error path builds ConditionErrors', async () => {
-  const mockInvoke = jest.fn<Promise<any>, any[]>().mockResolvedValue({ error: true })
+  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue({ error: true })
   const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
   RendererWorker.set(mockRpc)
 
@@ -36,7 +36,7 @@ test('toHaveText: error path builds ConditionErrors', async () => {
 })
 
 test('toHaveCount: validates number', async () => {
-  const mockInvoke = jest.fn<Promise<any>, any[]>().mockResolvedValue({})
+  const mockInvoke = jest.fn<(...args: any[]) => Promise<any>>().mockResolvedValue({})
   const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
   RendererWorker.set(mockRpc)
   const locator = createLocator('item')
