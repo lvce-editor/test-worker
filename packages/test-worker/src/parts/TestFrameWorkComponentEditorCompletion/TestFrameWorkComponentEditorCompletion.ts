@@ -1,9 +1,14 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const selectIndex = async (index: number): Promise<void> => {
-  await Rpc.invoke('EditorCompletion.selectIndex', index)
+  await RendererWorker.invoke('EditorCompletion.selectIndex', index)
 }
 
 export const selectCurrentIndex = async (): Promise<void> => {
-  await Rpc.invoke('EditorCompletion.selectCurrentIndex')
+  await RendererWorker.invoke('EditorCompletion.selectCurrentIndex')
+}
+
+export const handleWheel = async (deltaMode: number, deltaY: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('EditorCompletion.handleWheel', deltaMode, deltaY)
 }
