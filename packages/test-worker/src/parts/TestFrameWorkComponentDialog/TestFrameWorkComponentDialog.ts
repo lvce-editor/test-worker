@@ -12,6 +12,12 @@ export const mockSaveFilePicker = async (fn: () => string): Promise<void> => {
   await RendererWorker.invoke('FilePicker.mockSaveFilePicker', id)
 }
 
+export const mockConfirm = async (fn: () => boolean): Promise<void> => {
+  const id = Mock.registerMock(fn)
+  // @ts-ignore
+  await RendererWorker.invoke('ConfirmPrompt.mock', id)
+}
+
 export const executeMock = (id: number): string => {
   return Mock.executeMock(id)
 }
