@@ -1,3 +1,3 @@
 export interface MockFn {
-  (): any
+  (...args: readonly any[]): any
 }

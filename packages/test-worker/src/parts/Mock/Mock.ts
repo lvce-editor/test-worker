@@ -9,7 +9,7 @@ export const registerMock = (fn: MockFn): number => {
   return id
 }
 
-export const executeMock = (id: number): string => {
+export const executeMock = (id: number, ...args: readonly any[]): string => {
   const fn = mocks[id]
-  return fn()
+  return fn(...args)
 }
