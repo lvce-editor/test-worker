@@ -18,6 +18,6 @@ export const mockConfirm = async (fn: () => boolean): Promise<void> => {
   await RendererWorker.invoke('ConfirmPrompt.mock', id)
 }
 
-export const executeMock = (id: number): string => {
-  return Mock.executeMock(id)
+export const executeMock = (id: number, ...args: readonly any[]): string => {
+  return Mock.executeMock(id, ...args)
 }
