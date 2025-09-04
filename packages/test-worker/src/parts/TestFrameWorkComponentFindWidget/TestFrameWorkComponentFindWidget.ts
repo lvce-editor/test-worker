@@ -14,3 +14,8 @@ export const setValue = async (value: string): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('FindWidget.handleInput', value, InputSource.Script)
 }
+
+export const toggleReplace = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.toggleReplace')
+}
