@@ -10,6 +10,11 @@ export const focusPrevious = async (): Promise<void> => {
   await RendererWorker.invoke('FindWidget.focusPrevious')
 }
 
+export const setReplaceValue = async (value: string): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.handleReplaceInput', value, InputSource.Script)
+}
+
 export const setValue = async (value: string): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('FindWidget.handleInput', value, InputSource.Script)
@@ -18,4 +23,14 @@ export const setValue = async (value: string): Promise<void> => {
 export const toggleReplace = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('FindWidget.toggleReplace')
+}
+
+export const replace = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.replace')
+}
+
+export const replaceAll = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.replaceAll')
 }
