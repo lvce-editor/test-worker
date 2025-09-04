@@ -19,3 +19,13 @@ export const toggleReplace = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('FindWidget.toggleReplace')
 }
+
+export const replace = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.replace')
+}
+
+export const replaceAll = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.replaceAll')
+}
