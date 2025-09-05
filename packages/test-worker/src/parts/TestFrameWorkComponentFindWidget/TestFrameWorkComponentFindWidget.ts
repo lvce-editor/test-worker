@@ -25,6 +25,21 @@ export const toggleReplace = async (): Promise<void> => {
   await RendererWorker.invoke('FindWidget.toggleReplace')
 }
 
+export const toggleMatchCase = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.toggleMatchCase')
+}
+
+export const toggleMatchWholeWord = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.toggleMatchWholeWord')
+}
+
+export const toggleUseRegularExpression = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.toggleUseRegularExpression')
+}
+
 export const replace = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('FindWidget.replace')
