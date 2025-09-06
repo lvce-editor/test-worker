@@ -49,3 +49,18 @@ export const replaceAll = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('FindWidget.replaceAll')
 }
+
+export const focusElement = async (whenExpression: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.focusElement', whenExpression)
+}
+
+export const focusNextElement = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.focusNextElement')
+}
+
+export const focusPreviousElement = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.focusPreviousElement')
+}
