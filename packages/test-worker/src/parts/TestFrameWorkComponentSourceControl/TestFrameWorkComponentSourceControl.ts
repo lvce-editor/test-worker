@@ -1,18 +1,18 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const selectIndex = async (index: number): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Source Control.selectIndex')
+  await RendererWorker.invoke('Source Control.selectIndex')
 }
 
 export const acceptInput = async (): Promise<void> => {
-  await Rpc.invoke('Source Control.acceptInput')
+  await RendererWorker.invoke('Source Control.acceptInput')
 }
 
 export const handleInput = async (text: string): Promise<void> => {
-  await Rpc.invoke('Source Control.handleInput', text)
+  await RendererWorker.invoke('Source Control.handleInput', text)
 }
 
 export const handleClickSourceControlButtons = async (index: number, name: string): Promise<void> => {
-  await Rpc.invoke('Source Control.handleClickSourceControlButtons', index, name)
+  await RendererWorker.invoke('Source Control.handleClickSourceControlButtons', index, name)
 }
