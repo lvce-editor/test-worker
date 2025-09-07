@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import { stringifyJson } from '../StringifyJson/StringifyJson.ts'
@@ -60,4 +61,18 @@ export const createExecutableFrom = async (uri: string): Promise<string> => {
   // @ts-ignore
   const content = await RendererWorker.invoke('Ajax.getText', absolutePath)
   return createExecutable(content)
+}
+
+export const createDroppedFileHandle = async (): Promise<DroppedFileHandle> => {
+  const directory = await navigator.storage.getDirectory()
+  const fileHandle = await directory.getFileHandle('dropped-file.txt', {
+    create: true,
+  })
+  const file = await fileHandle.getFile()
+  // @ts-ignore
+  const id = await ParentRpc.invoke('FileSystemHandle.addFileHandle', fileHandle)
+  return {
+    file,
+    id,
+  }
 }
