@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as InputSource from '../InputSource/InputSource.ts'
 
 export const selectIndex = async (index: number): Promise<void> => {
   // @ts-ignore
@@ -10,7 +11,8 @@ export const acceptInput = async (): Promise<void> => {
 }
 
 export const handleInput = async (text: string): Promise<void> => {
-  await RendererWorker.invoke('Source Control.handleInput', text)
+  // @ts-ignore
+  await RendererWorker.invoke('Source Control.handleInput', text, InputSource.Script)
 }
 
 export const handleClickSourceControlButtons = async (index: number, name: string): Promise<void> => {
