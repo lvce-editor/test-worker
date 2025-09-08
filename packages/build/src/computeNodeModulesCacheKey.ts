@@ -40,7 +40,7 @@ const getContent = (absolutePath: string): Promise<string> => {
   return readFile(absolutePath, 'utf8')
 }
 
-export const computeHash = (contents: string | string[]): string => {
+export const computeHash = (contents: readonly string[] | string): string => {
   const hash = createHash('sha1')
   if (Array.isArray(contents)) {
     for (const content of contents) {
@@ -52,7 +52,7 @@ export const computeHash = (contents: string | string[]): string => {
   return hash.digest('hex')
 }
 
-const computeCacheKey = async (locations: string[]): Promise<string> => {
+const computeCacheKey = async (locations: readonly string[]): Promise<string> => {
   const absolutePaths = locations.map(getAbsolutePath)
   const contents = await Promise.all(absolutePaths.map(getContent))
   const hash = computeHash(contents)
@@ -64,4 +64,4 @@ const main = async (): Promise<void> => {
   process.stdout.write(hash)
 }
 
-main()
+void main()
