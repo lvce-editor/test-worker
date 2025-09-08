@@ -6,14 +6,17 @@ import { root } from './root.js'
 const RE_WORD = /\w+/
 
 const getActualContent = (content) => {
-  const lines = content.split('\n')
+  // we want slightly different types,
+  // specifically instead of exporting every interface
+  // we only export a test api interface for tests
 
+  const lines = content.split('\n')
   const newLines = []
   let state = 'default'
   for (const line of lines) {
     switch (state) {
       case 'default':
-        if (line.startsWith('export')) {
+        if (line.startsWith('export {')) {
           state = 'export'
           newLines.push('export interface TestApi {')
         } else {
