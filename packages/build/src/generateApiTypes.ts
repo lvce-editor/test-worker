@@ -1,18 +1,18 @@
 import { execa } from 'execa'
 import { readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { root } from './root.js'
+import { root } from './root.ts'
 
 const RE_WORD = /\w+/
 
-const getActualContent = (content) => {
+const getActualContent = (content: string): string => {
   // we want slightly different types,
   // specifically instead of exporting every interface
   // we only export a test api interface for tests
 
   const lines = content.split('\n')
-  const newLines = []
-  let state = 'default'
+  const newLines: string[] = []
+  let state: 'default' | 'export' | 'after-export' = 'default'
   for (const line of lines) {
     switch (state) {
       case 'default':
@@ -35,7 +35,9 @@ const getActualContent = (content) => {
           newLines.push('}')
         } else {
           const word = line.match(RE_WORD)
-          newLines.push(`  readonly ${word}: typeof ${word},`)
+          if (word) {
+            newLines.push(`  readonly ${word[0]}: typeof ${word[0]},`)
+          }
         }
         break
       case 'after-export':
@@ -48,7 +50,7 @@ const getActualContent = (content) => {
   return newLines.join('\n')
 }
 
-export const generateApiTypes = async () => {
+export const generateApiTypes = async (): Promise<void> => {
   const ext = process.platform === 'win32' ? '' : ''
   const bundleGeneratorPath = join(root, 'packages', 'build', 'node_modules', '.bin', 'dts-bundle-generator' + ext)
   await execa(bundleGeneratorPath, ['-o', '../../.tmp/dist/dist/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'], {
