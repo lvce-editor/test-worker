@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as InputSource from '../InputSource/InputSource.ts'
 
 export const show = async (): Promise<void> => {
   // @ts-ignore
@@ -7,7 +8,7 @@ export const show = async (): Promise<void> => {
 
 export const handleFilterInput = async (text: string): Promise<void> => {
   // @ts-ignore
-  await RendererWorker.invoke('Problems.handleFilterInput', text)
+  await RendererWorker.invoke('Problems.handleFilterInput', text, InputSource.Script)
 }
 
 export const copyMessage = async (): Promise<void> => {
