@@ -101,3 +101,8 @@ export const toggleReplace = async (): Promise<void> => {
 export const open = async (): Promise<void> => {
   await RendererWorker.invoke('SideBar.openViewlet', 'Search')
 }
+
+export const setLimit = async (limit: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.setLimit', limit)
+}
