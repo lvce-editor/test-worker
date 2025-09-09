@@ -1,99 +1,103 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const setValue = async (value: string): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Search.handleInput', value, InputSource.Script)
+  await RendererWorker.invoke('Search.handleInput', value, InputSource.Script)
 }
 
 export const setReplaceValue = async (value: string): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Search.handleReplaceInput', value, InputSource.Script)
+  await RendererWorker.invoke('Search.handleReplaceInput', value, InputSource.Script)
 }
 
 export const setExcludeValue = async (value: string): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Search.handleExcludeInput', value, InputSource.Script)
+  await RendererWorker.invoke('Search.handleExcludeInput', value, InputSource.Script)
 }
 
 export const replaceAll = async (): Promise<void> => {
-  await Rpc.invoke('Search.replaceAll')
+  await RendererWorker.invoke('Search.replaceAll')
 }
 
 export const setIncludeValue = async (value: string): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Search.handleIncludeInput', value, InputSource.Script)
+  await RendererWorker.invoke('Search.handleIncludeInput', value, InputSource.Script)
 }
 
 export const clearSearchResults = async (): Promise<void> => {
-  await Rpc.invoke('Search.clearSearchResults')
+  await RendererWorker.invoke('Search.clearSearchResults')
 }
 
 export const openDetails = async (): Promise<void> => {
-  await Rpc.invoke('Search.openDetails')
+  await RendererWorker.invoke('Search.openDetails')
 }
 
 export const collapseDetails = async (): Promise<void> => {
-  await Rpc.invoke('Search.collapseDetails')
+  await RendererWorker.invoke('Search.collapseDetails')
 }
 
 export const dismissItem = async (): Promise<void> => {
-  await Rpc.invoke('Search.dismissItem')
+  await RendererWorker.invoke('Search.dismissItem')
 }
 
 export const focusFirst = async (): Promise<void> => {
-  await Rpc.invoke('Search.focusFirst')
+  await RendererWorker.invoke('Search.focusFirst')
 }
 
 export const focusIndex = async (index: number): Promise<void> => {
-  await Rpc.invoke('Search.focusIndex', index)
+  await RendererWorker.invoke('Search.focusIndex', index)
 }
 
 export const selectIndex = async (index: number): Promise<void> => {
-  await Rpc.invoke('Search.selectIndex', index)
+  await RendererWorker.invoke('Search.selectIndex', index)
 }
 
 export const focusNext = async (): Promise<void> => {
-  await Rpc.invoke('Search.focusNext')
+  await RendererWorker.invoke('Search.focusNext')
 }
 
 export const handleWheel = async (deltaMode: number, deltaY: number): Promise<void> => {
-  await Rpc.invoke('Search.handleWheel', deltaMode, deltaY)
+  await RendererWorker.invoke('Search.handleWheel', deltaMode, deltaY)
 }
 
 export const focusNextPage = async (): Promise<void> => {
   // @ts-ignore
-  await Rpc.invoke('Search.focusPage')
+  await RendererWorker.invoke('Search.focusPage')
 }
 
 export const focusPreviousPage = async (): Promise<void> => {
-  await Rpc.invoke('Search.focusPreviousPage')
+  await RendererWorker.invoke('Search.focusPreviousPage')
 }
 
 export const focusPrevious = async (): Promise<void> => {
-  await Rpc.invoke('Search.focusPrevious')
+  await RendererWorker.invoke('Search.focusPrevious')
 }
 
 export const toggleSearchDetails = async (): Promise<void> => {
-  await Rpc.invoke('Search.toggleSearchDetails')
+  await RendererWorker.invoke('Search.toggleSearchDetails')
 }
 
 export const toggleMatchCase = async (): Promise<void> => {
-  await Rpc.invoke('Search.toggleMatchCase')
+  await RendererWorker.invoke('Search.toggleMatchCase')
 }
 
 export const toggleMatchWholeWord = async (): Promise<void> => {
-  await Rpc.invoke('Search.toggleMatchWholeWord')
+  await RendererWorker.invoke('Search.toggleMatchWholeWord')
 }
 
 export const togglePreserveCase = async (): Promise<void> => {
-  await Rpc.invoke('Search.togglePreserveCase')
+  await RendererWorker.invoke('Search.togglePreserveCase')
 }
 
 export const toggleUseRegularExpression = async (): Promise<void> => {
-  await Rpc.invoke('Search.toggleUseRegularExpression')
+  await RendererWorker.invoke('Search.toggleUseRegularExpression')
 }
 
 export const toggleReplace = async (): Promise<void> => {
-  await Rpc.invoke('Search.toggleReplace')
+  await RendererWorker.invoke('Search.toggleReplace')
+}
+
+export const open = async (): Promise<void> => {
+  await RendererWorker.invoke('SideBar.openViewlet', 'Search')
 }
