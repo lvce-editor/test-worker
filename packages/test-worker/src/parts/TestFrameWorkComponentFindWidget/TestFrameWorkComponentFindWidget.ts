@@ -35,6 +35,11 @@ export const toggleMatchWholeWord = async (): Promise<void> => {
   await RendererWorker.invoke('FindWidget.toggleMatchWholeWord')
 }
 
+export const togglePreserveCase = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.togglePreserveCase')
+}
+
 export const toggleUseRegularExpression = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('FindWidget.toggleUseRegularExpression')
