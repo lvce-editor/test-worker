@@ -266,3 +266,13 @@ export const shouldHaveSelections = async (expectedSelections: Uint32Array): Pro
     throw new Error(`Expected editor to have selections ${expectedSelections} but was ${selections}`)
   }
 }
+
+export const undo = async (): Promise<void> => {
+  // @ts-ignore
+  await EditorWorker.invoke('Editor.undo')
+}
+
+export const redo = async (): Promise<void> => {
+  // @ts-ignore
+  await EditorWorker.invoke('Editor.redo')
+}
