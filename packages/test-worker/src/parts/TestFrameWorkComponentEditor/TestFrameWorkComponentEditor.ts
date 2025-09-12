@@ -241,19 +241,27 @@ export const getSelections = async (): Promise<Uint32Array> => {
   return EditorWorker.invoke('Editor.getSelections', numeric)
 }
 
+const getKey = async (): Promise<number> => {
+  const keys = await EditorWorker.invoke('Editor.getKeys')
+  if (keys.length === 0) {
+    throw new Error(`no editor found`)
+  }
+  const key = keys.at(-1)
+  const numeric = Number.parseInt(key)
+  return numeric
+}
+
 export const shouldHaveText = async (expectedText: string): Promise<void> => {
-  const text = await EditorWorker.invoke('Editor.getText')
+  const key = await getKey()
+  const text = await EditorWorker.invoke('Editor.getText', key)
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
   }
 }
 
 export const shouldHaveSelections = async (expectedSelections: Uint32Array): Promise<void> => {
-  const keys = await EditorWorker.invoke('Editor.getKeys')
-  const key = keys.at(-1)
-  const numeric = Number.parseInt(key)
-  // @ts-ignore
-  const selections = await EditorWorker.invoke('Editor.getSelections', numeric)
+  const key = await getKey()
+  const selections = await EditorWorker.invoke('Editor.getSelections', key)
   if (!areSelectionsEqual(selections, expectedSelections)) {
     throw new Error(`Expected editor to have selections ${expectedSelections} but was ${selections}`)
   }
