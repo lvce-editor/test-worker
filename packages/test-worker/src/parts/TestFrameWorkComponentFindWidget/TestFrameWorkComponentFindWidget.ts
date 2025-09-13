@@ -10,6 +10,11 @@ export const focusPrevious = async (): Promise<void> => {
   await RendererWorker.invoke('FindWidget.focusPrevious')
 }
 
+export const close = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FindWidget.close')
+}
+
 export const setReplaceValue = async (value: string): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('FindWidget.handleReplaceInput', value, InputSource.Script)
