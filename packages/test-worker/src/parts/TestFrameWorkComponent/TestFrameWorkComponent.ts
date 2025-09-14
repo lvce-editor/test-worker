@@ -8,6 +8,7 @@ export * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComp
 export * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 export * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 export * as EditorCompletion from '../TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
+export * as EditorHover from '../TestFrameWorkComponentEditorHover/TestFrameWorkComponentEditorHover.ts'
 export * as EditorSourceAction from '../TestFrameWorkComponentEditorSourceAction/TestFrameWorkComponentEditorSourceAction.ts'
 export * as Explorer from '../TestFrameWorkComponentExplorer/TestFrameWorkComponentExplorer.ts'
 export * as Extension from '../TestFrameWorkComponentExtension/TestFrameWorkComponentExtension.ts'
