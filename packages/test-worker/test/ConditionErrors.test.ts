@@ -1,22 +1,7 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ILocatorInternal } from '../src/parts/ILocatorInternal/ILocatorInternal.ts'
-
-type MockReturnType = {
-  wasFound?: boolean
-  actual?: string | number
-}
-
-const mockLocatorInvoke = jest.fn<() => Promise<MockReturnType>>()
-
-jest.unstable_mockModule('../src/parts/LocatorInvoke/LocatorInvoke.ts', () => ({
-  locatorInvoke: mockLocatorInvoke,
-}))
-
-const ConditionErrors = await import('../src/parts/ConditionErrors/ConditionErrors.ts')
-
-beforeEach(() => {
-  mockLocatorInvoke.mockReset()
-})
+import * as ConditionErrors from '../src/parts/ConditionErrors/ConditionErrors.ts'
 
 test('toBeVisible', () => {
   const locator: ILocatorInternal = {
@@ -42,12 +27,14 @@ test('toHaveText - element not found', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: false, actual: '' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: false, actual: '' }
+    },
+  })
   const result = await ConditionErrors.toHaveText(locator, { text: 'hello' })
   expect(result).toBe('expected selector .text to have text "hello" element was not found')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'hello' })
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'hello' }]])
 })
 
 test('toHaveText - wrong text', async () => {
@@ -56,12 +43,14 @@ test('toHaveText - wrong text', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: true, actual: 'world' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: true, actual: 'world' }
+    },
+  })
   const result = await ConditionErrors.toHaveText(locator, { text: 'hello' })
   expect(result).toBe('expected selector .text to have text "hello" but was "world"')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'hello' })
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'hello' }]])
 })
 
 test('toHaveText - with hasText selector', async () => {
@@ -70,12 +59,14 @@ test('toHaveText - with hasText selector', async () => {
     _nth: -1,
     _hasText: 'hello',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: true, actual: 'wrong' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: true, actual: 'wrong' }
+    },
+  })
   const result = await ConditionErrors.toHaveText(locator, { text: 'test' })
   expect(result).toBe('expected selector .item "hello" to have text "test" but was "wrong"')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'test' })
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'test' }]])
 })
 
 test('toHaveAttribute - element not found', async () => {
@@ -84,15 +75,24 @@ test('toHaveAttribute - element not found', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: false, actual: '' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: false, actual: '' }
+    },
+  })
   const result = await ConditionErrors.toHaveAttribute(locator, { key: 'href', value: '#' })
   expect(result).toBe('expected .link to have attribute href # but element was not found')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveAttribute', locator, {
-    key: 'href',
-    value: '#',
-  })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.checkConditionError',
+      'toHaveAttribute',
+      locator,
+      {
+        key: 'href',
+        value: '#',
+      },
+    ],
+  ])
 })
 
 test('toHaveAttribute - wrong value', async () => {
@@ -101,15 +101,24 @@ test('toHaveAttribute - wrong value', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: true, actual: '/test' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: true, actual: '/test' }
+    },
+  })
   const result = await ConditionErrors.toHaveAttribute(locator, { key: 'href', value: '#' })
   expect(result).toBe('expected .link to have attribute href # but was /test')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveAttribute', locator, {
-    key: 'href',
-    value: '#',
-  })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.checkConditionError',
+      'toHaveAttribute',
+      locator,
+      {
+        key: 'href',
+        value: '#',
+      },
+    ],
+  ])
 })
 
 test('toHaveCount', async () => {
@@ -118,12 +127,14 @@ test('toHaveCount', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ actual: 1 })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 1 }
+    },
+  })
   const result = await ConditionErrors.toHaveCount(locator, { count: 3 })
   expect(result).toBe('expected .items to have count 3 but was 1')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveCount', locator)
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveCount', locator]])
 })
 
 test('toBeFocused', async () => {
@@ -132,12 +143,14 @@ test('toBeFocused', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ actual: 'BUTTON' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'BUTTON' }
+    },
+  })
   const result = await ConditionErrors.toBeFocused(locator)
   expect(result).toBe('expected .input to be focused but active element is BUTTON')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toBeFocused', locator)
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toBeFocused', locator]])
 })
 
 test('toBeFocused - with document.body', async () => {
@@ -146,12 +159,14 @@ test('toBeFocused - with document.body', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ actual: 'document.body' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'document.body' }
+    },
+  })
   const result = await ConditionErrors.toBeFocused(locator)
   expect(result).toBe('expected .input to be focused but active element is document.body')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toBeFocused', locator)
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toBeFocused', locator]])
 })
 
 test('toBeHidden', () => {
@@ -169,12 +184,14 @@ test('toHaveClass - element not found', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: false })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: false }
+    },
+  })
   const result = await ConditionErrors.toHaveClass(locator, { className: 'active' })
   expect(result).toBe('expected .button to have class active but element was not found')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveClass', locator, { className: 'active' })
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveClass', locator, { className: 'active' }]])
 })
 
 test('toHaveClass - wrong class', async () => {
@@ -183,12 +200,14 @@ test('toHaveClass - wrong class', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: true })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: true }
+    },
+  })
   const result = await ConditionErrors.toHaveClass(locator, { className: 'active' })
   expect(result).toBe('expected .button to have class active')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveClass', locator, { className: 'active' })
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveClass', locator, { className: 'active' }]])
 })
 
 test('toHaveId - element not found', async () => {
@@ -197,12 +216,14 @@ test('toHaveId - element not found', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: false, actual: '' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: false, actual: '' }
+    },
+  })
   const result = await ConditionErrors.toHaveId(locator, { id: 'submit' })
   expect(result).toBe('expected .button to have id submit but element was not found')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveId', locator, { id: 'submit' })
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveId', locator, { id: 'submit' }]])
 })
 
 test('toHaveId - wrong id', async () => {
@@ -211,12 +232,14 @@ test('toHaveId - wrong id', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: true, actual: 'cancel' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: true, actual: 'cancel' }
+    },
+  })
   const result = await ConditionErrors.toHaveId(locator, { id: 'submit' })
   expect(result).toBe('expected .button to have id submit but was cancel')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveId', locator, { id: 'submit' })
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveId', locator, { id: 'submit' }]])
 })
 
 test('toHaveCss - element not found', async () => {
@@ -225,15 +248,24 @@ test('toHaveCss - element not found', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: false, actual: '' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: false, actual: '' }
+    },
+  })
   const result = await ConditionErrors.toHaveCss(locator, { key: 'display', value: 'flex' })
   expect(result).toBe('expected .button to have css display flex but element was not found')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveCss', locator, {
-    key: 'display',
-    value: 'flex',
-  })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.checkConditionError',
+      'toHaveCss',
+      locator,
+      {
+        key: 'display',
+        value: 'flex',
+      },
+    ],
+  ])
 })
 
 test('toHaveCss - wrong value', async () => {
@@ -242,13 +274,22 @@ test('toHaveCss - wrong value', async () => {
     _nth: -1,
     _hasText: '',
   }
-  mockLocatorInvoke.mockResolvedValue({ wasFound: true, actual: 'block' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: true, actual: 'block' }
+    },
+  })
   const result = await ConditionErrors.toHaveCss(locator, { key: 'display', value: 'flex' })
   expect(result).toBe('expected .button to have css display flex but was block')
-  expect(mockLocatorInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockLocatorInvoke).toHaveBeenCalledWith(locator, 'TestFrameWork.checkConditionError', 'toHaveCss', locator, {
-    key: 'display',
-    value: 'flex',
-  })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.checkConditionError',
+      'toHaveCss',
+      locator,
+      {
+        key: 'display',
+        value: 'flex',
+      },
+    ],
+  ])
 })

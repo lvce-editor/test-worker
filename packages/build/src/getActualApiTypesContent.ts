@@ -1,81 +1,14 @@
 const RE_WORD = /\w+/
 
-// we want slightly different types,
-// specifically instead of exporting every interface
-// we only export a test api interface for tests
-export const getActualApiTypesContent = (contentApi: string, contentExpect: string, contentLocator: string): string => {
+export const getActualApiTypesContent = (content: string): string => {
+  // we want slightly different types,
+  // specifically instead of exporting every interface
+  // we only export a test api interface for tests
+
+  const lines = content.split('\n')
   const newLines: string[] = []
-  const expectLines = contentExpect.split('\n')
-  let state: 'default' | 'export' | 'after-export' | 'internal' | 'skip' = 'default'
-
-  // for (const line of expectLines) {
-  //   if (line.startsWith('// Generated')) {
-  //     continue
-  //   }
-  //   if(line.startsWith('export {}')){
-  //     continue
-  //   }
-  //   if (line.includes('@internal')) {
-  //     state = 'internal'
-  //     continue
-  //   }
-  //   if (line.startsWith('export interface')) {
-  //     newLines.push(line.replace('export interface', 'interface'))
-  //     continue
-  //   }
-  //   if (state === 'internal') {
-  //     if (line.trim() === '*/') {
-  //       newLines.push(line)
-  //       continue
-  //     }
-  //     state = 'default'
-  //     continue
-  //   }
-  //   // TODO remove internal types
-  //   newLines.push(line)
-  // }
-
-  const locatorLines = contentLocator.split('\n')
-  state = 'default'
-  for (const line of locatorLines) {
-    if (line.startsWith('// Generated')) {
-      continue
-    }
-    if (line.startsWith('export {}')) {
-      continue
-    }
-    if (line.startsWith('export interface ILocatorInternal ')) {
-      state = 'skip'
-      continue
-    }
-    if (line.startsWith('export interface ILocator ')) {
-      state = 'skip'
-      continue
-    }
-    if (state === 'skip' && line === '}') {
-      state = 'default'
-      continue
-    }
-    if (state === 'skip') {
-      continue
-    }
-    if (line.startsWith('export declare const create')) {
-      newLines.push(`interface LocatorConstructor {
-  (selector: string, option?: any) => ILocatorExternal
-}`)
-      continue
-    }
-    if (line.startsWith('export interface')) {
-      newLines.push(line.replace('export interface', 'interface'))
-      continue
-    }
-
-    newLines.push(line)
-  }
-
-  const contentLines = contentApi.split('\n')
-  state = 'default'
-  for (const line of contentLines) {
+  let state: 'default' | 'export' | 'after-export' = 'default'
+  for (const line of lines) {
     switch (state) {
       case 'default':
         if (line.startsWith('export {')) {

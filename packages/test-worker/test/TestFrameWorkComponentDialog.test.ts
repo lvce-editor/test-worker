@@ -1,26 +1,26 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Mock from '../src/parts/Mock/Mock.ts'
 import * as Dialog from '../src/parts/TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 
-const setup = (): jest.Mock => {
-  const invoke: jest.Mock = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke })
-  RendererWorker.set(mockRpc)
-  return invoke
-}
-
 test('showSaveFilePicker', async () => {
-  const invoke = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FilePicker.showSaveFilePicker'() {
+      return undefined
+    },
+  })
   await Dialog.showSaveFilePicker()
-  expect(invoke).toHaveBeenCalledWith('FilePicker.showSaveFilePicker')
+  expect(mockRpc.invocations).toEqual([['FilePicker.showSaveFilePicker']])
 })
 
 test('mockSaveFilePicker registers and forwards id', async () => {
-  const invoke = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FilePicker.mockSaveFilePicker'() {
+      return undefined
+    },
+  })
   await Dialog.mockSaveFilePicker(() => 'test.txt')
-  expect(invoke).toHaveBeenCalledWith('FilePicker.mockSaveFilePicker', expect.any(Number))
+  expect(mockRpc.invocations).toEqual([['FilePicker.mockSaveFilePicker', expect.any(Number)]])
 })
 
 test('executeMock returns value', () => {

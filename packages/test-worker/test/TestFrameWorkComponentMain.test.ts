@@ -1,52 +1,82 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Main from '../src/parts/TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 
 test('openUri', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Main.openUri'() {
+      return undefined
+    },
+  })
 
   await Main.openUri('file:///test.txt')
 
-  expect(mockInvoke).toHaveBeenCalledWith('Main.openUri', 'file:///test.txt')
+  expect(mockRpc.invocations).toEqual([['Main.openUri', 'file:///test.txt']])
 })
 
 test('splitRight', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Main.splitRight'() {
+      return undefined
+    },
+  })
 
   await Main.splitRight()
 
-  expect(mockInvoke).toHaveBeenCalledWith('Main.splitRight')
+  expect(mockRpc.invocations).toEqual([['Main.splitRight']])
 })
 
 test('openKeyBindings', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Main.openKeyBindings'() {
+      return undefined
+    },
+  })
 
   await Main.openKeyBindings()
 
-  expect(mockInvoke).toHaveBeenCalledWith('Main.openKeyBindings')
+  expect(mockRpc.invocations).toEqual([['Main.openKeyBindings']])
 })
 
 test('closeAllEditors', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Main.closeAllEditors'() {
+      return undefined
+    },
+  })
 
   await Main.closeAllEditors()
 
-  expect(mockInvoke).toHaveBeenCalledWith('Main.closeAllEditors')
+  expect(mockRpc.invocations).toEqual([['Main.closeAllEditors']])
 })
 
 test('closeTabsLeft/Right and others', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Main.closeTabsLeft'() {
+      return undefined
+    },
+    'Main.closeTabsRight'() {
+      return undefined
+    },
+    'Main.closeOthers'() {
+      return undefined
+    },
+    'Main.closeActiveEditor'() {
+      return undefined
+    },
+    'Main.focusFirst'() {
+      return undefined
+    },
+    'Main.focusNext'() {
+      return undefined
+    },
+    'Main.focusPrevious'() {
+      return undefined
+    },
+    'Main.focusLast'() {
+      return undefined
+    },
+  })
 
   await Main.closeTabsLeft()
   await Main.closeTabsRight()
@@ -57,12 +87,14 @@ test('closeTabsLeft/Right and others', async () => {
   await Main.focusPrevious()
   await Main.focusLast()
 
-  expect(mockInvoke).toHaveBeenCalledWith('Main.closeTabsLeft')
-  expect(mockInvoke).toHaveBeenCalledWith('Main.closeTabsRight')
-  expect(mockInvoke).toHaveBeenCalledWith('Main.closeOthers')
-  expect(mockInvoke).toHaveBeenCalledWith('Main.closeActiveEditor')
-  expect(mockInvoke).toHaveBeenCalledWith('Main.focusFirst')
-  expect(mockInvoke).toHaveBeenCalledWith('Main.focusNext')
-  expect(mockInvoke).toHaveBeenCalledWith('Main.focusPrevious')
-  expect(mockInvoke).toHaveBeenCalledWith('Main.focusLast')
+  expect(mockRpc.invocations).toEqual([
+    ['Main.closeTabsLeft'],
+    ['Main.closeTabsRight'],
+    ['Main.closeOthers'],
+    ['Main.closeActiveEditor'],
+    ['Main.focusFirst'],
+    ['Main.focusNext'],
+    ['Main.focusPrevious'],
+    ['Main.focusLast'],
+  ])
 })

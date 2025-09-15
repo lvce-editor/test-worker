@@ -1,62 +1,91 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RunAndDebug from '../src/parts/TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 
-const mockInvoke = jest.fn()
-
-const mockRpc = {
-  invoke: mockInvoke,
-} as any
-
-beforeEach(() => {
-  ParentRpc.set(mockRpc)
-  mockInvoke.mockReset()
-})
-
 test('handleClickSectionWatch', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.handleClickSectionWatch'() {
+      return undefined
+    },
+  })
+
   await RunAndDebug.handleClickSectionWatch()
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Run And Debug.handleClickSectionWatch')
+  expect(mockRpc.invocations).toEqual([['Run And Debug.handleClickSectionWatch']])
 })
 
 test('addWatchExpression', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.addWatchExpression'() {
+      return undefined
+    },
+  })
+
   await RunAndDebug.addWatchExpression('a + b')
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Run And Debug.addWatchExpression', 'a + b')
+  expect(mockRpc.invocations).toEqual([['Run And Debug.addWatchExpression', 'a + b']])
 })
 
 test('handleWatchValueChange', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.handleWatchValueChange'() {
+      return undefined
+    },
+  })
+
   await RunAndDebug.handleWatchValueChange()
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Run And Debug.handleWatchValueChange')
+  expect(mockRpc.invocations).toEqual([['Run And Debug.handleWatchValueChange']])
 })
 
 test('acceptWatchExpressionEdit', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.acceptWatchExpressionEdit'() {
+      return undefined
+    },
+  })
+
   await RunAndDebug.acceptWatchExpressionEdit()
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Run And Debug.acceptWatchExpressionEdit')
+  expect(mockRpc.invocations).toEqual([['Run And Debug.acceptWatchExpressionEdit']])
 })
 
 test('selectIndex', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.selectIndex'() {
+      return undefined
+    },
+  })
+
   await RunAndDebug.selectIndex(3)
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Run And Debug.selectIndex', 3)
+  expect(mockRpc.invocations).toEqual([['Run And Debug.selectIndex', 3]])
 })
 
 test('setPauseOnExceptions', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.setPauseOnExceptions'() {
+      return undefined
+    },
+  })
+
   await RunAndDebug.setPauseOnExceptions(1)
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Run And Debug.setPauseOnExceptions', 1)
+  expect(mockRpc.invocations).toEqual([['Run And Debug.setPauseOnExceptions', 1]])
 })
 
 test('handleRename', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.handleRename'() {
+      return undefined
+    },
+  })
+
   await RunAndDebug.handleRename()
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Run And Debug.handleRename')
+  expect(mockRpc.invocations).toEqual([['Run And Debug.handleRename']])
 })
 
 test('handleSpace', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.handleSpace'() {
+      return undefined
+    },
+  })
+
   await RunAndDebug.handleSpace()
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Run And Debug.handleSpace')
+  expect(mockRpc.invocations).toEqual([['Run And Debug.handleSpace']])
 })

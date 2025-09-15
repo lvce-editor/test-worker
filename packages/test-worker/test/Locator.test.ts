@@ -1,20 +1,6 @@
-import { expect, test, beforeEach, jest } from '@jest/globals'
-
-beforeEach(() => {
-  jest.resetAllMocks()
-})
-
-const mockInvoke = jest.fn()
-
-jest.unstable_mockModule('@lvce-editor/rpc-registry', () => {
-  return {
-    RendererWorker: {
-      invoke: mockInvoke,
-    },
-  }
-})
-
-const { createLocator } = await import('../src/parts/CreateLocator/CreateLocator.ts')
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { createLocator } from '../src/parts/CreateLocator/CreateLocator.ts'
 
 test('create', () => {
   const selector = 'button'
@@ -27,43 +13,70 @@ test('create', () => {
 })
 
 test('click', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.performAction'() {
+      return undefined
+    },
+  })
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
   await locator.click()
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockInvoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'click', {
-    bubbles: true,
-    button: 0,
-    cancable: true,
-    detail: 1,
-  })
+  expect(mockRpc.invocations).toHaveLength(1)
+  expect(mockRpc.invocations[0]).toEqual([
+    'TestFrameWork.performAction',
+    locator,
+    'click',
+    {
+      bubbles: true,
+      button: 0,
+      cancable: true,
+      detail: 1,
+    },
+  ])
 })
 
 test('hover', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.performAction'() {
+      return undefined
+    },
+  })
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
   await locator.hover()
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockInvoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'hover', {
-    bubbles: true,
-    cancable: true,
-  })
+  expect(mockRpc.invocations).toHaveLength(1)
+  expect(mockRpc.invocations[0]).toEqual([
+    'TestFrameWork.performAction',
+    locator,
+    'hover',
+    {
+      bubbles: true,
+      cancable: true,
+    },
+  ])
 })
 
 test('type', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.performAction'() {
+      return undefined
+    },
+  })
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
   await locator.type('a')
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  // @ts-ignore
-  expect(mockInvoke).toHaveBeenCalledWith('TestFrameWork.performAction', locator, 'type', {
-    text: 'a',
-  })
+  expect(mockRpc.invocations).toHaveLength(1)
+  expect(mockRpc.invocations[0]).toEqual([
+    'TestFrameWork.performAction',
+    locator,
+    'type',
+    {
+      text: 'a',
+    },
+  ])
 })
 
 test('first', () => {
