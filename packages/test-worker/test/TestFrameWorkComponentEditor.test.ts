@@ -602,7 +602,7 @@ test('getSelections', async () => {
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
@@ -623,7 +623,7 @@ test('shouldHaveText', async () => {
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
@@ -643,7 +643,7 @@ test('shouldHaveText - throws error when text does not match', async () => {
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
@@ -663,7 +663,7 @@ test('shouldHaveSelections', async () => {
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
@@ -683,7 +683,7 @@ test('shouldHaveSelections - throws error when selections do not match', async (
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
@@ -703,7 +703,7 @@ test('shouldHaveText - throws error when no editor found', async () => {
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return []
@@ -720,7 +720,7 @@ test('shouldHaveSelections - throws error when no editor found', async () => {
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return []
@@ -737,7 +737,7 @@ test('undo', async () => {
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.undo'() {
       return undefined
@@ -754,7 +754,7 @@ test('redo', async () => {
       return undefined
     },
   })
-  
+
   const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.redo'() {
       return undefined
