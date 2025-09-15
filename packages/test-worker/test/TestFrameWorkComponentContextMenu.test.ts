@@ -5,7 +5,12 @@ import * as ContextMenu from '../src/parts/TestFrameWorkComponentContextMenu/Tes
 
 
 test('selectItem', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Menu.selectItem'() {
+      return undefined
+    },
+  })
+
   await ContextMenu.selectItem('test item')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Menu.selectItem', 'test item')
+  expect(mockRpc.invocations).toEqual([['Menu.selectItem', 'test item']])
 })
