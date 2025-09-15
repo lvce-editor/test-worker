@@ -37,3 +37,15 @@ test('selectChannel', async () => {
 
   expect(mockRpc.invocations).toEqual([['Output.selectChannel', 'test-channel-id']])
 })
+
+test('clear', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Output.clear'() {
+      return undefined
+    },
+  })
+
+  await Output.clear()
+
+  expect(mockRpc.invocations).toEqual([['Output.clear']])
+})

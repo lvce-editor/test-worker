@@ -28,3 +28,13 @@ test('executeMock returns value', () => {
   const result = Dialog.executeMock(id)
   expect(result).toBe('ok')
 })
+
+test('mockConfirm registers and forwards id', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ConfirmPrompt.mock'() {
+      return undefined
+    },
+  })
+  await Dialog.mockConfirm(() => true)
+  expect(mockRpc.invocations).toEqual([['ConfirmPrompt.mock', expect.any(Number)]])
+})
