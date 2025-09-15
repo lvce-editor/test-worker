@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, EditorWorker } from '@lvce-editor/rpc-registry'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
 test('setCursor', async () => {
@@ -583,6 +583,132 @@ test.skip('shouldHaveText - throws error when text does not match', async () => 
   })
 
   await expect(Editor.shouldHaveText('test text')).rejects.toThrow('Expected editor to have text test text but was wrong text')
+})
+
+test('growSelection', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectionGrow'() {
+      return undefined
+    },
+  })
+
+  await Editor.growSelection()
+  expect(mockRpc.invocations).toEqual([['Editor.selectionGrow']])
+})
+
+test('getSelections', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getSelections'() {
+      return new Uint32Array([1, 2, 3])
+    },
+  })
+
+  const selections = await Editor.getSelections()
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+  expect(selections).toEqual(new Uint32Array([1, 2, 3]))
+})
+
+test('shouldHaveText', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getText'() {
+      return 'test text'
+    },
+  })
+
+  await Editor.shouldHaveText('test text')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+})
+
+test('shouldHaveText - throws error when text does not match', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getText'() {
+      return 'wrong text'
+    },
+  })
+
+  await expect(Editor.shouldHaveText('test text')).rejects.toThrow('Expected editor to have text test text but was wrong text')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+})
+
+test('shouldHaveSelections', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getSelections'() {
+      return new Uint32Array([1, 2, 3])
+    },
+  })
+
+  await Editor.shouldHaveSelections(new Uint32Array([1, 2, 3]))
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+})
+
+test('shouldHaveSelections - throws error when selections do not match', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getSelections'() {
+      return new Uint32Array([4, 5, 6])
+    },
+  })
+
+  await expect(Editor.shouldHaveSelections(new Uint32Array([1, 2, 3]))).rejects.toThrow('Expected editor to have selections 1,2,3 but was 4,5,6')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+})
+
+test('shouldHaveText - throws error when no editor found', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return []
+    },
+  })
+
+  await expect(Editor.shouldHaveText('test text')).rejects.toThrow('no editor found')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys']])
+})
+
+test('shouldHaveSelections - throws error when no editor found', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return []
+    },
+  })
+
+  await expect(Editor.shouldHaveSelections(new Uint32Array([1, 2, 3]))).rejects.toThrow('no editor found')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys']])
+})
+
+test('undo', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.undo'() {
+      return undefined
+    },
+  })
+
+  await Editor.undo()
+  expect(mockRpc.invocations).toEqual([['Editor.undo']])
+})
+
+test('redo', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.redo'() {
+      return undefined
+    },
+  })
+
+  await Editor.redo()
+  expect(mockRpc.invocations).toEqual([['Editor.redo']])
 })
 
 test('executeTabCompletion', async () => {
