@@ -10,12 +10,16 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
     title: 'Test WebView',
   }
 
+  const disposables: Array<() => Promise<void>> = []
+
   // Mock RendererWorker for GetWebViewInfo and SetWebViewPort
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
+      // Add port to disposables
+      disposables.push(async () => port.close())
       // Simulate sending ready message after port is set
       setTimeout(() => {
         port.postMessage('ready')
@@ -31,7 +35,11 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  await result.dispose()
+  // Add result to disposables and dispose all
+  disposables.push(async () => await result.dispose())
+  for (const dispose of disposables) {
+    await dispose()
+  }
 })
 
 test('createPortRpc: throws error when first message is not ready', async (): Promise<void> => {
@@ -42,14 +50,15 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
     title: 'Test WebView 2',
   }
 
-  let capturedPort: MessagePort | null = null
+  const disposables: Array<() => Promise<void>> = []
 
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-      capturedPort = port
+      // Add port to disposables
+      disposables.push(async () => port.close())
       // Send wrong message instead of 'ready'
       setTimeout(() => {
         port.postMessage('not-ready')
@@ -63,9 +72,9 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  // Clean up
-  if (capturedPort) {
-    capturedPort.close()
+  // Dispose all disposables
+  for (const dispose of disposables) {
+    await dispose()
   }
 })
 
@@ -90,14 +99,15 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
     title: 'Error WebView',
   }
 
-  let capturedPort: MessagePort | null = null
+  const disposables: Array<() => Promise<void>> = []
 
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
     'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-      capturedPort = port
+      // Add port to disposables
+      disposables.push(async () => port.close())
       return Promise.reject(new Error('Failed to set port'))
     },
   })
@@ -108,9 +118,9 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  // Clean up
-  if (capturedPort) {
-    capturedPort.close()
+  // Dispose all disposables
+  for (const dispose of disposables) {
+    await dispose()
   }
 })
 
@@ -122,11 +132,15 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     title: 'Port Type Test',
   }
 
+  const disposables: Array<() => Promise<void>> = []
+
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
+      // Add port to disposables
+      disposables.push(async () => port.close())
       expect(portType).toBe('test')
       setTimeout(() => {
         port.postMessage('ready')
@@ -143,7 +157,11 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  await result.dispose()
+  // Add result to disposables and dispose all
+  disposables.push(async () => await result.dispose())
+  for (const dispose of disposables) {
+    await dispose()
+  }
 })
 
 test('createPortRpc: handles different webViewId values', async (): Promise<any> => {
@@ -160,14 +178,15 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       title: `WebView ${testCase.webViewId}`,
     }
 
-    let capturedPort: MessagePort | null = null
+    const disposables: Array<() => Promise<void>> = []
 
     const mockRpc = RendererWorker.registerMockRpc({
       async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
         return mockWebViewInfo
       },
       async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-        capturedPort = port
+        // Add port to disposables
+        disposables.push(async () => port.close())
         setTimeout(() => {
           port.postMessage('ready')
         }, 0)
@@ -183,12 +202,11 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       ['WebView.setPort', testCase.uid, expect.any(MessagePort), testCase.origin, 'test'],
     ])
 
-    // Clean up
-    if (capturedPort) {
-      capturedPort.close()
+    // Add result to disposables and dispose all
+    disposables.push(async () => await result.dispose())
+    for (const dispose of disposables) {
+      await dispose()
     }
-
-    await result.dispose()
 
     // Allow time for cleanup
     await new Promise((resolve) => setTimeout(resolve, 10))
