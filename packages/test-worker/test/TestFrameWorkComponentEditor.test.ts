@@ -3,7 +3,6 @@ import { RendererWorker, EditorWorker } from '@lvce-editor/rpc-registry'
 import { reset } from '../src/parts/EditorWorker/EditorWorker.ts'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
-// Reset module state before each test
 beforeEach(() => {
   reset()
 })
