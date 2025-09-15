@@ -5,25 +5,45 @@ import * as SourceControl from '../src/parts/TestFrameWorkComponentSourceControl
 
 
 test('selectIndex', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Source Control.selectIndex'() {
+      return undefined
+    },
+  })
+
   await SourceControl.selectIndex(2)
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Source Control.selectIndex')
+  expect(mockRpc.invocations).toEqual([['Source Control.selectIndex']])
 })
 
 test('acceptInput', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Source Control.acceptInput'() {
+      return undefined
+    },
+  })
+
   await SourceControl.acceptInput()
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Source Control.acceptInput')
+  expect(mockRpc.invocations).toEqual([['Source Control.acceptInput']])
 })
 
 test('handleInput', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Source Control.handleInput'() {
+      return undefined
+    },
+  })
+
   await SourceControl.handleInput('feat: message')
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Source Control.handleInput', 'feat: message')
+  expect(mockRpc.invocations).toEqual([['Source Control.handleInput', 'feat: message']])
 })
 
 test('handleClickSourceControlButtons', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Source Control.handleClickSourceControlButtons'() {
+      return undefined
+    },
+  })
+
   await SourceControl.handleClickSourceControlButtons(1, 'commit')
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Source Control.handleClickSourceControlButtons', 1, 'commit')
+  expect(mockRpc.invocations).toEqual([['Source Control.handleClickSourceControlButtons', 1, 'commit']])
 })

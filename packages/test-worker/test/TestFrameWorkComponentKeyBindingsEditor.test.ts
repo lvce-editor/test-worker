@@ -12,7 +12,7 @@ test('open', async () => {
   })
 
   await KeyBindingsEditor.open()
-  expect(mockRpc.invocations).toEqual(['Main.openUri', 'app://keybindings'])
+  expect(mockRpc.invocations).toEqual([['Main.openUri', 'app://keybindings']])
 })
 
 test('handleInput', async () => {
@@ -23,7 +23,7 @@ test('handleInput', async () => {
   })
 
   await KeyBindingsEditor.handleInput('test')
-  expect(mockRpc.invocations).toEqual(['KeyBindings.handleInput', 'test'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.handleInput', 'test']])
 })
 
 test('handleClick', async () => {
@@ -34,7 +34,7 @@ test('handleClick', async () => {
   })
 
   await KeyBindingsEditor.handleClick(10, 20)
-  expect(mockRpc.invocations).toEqual(['KeyBindings.handleClick', 10, 20])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.handleClick', 10, 20]])
 })
 
 test('handleWheel', async () => {
@@ -45,7 +45,7 @@ test('handleWheel', async () => {
   })
 
   await KeyBindingsEditor.handleWheel(1, 100)
-  expect(mockRpc.invocations).toEqual(['KeyBindings.handleWheel', 1, 100])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.handleWheel', 1, 100]])
 })
 
 test('handleDoubleClick', async () => {
@@ -56,7 +56,7 @@ test('handleDoubleClick', async () => {
   })
 
   await KeyBindingsEditor.handleDoubleClick(10, 20)
-  expect(mockRpc.invocations).toEqual(['KeyBindings.handleDoubleClick', 10, 20])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.handleDoubleClick', 10, 20]])
 })
 
 test('focusNext', async () => {
@@ -67,7 +67,7 @@ test('focusNext', async () => {
   })
 
   await KeyBindingsEditor.focusNext()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.focusNext'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.focusNext']])
 })
 
 test('focusPrevious', async () => {
@@ -78,7 +78,7 @@ test('focusPrevious', async () => {
   })
 
   await KeyBindingsEditor.focusPrevious()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.focusPrevious'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.focusPrevious']])
 })
 
 test('focusFirst', async () => {
@@ -89,7 +89,7 @@ test('focusFirst', async () => {
   })
 
   await KeyBindingsEditor.focusFirst()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.focusFirst'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.focusFirst']])
 })
 
 test('focusLast', async () => {
@@ -100,7 +100,7 @@ test('focusLast', async () => {
   })
 
   await KeyBindingsEditor.focusLast()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.focusLast'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.focusLast']])
 })
 
 test('toggleRecordingKeys', async () => {
@@ -111,7 +111,7 @@ test('toggleRecordingKeys', async () => {
   })
 
   await KeyBindingsEditor.toggleRecordingKeys()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.toggleRecordingKeys'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.toggleRecordingKeys']])
 })
 
 test('startRecordingKeys', async () => {
@@ -122,7 +122,7 @@ test('startRecordingKeys', async () => {
   })
 
   await KeyBindingsEditor.startRecordingKeys()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.startRecordingKeys'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.startRecordingKeys']])
 })
 
 test('clearInput', async () => {
@@ -133,7 +133,7 @@ test('clearInput', async () => {
   })
 
   await KeyBindingsEditor.clearInput()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.clearInput'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.clearInput']])
 })
 
 test('sortByPrecedence', async () => {
@@ -144,7 +144,7 @@ test('sortByPrecedence', async () => {
   })
 
   await KeyBindingsEditor.sortByPrecedence()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.sortByPrecedence'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.sortByPrecedence']])
 })
 
 test('stopRecordingKeys', async () => {
@@ -155,7 +155,7 @@ test('stopRecordingKeys', async () => {
   })
 
   await KeyBindingsEditor.stopRecordingKeys()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.stopRecordingKeys'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.stopRecordingKeys']])
 })
 
 test('handleContextMenu', async () => {
@@ -166,7 +166,7 @@ test('handleContextMenu', async () => {
   })
 
   await KeyBindingsEditor.handleContextMenu(1, 10, 20)
-  expect(mockRpc.invocations).toEqual(['KeyBindings.handleContextMenu', 1, 10, 20])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.handleContextMenu', 1, 10, 20]])
 })
 
 test('copyCommandId', async () => {
@@ -177,7 +177,7 @@ test('copyCommandId', async () => {
   })
 
   await KeyBindingsEditor.copyCommandId()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.copyCommandId'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.copyCommandId']])
 })
 
 test('copyCommandTitle', async () => {
@@ -188,7 +188,7 @@ test('copyCommandTitle', async () => {
   })
 
   await KeyBindingsEditor.copyCommandTitle()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.copyCommandTitle'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.copyCommandTitle']])
 })
 
 test('addKeyBinding', async () => {
@@ -199,7 +199,7 @@ test('addKeyBinding', async () => {
   })
 
   await KeyBindingsEditor.addKeyBinding()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.addKeyBinding'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.addKeyBinding']])
 })
 
 test('removeKeyBinding', async () => {
@@ -210,7 +210,7 @@ test('removeKeyBinding', async () => {
   })
 
   await KeyBindingsEditor.removeKeyBinding()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.removeKeyBinding'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.removeKeyBinding']])
 })
 
 test('changeWhenExpression', async () => {
@@ -221,7 +221,7 @@ test('changeWhenExpression', async () => {
   })
 
   await KeyBindingsEditor.changeWhenExpression()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.changeWhenExpression'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.changeWhenExpression']])
 })
 
 test('showSameKeyBindings', async () => {
@@ -232,7 +232,7 @@ test('showSameKeyBindings', async () => {
   })
 
   await KeyBindingsEditor.showSameKeyBindings()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.showSameKeyBindings'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.showSameKeyBindings']])
 })
 
 test('resetKeyBinding', async () => {
@@ -243,5 +243,5 @@ test('resetKeyBinding', async () => {
   })
 
   await KeyBindingsEditor.resetKeyBinding()
-  expect(mockRpc.invocations).toEqual(['KeyBindings.resetKeyBinding'])
+  expect(mockRpc.invocations).toEqual([['KeyBindings.resetKeyBinding']])
 })
