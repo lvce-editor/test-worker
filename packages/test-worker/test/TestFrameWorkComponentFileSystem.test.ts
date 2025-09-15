@@ -156,10 +156,14 @@ test('createExecutableFrom', async () => {
 test('createDroppedFileHandle', async () => {
   const mockFile = new File(['test content'], 'dropped-file.txt', { type: 'text/plain' })
   const mockFileHandle = {
-    getFile: (): Promise<File> => Promise.resolve(mockFile),
+    async getFile(): Promise<File> {
+      return mockFile
+    },
   }
   const mockDirectory = {
-    getFileHandle: (): Promise<typeof mockFileHandle> => Promise.resolve(mockFileHandle),
+    async getFileHandle(): Promise<typeof mockFileHandle> {
+      return mockFileHandle
+    },
   }
 
   // Mock navigator.storage.getDirectory
