@@ -24,3 +24,25 @@ test('selectCurrentIndex', async () => {
   expect(mockInvoke).toHaveBeenCalledTimes(1)
   expect(mockInvoke).toHaveBeenCalledWith('EditorCompletion.selectCurrentIndex')
 })
+
+test('close', async () => {
+  const mockInvoke = jest.fn()
+  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
+  RendererWorker.set(mockRpc)
+
+  await EditorCompletion.close()
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('EditorCompletion.close')
+})
+
+test('handleWheel', async () => {
+  const mockInvoke = jest.fn()
+  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
+  RendererWorker.set(mockRpc)
+
+  await EditorCompletion.handleWheel(0, 100)
+
+  expect(mockInvoke).toHaveBeenCalledTimes(1)
+  expect(mockInvoke).toHaveBeenCalledWith('EditorCompletion.handleWheel', 0, 100)
+})
