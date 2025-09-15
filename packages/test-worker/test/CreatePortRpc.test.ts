@@ -2,6 +2,8 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as CreatePortRpc from '../src/parts/CreatePortRpc/CreatePortRpc.ts'
 
+type Disposable = () => Promise<void>
+
 test('createPortRpc: creates RPC successfully with ready message', async (): Promise<any> => {
   const webViewId = 'test-webview-123'
   const mockWebViewInfo = {
@@ -10,7 +12,7 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
     title: 'Test WebView',
   }
 
-  const disposables: Array<() => Promise<void>> = []
+  const disposables: Disposable[] = []
 
   // Mock RendererWorker for GetWebViewInfo and SetWebViewPort
   const mockRpc = RendererWorker.registerMockRpc({
@@ -50,7 +52,7 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
     title: 'Test WebView 2',
   }
 
-  const disposables: Array<() => Promise<void>> = []
+  const disposables: Disposable[] = []
 
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
@@ -99,7 +101,7 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
     title: 'Error WebView',
   }
 
-  const disposables: Array<() => Promise<void>> = []
+  const disposables: Disposable[] = []
 
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
@@ -132,7 +134,7 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     title: 'Port Type Test',
   }
 
-  const disposables: Array<() => Promise<void>> = []
+  const disposables: Disposable[] = []
 
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
@@ -178,7 +180,7 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       title: `WebView ${testCase.webViewId}`,
     }
 
-    const disposables: Array<() => Promise<void>> = []
+    const disposables: Disposable[] = []
 
     const mockRpc = RendererWorker.registerMockRpc({
       async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
