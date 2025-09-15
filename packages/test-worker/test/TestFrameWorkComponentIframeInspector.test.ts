@@ -35,6 +35,6 @@ test('focus navigation methods', async () => {
     ['IframeInspector.focusNext'],
     ['IframeInspector.focusPrevious'],
     ['IframeInspector.focusFirst'],
-    ['IframeInspector.focusLast']
+    ['IframeInspector.focusLast'],
   ])
 })

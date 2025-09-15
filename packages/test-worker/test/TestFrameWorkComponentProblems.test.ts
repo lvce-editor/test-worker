@@ -11,9 +11,7 @@ test('show', async () => {
 
   await Problems.show()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Panel.selectIndex', 0]
-  ])
+  expect(mockRpc.invocations).toEqual([['Panel.selectIndex', 0]])
 })
 
 test('handleFilterInput', async () => {
@@ -25,9 +23,7 @@ test('handleFilterInput', async () => {
 
   await Problems.handleFilterInput('test filter')
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.handleFilterInput', 'test filter', 2]
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.handleFilterInput', 'test filter', 2]])
 })
 
 test('copyMessage', async () => {
@@ -39,9 +35,7 @@ test('copyMessage', async () => {
 
   await Problems.copyMessage()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.copyMessage']
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.copyMessage']])
 })
 
 test('focusIndex', async () => {
@@ -53,9 +47,7 @@ test('focusIndex', async () => {
 
   await Problems.focusIndex(5)
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.focusIndex', 5]
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.focusIndex', 5]])
 })
 
 test('handleArrowLeft', async () => {
@@ -67,9 +59,7 @@ test('handleArrowLeft', async () => {
 
   await Problems.handleArrowLeft()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.handleArrowLeft']
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.handleArrowLeft']])
 })
 
 test('handleArrowRight', async () => {
@@ -81,9 +71,7 @@ test('handleArrowRight', async () => {
 
   await Problems.handleArrowRight()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.handleArrowRight']
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.handleArrowRight']])
 })
 
 test('handleClickAt', async () => {
@@ -95,9 +83,7 @@ test('handleClickAt', async () => {
 
   await Problems.handleClickAt(100, 200)
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.handleClickAt', 100, 200]
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.handleClickAt', 100, 200]])
 })
 
 test('handleIconThemeChange', async () => {
@@ -109,9 +95,7 @@ test('handleIconThemeChange', async () => {
 
   await Problems.handleIconThemeChange()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.handleIconThemeChange']
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.handleIconThemeChange']])
 })
 
 test('viewAsList', async () => {
@@ -123,9 +107,7 @@ test('viewAsList', async () => {
 
   await Problems.viewAsList()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.viewAsList']
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.viewAsList']])
 })
 
 test('viewAsTable', async () => {
@@ -137,7 +119,5 @@ test('viewAsTable', async () => {
 
   await Problems.viewAsTable()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Problems.viewAsTable']
-  ])
+  expect(mockRpc.invocations).toEqual([['Problems.viewAsTable']])
 })

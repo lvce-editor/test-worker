@@ -9,9 +9,7 @@ test('handleClickCategory', async () => {
     },
   })
   await ExtensionDetail.handleClickCategory('cat')
-  expect(mockRpc.invocations).toEqual([
-    ['ExtensionDetail.handleClickCategory', 'cat']
-  ])
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleClickCategory', 'cat']])
 })
 
 test('handleClickEnable/Disable/SetColorTheme', async () => {
@@ -32,7 +30,7 @@ test('handleClickEnable/Disable/SetColorTheme', async () => {
   expect(mockRpc.invocations).toEqual([
     ['ExtensionDetail.handleClickEnable'],
     ['ExtensionDetail.handleClickDisable'],
-    ['ExtensionDetail.handleClickSetColorTheme']
+    ['ExtensionDetail.handleClickSetColorTheme'],
   ])
 })
 
@@ -49,7 +47,7 @@ test('selectFeature and selectTab', async () => {
   await ExtensionDetail.selectTab('tab')
   expect(mockRpc.invocations).toEqual([
     ['ExtensionDetail.selectFeature', 'feat'],
-    ['ExtensionDetail.selectTab', 'tab']
+    ['ExtensionDetail.selectTab', 'tab'],
   ])
 })
 
@@ -65,7 +63,7 @@ test('selectDetails/Features/Changelog', async () => {
   expect(mockRpc.invocations).toEqual([
     ['ExtensionDetail.selectTab', 'Details'],
     ['ExtensionDetail.selectTab', 'Features'],
-    ['ExtensionDetail.selectTab', 'Changelog']
+    ['ExtensionDetail.selectTab', 'Changelog'],
   ])
 })
 
@@ -76,9 +74,7 @@ test('open opens uri', async () => {
     },
   })
   await ExtensionDetail.open('my.ext')
-  expect(mockRpc.invocations).toEqual([
-    ['Main.openUri', 'extension-detail://my.ext']
-  ])
+  expect(mockRpc.invocations).toEqual([['Main.openUri', 'extension-detail://my.ext']])
 })
 
 test('openFeature and openThemes/Commands/WebViews/RuntimeStatus/JsonValidation/Settings', async () => {
@@ -101,7 +97,7 @@ test('openFeature and openThemes/Commands/WebViews/RuntimeStatus/JsonValidation/
     ['ExtensionDetail.handleFeaturesClick', 'WebView'],
     ['ExtensionDetail.handleFeaturesClick', 'RuntimeStatus'],
     ['ExtensionDetail.handleFeaturesClick', 'JsonValidation'],
-    ['ExtensionDetail.handleFeaturesClick', 'Settings']
+    ['ExtensionDetail.handleFeaturesClick', 'Settings'],
   ])
 })
 
@@ -112,7 +108,5 @@ test('handleScroll', async () => {
     },
   })
   await ExtensionDetail.handleScroll(123)
-  expect(mockRpc.invocations).toEqual([
-    ['ExtensionDetail.handleScroll', 123]
-  ])
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleScroll', 123]])
 })

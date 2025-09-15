@@ -11,13 +11,19 @@ test('press: simple key', async () => {
     },
   })
   await KeyBoard.press('a')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.performKeyBoardAction', 'press', {
-    cancelable: true,
-    bubbles: true,
-    key: 'a',
-    ctrlKey: false,
-    altKey: false,
-  }]])
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.performKeyBoardAction',
+      'press',
+      {
+        cancelable: true,
+        bubbles: true,
+        key: 'a',
+        ctrlKey: false,
+        altKey: false,
+      },
+    ],
+  ])
 })
 
 // modifier parsing
@@ -29,11 +35,17 @@ test('press: with modifiers Control+Alt+Space', async () => {
     },
   })
   await KeyBoard.press('Control+Alt+Space')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.performKeyBoardAction', 'press', {
-    cancelable: true,
-    bubbles: true,
-    key: ' ',
-    ctrlKey: true,
-    altKey: true,
-  }]])
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.performKeyBoardAction',
+      'press',
+      {
+        cancelable: true,
+        bubbles: true,
+        key: ' ',
+        ctrlKey: true,
+        altKey: true,
+      },
+    ],
+  ])
 })

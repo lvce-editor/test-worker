@@ -11,9 +11,7 @@ test('openUri', async () => {
 
   await Main.openUri('file:///test.txt')
 
-  expect(mockRpc.invocations).toEqual([
-    ['Main.openUri', 'file:///test.txt']
-  ])
+  expect(mockRpc.invocations).toEqual([['Main.openUri', 'file:///test.txt']])
 })
 
 test('splitRight', async () => {
@@ -25,9 +23,7 @@ test('splitRight', async () => {
 
   await Main.splitRight()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Main.splitRight']
-  ])
+  expect(mockRpc.invocations).toEqual([['Main.splitRight']])
 })
 
 test('openKeyBindings', async () => {
@@ -39,9 +35,7 @@ test('openKeyBindings', async () => {
 
   await Main.openKeyBindings()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Main.openKeyBindings']
-  ])
+  expect(mockRpc.invocations).toEqual([['Main.openKeyBindings']])
 })
 
 test('closeAllEditors', async () => {
@@ -53,9 +47,7 @@ test('closeAllEditors', async () => {
 
   await Main.closeAllEditors()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Main.closeAllEditors']
-  ])
+  expect(mockRpc.invocations).toEqual([['Main.closeAllEditors']])
 })
 
 test('closeTabsLeft/Right and others', async () => {
@@ -103,6 +95,6 @@ test('closeTabsLeft/Right and others', async () => {
     ['Main.focusFirst'],
     ['Main.focusNext'],
     ['Main.focusPrevious'],
-    ['Main.focusLast']
+    ['Main.focusLast'],
   ])
 })

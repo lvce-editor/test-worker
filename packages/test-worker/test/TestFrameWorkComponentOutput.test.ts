@@ -11,9 +11,7 @@ test('show', async () => {
 
   await Output.show()
 
-  expect(mockRpc.invocations).toEqual([
-    ['Panel.selectIndex', 1]
-  ])
+  expect(mockRpc.invocations).toEqual([['Panel.selectIndex', 1]])
 })
 
 test('handleFilterInput', async () => {
@@ -25,9 +23,7 @@ test('handleFilterInput', async () => {
 
   await Output.handleFilterInput('test filter')
 
-  expect(mockRpc.invocations).toEqual([
-    ['Output.handleFilterInput', 'test filter', 2]
-  ])
+  expect(mockRpc.invocations).toEqual([['Output.handleFilterInput', 'test filter', 2]])
 })
 
 test('selectChannel', async () => {
@@ -39,7 +35,5 @@ test('selectChannel', async () => {
 
   await Output.selectChannel('test-channel-id')
 
-  expect(mockRpc.invocations).toEqual([
-    ['Output.selectChannel', 'test-channel-id']
-  ])
+  expect(mockRpc.invocations).toEqual([['Output.selectChannel', 'test-channel-id']])
 })

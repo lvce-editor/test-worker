@@ -23,34 +23,26 @@ const setup = (): any => {
 test('readNativeFiles', async () => {
   const mockRpc = setup()
   await ClipBoard.readNativeFiles()
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.readNativeFiles']
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readNativeFiles']])
 })
 
 test('writeNativeFiles', async () => {
   const mockRpc = setup()
   const uris = ['file:///a', 'file:///b']
   await ClipBoard.writeNativeFiles(uris)
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.writeNativeFiles', uris]
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', uris]])
 })
 
 test('enableMemoryClipBoard', async () => {
   const mockRpc = setup()
   await ClipBoard.enableMemoryClipBoard()
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.enableMemoryClipBoard']
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.enableMemoryClipBoard']])
 })
 
 test('disableMemoryClipBoard', async () => {
   const mockRpc = setup()
   await ClipBoard.disableMemoryClipBoard()
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.disableMemoryClipBoard']
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.disableMemoryClipBoard']])
 })
 
 test('shouldHaveText - correct', async () => {
@@ -60,9 +52,7 @@ test('shouldHaveText - correct', async () => {
     },
   })
   await ClipBoard.shouldHaveText('hello')
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.readMemoryText']
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })
 
 test('shouldHaveText - wrong', async () => {
@@ -72,7 +62,5 @@ test('shouldHaveText - wrong', async () => {
     },
   })
   await expect(ClipBoard.shouldHaveText('hello')).rejects.toThrow('expected clipboard to have text "hello" but was "world"')
-  expect(mockRpc.invocations).toEqual([
-    ['ClipBoard.readMemoryText']
-  ])
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })

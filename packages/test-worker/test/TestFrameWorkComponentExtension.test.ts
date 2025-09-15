@@ -11,9 +11,7 @@ test('addWebExtension', async () => {
 
   await Extension.addWebExtension('extensions/web')
 
-  expect(mockRpc.invocations).toEqual([
-    ['ExtensionMeta.addWebExtension', 'extensions/web']
-  ])
+  expect(mockRpc.invocations).toEqual([['ExtensionMeta.addWebExtension', 'extensions/web']])
 })
 
 test('addNodeExtension', async () => {
@@ -25,7 +23,5 @@ test('addNodeExtension', async () => {
 
   await Extension.addNodeExtension('extensions/node')
 
-  expect(mockRpc.invocations).toEqual([
-    ['ExtensionMeta.addNodeExtension', 'extensions/node']
-  ])
+  expect(mockRpc.invocations).toEqual([['ExtensionMeta.addNodeExtension', 'extensions/node']])
 })

@@ -47,9 +47,7 @@ test('mkdir', async () => {
   })
 
   await FileSystem.mkdir('memfs:///dir')
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.mkdir', 'memfs:///dir']
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.mkdir', 'memfs:///dir']])
 })
 
 test('remove', async () => {
@@ -80,9 +78,7 @@ test('getTmpDir: file scheme', async () => {
 
   const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'file' })
   expect(tmpDir).toBe('/tmp')
-  expect(mockRpc.invocations).toEqual([
-    ['PlatformPaths.getTmpDir']
-  ])
+  expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir']])
 })
 
 test('chmod', async () => {
@@ -93,9 +89,7 @@ test('chmod', async () => {
   })
 
   await FileSystem.chmod('file:///bin', '755')
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.chmod', 'file:///bin', '755']
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.chmod', 'file:///bin', '755']])
 })
 
 test('createExecutable', async () => {
@@ -121,7 +115,7 @@ test('createExecutable', async () => {
     ['PlatformPaths.getTmpDir'],
     ['PlatformPaths.getNodePath'],
     ['FileSystem.writeFile', '/tmp/git', "#!/usr/bin/node\n  console.log('hi')"],
-    ['FileSystem.chmod', '/tmp/git', '755']
+    ['FileSystem.chmod', '/tmp/git', '755'],
   ])
 })
 
@@ -155,6 +149,6 @@ test('createExecutableFrom', async () => {
     ['PlatformPaths.getTmpDir'],
     ['PlatformPaths.getNodePath'],
     ['FileSystem.writeFile', '/tmp/git', "#!/usr/bin/node\n  console.log('ok')"],
-    ['FileSystem.chmod', '/tmp/git', '755']
+    ['FileSystem.chmod', '/tmp/git', '755'],
   ])
 })
