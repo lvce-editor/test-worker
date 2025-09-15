@@ -1,48 +1,50 @@
-import { test, jest, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Problems from '../src/parts/TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 
 test('show', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.show()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Panel.selectIndex', 0)
+  expect(mockRpc.invocations).toEqual([
+    ['Panel.selectIndex', 0]
+  ])
 })
 
 test('handleFilterInput', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleFilterInput('test filter')
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleFilterInput', 'test filter', 2)
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.handleFilterInput', 'test filter', 2]
+  ])
 })
 
 test('copyMessage', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.copyMessage()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.copyMessage')
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.copyMessage']
+  ])
 })
 
 test('focusIndex', async () => {
