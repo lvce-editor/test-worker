@@ -1,23 +1,32 @@
 import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as IframeInspector from '../src/parts/TestFrameWorkComponentIframeInspector/TestFrameWorkComponentIframeInspector.ts'
-import { createMockRpcWithInvocations } from './test-utils.ts'
-
-const setup = () => {
-  return createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
-    return undefined
-  })
-}
 
 test('selectIndex', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IframeInspector.selectIndex'() {
+      return undefined
+    },
+  })
   await IframeInspector.selectIndex(2)
-  expect(mockRpc.invocations).toEqual([
-    ['IframeInspector.selectIndex', 2]
-  ])
+  expect(mockRpc.invocations).toEqual([['IframeInspector.selectIndex', 2]])
 })
 
 test('focus navigation methods', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IframeInspector.focusNext'() {
+      return undefined
+    },
+    'IframeInspector.focusPrevious'() {
+      return undefined
+    },
+    'IframeInspector.focusFirst'() {
+      return undefined
+    },
+    'IframeInspector.focusLast'() {
+      return undefined
+    },
+  })
   await IframeInspector.focusNext()
   await IframeInspector.focusPrevious()
   await IframeInspector.focusFirst()

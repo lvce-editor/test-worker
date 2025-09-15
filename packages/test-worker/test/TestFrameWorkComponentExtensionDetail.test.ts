@@ -1,15 +1,14 @@
 import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ExtensionDetail from '../src/parts/TestFrameWorkComponentExtensionDetail/TestFrameWorkComponentExtensionDetail.ts'
-import { createMockRpcWithInvocations } from './test-utils.ts'
-
-const setup = () => {
-  return createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
-    return undefined
-  })
-}
 
 test('handleClickCategory', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {},
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
+  })
   await ExtensionDetail.handleClickCategory('cat')
   expect(mockRpc.invocations).toEqual([
     ['ExtensionDetail.handleClickCategory', 'cat']
@@ -17,7 +16,12 @@ test('handleClickCategory', async () => {
 })
 
 test('handleClickEnable/Disable/SetColorTheme', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {},
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
+  })
   await ExtensionDetail.handleClickEnable()
   await ExtensionDetail.handleClickDisable()
   await ExtensionDetail.handleClickSetColorTheme()
@@ -29,7 +33,12 @@ test('handleClickEnable/Disable/SetColorTheme', async () => {
 })
 
 test('selectFeature and selectTab', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {},
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
+  })
   await ExtensionDetail.selectFeature('feat')
   await ExtensionDetail.selectTab('tab')
   expect(mockRpc.invocations).toEqual([
@@ -39,7 +48,12 @@ test('selectFeature and selectTab', async () => {
 })
 
 test('selectDetails/Features/Changelog', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {},
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
+  })
   await ExtensionDetail.selectDetails()
   await ExtensionDetail.selectFeatures()
   await ExtensionDetail.selectChangelog()
@@ -51,7 +65,12 @@ test('selectDetails/Features/Changelog', async () => {
 })
 
 test('open opens uri', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {},
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
+  })
   await ExtensionDetail.open('my.ext')
   expect(mockRpc.invocations).toEqual([
     ['Main.openUri', 'extension-detail://my.ext']
@@ -59,7 +78,12 @@ test('open opens uri', async () => {
 })
 
 test('openFeature and openThemes/Commands/WebViews/RuntimeStatus/JsonValidation/Settings', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {},
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
+  })
   await ExtensionDetail.openFeature('FeatureX')
   await ExtensionDetail.openThemes()
   await ExtensionDetail.openCommands()
@@ -79,7 +103,12 @@ test('openFeature and openThemes/Commands/WebViews/RuntimeStatus/JsonValidation/
 })
 
 test('handleScroll', async () => {
-  const mockRpc = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {},
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
+  })
   await ExtensionDetail.handleScroll(123)
   expect(mockRpc.invocations).toEqual([
     ['ExtensionDetail.handleScroll', 123]
