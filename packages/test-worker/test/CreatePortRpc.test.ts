@@ -128,7 +128,7 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
   if (capturedPort) {
     capturedPort.close()
   }
-  
+
   // Allow time for cleanup
   await new Promise(resolve => setTimeout(resolve, 10))
 })
@@ -170,7 +170,7 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
   if (capturedPort) {
     capturedPort.close()
   }
-  
+
   // Allow time for cleanup
   await new Promise(resolve => setTimeout(resolve, 10))
 })
@@ -217,5 +217,8 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
     if (capturedPort) {
       capturedPort.close()
     }
+
+    // Allow time for cleanup
+    await new Promise(resolve => setTimeout(resolve, 10))
   }
 })
