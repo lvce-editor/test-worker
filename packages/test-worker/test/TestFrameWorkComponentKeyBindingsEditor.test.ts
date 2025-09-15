@@ -90,6 +90,17 @@ test('focusFirst', async () => {
   expect(mockRpc.invocations).toEqual([['KeyBindings.focusFirst']])
 })
 
+test('focusIndex', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'KeyBindings.focusIndex'() {
+      return undefined
+    },
+  })
+
+  await KeyBindingsEditor.focusIndex(5)
+  expect(mockRpc.invocations).toEqual([['KeyBindings.focusIndex', 5]])
+})
+
 test('focusLast', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.focusLast'() {

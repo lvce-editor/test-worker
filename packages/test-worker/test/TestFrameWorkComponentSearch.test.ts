@@ -255,3 +255,25 @@ test('toggleReplace', async () => {
   await Search.toggleReplace()
   expect(mockRpc.invocations).toEqual([['Search.toggleReplace']])
 })
+
+test('open', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SideBar.openViewlet'() {
+      return undefined
+    },
+  })
+
+  await Search.open()
+  expect(mockRpc.invocations).toEqual([['SideBar.openViewlet', 'Search']])
+})
+
+test('setLimit', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Search.setLimit'() {
+      return undefined
+    },
+  })
+
+  await Search.setLimit(100)
+  expect(mockRpc.invocations).toEqual([['Search.setLimit', 100]])
+})
