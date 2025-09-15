@@ -170,7 +170,9 @@ test('createDroppedFileHandle', async () => {
   Object.defineProperty(globalThis, 'navigator', {
     value: {
       storage: {
-        getDirectory: (): Promise<typeof mockDirectory> => Promise.resolve(mockDirectory),
+        async getDirectory(): Promise<typeof mockDirectory> {
+          return mockDirectory
+        },
       },
     },
     writable: true,
