@@ -2,7 +2,7 @@ import type { ILocator } from '../ILocator/ILocator.ts'
 import { getLocatorInvoke } from '../GetLocatorInvoke/GetLocatorInvoke.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
-export const create = (selector: string, options: any = {}): any => {
+export const create = (selector: string, options: any = {}): Locator => {
   return new Locator(selector, options)
 }
 

@@ -1,24 +1,25 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SideBar from '../src/parts/TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
-const mockRpc = {
-  invoke: jest.fn(),
-} as any
-
-beforeEach(() => {
-  ParentRpc.set(mockRpc)
-  mockRpc.invoke.mockReset()
-})
-
 test('open', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SideBar.openViewlet'() {
+      return undefined
+    },
+  })
+
   await SideBar.open('test-id')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('SideBar.openViewlet', 'test-id')
+  expect(mockRpc.invocations).toEqual([['SideBar.openViewlet', 'test-id']])
 })
 
 test('hide', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Layout.hideSideBar'() {
+      return undefined
+    },
+  })
+
   await SideBar.hide()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Layout.hideSideBar')
+  expect(mockRpc.invocations).toEqual([['Layout.hideSideBar']])
 })
