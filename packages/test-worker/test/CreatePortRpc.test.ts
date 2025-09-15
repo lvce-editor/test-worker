@@ -197,8 +197,5 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
 
     store.add(async () => await result.dispose())
     await store.dispose()
-
-    // Allow time for cleanup
-    await new Promise((resolve) => setTimeout(resolve, 10))
   }
 })
