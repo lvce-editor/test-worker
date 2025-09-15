@@ -43,7 +43,7 @@ test('toHaveText: error path builds ConditionErrors', async () => {
   // Verify the RPC was called
   expect(mockRpc.invocations).toEqual([
     ['TestFrameWork.checkSingleElementCondition', locator, 'toHaveText', { text: 'World' }],
-    ['TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'World' }]
+    ['TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'World' }],
   ])
 })
 
