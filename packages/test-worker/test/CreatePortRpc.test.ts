@@ -146,7 +146,7 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     },
   })
 
-  const result: any = await CreatePortRpc.createPortRpc(webViewId)
+  const result = await CreatePortRpc.createPortRpc(webViewId)
 
   expect(result).toBeDefined()
   expect(typeof result).toBe('object')
@@ -186,7 +186,7 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       },
     })
 
-    const result: any = await CreatePortRpc.createPortRpc(testCase.webViewId)
+    const result = await CreatePortRpc.createPortRpc(testCase.webViewId)
 
     expect(result).toBeDefined()
     expect(typeof result).toBe('object')
