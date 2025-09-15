@@ -1,5 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
+import type { FileSystemTmpDirOptions } from '../FileSystemTmpDirOptions/FileSystemTmpDirOptions.ts'
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import { stringifyJson } from '../StringifyJson/StringifyJson.ts'
@@ -25,7 +26,7 @@ export const remove = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.remove', uri)
 }
 
-export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: { readonly scheme?: string } = {}): Promise<string> => {
+export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: FileSystemTmpDirOptions = {}): Promise<string> => {
   switch (scheme) {
     case FileSystemProtocol.Memfs:
       return 'memfs:///workspace'
