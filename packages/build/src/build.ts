@@ -3,6 +3,7 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { bundleJs } from './bundleJs.ts'
 import { generateApiTypes } from './generateApiTypes.ts'
+import { verifyE2eTypes } from './verifyE2eTypes.ts'
 import { root } from './root.ts'
 
 const dist = join(root, '.tmp', 'dist')
@@ -70,6 +71,8 @@ packageJson.types = 'dist/api.d.ts'
 await writeJson(join(dist, 'package.json'), packageJson)
 
 await generateApiTypes()
+
+await verifyE2eTypes()
 
 await cp(join(root, 'README.md'), join(dist, 'README.md'))
 await cp(join(root, 'LICENSE'), join(dist, 'LICENSE'))
