@@ -70,8 +70,6 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
   if (capturedPort) {
     capturedPort.close()
   }
-
-  await mockRpc.dispose()
 })
 
 test('createPortRpc: propagates error from GetWebViewInfo', async (): Promise<void> => {
@@ -85,8 +83,6 @@ test('createPortRpc: propagates error from GetWebViewInfo', async (): Promise<vo
 
   await expect(CreatePortRpc.createPortRpc(webViewId)).rejects.toThrow('WebView not found')
   expect(mockRpc.invocations).toEqual([['WebView.getWebViewInfo2', webViewId]])
-
-  await mockRpc.dispose()
 })
 
 test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<void> => {
@@ -119,8 +115,6 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
   if (capturedPort) {
     capturedPort.close()
   }
-
-  await mockRpc.dispose()
 })
 
 test('createPortRpc: uses correct port type', async (): Promise<any> => {
@@ -155,13 +149,7 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  // Clean up
-  result.close?.()
-  if (capturedPort) {
-    capturedPort.close()
-  }
-
-  await mockRpc.dispose()
+  await result.dispose()
 })
 
 test('createPortRpc: handles different webViewId values', async (): Promise<any> => {
@@ -207,7 +195,7 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       capturedPort.close()
     }
 
-    await mockRpc.dispose()
+    await result.dispose()
 
     // Allow time for cleanup
     await new Promise((resolve) => setTimeout(resolve, 10))
