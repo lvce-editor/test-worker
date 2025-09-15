@@ -1,28 +1,33 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as LocatorInvoke from '../src/parts/LocatorInvoke/LocatorInvoke.ts'
 import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
 test('locatorInvoke: with WebViewState', async () => {
-  const invoke = jest.fn<(...args: readonly any[]) => Promise<any>>().mockResolvedValue('ok')
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.performAction'() {
+      return 'ok'
+    },
+  })
   const locator: any = { webViewId: 'web' }
-  WebViewState.set('web', { invoke })
+  WebViewState.set('web', { invoke: mockRpc.invoke })
 
-  const result = await LocatorInvoke.locatorInvoke(locator, 'click', 1)
+  const result = await LocatorInvoke.locatorInvoke(locator, 'TestFrameWork.performAction', locator, 'click', 1)
   expect(result).toBe('ok')
-  expect(invoke).toHaveBeenCalledWith('click', 1)
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.performAction', locator, 'click', 1]])
 })
 
 test('locatorInvoke: with RendererWorker', async () => {
-  const mockInvoke = jest.fn<(...args: readonly any[]) => Promise<any>>().mockResolvedValue('ok')
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.performAction'() {
+      return 'ok'
+    },
+  })
   const locator: any = {}
 
-  const result = await LocatorInvoke.locatorInvoke(locator, 'hover', 2)
+  const result = await LocatorInvoke.locatorInvoke(locator, 'TestFrameWork.performAction', locator, 'hover', 2)
   expect(result).toBe('ok')
-  expect(mockInvoke).toHaveBeenCalledWith('hover', 2)
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.performAction', locator, 'hover', 2]])
 })
 
 test('locatorInvoke: asserts', async () => {
