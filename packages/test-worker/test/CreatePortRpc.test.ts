@@ -4,6 +4,12 @@ import * as CreatePortRpc from '../src/parts/CreatePortRpc/CreatePortRpc.ts'
 
 type Disposable = () => Promise<void>
 
+const disposeAll = async (disposables: readonly Disposable[]): Promise<void> => {
+  for (const dispose of disposables) {
+    await dispose()
+  }
+}
+
 test('createPortRpc: creates RPC successfully with ready message', async (): Promise<any> => {
   const webViewId = 'test-webview-123'
   const mockWebViewInfo = {
@@ -37,9 +43,7 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
 
   // Add result to disposables and dispose all
   disposables.push(async () => await result.dispose())
-  for (const dispose of disposables) {
-    await dispose()
-  }
+  await disposeAll(disposables)
 })
 
 test('createPortRpc: throws error when first message is not ready', async (): Promise<void> => {
@@ -71,9 +75,7 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
   ])
 
   // Dispose all disposables
-  for (const dispose of disposables) {
-    await dispose()
-  }
+  await disposeAll(disposables)
 })
 
 test.skip('createPortRpc: propagates error from GetWebViewInfo', async (): Promise<void> => {
@@ -117,9 +119,7 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
   ])
 
   // Dispose all disposables
-  for (const dispose of disposables) {
-    await dispose()
-  }
+  await disposeAll(disposables)
 })
 
 test('createPortRpc: uses correct port type', async (): Promise<any> => {
@@ -155,9 +155,7 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
 
   // Add result to disposables and dispose all
   disposables.push(async () => await result.dispose())
-  for (const dispose of disposables) {
-    await dispose()
-  }
+  await disposeAll(disposables)
 })
 
 test('createPortRpc: handles different webViewId values', async (): Promise<any> => {
@@ -198,9 +196,7 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
 
     // Add result to disposables and dispose all
     disposables.push(async () => await result.dispose())
-    for (const dispose of disposables) {
-      await dispose()
-    }
+    await disposeAll(disposables)
 
     // Allow time for cleanup
     await new Promise((resolve) => setTimeout(resolve, 10))
