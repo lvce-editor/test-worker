@@ -12,8 +12,6 @@ test('writeFile', async () => {
   await FileSystem.writeFile('memfs:///file.txt', 'content')
 
   expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', 'memfs:///file.txt', 'content']])
-  
-  await mockRpc.dispose()
 })
 
 test('writeJson', async () => {
