@@ -6,7 +6,7 @@ test('getWebViewInfo: calls RendererWorker.invoke with correct method and webVie
   const mockWebViewInfo = {
     uid: 'test-uid-123',
     origin: 'https://example.com',
-    title: 'Test WebView'
+    title: 'Test WebView',
   }
 
   const mockRpc = RendererWorker.registerMockRpc({
@@ -18,16 +18,14 @@ test('getWebViewInfo: calls RendererWorker.invoke with correct method and webVie
   const result: any = await GetWebViewInfo.getWebViewInfo('test-webview-id')
 
   expect(result).toEqual(mockWebViewInfo)
-  expect(mockRpc.invocations).toEqual([
-    ['WebView.getWebViewInfo2', 'test-webview-id']
-  ])
+  expect(mockRpc.invocations).toEqual([['WebView.getWebViewInfo2', 'test-webview-id']])
 })
 
 test('getWebViewInfo: handles different webViewId values', async (): Promise<void> => {
   const mockWebViewInfo = {
     uid: 'different-uid-456',
     origin: 'https://test.com',
-    title: 'Different WebView'
+    title: 'Different WebView',
   }
 
   const mockRpc = RendererWorker.registerMockRpc({
@@ -39,9 +37,7 @@ test('getWebViewInfo: handles different webViewId values', async (): Promise<voi
   const result: any = await GetWebViewInfo.getWebViewInfo('different-webview-id')
 
   expect(result).toEqual(mockWebViewInfo)
-  expect(mockRpc.invocations).toEqual([
-    ['WebView.getWebViewInfo2', 'different-webview-id']
-  ])
+  expect(mockRpc.invocations).toEqual([['WebView.getWebViewInfo2', 'different-webview-id']])
 })
 
 test('getWebViewInfo: propagates errors from RendererWorker.invoke', async (): Promise<void> => {
@@ -52,7 +48,5 @@ test('getWebViewInfo: propagates errors from RendererWorker.invoke', async (): P
   })
 
   await expect(GetWebViewInfo.getWebViewInfo('non-existent-id')).rejects.toThrow('WebView not found')
-  expect(mockRpc.invocations).toEqual([
-    ['WebView.getWebViewInfo2', 'non-existent-id']
-  ])
+  expect(mockRpc.invocations).toEqual([['WebView.getWebViewInfo2', 'non-existent-id']])
 })
