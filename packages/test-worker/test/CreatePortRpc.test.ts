@@ -10,15 +10,12 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
     title: 'Test WebView',
   }
 
-  let capturedPort: MessagePort | null = null
-
   // Mock RendererWorker for GetWebViewInfo and SetWebViewPort
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-      capturedPort = port
       // Simulate sending ready message after port is set
       setTimeout(() => {
         port.postMessage('ready')
@@ -125,14 +122,11 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     title: 'Port Type Test',
   }
 
-  let capturedPort: MessagePort | null = null
-
   const mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-      capturedPort = port
       expect(portType).toBe('test')
       setTimeout(() => {
         port.postMessage('ready')
@@ -190,7 +184,6 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
     ])
 
     // Clean up
-    result.close?.()
     if (capturedPort) {
       capturedPort.close()
     }
