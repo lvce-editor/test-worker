@@ -1,70 +1,54 @@
 import { execa } from 'execa'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile, readdir, stat } from 'node:fs/promises'
 import { join } from 'node:path'
 import { root } from './root.ts'
+
+const copyE2eTestFiles = async (srcDir: string, destDir: string): Promise<void> => {
+  const files = await readdir(srcDir)
+  
+  for (const file of files) {
+    const srcPath = join(srcDir, file)
+    const destPath = join(destDir, file)
+    
+    const stats = await stat(srcPath)
+    if (stats.isDirectory()) {
+      await mkdir(destPath, { recursive: true })
+      await copyE2eTestFiles(srcPath, destPath)
+    } else if (file.endsWith('.ts')) {
+      const content = await readFile(srcPath, 'utf8')
+      
+      // Replace test-with-playwright imports with our generated API types
+      const modifiedContent = content.replace(
+        /import type { Test } from '@lvce-editor\/test-with-playwright'/g,
+        "import type { Test } from './api.d.ts'"
+      )
+      
+      await writeFile(destPath, modifiedContent)
+    }
+  }
+}
 
 export const verifyE2eTypes = async (): Promise<void> => {
   const tempDir = join(root, '.tmp', 'e2e-type-verification')
   const generatedTypesPath = join(root, '.tmp', 'dist', 'dist', 'api.d.ts')
+  const e2eSrcDir = join(root, 'packages', 'e2e', 'src')
 
-  // Create temporary directory
+  // Create temporary directory structure
   await mkdir(tempDir, { recursive: true })
+  const tempSrcDir = join(tempDir, 'src')
+  await mkdir(tempSrcDir, { recursive: true })
 
-  // Create a simple test file that uses the generated types
-  const testContent = `
-import type { TestApi, Test } from './api.d.ts'
-
-// Test that the generated types work correctly
-const testApi: TestApi = {} as any
-
-// Test that we can create a test function with the correct signature
-const testFunction: Test = async (api) => {
-  // Test Locator usage
-  const locator = api.Locator('.test-selector')
-  await locator.click({})
-  await locator.hover()
-  await locator.type('test text')
-
-  // Test expect usage
-  await api.expect(locator).toBeVisible()
-
-  // Test About usage
-  await api.About.show()
-
-  // Test KeyBindingsEditor usage
-  await api.KeyBindingsEditor.open()
-
-  // Test TitleBarMenuBar usage
-  await api.TitleBarMenuBar.focus()
-  await api.TitleBarMenuBar.handleKeyArrowDown()
-}
-
-// Test that the types are properly exported
-const _testApi: TestApi = testApi
-const _testFunction: Test = testFunction
-`
-
-  // Copy the generated types to temp directory
+  // Copy the generated types to temp src directory
   const generatedTypes = await readFile(generatedTypesPath, 'utf8')
-  await writeFile(join(tempDir, 'api.d.ts'), generatedTypes)
-  await writeFile(join(tempDir, 'test.ts'), testContent)
+  await writeFile(join(tempSrcDir, 'api.d.ts'), generatedTypes)
 
-  // Create a simple tsconfig.json
-  const tsconfig = {
-    compilerOptions: {
-      target: 'esnext',
-      lib: ['esnext'],
-      module: 'esnext',
-      moduleResolution: 'node',
-      skipLibCheck: true,
-      noEmit: true,
-      strict: true,
-      noImplicitAny: false,
-    },
-    include: ['test.ts'],
-  }
+  // Copy all e2e test files and replace imports
+  await copyE2eTestFiles(e2eSrcDir, tempSrcDir)
 
-  await writeFile(join(tempDir, 'tsconfig.json'), JSON.stringify(tsconfig, null, 2))
+  // Copy the tsconfig.json from the e2e package
+  const e2eTsconfigPath = join(root, 'packages', 'e2e', 'tsconfig.json')
+  const e2eTsconfig = await readFile(e2eTsconfigPath, 'utf8')
+  await writeFile(join(tempDir, 'tsconfig.json'), e2eTsconfig)
 
   // Run TypeScript compiler to check for errors
   const { stdout, stderr, exitCode } = await execa('npx', ['tsc', '--noEmit'], {
@@ -81,5 +65,5 @@ const _testFunction: Test = testFunction
     throw new Error(`E2E type verification failed with exit code ${exitCode}`)
   }
 
-  console.log('✅ E2E type verification passed - generated API types are valid and complete')
+  console.log('✅ E2E type verification passed - all e2e tests compile correctly with generated API types')
 }
