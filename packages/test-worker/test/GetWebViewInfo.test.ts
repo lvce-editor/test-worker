@@ -10,8 +10,8 @@ test('getWebViewInfo: calls RendererWorker.invoke with correct method and webVie
   }
 
   const mockRpc = RendererWorker.registerMockRpc({
-    'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
-      return Promise.resolve(mockWebViewInfo)
+    async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
+      return mockWebViewInfo
     },
   })
 
@@ -31,8 +31,8 @@ test('getWebViewInfo: handles different webViewId values', async (): Promise<voi
   }
 
   const mockRpc = RendererWorker.registerMockRpc({
-    'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
-      return Promise.resolve(mockWebViewInfo)
+    async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
+      return mockWebViewInfo
     },
   })
 
