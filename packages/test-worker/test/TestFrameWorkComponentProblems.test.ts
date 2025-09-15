@@ -28,7 +28,7 @@ test('handleFilterInput', async () => {
   await Problems.handleFilterInput('test filter')
 
   expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleFilterInput', 'test filter')
+  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleFilterInput', 'test filter', 2)
 })
 
 test('copyMessage', async () => {
