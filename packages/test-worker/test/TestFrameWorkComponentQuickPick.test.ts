@@ -3,81 +3,162 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as QuickPick from '../src/parts/TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 
 test('open', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget'() {
+      return undefined
+    },
+  })
+
   await QuickPick.open()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Viewlet.openWidget', 'QuickPick', 'everything')
+  expect(mockRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'everything']])
 })
 
 test('handleInput', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.handleInput'() {
+      return undefined
+    },
+  })
+
   await QuickPick.handleInput('test')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.handleInput', 'test', 0)
+  expect(mockRpc.invocations).toEqual([['QuickPick.handleInput', 'test', 0]])
 })
 
 test('handleClickAt', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.handleClickAt'() {
+      return undefined
+    },
+  })
+
   await QuickPick.handleClickAt(100, 200)
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.handleClickAt', 100, 200)
+  expect(mockRpc.invocations).toEqual([['QuickPick.handleClickAt', 100, 200]])
 })
 
 test('setValue', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.setValue'() {
+      return undefined
+    },
+  })
+
   await QuickPick.setValue('test')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.setValue', 'test')
+  expect(mockRpc.invocations).toEqual([['QuickPick.setValue', 'test']])
 })
 
 test('focusNext', async () => {
+  const mockInvoke = jest.fn().mockResolvedValue(undefined)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: mockInvoke,
+  })
+  RendererWorker.set(mockRpc)
+
   await QuickPick.focusNext()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.focusNext')
+  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusNext')
 })
 
 test('focusFirst', async () => {
+  const mockInvoke = jest.fn().mockResolvedValue(undefined)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: mockInvoke,
+  })
+  RendererWorker.set(mockRpc)
+
   await QuickPick.focusFirst()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.focusFirst')
+  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusFirst')
 })
 
 test('focusLast', async () => {
+  const mockInvoke = jest.fn().mockResolvedValue(undefined)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: mockInvoke,
+  })
+  RendererWorker.set(mockRpc)
+
   await QuickPick.focusLast()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.focusLast')
+  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusLast')
 })
 
 test('focusIndex', async () => {
+  const mockInvoke = jest.fn().mockResolvedValue(undefined)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: mockInvoke,
+  })
+  RendererWorker.set(mockRpc)
+
   await QuickPick.focusIndex(1)
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.focusIndex', 1)
+  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusIndex', 1)
 })
 
 test('focusPrevious', async () => {
+  const mockInvoke = jest.fn().mockResolvedValue(undefined)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: mockInvoke,
+  })
+  RendererWorker.set(mockRpc)
+
   await QuickPick.focusPrevious()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.focusPrevious')
+  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusPrevious')
 })
 
 test('selectItem', async () => {
+  const mockInvoke = jest.fn().mockResolvedValue(undefined)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: mockInvoke,
+  })
+  RendererWorker.set(mockRpc)
+
   await QuickPick.selectItem('test')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.selectItem', 'test')
+  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.selectItem', 'test')
 })
 
 test('selectIndex', async () => {
+  const mockInvoke = jest.fn().mockResolvedValue(undefined)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: mockInvoke,
+  })
+  RendererWorker.set(mockRpc)
+
   await QuickPick.selectIndex(1)
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.selectIndex', 1)
+  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.selectIndex', 1)
 })
 
 test('selectCurrentIndex', async () => {
+  const mockInvoke = jest.fn().mockResolvedValue(undefined)
+  const mockRpc = MockRpc.create({
+    commandMap: {},
+    invoke: mockInvoke,
+  })
+  RendererWorker.set(mockRpc)
+
   await QuickPick.selectCurrentIndex()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('QuickPick.selectCurrentIndex')
+  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.selectCurrentIndex')
 })
 
 test('executeCommand', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.showCommands'() {
+      return undefined
+    },
+    'QuickPick.handleInput'() {
+      return undefined
+    },
+    'QuickPick.selectItem'() {
+      return undefined
+    },
+  })
+
   await QuickPick.executeCommand('test')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(3)
-  expect(mockRpc.invoke).toHaveBeenNthCalledWith(1, 'QuickPick.showCommands')
-  expect(mockRpc.invoke).toHaveBeenNthCalledWith(2, 'QuickPick.handleInput', 'test', 0)
-  expect(mockRpc.invoke).toHaveBeenNthCalledWith(3, 'QuickPick.selectItem', 'test')
+  expect(mockRpc.invocations).toEqual([
+    ['QuickPick.showCommands'],
+    ['QuickPick.handleInput', 'test', 0],
+    ['QuickPick.selectItem', 'test']
+  ])
 })
