@@ -597,7 +597,13 @@ test('growSelection', async () => {
 })
 
 test('getSelections', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
     },
@@ -607,12 +613,18 @@ test('getSelections', async () => {
   })
 
   const selections = await Editor.getSelections()
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+  expect(editorMockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
   expect(selections).toEqual(new Uint32Array([1, 2, 3]))
 })
 
 test('shouldHaveText', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
     },
@@ -622,11 +634,17 @@ test('shouldHaveText', async () => {
   })
 
   await Editor.shouldHaveText('test text')
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+  expect(editorMockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
 })
 
 test('shouldHaveText - throws error when text does not match', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
     },
@@ -636,7 +654,7 @@ test('shouldHaveText - throws error when text does not match', async () => {
   })
 
   await expect(Editor.shouldHaveText('test text')).rejects.toThrow('Expected editor to have text test text but was wrong text')
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+  expect(editorMockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
 })
 
 test('shouldHaveSelections', async () => {
