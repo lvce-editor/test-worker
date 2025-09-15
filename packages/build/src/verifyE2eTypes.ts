@@ -20,7 +20,7 @@ const copyE2eTestFiles = async (srcDir: string, destDir: string): Promise<void> 
       // Replace test-with-playwright imports with our generated API types
       const modifiedContent = content.replace(
         /import type { Test } from '@lvce-editor\/test-with-playwright'/g,
-        "import type { Test } from './api.d.ts'"
+        "import type { Test } from '../api.d.ts'"
       )
       
       await writeFile(destPath, modifiedContent)
@@ -38,9 +38,9 @@ export const verifyE2eTypes = async (): Promise<void> => {
   const tempSrcDir = join(tempDir, 'src')
   await mkdir(tempSrcDir, { recursive: true })
 
-  // Copy the generated types to temp src directory
+  // Copy the generated types to temp directory root
   const generatedTypes = await readFile(generatedTypesPath, 'utf8')
-  await writeFile(join(tempSrcDir, 'api.d.ts'), generatedTypes)
+  await writeFile(join(tempDir, 'api.d.ts'), generatedTypes)
 
   // Copy all e2e test files and replace imports
   await copyE2eTestFiles(e2eSrcDir, tempSrcDir)
