@@ -4,8 +4,7 @@ import * as Problems from '../src/parts/TestFrameWorkComponentProblems/TestFrame
 
 test('show', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Panel.selectIndex'() {
       return undefined
     },
   })
