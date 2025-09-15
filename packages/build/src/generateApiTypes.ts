@@ -57,10 +57,6 @@ export const generateApiTypes = async (): Promise<void> => {
     cwd: join(root, 'packages', 'test-worker'),
     reject: false,
   })
-<<<<<<< Updated upstream
-  const content = await readFile(join(root, '.tmp', 'dist', 'dist', 'api.d.ts'), 'utf8')
-  const actual = getActualContent(content)
-=======
   await execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/expect.d.ts', 'src/parts/Expect/Expect.ts'], {
     cwd: join(root, 'packages', 'test-worker'),
     reject: false,
@@ -73,6 +69,5 @@ export const generateApiTypes = async (): Promise<void> => {
   const contentExpect = await readFile(join(root, '.tmp', 'api-types', 'expect.d.ts'), 'utf8')
   const contentLocator = await readFile(join(root, '.tmp', 'api-types', 'locator.d.ts'), 'utf8')
   const actual = getActualApiTypesContent(content, contentExpect, contentLocator)
->>>>>>> Stashed changes
   await writeFile(join(root, '.tmp', 'dist', 'dist', 'api.d.ts'), actual)
 }
