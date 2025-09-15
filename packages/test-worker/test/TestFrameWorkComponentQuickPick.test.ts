@@ -47,39 +47,36 @@ test('setValue', async () => {
 })
 
 test('focusNext', async () => {
-  const mockInvoke = jest.fn().mockResolvedValue(undefined)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.focusNext'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await QuickPick.focusNext()
-  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusNext')
+  expect(mockRpc.invocations).toEqual([['QuickPick.focusNext']])
 })
 
 test('focusFirst', async () => {
-  const mockInvoke = jest.fn().mockResolvedValue(undefined)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.focusFirst'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await QuickPick.focusFirst()
-  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusFirst')
+  expect(mockRpc.invocations).toEqual([['QuickPick.focusFirst']])
 })
 
 test('focusLast', async () => {
-  const mockInvoke = jest.fn().mockResolvedValue(undefined)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.focusLast'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await QuickPick.focusLast()
-  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusLast')
+  expect(mockRpc.invocations).toEqual([['QuickPick.focusLast']])
 })
 
 test('focusIndex', async () => {
