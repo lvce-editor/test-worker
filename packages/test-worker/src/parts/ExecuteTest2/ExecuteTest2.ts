@@ -4,10 +4,11 @@ import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import * as TestType from '../TestType/TestType.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'
 
-export const executeTest2 = async (name: string, fn: any, globals: any): Promise<ExecuteTestResult> => {
-  const start = Timestamp.now()
+export const executeTest2 = async (name: string, fn: any, globals: any, timestampGenerator?: () => number): Promise<ExecuteTestResult> => {
+  const getTimestamp = timestampGenerator ?? Timestamp.now
+  const start = getTimestamp()
   const error = await callFunction(fn, globals)
-  const end = Timestamp.now()
+  const end = getTimestamp()
   const duration = end - start
   const formattedDuration = formatDuration(duration)
   if (error) {
