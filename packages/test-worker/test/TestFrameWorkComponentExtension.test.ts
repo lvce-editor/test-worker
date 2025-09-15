@@ -4,8 +4,7 @@ import * as Extension from '../src/parts/TestFrameWorkComponentExtension/TestFra
 
 test('addWebExtension', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ExtensionMeta.addWebExtension'() {
       return undefined
     },
   })
@@ -19,8 +18,7 @@ test('addWebExtension', async () => {
 
 test('addNodeExtension', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ExtensionMeta.addNodeExtension'() {
       return undefined
     },
   })

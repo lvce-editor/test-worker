@@ -18,8 +18,7 @@ test('show', async () => {
 
 test('handleFilterInput', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.handleFilterInput'() {
       return undefined
     },
   })
@@ -33,8 +32,7 @@ test('handleFilterInput', async () => {
 
 test('copyMessage', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.copyMessage'() {
       return undefined
     },
   })
@@ -48,8 +46,7 @@ test('copyMessage', async () => {
 
 test('focusIndex', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.focusIndex'() {
       return undefined
     },
   })
@@ -63,8 +60,7 @@ test('focusIndex', async () => {
 
 test('handleArrowLeft', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.handleArrowLeft'() {
       return undefined
     },
   })
@@ -78,8 +74,7 @@ test('handleArrowLeft', async () => {
 
 test('handleArrowRight', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.handleArrowRight'() {
       return undefined
     },
   })
@@ -93,8 +88,7 @@ test('handleArrowRight', async () => {
 
 test('handleClickAt', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.handleClickAt'() {
       return undefined
     },
   })
@@ -108,8 +102,7 @@ test('handleClickAt', async () => {
 
 test('handleIconThemeChange', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.handleIconThemeChange'() {
       return undefined
     },
   })
@@ -123,8 +116,7 @@ test('handleIconThemeChange', async () => {
 
 test('viewAsList', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.viewAsList'() {
       return undefined
     },
   })
@@ -138,8 +130,7 @@ test('viewAsList', async () => {
 
 test('viewAsTable', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Problems.viewAsTable'() {
       return undefined
     },
   })

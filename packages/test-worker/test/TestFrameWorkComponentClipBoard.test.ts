@@ -4,8 +4,16 @@ import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFra
 
 const setup = () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ClipBoard.readNativeFiles'() {
+      return undefined
+    },
+    'ClipBoard.writeNativeFiles'() {
+      return undefined
+    },
+    'ClipBoard.enableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.disableMemoryClipBoard'() {
       return undefined
     },
   })
@@ -47,12 +55,8 @@ test('disableMemoryClipBoard', async () => {
 
 test('shouldHaveText - correct', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      if (method === 'ClipBoard.readMemoryText') {
-        return 'hello'
-      }
-      throw new Error('unexpected method')
+    'ClipBoard.readMemoryText'() {
+      return 'hello'
     },
   })
   await ClipBoard.shouldHaveText('hello')
@@ -63,12 +67,8 @@ test('shouldHaveText - correct', async () => {
 
 test('shouldHaveText - wrong', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      if (method === 'ClipBoard.readMemoryText') {
-        return 'world'
-      }
-      throw new Error('unexpected method')
+    'ClipBoard.readMemoryText'() {
+      return 'world'
     },
   })
   await expect(ClipBoard.shouldHaveText('hello')).rejects.toThrow('expected clipboard to have text "hello" but was "world"')

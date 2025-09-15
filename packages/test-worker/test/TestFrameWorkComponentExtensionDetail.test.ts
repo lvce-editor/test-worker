@@ -4,8 +4,7 @@ import * as ExtensionDetail from '../src/parts/TestFrameWorkComponentExtensionDe
 
 test('handleClickCategory', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ExtensionDetail.handleClickCategory'() {
       return undefined
     },
   })
@@ -17,8 +16,13 @@ test('handleClickCategory', async () => {
 
 test('handleClickEnable/Disable/SetColorTheme', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ExtensionDetail.handleClickEnable'() {
+      return undefined
+    },
+    'ExtensionDetail.handleClickDisable'() {
+      return undefined
+    },
+    'ExtensionDetail.handleClickSetColorTheme'() {
       return undefined
     },
   })
@@ -34,8 +38,10 @@ test('handleClickEnable/Disable/SetColorTheme', async () => {
 
 test('selectFeature and selectTab', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ExtensionDetail.selectFeature'() {
+      return undefined
+    },
+    'ExtensionDetail.selectTab'() {
       return undefined
     },
   })
@@ -49,8 +55,7 @@ test('selectFeature and selectTab', async () => {
 
 test('selectDetails/Features/Changelog', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ExtensionDetail.selectTab'() {
       return undefined
     },
   })
@@ -66,8 +71,7 @@ test('selectDetails/Features/Changelog', async () => {
 
 test('open opens uri', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Main.openUri'() {
       return undefined
     },
   })
@@ -79,8 +83,7 @@ test('open opens uri', async () => {
 
 test('openFeature and openThemes/Commands/WebViews/RuntimeStatus/JsonValidation/Settings', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ExtensionDetail.handleFeaturesClick'() {
       return undefined
     },
   })
@@ -104,8 +107,7 @@ test('openFeature and openThemes/Commands/WebViews/RuntimeStatus/JsonValidation/
 
 test('handleScroll', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'ExtensionDetail.handleScroll'() {
       return undefined
     },
   })

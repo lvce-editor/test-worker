@@ -40,8 +40,10 @@ test('readFile', async () => {
 })
 
 test('mkdir', async () => {
-  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
-    return undefined
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.mkdir'() {
+      return undefined
+    },
   })
 
   await FileSystem.mkdir('memfs:///dir')
@@ -62,12 +64,7 @@ test('remove', async () => {
 })
 
 test('getTmpDir: memfs default', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      return undefined
-    },
-  })
+  const mockRpc = RendererWorker.registerMockRpc({})
 
   const tmpDir: string = await FileSystem.getTmpDir()
   expect(tmpDir).toBe('memfs:///workspace')
@@ -76,12 +73,8 @@ test('getTmpDir: memfs default', async () => {
 
 test('getTmpDir: file scheme', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      if (method === 'PlatformPaths.getTmpDir') {
-        return '/tmp'
-      }
-      throw new Error(`unexpected method ${method}`)
+    'PlatformPaths.getTmpDir'() {
+      return '/tmp'
     },
   })
 
@@ -94,8 +87,7 @@ test('getTmpDir: file scheme', async () => {
 
 test('chmod', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'FileSystem.chmod'() {
       return undefined
     },
   })
@@ -108,18 +100,17 @@ test('chmod', async () => {
 
 test('createExecutable', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      if (method === 'PlatformPaths.getTmpDir') {
-        return '/tmp'
-      }
-      if (method === 'PlatformPaths.getNodePath') {
-        return '/usr/bin/node'
-      }
-      if (method === 'FileSystem.writeFile' || method === 'FileSystem.chmod') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
+    'PlatformPaths.getTmpDir'() {
+      return '/tmp'
+    },
+    'PlatformPaths.getNodePath'() {
+      return '/usr/bin/node'
+    },
+    'FileSystem.writeFile'() {
+      return undefined
+    },
+    'FileSystem.chmod'() {
+      return undefined
     },
   })
 
@@ -136,24 +127,23 @@ test('createExecutable', async () => {
 
 test('createExecutableFrom', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      if (method === 'PlatformPaths.getTestPath') {
-        return '/tests'
-      }
-      if (method === 'Ajax.getText') {
-        return "console.log('ok')"
-      }
-      if (method === 'PlatformPaths.getTmpDir') {
-        return '/tmp'
-      }
-      if (method === 'PlatformPaths.getNodePath') {
-        return '/usr/bin/node'
-      }
-      if (method === 'FileSystem.writeFile' || method === 'FileSystem.chmod') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
+    'PlatformPaths.getTestPath'() {
+      return '/tests'
+    },
+    'Ajax.getText'() {
+      return "console.log('ok')"
+    },
+    'PlatformPaths.getTmpDir'() {
+      return '/tmp'
+    },
+    'PlatformPaths.getNodePath'() {
+      return '/usr/bin/node'
+    },
+    'FileSystem.writeFile'() {
+      return undefined
+    },
+    'FileSystem.chmod'() {
+      return undefined
     },
   })
 

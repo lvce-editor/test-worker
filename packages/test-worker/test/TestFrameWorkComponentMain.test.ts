@@ -4,8 +4,7 @@ import * as Main from '../src/parts/TestFrameWorkComponentMain/TestFrameWorkComp
 
 test('openUri', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Main.openUri'() {
       return undefined
     },
   })
@@ -19,8 +18,7 @@ test('openUri', async () => {
 
 test('splitRight', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Main.splitRight'() {
       return undefined
     },
   })
@@ -34,8 +32,7 @@ test('splitRight', async () => {
 
 test('openKeyBindings', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Main.openKeyBindings'() {
       return undefined
     },
   })
@@ -49,8 +46,7 @@ test('openKeyBindings', async () => {
 
 test('closeAllEditors', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Main.closeAllEditors'() {
       return undefined
     },
   })
@@ -64,8 +60,28 @@ test('closeAllEditors', async () => {
 
 test('closeTabsLeft/Right and others', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Main.closeTabsLeft'() {
+      return undefined
+    },
+    'Main.closeTabsRight'() {
+      return undefined
+    },
+    'Main.closeOthers'() {
+      return undefined
+    },
+    'Main.closeActiveEditor'() {
+      return undefined
+    },
+    'Main.focusFirst'() {
+      return undefined
+    },
+    'Main.focusNext'() {
+      return undefined
+    },
+    'Main.focusPrevious'() {
+      return undefined
+    },
+    'Main.focusLast'() {
       return undefined
     },
   })

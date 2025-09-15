@@ -4,8 +4,7 @@ import * as Output from '../src/parts/TestFrameWorkComponentOutput/TestFrameWork
 
 test('show', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Panel.selectIndex'() {
       return undefined
     },
   })
@@ -19,8 +18,7 @@ test('show', async () => {
 
 test('handleFilterInput', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Output.handleFilterInput'() {
       return undefined
     },
   })
@@ -34,8 +32,7 @@ test('handleFilterInput', async () => {
 
 test('selectChannel', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'Output.selectChannel'() {
       return undefined
     },
   })
