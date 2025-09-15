@@ -52,16 +52,13 @@ test('mkdir', async () => {
 
 test('remove', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
+    'FileSystem.remove'() {
       return undefined
     },
   })
 
   await FileSystem.remove('memfs:///file.txt')
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.remove', 'memfs:///file.txt']
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.remove', 'memfs:///file.txt']])
 })
 
 test('getTmpDir: memfs default', async () => {
