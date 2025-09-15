@@ -658,7 +658,13 @@ test('shouldHaveText - throws error when text does not match', async () => {
 })
 
 test('shouldHaveSelections', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
     },
@@ -668,7 +674,7 @@ test('shouldHaveSelections', async () => {
   })
 
   await Editor.shouldHaveSelections(new Uint32Array([1, 2, 3]))
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+  expect(editorMockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
 })
 
 test('shouldHaveSelections - throws error when selections do not match', async () => {
