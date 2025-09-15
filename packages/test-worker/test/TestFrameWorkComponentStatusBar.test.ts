@@ -1,13 +1,13 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as StatusBar from '../src/parts/TestFrameWorkComponentStatusBar/TestFrameWorkComponentStatusBar.ts'
 
 test('update calls StatusBar.updateStatusBarItems', async () => {
-  const invoke: jest.Mock = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'StatusBar.updateStatusBarItems'() {
+      return undefined
+    },
+  })
   await StatusBar.update()
-  expect(invoke).toHaveBeenCalledTimes(1)
-  expect(invoke).toHaveBeenCalledWith('StatusBar.updateStatusBarItems')
+  expect(mockRpc.invocations).toEqual([['StatusBar.updateStatusBarItems']])
 })

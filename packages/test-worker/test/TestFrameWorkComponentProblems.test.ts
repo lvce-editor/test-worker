@@ -1,144 +1,123 @@
-import { test, jest, expect } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Problems from '../src/parts/TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 
 test('show', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Panel.selectIndex'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.show()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Panel.selectIndex', 0)
+  expect(mockRpc.invocations).toEqual([['Panel.selectIndex', 0]])
 })
 
 test('handleFilterInput', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleFilterInput'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleFilterInput('test filter')
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleFilterInput', 'test filter', 2)
+  expect(mockRpc.invocations).toEqual([['Problems.handleFilterInput', 'test filter', 2]])
 })
 
 test('copyMessage', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.copyMessage'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.copyMessage()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.copyMessage')
+  expect(mockRpc.invocations).toEqual([['Problems.copyMessage']])
 })
 
 test('focusIndex', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.focusIndex'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.focusIndex(5)
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.focusIndex', 5)
+  expect(mockRpc.invocations).toEqual([['Problems.focusIndex', 5]])
 })
 
 test('handleArrowLeft', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleArrowLeft'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleArrowLeft()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleArrowLeft')
+  expect(mockRpc.invocations).toEqual([['Problems.handleArrowLeft']])
 })
 
 test('handleArrowRight', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleArrowRight'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleArrowRight()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleArrowRight')
+  expect(mockRpc.invocations).toEqual([['Problems.handleArrowRight']])
 })
 
 test('handleClickAt', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleClickAt'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleClickAt(100, 200)
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleClickAt', 100, 200)
+  expect(mockRpc.invocations).toEqual([['Problems.handleClickAt', 100, 200]])
 })
 
 test('handleIconThemeChange', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleIconThemeChange'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleIconThemeChange()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleIconThemeChange')
+  expect(mockRpc.invocations).toEqual([['Problems.handleIconThemeChange']])
 })
 
 test('viewAsList', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.viewAsList'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.viewAsList()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.viewAsList')
+  expect(mockRpc.invocations).toEqual([['Problems.viewAsList']])
 })
 
 test('viewAsTable', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Problems.viewAsTable'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.viewAsTable()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.viewAsTable')
+  expect(mockRpc.invocations).toEqual([['Problems.viewAsTable']])
 })

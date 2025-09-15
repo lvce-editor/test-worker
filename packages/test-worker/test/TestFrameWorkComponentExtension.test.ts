@@ -1,26 +1,27 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Extension from '../src/parts/TestFrameWorkComponentExtension/TestFrameWorkComponentExtension.ts'
 
 test('addWebExtension', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionMeta.addWebExtension'() {
+      return undefined
+    },
+  })
 
   await Extension.addWebExtension('extensions/web')
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('ExtensionMeta.addWebExtension', 'extensions/web')
+  expect(mockRpc.invocations).toEqual([['ExtensionMeta.addWebExtension', 'extensions/web']])
 })
 
 test('addNodeExtension', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke: mockInvoke })
-  RendererWorker.set(mockRpc)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionMeta.addNodeExtension'() {
+      return undefined
+    },
+  })
 
   await Extension.addNodeExtension('extensions/node')
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('ExtensionMeta.addNodeExtension', 'extensions/node')
+  expect(mockRpc.invocations).toEqual([['ExtensionMeta.addNodeExtension', 'extensions/node']])
 })

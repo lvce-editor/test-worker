@@ -1,29 +1,40 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as IframeInspector from '../src/parts/TestFrameWorkComponentIframeInspector/TestFrameWorkComponentIframeInspector.ts'
 
-const setup = (): jest.Mock => {
-  const invoke: jest.Mock = jest.fn()
-  const mockRpc = MockRpc.create({ commandMap: {}, invoke })
-  RendererWorker.set(mockRpc)
-  return invoke
-}
-
 test('selectIndex', async () => {
-  const invoke = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IframeInspector.selectIndex'() {
+      return undefined
+    },
+  })
   await IframeInspector.selectIndex(2)
-  expect(invoke).toHaveBeenCalledWith('IframeInspector.selectIndex', 2)
+  expect(mockRpc.invocations).toEqual([['IframeInspector.selectIndex', 2]])
 })
 
 test('focus navigation methods', async () => {
-  const invoke = setup()
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IframeInspector.focusNext'() {
+      return undefined
+    },
+    'IframeInspector.focusPrevious'() {
+      return undefined
+    },
+    'IframeInspector.focusFirst'() {
+      return undefined
+    },
+    'IframeInspector.focusLast'() {
+      return undefined
+    },
+  })
   await IframeInspector.focusNext()
   await IframeInspector.focusPrevious()
   await IframeInspector.focusFirst()
   await IframeInspector.focusLast()
-  expect(invoke).toHaveBeenCalledWith('IframeInspector.focusNext')
-  expect(invoke).toHaveBeenCalledWith('IframeInspector.focusPrevious')
-  expect(invoke).toHaveBeenCalledWith('IframeInspector.focusFirst')
-  expect(invoke).toHaveBeenCalledWith('IframeInspector.focusLast')
+  expect(mockRpc.invocations).toEqual([
+    ['IframeInspector.focusNext'],
+    ['IframeInspector.focusPrevious'],
+    ['IframeInspector.focusFirst'],
+    ['IframeInspector.focusLast'],
+  ])
 })
