@@ -1,13 +1,10 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystem from '../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
+import { createMockRpcWithInvocations } from './test-utils.ts'
 
 test('writeFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      return undefined
-    },
+  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
+    return undefined
   })
 
   await FileSystem.writeFile('memfs:///file.txt', 'content')
@@ -18,11 +15,8 @@ test('writeFile', async () => {
 })
 
 test('writeJson', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      return undefined
-    },
+  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
+    return undefined
   })
 
   await FileSystem.writeJson('memfs:///data.json', { a: 1 })
@@ -34,14 +28,11 @@ test('writeJson', async () => {
 })
 
 test('readFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      if (method === 'FileSystem.readFile') {
-        return 'content'
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
+    if (method === 'FileSystem.readFile') {
+      return 'content'
+    }
+    throw new Error(`unexpected method ${method}`)
   })
 
   const content: string = await FileSystem.readFile('memfs:///file.txt')
@@ -52,11 +43,8 @@ test('readFile', async () => {
 })
 
 test('mkdir', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      return undefined
-    },
+  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
+    return undefined
   })
 
   await FileSystem.mkdir('memfs:///dir')
