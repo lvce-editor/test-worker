@@ -1,15 +1,11 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ExtensionDetail from '../src/parts/TestFrameWorkComponentExtensionDetail/TestFrameWorkComponentExtensionDetail.ts'
+import { createMockRpcWithInvocations } from './test-utils.ts'
 
 const setup = () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      return undefined
-    },
+  return createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
+    return undefined
   })
-  return mockRpc
 }
 
 test('handleClickCategory', async () => {

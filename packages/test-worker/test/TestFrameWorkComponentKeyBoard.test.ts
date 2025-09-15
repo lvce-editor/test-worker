@@ -1,15 +1,12 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as KeyBoard from '../src/parts/TestFrameWorkComponentKeyBoard/TestFrameWorkComponentKeyBoard.ts'
+import { createMockRpcWithInvocations } from './test-utils.ts'
 
 // basic case
 
 test('press: simple key', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      return undefined
-    },
+  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
+    return undefined
   })
   await KeyBoard.press('a')
   expect(mockRpc.invocations).toEqual([
@@ -26,11 +23,8 @@ test('press: simple key', async () => {
 // modifier parsing
 
 test('press: with modifiers Control+Alt+Space', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      return undefined
-    },
+  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
+    return undefined
   })
   await KeyBoard.press('Control+Alt+Space')
   expect(mockRpc.invocations).toEqual([

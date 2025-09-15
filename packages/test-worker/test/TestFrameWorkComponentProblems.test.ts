@@ -48,99 +48,106 @@ test('copyMessage', async () => {
 })
 
 test('focusIndex', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.focusIndex(5)
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.focusIndex', 5)
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.focusIndex', 5]
+  ])
 })
 
 test('handleArrowLeft', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleArrowLeft()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleArrowLeft')
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.handleArrowLeft']
+  ])
 })
 
 test('handleArrowRight', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleArrowRight()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleArrowRight')
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.handleArrowRight']
+  ])
 })
 
 test('handleClickAt', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleClickAt(100, 200)
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleClickAt', 100, 200)
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.handleClickAt', 100, 200]
+  ])
 })
 
 test('handleIconThemeChange', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.handleIconThemeChange()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.handleIconThemeChange')
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.handleIconThemeChange']
+  ])
 })
 
 test('viewAsList', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.viewAsList()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.viewAsList')
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.viewAsList']
+  ])
 })
 
 test('viewAsTable', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
+  const mockRpc = RendererWorker.registerMockRpc({
     commandMap: {},
-    invoke: mockInvoke,
+    invoke: async (method: string, ...args: readonly any[]) => {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await Problems.viewAsTable()
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('Problems.viewAsTable')
+  expect(mockRpc.invocations).toEqual([
+    ['Problems.viewAsTable']
+  ])
 })

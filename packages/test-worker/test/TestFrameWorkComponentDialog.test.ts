@@ -1,16 +1,12 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Mock from '../src/parts/Mock/Mock.ts'
 import * as Dialog from '../src/parts/TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
+import { createMockRpcWithInvocations } from './test-utils.ts'
 
 const setup = () => {
-  const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: async (method: string, ...args: readonly any[]) => {
-      return undefined
-    },
+  return createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
+    return undefined
   })
-  return mockRpc
 }
 
 test('showSaveFilePicker', async () => {
