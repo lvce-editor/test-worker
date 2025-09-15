@@ -23,9 +23,7 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
       // Add port to disposables
       disposables.push(async () => port.close())
       // Simulate sending ready message after port is set
-      setTimeout(() => {
-        port.postMessage('ready')
-      }, 0)
+      port.postMessage('ready')
     },
   })
 
@@ -62,9 +60,7 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
       // Add port to disposables
       disposables.push(async () => port.close())
       // Send wrong message instead of 'ready'
-      setTimeout(() => {
-        port.postMessage('not-ready')
-      }, 0)
+      port.postMessage('not-ready')
     },
   })
 
@@ -144,9 +140,7 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
       // Add port to disposables
       disposables.push(async () => port.close())
       expect(portType).toBe('test')
-      setTimeout(() => {
-        port.postMessage('ready')
-      }, 0)
+      port.postMessage('ready')
     },
   })
 
@@ -189,9 +183,7 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
         // Add port to disposables
         disposables.push(async () => port.close())
-        setTimeout(() => {
-          port.postMessage('ready')
-        }, 0)
+        port.postMessage('ready')
       },
     })
 
