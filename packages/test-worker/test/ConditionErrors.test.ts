@@ -3,11 +3,6 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ILocatorInternal } from '../src/parts/ILocatorInternal/ILocatorInternal.ts'
 import * as ConditionErrors from '../src/parts/ConditionErrors/ConditionErrors.ts'
 
-type MockReturnType = {
-  wasFound?: boolean
-  actual?: string | number
-}
-
 test('toBeVisible', () => {
   const locator: ILocatorInternal = {
     _selector: '.button',
