@@ -33,6 +33,13 @@ export const verifyE2eTypes = async (): Promise<void> => {
   const generatedTypesPath = join(root, '.tmp', 'dist', 'dist', 'api.d.ts')
   const e2eSrcDir = join(root, 'packages', 'e2e', 'src')
 
+  // Always clean up any existing temp directory to ensure clean state
+  try {
+    await execa('rm', ['-rf', tempDir])
+  } catch {
+    // Ignore errors if directory doesn't exist
+  }
+
   // Create temporary directory structure
   await mkdir(tempDir, { recursive: true })
   const tempSrcDir = join(tempDir, 'src')
