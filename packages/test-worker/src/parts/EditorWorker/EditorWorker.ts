@@ -14,3 +14,7 @@ export const invoke = async (method: string, ...params: readonly any[]): Promise
   const rpc = await getRpc()
   return rpc.invoke(method, ...params)
 }
+
+export const reset = (): void => {
+  rpcPromise = undefined
+}
