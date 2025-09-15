@@ -6,6 +6,8 @@ import * as TestType from '../TestType/TestType.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'
 import { VError } from '../VError/VError.ts'
 
+// TODO make this code more functional, returning a test result
+// and a separate function prints out the test result
 export const executeTest = async (name: string, fn: any, globals = {}): Promise<void> => {
   let _error
   let _start

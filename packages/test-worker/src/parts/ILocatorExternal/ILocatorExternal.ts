@@ -1,5 +1,9 @@
+export interface LocatorClickOptions {
+  readonly button?: string
+}
+
 export interface ILocatorExternal {
-  readonly click: (options: { readonly button?: string }) => Promise<void>
+  readonly click: (options: LocatorClickOptions) => Promise<void>
   readonly hover: () => Promise<void>
   readonly first: () => ILocatorExternal
   readonly locator: (subSelector: string) => ILocatorExternal

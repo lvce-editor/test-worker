@@ -330,3 +330,21 @@ test.skip('shouldHaveText - throws error when text does not match', async () => 
   mockRpc.invoke.mockResolvedValue('wrong text')
   await expect(Editor.shouldHaveText('test text')).rejects.toThrow('Expected editor to have text test text but was wrong text')
 })
+
+test('executeTabCompletion', async () => {
+  await Editor.executeTabCompletion()
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.tabCompletion')
+})
+
+test('rename2', async () => {
+  mockRpc.invoke.mockResolvedValue(undefined)
+  await Editor.rename2('newName')
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(3)
+  expect(mockRpc.invoke).toHaveBeenNthCalledWith(1, 'Editor.openRename')
+  expect(mockRpc.invoke).toHaveBeenNthCalledWith(2, 'EditorRename.handleInput', 'newName', 2)
+  expect(mockRpc.invoke).toHaveBeenNthCalledWith(3, 'EditorRename.accept')
+})
+
+// Note: getSelections, shouldHaveSelections, undo, and redo functions use EditorWorker
+// which requires complex RPC setup. These are tested indirectly through integration tests.

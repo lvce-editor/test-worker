@@ -16,3 +16,10 @@ test('open', async () => {
   expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
   expect(mockRpc.invoke).toHaveBeenCalledWith('Layout.showPanel', 'test-panel')
 })
+
+test('openProblems', async () => {
+  await Panel.openProblems()
+  expect(mockRpc.invoke).toHaveBeenCalledTimes(2)
+  expect(mockRpc.invoke).toHaveBeenNthCalledWith(1, 'Layout.showPanel', 'Problems')
+  expect(mockRpc.invoke).toHaveBeenNthCalledWith(2, 'Panel.selectIndex', 0)
+})
