@@ -1,18 +1,7 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as Search from '../src/parts/TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
-
-const mockInvoke = jest.fn()
-
-const mockRpc = {
-  invoke: mockInvoke,
-} as any
-
-beforeEach(() => {
-  ParentRpc.set(mockRpc)
-  mockInvoke.mockReset()
-})
 
 test('setValue', async () => {
   await Search.setValue('test')

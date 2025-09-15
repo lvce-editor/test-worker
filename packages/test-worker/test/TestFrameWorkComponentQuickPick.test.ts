@@ -1,15 +1,6 @@
-import { beforeEach, test, expect, jest } from '@jest/globals'
-import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
+import { test, expect } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as QuickPick from '../src/parts/TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
-
-const mockRpc = {
-  invoke: jest.fn(),
-} as any
-
-beforeEach(() => {
-  ParentRpc.set(mockRpc)
-  mockRpc.invoke.mockReset()
-})
 
 test('open', async () => {
   await QuickPick.open()

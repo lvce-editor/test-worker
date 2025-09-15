@@ -1,15 +1,8 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as KeyBindingsEditor from '../src/parts/TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
 
-const mockRpc = {
-  invoke: jest.fn(),
-} as any
 
-beforeEach(() => {
-  ParentRpc.set(mockRpc)
-  mockRpc.invoke.mockReset()
-})
 
 test('open', async () => {
   await KeyBindingsEditor.open()

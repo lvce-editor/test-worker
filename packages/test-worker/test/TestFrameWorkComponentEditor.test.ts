@@ -1,50 +1,71 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
-const mockRpc = {
-  invoke: jest.fn(),
-} as any
-
-beforeEach(() => {
-  ParentRpc.set(mockRpc)
-  mockRpc.invoke.mockReset()
-})
-
 test('setCursor', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.cursorSet'() {
+      return undefined
+    },
+  })
+
   await Editor.setCursor(1, 2)
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.cursorSet', 1, 2)
+  expect(mockRpc.invocations).toEqual([['Editor.cursorSet', 1, 2]])
 })
 
 test('openCompletion', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.openCompletion'() {
+      return undefined
+    },
+  })
+
   await Editor.openCompletion()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.openCompletion')
+  expect(mockRpc.invocations).toEqual([['Editor.openCompletion']])
 })
 
 test('closeCompletion', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'EditorCompletion.close'() {
+      return undefined
+    },
+  })
+
   await Editor.closeCompletion()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('EditorCompletion.close')
+  expect(mockRpc.invocations).toEqual([['EditorCompletion.close']])
 })
 
 test('openEditorContextMenu', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleContextMenu'() {
+      return undefined
+    },
+  })
+
   await Editor.openEditorContextMenu()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.handleContextMenu', 0, 0)
+  expect(mockRpc.invocations).toEqual([['Editor.handleContextMenu', 0, 0]])
 })
 
 test('invokeTabCompletion', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.tabCompletion'() {
+      return undefined
+    },
+  })
+
   await Editor.invokeTabCompletion()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.tabCompletion')
+  expect(mockRpc.invocations).toEqual([['Editor.tabCompletion']])
 })
 
 test('invokeBraceCompletion', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.braceCompletion'() {
+      return undefined
+    },
+  })
+
   await Editor.invokeBraceCompletion('text')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.braceCompletion', 'text')
+  expect(mockRpc.invocations).toEqual([['Editor.braceCompletion', 'text']])
 })
 
 test('cursorCharacterRight', async () => {
@@ -294,10 +315,14 @@ test('openContextMenu', async () => {
 })
 
 test('getText', async () => {
-  mockRpc.invoke.mockResolvedValue('test text')
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return 'test text'
+    },
+  })
+
   const text = await Editor.getText()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.getText')
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
   expect(text).toBe('test text')
 })
 
@@ -320,14 +345,23 @@ test('openRename', async () => {
 })
 
 test.skip('shouldHaveText', async () => {
-  mockRpc.invoke.mockResolvedValue('test text')
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return 'test text'
+    },
+  })
+
   await Editor.shouldHaveText('test text')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Editor.getText')
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
 })
 
 test.skip('shouldHaveText - throws error when text does not match', async () => {
-  mockRpc.invoke.mockResolvedValue('wrong text')
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return 'wrong text'
+    },
+  })
+
   await expect(Editor.shouldHaveText('test text')).rejects.toThrow('Expected editor to have text test text but was wrong text')
 })
 
@@ -338,12 +372,24 @@ test('executeTabCompletion', async () => {
 })
 
 test('rename2', async () => {
-  mockRpc.invoke.mockResolvedValue(undefined)
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Editor.openRename'() {
+      return undefined
+    },
+    'EditorRename.handleInput'() {
+      return undefined
+    },
+    'EditorRename.accept'() {
+      return undefined
+    },
+  })
+
   await Editor.rename2('newName')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(3)
-  expect(mockRpc.invoke).toHaveBeenNthCalledWith(1, 'Editor.openRename')
-  expect(mockRpc.invoke).toHaveBeenNthCalledWith(2, 'EditorRename.handleInput', 'newName', 2)
-  expect(mockRpc.invoke).toHaveBeenNthCalledWith(3, 'EditorRename.accept')
+  expect(mockRpc.invocations).toEqual([
+    ['Editor.openRename'],
+    ['EditorRename.handleInput', 'newName', 2],
+    ['EditorRename.accept']
+  ])
 })
 
 // Note: getSelections, shouldHaveSelections, undo, and redo functions use EditorWorker

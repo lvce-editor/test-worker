@@ -1,17 +1,8 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SourceControl from '../src/parts/TestFrameWorkComponentSourceControl/TestFrameWorkComponentSourceControl.ts'
 
-const mockInvoke = jest.fn()
 
-const mockRpc = {
-  invoke: mockInvoke,
-} as any
-
-beforeEach(() => {
-  ParentRpc.set(mockRpc)
-  mockInvoke.mockReset()
-})
 
 test('selectIndex', async () => {
   await SourceControl.selectIndex(2)

@@ -1,25 +1,31 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker as ParentRpc } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Panel from '../src/parts/TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 
-const mockRpc = {
-  invoke: jest.fn(),
-} as any
-
-beforeEach(() => {
-  ParentRpc.set(mockRpc)
-  mockRpc.invoke.mockReset()
-})
-
 test('open', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Layout.showPanel'() {
+      return undefined
+    },
+  })
+
   await Panel.open('test-panel')
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(1)
-  expect(mockRpc.invoke).toHaveBeenCalledWith('Layout.showPanel', 'test-panel')
+  expect(mockRpc.invocations).toEqual([['Layout.showPanel', 'test-panel']])
 })
 
 test('openProblems', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Layout.showPanel'() {
+      return undefined
+    },
+    'Panel.selectIndex'() {
+      return undefined
+    },
+  })
+
   await Panel.openProblems()
-  expect(mockRpc.invoke).toHaveBeenCalledTimes(2)
-  expect(mockRpc.invoke).toHaveBeenNthCalledWith(1, 'Layout.showPanel', 'Problems')
-  expect(mockRpc.invoke).toHaveBeenNthCalledWith(2, 'Panel.selectIndex', 0)
+  expect(mockRpc.invocations).toEqual([
+    ['Layout.showPanel', 'Problems'],
+    ['Panel.selectIndex', 0]
+  ])
 })
