@@ -23,6 +23,8 @@ export const generateApiTypes = async (): Promise<void> => {
     }),
   ])
   const content = await readFile(join(root, '.tmp', 'api-types', 'api.d.ts'), 'utf8')
-  const actual = getActualApiTypesContent(content)
+  const contentExpect = await readFile(join(root, '.tmp', 'api-types', 'expect.d.ts'), 'utf8')
+  const contentLocator = await readFile(join(root, '.tmp', 'api-types', 'locator.d.ts'), 'utf8')
+  const actual = getActualApiTypesContent(content, contentExpect, contentLocator)
   await writeFile(join(root, '.tmp', 'dist', 'dist', 'api.d.ts'), actual)
 }
