@@ -1,6 +1,5 @@
-import { expect, test, jest } from '@jest/globals'
-import { RendererWorker, set, RpcId } from '@lvce-editor/rpc-registry'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystem from '../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 
 test('writeFile', async () => {
@@ -157,17 +156,17 @@ test('createExecutableFrom', async () => {
 test('createDroppedFileHandle', async () => {
   const mockFile = new File(['test content'], 'dropped-file.txt', { type: 'text/plain' })
   const mockFileHandle = {
-    getFile: () => Promise.resolve(mockFile),
+    getFile: (): Promise<File> => mockFile,
   }
   const mockDirectory = {
-    getFileHandle: () => Promise.resolve(mockFileHandle),
+    getFileHandle: (): Promise<typeof mockFileHandle> => mockFileHandle,
   }
 
   // Mock navigator.storage.getDirectory
-  Object.defineProperty(global, 'navigator', {
+  Object.defineProperty(globalThis, 'navigator', {
     value: {
       storage: {
-        getDirectory: () => Promise.resolve(mockDirectory),
+        getDirectory: (): Promise<typeof mockDirectory> => mockDirectory,
       },
     },
     writable: true,
