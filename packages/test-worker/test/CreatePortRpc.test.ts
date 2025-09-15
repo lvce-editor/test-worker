@@ -35,7 +35,6 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
       return mockWebViewInfo
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-      // Add port to store
       store.add(() => port.close())
       // Simulate sending ready message after port is set
       port.postMessage('ready')
@@ -50,7 +49,6 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  // Add result to store and dispose all
   store.add(async () => await result.dispose())
   await store.dispose()
 })
@@ -70,7 +68,6 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
       return mockWebViewInfo
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-      // Add port to store
       store.add(() => port.close())
       // Send wrong message instead of 'ready'
       port.postMessage('not-ready')
@@ -83,7 +80,6 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  // Dispose all disposables
   await store.dispose()
 })
 
@@ -115,7 +111,6 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
       return mockWebViewInfo
     },
     'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-      // Add port to store
       store.add(() => port.close())
       return Promise.reject(new Error('Failed to set port'))
     },
@@ -127,7 +122,6 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  // Dispose all disposables
   await store.dispose()
 })
 
@@ -146,7 +140,6 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
       return mockWebViewInfo
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
-      // Add port to store
       store.add(() => port.close())
       expect(portType).toBe('test')
       port.postMessage('ready')
@@ -162,7 +155,6 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  // Add result to store and dispose all
   store.add(async () => await result.dispose())
   await store.dispose()
 })
@@ -203,7 +195,6 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       ['WebView.setPort', testCase.uid, expect.any(MessagePort), testCase.origin, 'test'],
     ])
 
-    // Add result to store and dispose all
     store.add(async () => await result.dispose())
     await store.dispose()
 
