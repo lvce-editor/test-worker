@@ -34,11 +34,7 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
   ])
 
-  // Clean up
-  result.close?.()
-  if (capturedPort) {
-    capturedPort.close()
-  }
+  await result.dispose()
 
   // Allow time for cleanup
   await new Promise((resolve) => setTimeout(resolve, 10))
@@ -78,6 +74,8 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
     capturedPort.close()
   }
 
+  await mockRpc.dispose()
+
   // Allow time for cleanup
   await new Promise((resolve) => setTimeout(resolve, 10))
 })
@@ -93,6 +91,8 @@ test('createPortRpc: propagates error from GetWebViewInfo', async (): Promise<vo
 
   await expect(CreatePortRpc.createPortRpc(webViewId)).rejects.toThrow('WebView not found')
   expect(mockRpc.invocations).toEqual([['WebView.getWebViewInfo2', webViewId]])
+
+  await mockRpc.dispose()
 
   // Allow time for cleanup
   await new Promise((resolve) => setTimeout(resolve, 10))
@@ -129,8 +129,10 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
     capturedPort.close()
   }
 
+  await mockRpc.dispose()
+
   // Allow time for cleanup
-  await new Promise(resolve => setTimeout(resolve, 10))
+  await new Promise((resolve) => setTimeout(resolve, 10))
 })
 
 test('createPortRpc: uses correct port type', async (): Promise<any> => {
@@ -171,8 +173,10 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     capturedPort.close()
   }
 
+  await mockRpc.dispose()
+
   // Allow time for cleanup
-  await new Promise(resolve => setTimeout(resolve, 10))
+  await new Promise((resolve) => setTimeout(resolve, 10))
 })
 
 test('createPortRpc: handles different webViewId values', async (): Promise<any> => {
@@ -218,7 +222,9 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       capturedPort.close()
     }
 
+    await mockRpc.dispose()
+
     // Allow time for cleanup
-    await new Promise(resolve => setTimeout(resolve, 10))
+    await new Promise((resolve) => setTimeout(resolve, 10))
   }
 })
