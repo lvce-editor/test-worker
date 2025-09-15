@@ -1,28 +1,28 @@
 import { execa } from 'execa'
-import { mkdir, readFile, writeFile, readdir, stat } from 'node:fs/promises'
+import { mkdir, readFile, writeFile, readdir, stat, rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import { root } from './root.ts'
 
 const copyE2eTestFiles = async (srcDir: string, destDir: string): Promise<void> => {
   const files = await readdir(srcDir)
-  
+
   for (const file of files) {
     const srcPath = join(srcDir, file)
     const destPath = join(destDir, file)
-    
+
     const stats = await stat(srcPath)
     if (stats.isDirectory()) {
       await mkdir(destPath, { recursive: true })
       await copyE2eTestFiles(srcPath, destPath)
     } else if (file.endsWith('.ts')) {
       const content = await readFile(srcPath, 'utf8')
-      
+
       // Replace test-with-playwright imports with our generated API types
       const modifiedContent = content.replace(
         /import type { Test } from '@lvce-editor\/test-with-playwright'/g,
         "import type { Test } from '../api.d.ts'"
       )
-      
+
       await writeFile(destPath, modifiedContent)
     }
   }
@@ -35,7 +35,7 @@ export const verifyE2eTypes = async (): Promise<void> => {
 
   // Always clean up any existing temp directory to ensure clean state
   try {
-    await execa('rm', ['-rf', tempDir])
+    await rm(tempDir, { recursive: true, force: true })
   } catch {
     // Ignore errors if directory doesn't exist
   }
