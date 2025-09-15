@@ -2,8 +2,6 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as TitleBarMenuBar from '../src/parts/TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
 
-
-
 test('closeMenu', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'TitleBarMenuBar.closeMenu'() {

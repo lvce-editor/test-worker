@@ -148,9 +148,5 @@ test('executeCommand', async () => {
   })
 
   await QuickPick.executeCommand('test')
-  expect(mockRpc.invocations).toEqual([
-    ['QuickPick.showCommands'],
-    ['QuickPick.handleInput', 'test', 0],
-    ['QuickPick.selectItem', 'test']
-  ])
+  expect(mockRpc.invocations).toEqual([['QuickPick.showCommands'], ['QuickPick.handleInput', 'test', 0], ['QuickPick.selectItem', 'test']])
 })

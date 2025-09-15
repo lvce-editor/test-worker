@@ -26,6 +26,6 @@ test('openProblems', async () => {
   await Panel.openProblems()
   expect(mockRpc.invocations).toEqual([
     ['Layout.showPanel', 'Problems'],
-    ['Panel.selectIndex', 0]
+    ['Panel.selectIndex', 0],
   ])
 })
