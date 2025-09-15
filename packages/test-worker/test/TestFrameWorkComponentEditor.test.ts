@@ -678,7 +678,13 @@ test('shouldHaveSelections', async () => {
 })
 
 test('shouldHaveSelections - throws error when selections do not match', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return ['1']
     },
@@ -688,51 +694,75 @@ test('shouldHaveSelections - throws error when selections do not match', async (
   })
 
   await expect(Editor.shouldHaveSelections(new Uint32Array([1, 2, 3]))).rejects.toThrow('Expected editor to have selections 1,2,3 but was 4,5,6')
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+  expect(editorMockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
 })
 
 test('shouldHaveText - throws error when no editor found', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return []
     },
   })
 
   await expect(Editor.shouldHaveText('test text')).rejects.toThrow('no editor found')
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys']])
+  expect(editorMockRpc.invocations).toEqual([['Editor.getKeys']])
 })
 
 test('shouldHaveSelections - throws error when no editor found', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.getKeys'() {
       return []
     },
   })
 
   await expect(Editor.shouldHaveSelections(new Uint32Array([1, 2, 3]))).rejects.toThrow('no editor found')
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys']])
+  expect(editorMockRpc.invocations).toEqual([['Editor.getKeys']])
 })
 
 test('undo', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.undo'() {
       return undefined
     },
   })
 
   await Editor.undo()
-  expect(mockRpc.invocations).toEqual([['Editor.undo']])
+  expect(editorMockRpc.invocations).toEqual([['Editor.undo']])
 })
 
 test('redo', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
+      return undefined
+    },
+  })
+  
+  const editorMockRpc = EditorWorker.registerMockRpc({
     'Editor.redo'() {
       return undefined
     },
   })
 
   await Editor.redo()
-  expect(mockRpc.invocations).toEqual([['Editor.redo']])
+  expect(editorMockRpc.invocations).toEqual([['Editor.redo']])
 })
 
 test('executeTabCompletion', async () => {
