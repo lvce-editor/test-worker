@@ -24,7 +24,7 @@ test('getWebViewInfo: calls RendererWorker.invoke with correct method and webVie
 test('getWebViewInfo: handles different webViewId values', async (): Promise<void> => {
   const mockWebViewInfo = {
     uid: 'different-uid-456',
-    origin: 'https://test.com',
+    origin: 'https://example.com',
     title: 'Different WebView',
   }
 
