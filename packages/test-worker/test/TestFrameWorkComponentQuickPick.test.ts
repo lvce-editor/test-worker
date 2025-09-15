@@ -80,63 +80,58 @@ test('focusLast', async () => {
 })
 
 test('focusIndex', async () => {
-  const mockInvoke = jest.fn().mockResolvedValue(undefined)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.focusIndex'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await QuickPick.focusIndex(1)
-  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusIndex', 1)
+  expect(mockRpc.invocations).toEqual([['QuickPick.focusIndex', 1]])
 })
 
 test('focusPrevious', async () => {
-  const mockInvoke = jest.fn().mockResolvedValue(undefined)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.focusPrevious'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await QuickPick.focusPrevious()
-  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.focusPrevious')
+  expect(mockRpc.invocations).toEqual([['QuickPick.focusPrevious']])
 })
 
 test('selectItem', async () => {
-  const mockInvoke = jest.fn().mockResolvedValue(undefined)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.selectItem'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await QuickPick.selectItem('test')
-  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.selectItem', 'test')
+  expect(mockRpc.invocations).toEqual([['QuickPick.selectItem', 'test']])
 })
 
 test('selectIndex', async () => {
-  const mockInvoke = jest.fn().mockResolvedValue(undefined)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.selectIndex'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await QuickPick.selectIndex(1)
-  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.selectIndex', 1)
+  expect(mockRpc.invocations).toEqual([['QuickPick.selectIndex', 1]])
 })
 
 test('selectCurrentIndex', async () => {
-  const mockInvoke = jest.fn().mockResolvedValue(undefined)
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'QuickPick.selectCurrentIndex'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await QuickPick.selectCurrentIndex()
-  expect(mockInvoke).toHaveBeenCalledWith('QuickPick.selectCurrentIndex')
+  expect(mockRpc.invocations).toEqual([['QuickPick.selectCurrentIndex']])
 })
 
 test('executeCommand', async () => {
