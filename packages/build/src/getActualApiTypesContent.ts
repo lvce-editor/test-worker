@@ -1,5 +1,3 @@
-const RE_WORD = /\w+/
-
 // we want slightly different types,
 // specifically instead of exporting every interface
 // we only export a test api interface for tests
@@ -138,7 +136,7 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
       // Parse the export line immediately
       const exportLine = line.replace(/^\s*export\s*\{\s*/, '').replace(/\s*\};\s*$/, '')
       if (exportLine) {
-        const exports = exportLine.split(',').map(exp => exp.trim())
+        const exports = exportLine.split(',').map((exp) => exp.trim())
         if (currentNamespace) {
           namespaces[currentNamespace].push(...exports)
         }
@@ -170,16 +168,14 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
     newLines.push(`interface ${namespaceName} {`)
     for (const exportName of exports) {
       // Handle aliased exports (e.g., "close$1 as close")
-      const [actualName, alias] = exportName.includes(' as ')
-        ? exportName.split(' as ').map(s => s.trim())
-        : [exportName, exportName]
+      const [actualName, alias] = exportName.includes(' as ') ? exportName.split(' as ').map((s) => s.trim()) : [exportName, exportName]
 
       // Try to find the signature, first with the exact name, then with the base name
       let signature = functionSignatures[actualName]
       if (!signature) {
         // Try to find a function with the same base name
         const baseName = actualName.replace(/\$.*$/, '')
-        const matchingKey = Object.keys(functionSignatures).find(key => key === baseName)
+        const matchingKey = Object.keys(functionSignatures).find((key) => key === baseName)
         if (matchingKey) {
           signature = functionSignatures[matchingKey]
         }
