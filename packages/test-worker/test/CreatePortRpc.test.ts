@@ -36,7 +36,7 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
       // Add port to store
-      store.add(async () => port.close())
+      store.add(() => port.close())
       // Simulate sending ready message after port is set
       port.postMessage('ready')
     },
@@ -71,7 +71,7 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
       // Add port to store
-      store.add(async () => port.close())
+      store.add(() => port.close())
       // Send wrong message instead of 'ready'
       port.postMessage('not-ready')
     },
@@ -116,7 +116,7 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
     },
     'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
       // Add port to store
-      store.add(async () => port.close())
+      store.add(() => port.close())
       return Promise.reject(new Error('Failed to set port'))
     },
   })
@@ -147,7 +147,7 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
     },
     async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
       // Add port to store
-      store.add(async () => port.close())
+      store.add(() => port.close())
       expect(portType).toBe('test')
       port.postMessage('ready')
     },
@@ -189,7 +189,7 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
       },
       async 'WebView.setPort'(uid: number, port: MessagePort, origin: string, portType: string): Promise<void> {
         // Add port to store
-        store.add(async () => port.close())
+        store.add(() => port.close())
         port.postMessage('ready')
       },
     })
