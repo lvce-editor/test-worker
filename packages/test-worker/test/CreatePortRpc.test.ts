@@ -149,7 +149,6 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
   const result = await CreatePortRpc.createPortRpc(webViewId)
 
   expect(result).toBeDefined()
-  expect(typeof result).toBe('object')
   expect(mockRpc.invocations).toEqual([
     ['WebView.getWebViewInfo2', webViewId],
     ['WebView.setPort', mockWebViewInfo.uid, expect.any(MessagePort), mockWebViewInfo.origin, 'test'],
@@ -189,7 +188,6 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
     const result = await CreatePortRpc.createPortRpc(testCase.webViewId)
 
     expect(result).toBeDefined()
-    expect(typeof result).toBe('object')
     expect(mockRpc.invocations).toEqual([
       ['WebView.getWebViewInfo2', testCase.webViewId],
       ['WebView.setPort', testCase.uid, expect.any(MessagePort), testCase.origin, 'test'],
