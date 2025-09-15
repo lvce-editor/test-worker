@@ -1,8 +1,8 @@
-import { ExecuteTestResult } from '../ExecuteTestResult/ExecuteTestResult.ts'
-import { formatDuration } from '../FormatDuration/FormatDuration.ts'
-import * as Timestamp from '../Timestamp/Timestamp.ts'
-import * as TestType from '../TestType/TestType.ts'
+import type { ExecuteTestResult } from '../ExecuteTestResult/ExecuteTestResult.ts'
 import { callFunction } from '../CallFunction/CallFunction.ts'
+import { formatDuration } from '../FormatDuration/FormatDuration.ts'
+import * as TestType from '../TestType/TestType.ts'
+import * as Timestamp from '../Timestamp/Timestamp.ts'
 
 export const executeTest2 = async (name: string, fn: any, globals: any): Promise<ExecuteTestResult> => {
   const start = Timestamp.now()
