@@ -576,7 +576,7 @@ test.skip('shouldHaveText', async () => {
 })
 
 test.skip('shouldHaveText - throws error when text does not match', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  RendererWorker.registerMockRpc({
     'Editor.getText'() {
       return 'wrong text'
     },
