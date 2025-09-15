@@ -1,5 +1,6 @@
-import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { expect, test, jest } from '@jest/globals'
+import { RendererWorker, set, RpcId } from '@lvce-editor/rpc-registry'
+import { MockRpc } from '@lvce-editor/rpc'
 import * as FileSystem from '../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 
 test('writeFile', async () => {
@@ -151,4 +152,39 @@ test('createExecutableFrom', async () => {
     ['FileSystem.writeFile', '/tmp/git', "#!/usr/bin/node\n  console.log('ok')"],
     ['FileSystem.chmod', '/tmp/git', '755'],
   ])
+})
+
+test('createDroppedFileHandle', async () => {
+  const mockFile = new File(['test content'], 'dropped-file.txt', { type: 'text/plain' })
+  const mockFileHandle = {
+    getFile: () => Promise.resolve(mockFile),
+  }
+  const mockDirectory = {
+    getFileHandle: () => Promise.resolve(mockFileHandle),
+  }
+
+  // Mock navigator.storage.getDirectory
+  Object.defineProperty(global, 'navigator', {
+    value: {
+      storage: {
+        getDirectory: () => Promise.resolve(mockDirectory),
+      },
+    },
+    writable: true,
+  })
+
+  // Mock the RPC call using registerMockRpc
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystemHandle.addFileHandle'() {
+      return 123
+    },
+  })
+
+  const result = await FileSystem.createDroppedFileHandle()
+
+  expect(result).toEqual({
+    file: mockFile,
+    id: 123,
+  })
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', mockFileHandle]])
 })
