@@ -1,45 +1,42 @@
 import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystem from '../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
-import { createMockRpcWithInvocations } from './test-utils.ts'
 
 test('writeFile', async () => {
-  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
-    return undefined
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return undefined
+    },
   })
 
   await FileSystem.writeFile('memfs:///file.txt', 'content')
 
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.writeFile', 'memfs:///file.txt', 'content']
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', 'memfs:///file.txt', 'content']])
 })
 
 test('writeJson', async () => {
-  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
-    return undefined
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return undefined
+    },
   })
 
   await FileSystem.writeJson('memfs:///data.json', { a: 1 })
 
   const expected = '{\n  "a": 1\n}\n'
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.writeFile', 'memfs:///data.json', expected]
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', 'memfs:///data.json', expected]])
 })
 
 test('readFile', async () => {
-  const mockRpc = createMockRpcWithInvocations(async (method: string, ...args: readonly any[]) => {
-    if (method === 'FileSystem.readFile') {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
       return 'content'
-    }
-    throw new Error(`unexpected method ${method}`)
+    },
   })
 
   const content: string = await FileSystem.readFile('memfs:///file.txt')
   expect(content).toBe('content')
-  expect(mockRpc.invocations).toEqual([
-    ['FileSystem.readFile', 'memfs:///file.txt']
-  ])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readFile', 'memfs:///file.txt']])
 })
 
 test('mkdir', async () => {
