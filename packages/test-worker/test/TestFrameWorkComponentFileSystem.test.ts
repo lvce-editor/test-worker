@@ -156,17 +156,17 @@ test('createExecutableFrom', async () => {
 test('createDroppedFileHandle', async () => {
   const mockFile = new File(['test content'], 'dropped-file.txt', { type: 'text/plain' })
   const mockFileHandle = {
-    getFile: (): Promise<File> => mockFile,
+    getFile: (): Promise<File> => Promise.resolve(mockFile),
   }
   const mockDirectory = {
-    getFileHandle: (): Promise<typeof mockFileHandle> => mockFileHandle,
+    getFileHandle: (): Promise<typeof mockFileHandle> => Promise.resolve(mockFileHandle),
   }
 
   // Mock navigator.storage.getDirectory
   Object.defineProperty(globalThis, 'navigator', {
     value: {
       storage: {
-        getDirectory: (): Promise<typeof mockDirectory> => mockDirectory,
+        getDirectory: (): Promise<typeof mockDirectory> => Promise.resolve(mockDirectory),
       },
     },
     writable: true,
