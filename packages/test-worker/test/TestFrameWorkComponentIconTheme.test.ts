@@ -1,18 +1,15 @@
-import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as IconTheme from '../src/parts/TestFrameWorkComponentIconTheme/TestFrameWorkComponentIconTheme.ts'
 
 test('setIconTheme', async () => {
-  const mockInvoke = jest.fn()
-  const mockRpc = MockRpc.create({
-    commandMap: {},
-    invoke: mockInvoke,
+  const mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.setIconTheme'() {
+      return undefined
+    },
   })
-  RendererWorker.set(mockRpc)
 
   await IconTheme.setIconTheme('vs-code-icon-theme')
 
-  expect(mockInvoke).toHaveBeenCalledTimes(1)
-  expect(mockInvoke).toHaveBeenCalledWith('IconTheme.setIconTheme', 'vs-code-icon-theme')
+  expect(mockRpc.invocations).toEqual([['IconTheme.setIconTheme', 'vs-code-icon-theme']])
 })
