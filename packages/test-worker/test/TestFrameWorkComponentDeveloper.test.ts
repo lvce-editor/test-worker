@@ -67,9 +67,5 @@ test('reloadColorTheme and reloadIconTheme and toggleDeveloperTools', async () =
   await Developer.reloadColorTheme()
   await Developer.reloadIconTheme()
   await Developer.toggleDeveloperTools()
-  expect(mockRpc.invocations).toEqual([
-    ['Developer.reloadColorTheme'],
-    ['Developer.reloadIconTheme'],
-    ['Developer.toggleDeveloperTools']
-  ])
+  expect(mockRpc.invocations).toEqual([['Developer.reloadColorTheme'], ['Developer.reloadIconTheme'], ['Developer.toggleDeveloperTools']])
 })
