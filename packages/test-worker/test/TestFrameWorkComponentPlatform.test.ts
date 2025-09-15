@@ -18,6 +18,7 @@ test('getNodePath delegates to PlatformPaths.getNodePath', async () => {
   expect(nodePath).toBe('/usr/bin/node')
 })
 
-test('isFirefox returns value from IsFirefox.isFirefox', () => {
+test('isFirefox returns value from IsFirefox.getIsFirefox', () => {
   expect(Platform.isFirefox()).toBe(true)
+  expect(IsFirefox.getIsFirefox).toHaveBeenCalledTimes(1)
 })
