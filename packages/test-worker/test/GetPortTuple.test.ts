@@ -6,6 +6,6 @@ test('getPortTuple returns two connected MessagePorts', () => {
   expect(port1).toBeDefined()
   expect(port2).toBeDefined()
   expect(port1).not.toBe(port2)
-  expect(typeof (port1 as any).postMessage).toBe('function')
-  expect(typeof (port2 as any).postMessage).toBe('function')
+  expect(typeof port1.postMessage).toBe('function')
+  expect(typeof port2.postMessage).toBe('function')
 })
