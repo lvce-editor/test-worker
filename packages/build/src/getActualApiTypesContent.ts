@@ -1,10 +1,9 @@
 const RE_WORD = /\w+/
 
+// we want slightly different types,
+// specifically instead of exporting every interface
+// we only export a test api interface for tests
 export const getActualApiTypesContent = (content: string): string => {
-  // we want slightly different types,
-  // specifically instead of exporting every interface
-  // we only export a test api interface for tests
-
   const lines = content.split('\n')
   const newLines: string[] = []
   let state: 'default' | 'export' | 'after-export' = 'default'
