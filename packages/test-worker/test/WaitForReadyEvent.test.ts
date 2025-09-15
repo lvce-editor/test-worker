@@ -1,5 +1,4 @@
 import { expect, test } from '@jest/globals'
-import { setTimeout } from 'node:timers/promises'
 import * as WaitForReadyEvent from '../src/parts/WaitForReadyEvent/WaitForReadyEvent.ts'
 
 test('waitForFirstEventEvent resolves with the first message event', async () => {
