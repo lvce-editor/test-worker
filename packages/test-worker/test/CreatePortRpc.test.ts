@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as CreatePortRpc from '../src/parts/CreatePortRpc/CreatePortRpc.ts'
 
-type Disposable = () => Promise<void>
+type Disposable = (() => Promise<void>) | (() => void)
 
 class DisposableStore {
   private disposables: Disposable[] = []
