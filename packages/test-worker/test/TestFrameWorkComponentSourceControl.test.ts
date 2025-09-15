@@ -2,8 +2,6 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SourceControl from '../src/parts/TestFrameWorkComponentSourceControl/TestFrameWorkComponentSourceControl.ts'
 
-
-
 test('selectIndex', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Source Control.selectIndex'() {

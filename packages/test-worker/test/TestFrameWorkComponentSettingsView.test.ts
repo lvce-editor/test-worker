@@ -3,8 +3,6 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as SettingsView from '../src/parts/TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
 
-
-
 test('show', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {

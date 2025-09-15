@@ -2,8 +2,6 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as KeyBindingsEditor from '../src/parts/TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
 
-
-
 test('open', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {

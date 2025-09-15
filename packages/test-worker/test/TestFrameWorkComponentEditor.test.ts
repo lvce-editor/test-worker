@@ -610,11 +610,7 @@ test('rename2', async () => {
   })
 
   await Editor.rename2('newName')
-  expect(mockRpc.invocations).toEqual([
-    ['Editor.openRename'],
-    ['EditorRename.handleInput', 'newName', 2],
-    ['EditorRename.accept']
-  ])
+  expect(mockRpc.invocations).toEqual([['Editor.openRename'], ['EditorRename.handleInput', 'newName', 2], ['EditorRename.accept']])
 })
 
 // Note: getSelections, shouldHaveSelections, undo, and redo functions use EditorWorker
