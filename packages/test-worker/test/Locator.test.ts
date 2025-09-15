@@ -23,12 +23,17 @@ test('click', async () => {
   const locator = createLocator(selector, options)
   await locator.click()
   expect(mockRpc.invocations).toHaveLength(1)
-  expect(mockRpc.invocations[0]).toEqual(['TestFrameWork.performAction', locator, 'click', {
-    bubbles: true,
-    button: 0,
-    cancable: true,
-    detail: 1,
-  }])
+  expect(mockRpc.invocations[0]).toEqual([
+    'TestFrameWork.performAction',
+    locator,
+    'click',
+    {
+      bubbles: true,
+      button: 0,
+      cancable: true,
+      detail: 1,
+    },
+  ])
 })
 
 test('hover', async () => {
@@ -42,10 +47,15 @@ test('hover', async () => {
   const locator = createLocator(selector, options)
   await locator.hover()
   expect(mockRpc.invocations).toHaveLength(1)
-  expect(mockRpc.invocations[0]).toEqual(['TestFrameWork.performAction', locator, 'hover', {
-    bubbles: true,
-    cancable: true,
-  }])
+  expect(mockRpc.invocations[0]).toEqual([
+    'TestFrameWork.performAction',
+    locator,
+    'hover',
+    {
+      bubbles: true,
+      cancable: true,
+    },
+  ])
 })
 
 test('type', async () => {
@@ -59,9 +69,14 @@ test('type', async () => {
   const locator = createLocator(selector, options)
   await locator.type('a')
   expect(mockRpc.invocations).toHaveLength(1)
-  expect(mockRpc.invocations[0]).toEqual(['TestFrameWork.performAction', locator, 'type', {
-    text: 'a',
-  }])
+  expect(mockRpc.invocations[0]).toEqual([
+    'TestFrameWork.performAction',
+    locator,
+    'type',
+    {
+      text: 'a',
+    },
+  ])
 })
 
 test('first', () => {
