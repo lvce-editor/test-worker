@@ -71,7 +71,7 @@ export const createDroppedFileHandle = async (): Promise<DroppedFileHandle> => {
   })
   const file = await fileHandle.getFile()
   // @ts-ignore
-  const id = await ParentRpc.invoke('FileSystemHandle.addFileHandle', fileHandle)
+  const id = await RendererWorker.invoke('FileSystemHandle.addFileHandle', fileHandle)
   return {
     file,
     id,

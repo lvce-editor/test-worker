@@ -152,3 +152,44 @@ test('createExecutableFrom', async () => {
     ['FileSystem.chmod', '/tmp/git', '755'],
   ])
 })
+
+test('createDroppedFileHandle', async () => {
+  const mockFile = new File(['test content'], 'dropped-file.txt', { type: 'text/plain' })
+  const mockFileHandle = {
+    async getFile(): Promise<File> {
+      return mockFile
+    },
+  }
+  const mockDirectory = {
+    async getFileHandle(): Promise<typeof mockFileHandle> {
+      return mockFileHandle
+    },
+  }
+
+  // Mock navigator.storage.getDirectory
+  Object.defineProperty(globalThis, 'navigator', {
+    value: {
+      storage: {
+        async getDirectory(): Promise<typeof mockDirectory> {
+          return mockDirectory
+        },
+      },
+    },
+    writable: true,
+  })
+
+  // Mock the RPC call using registerMockRpc
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystemHandle.addFileHandle'() {
+      return 123
+    },
+  })
+
+  const result = await FileSystem.createDroppedFileHandle()
+
+  expect(result).toEqual({
+    file: mockFile,
+    id: 123,
+  })
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', mockFileHandle]])
+})

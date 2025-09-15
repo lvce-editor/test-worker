@@ -1,4 +1,4 @@
-const getIsFirefox = (): boolean => {
+export const getIsFirefox = (): boolean => {
   if (typeof navigator === 'undefined') {
     return false
   }
@@ -11,8 +11,3 @@ const getIsFirefox = (): boolean => {
   }
   return navigator.userAgent.toLowerCase().includes('firefox')
 }
-
-/**
- * @type {boolean}
- */
-export const isFirefox = getIsFirefox()

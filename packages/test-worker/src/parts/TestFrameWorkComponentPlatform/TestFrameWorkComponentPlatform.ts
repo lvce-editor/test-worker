@@ -6,5 +6,5 @@ export const getNodePath = (): Promise<string> => {
 }
 
 export const isFirefox = (): boolean => {
-  return IsFirefox.isFirefox
+  return IsFirefox.getIsFirefox()
 }
