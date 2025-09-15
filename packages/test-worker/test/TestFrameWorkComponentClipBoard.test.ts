@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
-const setup = () => {
+const setup = (): any => {
   const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readNativeFiles'() {
       return undefined
