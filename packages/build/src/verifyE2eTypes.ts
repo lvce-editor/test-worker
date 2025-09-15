@@ -20,7 +20,7 @@ const copyE2eTestFiles = async (srcDir: string, destDir: string): Promise<void> 
       // Replace test-with-playwright imports with our generated API types
       const modifiedContent = content.replace(
         /import type { Test } from '@lvce-editor\/test-with-playwright'/g,
-        "import type { Test } from '../api.d.ts'"
+        "import type { Test } from '../api.d.ts'",
       )
 
       await writeFile(destPath, modifiedContent)
