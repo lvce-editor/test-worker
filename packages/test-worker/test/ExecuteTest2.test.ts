@@ -31,10 +31,6 @@ const testFunction5 = async (): Promise<void> => {
   throw undefined
 }
 
-const testFunction6 = async (): Promise<void> => {
-  // Simulate successful test
-}
-
 const timestampGenerator7 = (): number => 5000
 const receivedGlobals: any = {}
 const testFunction7 = async (globals: any): Promise<void> => {
@@ -120,22 +116,6 @@ test('executeTest2 with undefined error', async () => {
   expect(result.type).toBe(TestType.Pass)
   expect(result.background).toBe('green')
   expect(result.text).toBe('test passed in 0.00ms')
-})
-
-test('executeTest2 uses default timestamp generator when none provided', async () => {
-  const globals = {}
-
-  const result = await ExecuteTest2.executeTest2('default-timestamp-test', testFunction6, globals)
-
-  expect(result.name).toBe('default-timestamp-test')
-  expect(result.error).toBeUndefined()
-  expect(typeof result.start).toBe('number')
-  expect(typeof result.end).toBe('number')
-  expect(typeof result.duration).toBe('number')
-  expect(result.duration).toBeGreaterThanOrEqual(0)
-  expect(result.type).toBe(TestType.Pass)
-  expect(result.background).toBe('green')
-  expect(result.text).toMatch(/^test passed in \d+\.\d+ms$/)
 })
 
 test('executeTest2 with globals passed to test function', async () => {

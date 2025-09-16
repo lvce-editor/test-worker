@@ -2,10 +2,9 @@ import type { ExecuteTestResult } from '../ExecuteTestResult/ExecuteTestResult.t
 import { callFunction } from '../CallFunction/CallFunction.ts'
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import * as TestType from '../TestType/TestType.ts'
-import * as Timestamp from '../Timestamp/Timestamp.ts'
 
-export const executeTest2 = async (name: string, fn: any, globals: any, timestampGenerator?: () => number): Promise<ExecuteTestResult> => {
-  const getTimestamp = timestampGenerator ?? Timestamp.now
+export const executeTest2 = async (name: string, fn: any, globals: any, timestampGenerator: () => number): Promise<ExecuteTestResult> => {
+  const getTimestamp = timestampGenerator
   const start = getTimestamp()
   const error = await callFunction(fn, globals)
   const end = getTimestamp()
