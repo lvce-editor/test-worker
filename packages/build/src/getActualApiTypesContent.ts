@@ -5,6 +5,17 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   const newLines: string[] = []
   let state: 'default' | 'export' | 'after-export' | 'internal' | 'skip' = 'default'
 
+  const expectLines = contentExpect.split('\n')
+  for (const line of expectLines) {
+    if (line.startsWith('// Generated')) {
+      continue
+    }
+    if (line.startsWith('export {}')) {
+      continue
+    }
+    newLines.push(line)
+  }
+
   const locatorLines = contentLocator.split('\n')
   state = 'default'
   for (const line of locatorLines) {
@@ -194,7 +205,7 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   for (const namespaceName of Object.keys(namespaces)) {
     newLines.push(`  readonly ${namespaceName}: ${namespaceName}`)
   }
-  newLines.push('  readonly expect: any')
+  newLines.push('  readonly expect: (locator: ILocatorExternal) => LocatorExpect')
   newLines.push('  readonly Locator: (selector: string, option?: any) => ILocatorExternal')
   newLines.push('}')
   newLines.push('')

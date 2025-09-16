@@ -13,7 +13,7 @@ export const generateApiTypes = async (): Promise<void> => {
       cwd: join(root, 'packages', 'test-worker'),
       reject: false,
     }),
-    execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/expect.d.ts', 'src/parts/Expect/Expect.ts'], {
+    execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/expect.d.ts', 'src/parts/LocatorExpect/LocatorExpect.ts'], {
       cwd: join(root, 'packages', 'test-worker'),
       reject: false,
     }),
