@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { getIsFirefox } from '../src/parts/IsFirefox/IsFirefox.ts'
 
 const mockNavigator = (userAgent: string, userAgentData?: any): void => {
   Object.defineProperty(globalThis, 'navigator', {
@@ -14,20 +15,6 @@ const mockNavigator = (userAgent: string, userAgentData?: any): void => {
 const clearNavigator = (): void => {
   // @ts-expect-error
   delete globalThis.navigator
-}
-
-const getIsFirefox = (): boolean => {
-  if (typeof navigator === 'undefined') {
-    return false
-  }
-  if (
-    // @ts-expect-error
-    navigator.userAgentData?.brands
-  ) {
-    // @ts-expect-error
-    return navigator.userAgentData.brands.includes('Firefox')
-  }
-  return navigator.userAgent.toLowerCase().includes('firefox')
 }
 
 test('returns false when navigator is undefined', () => {
