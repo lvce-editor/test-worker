@@ -31,10 +31,6 @@ const testFunction5 = async (): Promise<void> => {
   throw undefined
 }
 
-const testFunction6 = async (): Promise<void> => {
-  // Simulate successful test
-}
-
 const timestampGenerator7 = (): number => 5000
 const receivedGlobals: any = {}
 const testFunction7 = async (globals: any): Promise<void> => {
