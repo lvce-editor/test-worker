@@ -11,6 +11,7 @@ export const executeTest2 = async (name: string, fn: any, globals: any, timestam
   const end = getTimestamp()
   const duration = end - start
   const formattedDuration = formatDuration(duration)
+  console.log({ error })
   if (error) {
     return {
       error,
