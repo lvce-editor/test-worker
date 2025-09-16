@@ -8,6 +8,8 @@ export const getFunction = (fnName: string): any => {
       return ConditionErrors.toHaveValue
     case 'toHaveText':
       return ConditionErrors.toHaveText
+    case 'toContainText':
+      return ConditionErrors.toContainText
     case 'toHaveAttribute':
       return ConditionErrors.toHaveAttribute
     case 'toHaveCount':

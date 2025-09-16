@@ -27,6 +27,16 @@ export const toHaveText = async (locator: ILocatorInternal, options: { readonly 
   return `expected selector ${locatorString} to have text "${text}" but was "${actual}"`
 }
 
+export const toContainText = async (locator: ILocatorInternal, options: { readonly text: string }): Promise<string> => {
+  const locatorString = printLocator(locator)
+  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toContainText', locator, options)
+  const { text } = options
+  if (!wasFound) {
+    return `expected selector ${locatorString} to contain text "${text}" element was not found`
+  }
+  return `expected selector ${locatorString} to contain text "${text}" but was "${actual}"`
+}
+
 export const toHaveAttribute = async (
   locator: ILocatorInternal,
   options: {
