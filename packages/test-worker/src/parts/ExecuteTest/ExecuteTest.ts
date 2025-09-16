@@ -3,8 +3,6 @@ import { executeTest2 } from '../ExecuteTest2/ExecuteTest2.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'
 
-// TODO make this code more functional, returning a test result
-// and a separate function prints out the test result
 export const executeTest = async (name: string, fn: any, globals = {}): Promise<void> => {
   const { error, formattedDuration, background, text, type } = await executeTest2(name, fn, globals, Timestamp.now)
   if (error) {
