@@ -353,6 +353,18 @@ test('expandAll', async () => {
   expect(mockRpc.invocations).toEqual([['Explorer.expandAll']])
 })
 
+test('collapseAll', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.collapseAll'() {
+      return undefined
+    },
+  })
+
+  await Explorer.collapseAll()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.collapseAll']])
+})
+
 test('handleDragOver', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleDragOver'() {
