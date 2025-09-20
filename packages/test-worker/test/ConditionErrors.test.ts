@@ -293,3 +293,87 @@ test('toHaveCss - wrong value', async () => {
     ],
   ])
 })
+
+test('toContainText - element not found', async () => {
+  const locator: ILocatorInternal = {
+    _selector: '.text',
+    _nth: -1,
+    _hasText: '',
+  }
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: false, actual: '' }
+    },
+  })
+  const result = await ConditionErrors.toContainText(locator, { text: 'hello' })
+  expect(result).toBe('expected selector .text to contain text "hello" element was not found')
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toContainText', locator, { text: 'hello' }]])
+})
+
+test('toContainText - wrong text', async () => {
+  const locator: ILocatorInternal = {
+    _selector: '.text',
+    _nth: -1,
+    _hasText: '',
+  }
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: true, actual: 'world' }
+    },
+  })
+  const result = await ConditionErrors.toContainText(locator, { text: 'hello' })
+  expect(result).toBe('expected selector .text to contain text "hello" but was "world"')
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toContainText', locator, { text: 'hello' }]])
+})
+
+test('toHaveJSProperty - element not found', async () => {
+  const locator: ILocatorInternal = {
+    _selector: '.button',
+    _nth: -1,
+    _hasText: '',
+  }
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: false, actual: '' }
+    },
+  })
+  const result = await ConditionErrors.toHaveJSProperty(locator, { key: 'disabled', value: 'true' })
+  expect(result).toBe('expected .button to have js property disabled true but element was not found')
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.checkConditionError',
+      'toHaveJSProperty',
+      locator,
+      {
+        key: 'disabled',
+        value: 'true',
+      },
+    ],
+  ])
+})
+
+test('toHaveJSProperty - wrong value', async () => {
+  const locator: ILocatorInternal = {
+    _selector: '.button',
+    _nth: -1,
+    _hasText: '',
+  }
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { wasFound: true, actual: 'false' }
+    },
+  })
+  const result = await ConditionErrors.toHaveJSProperty(locator, { key: 'disabled', value: 'true' })
+  expect(result).toBe('expected .button to have js property disabled true but was false')
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.checkConditionError',
+      'toHaveJSProperty',
+      locator,
+      {
+        key: 'disabled',
+        value: 'true',
+      },
+    ],
+  ])
+})
