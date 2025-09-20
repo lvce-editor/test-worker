@@ -64,3 +64,23 @@ test('shouldHaveText - wrong', async () => {
   await expect(ClipBoard.shouldHaveText('hello')).rejects.toThrow('expected clipboard to have text "hello" but was "world"')
   expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })
+
+test('shouldHaveText - regex success', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryText'() {
+      return 'Hello World 123'
+    },
+  })
+  await ClipBoard.shouldHaveText(/Hello.*\d+/)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
+})
+
+test('shouldHaveText - regex error', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryText'() {
+      return 'Hello World'
+    },
+  })
+  await expect(ClipBoard.shouldHaveText(/Hello.*\d+/)).rejects.toThrow('expected clipboard to have text "/Hello.*\\d+/" but was "Hello World"')
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
+})
