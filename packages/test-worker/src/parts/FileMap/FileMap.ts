@@ -1,3 +1,3 @@
 export interface FileMap {
-  [path: string]: string
+  readonly [path: string]: string
 }
