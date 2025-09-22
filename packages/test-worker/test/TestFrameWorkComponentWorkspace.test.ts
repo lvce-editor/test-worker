@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/await-thenable */
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Workspace from '../src/parts/TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
@@ -25,11 +24,6 @@ test('openTmpDir sets workspace path and returns it', async () => {
 })
 
 test('resolveFileUrl converts url to file url', async () => {
-  const result = await Workspace.resolveFileUrl('https://example.com/remote/path/to/file')
+  const result = Workspace.resolveFileUrl('https://example.com/remote/path/to/file')
   expect(result).toBe('file:///path/to/file')
-})
-
-test('resolveFileUrl handles fixture urls in web environment', async () => {
-  // This test would require complex platform mocking, so we'll skip it for now
-  // The functionality is tested in the ResolveFixtureUri tests
 })
