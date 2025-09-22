@@ -1,4 +1,5 @@
 import { expect, test, jest, afterEach } from '@jest/globals'
+import { VError } from '@lvce-editor/verror'
 import type { FileMap } from '../src/parts/FileMap/FileMap.ts'
 import { loadFileMap } from '../src/parts/LoadFileMap/LoadFileMap.ts'
 
@@ -32,7 +33,9 @@ test('loadFileMap - 404 error', async () => {
   })
   mockFetch.mockResolvedValueOnce(mockResponse)
 
-  await expect(loadFileMap('http://localhost:3000/nonexistent.json')).rejects.toThrow('Failed to load filemap.json: 404 Not Found')
+  await expect(loadFileMap('http://localhost:3000/nonexistent.json')).rejects.toThrow(
+    'Failed to load file map from http://localhost:3000/nonexistent.json',
+  )
 })
 
 test('loadFileMap - 500 error', async () => {
@@ -42,13 +45,13 @@ test('loadFileMap - 500 error', async () => {
   })
   mockFetch.mockResolvedValueOnce(mockResponse)
 
-  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load filemap.json: 500 Internal Server Error')
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
 })
 
 test('loadFileMap - network error', async () => {
   mockFetch.mockRejectedValueOnce(new Error('Network error'))
 
-  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Network error')
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
 })
 
 test('loadFileMap - JSON parsing error', async () => {
@@ -58,7 +61,7 @@ test('loadFileMap - JSON parsing error', async () => {
   })
   mockFetch.mockResolvedValueOnce(mockResponse)
 
-  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow()
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
 })
 
 test('loadFileMap - empty file map', async () => {
@@ -124,6 +127,14 @@ test('loadFileMap - different URL formats', async () => {
   await loadFileMap(httpsUrl)
 
   expect(mockFetch).toHaveBeenCalledWith(httpsUrl)
+})
+
+test('loadFileMap - VError contains original error and URL context', async () => {
+  const testUrl = 'http://localhost:3000/test.json'
+  const originalError = new Error('Network error')
+  mockFetch.mockRejectedValueOnce(originalError)
+
+  await expect(loadFileMap(testUrl)).rejects.toThrow('Failed to load file map from http://localhost:3000/test.json')
 })
 
 // Reset mocks after each test
