@@ -9,9 +9,15 @@ import * as TestState from '../TestState/TestState.ts'
 // 1. import test module
 // 2. execute test
 // 3. print out results
-export const execute = async (href: string): Promise<void> => {
+export const execute = async (href: string, platform: number): Promise<void> => {
   const globals = {
     ...TestFrameWorkComponent,
+    FileSystem: {
+      ...TestFrameWorkComponent.FileSystem,
+      loadFixture(url: string): Promise<string> {
+        return TestFrameWorkComponent.FileSystem.loadFixture(platform, url)
+      },
+    },
     ...TestFrameWork,
   }
   // TODO
