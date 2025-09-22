@@ -12,12 +12,11 @@ export const openTmpDir = async (): Promise<string> => {
   return tmpDir
 }
 
+/**
+ * @deprecated use FileSystem.loadFixture instead
+ */
 export const resolveFileUrl = (url: string): string => {
-  // TODO in web, convert to memfs or fetch url
-  // TODO on web: read filemap for that fixture
-  // else, use filesystem to read the files
   // TODO covert remote url to file url
   // then set that as workspace path
-
   return toFileUrl(url)
 }
