@@ -137,6 +137,89 @@ test('loadFileMap - VError contains original error and URL context', async () =>
   await expect(loadFileMap(testUrl)).rejects.toThrow('Failed to load file map from http://localhost:3000/test.json')
 })
 
+test('loadFileMap - throws error when JSON is null', async () => {
+  const mockResponse = new Response(JSON.stringify(null), {
+    status: 200,
+    statusText: 'OK',
+  })
+  mockFetch.mockResolvedValueOnce(mockResponse)
+
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
+})
+
+test('loadFileMap - throws error when JSON is a number', async () => {
+  const mockResponse = new Response(JSON.stringify(42), {
+    status: 200,
+    statusText: 'OK',
+  })
+  mockFetch.mockResolvedValueOnce(mockResponse)
+
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
+})
+
+test('loadFileMap - throws error when JSON is an array', async () => {
+  const mockResponse = new Response(JSON.stringify(['file1.ts', 'file2.ts']), {
+    status: 200,
+    statusText: 'OK',
+  })
+  mockFetch.mockResolvedValueOnce(mockResponse)
+
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
+})
+
+test('loadFileMap - throws error when JSON is a string', async () => {
+  const mockResponse = new Response(JSON.stringify('not a file map'), {
+    status: 200,
+    statusText: 'OK',
+  })
+  mockFetch.mockResolvedValueOnce(mockResponse)
+
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
+})
+
+test('loadFileMap - throws error when JSON is a boolean', async () => {
+  const mockResponse = new Response(JSON.stringify(true), {
+    status: 200,
+    statusText: 'OK',
+  })
+  mockFetch.mockResolvedValueOnce(mockResponse)
+
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
+})
+
+test('loadFileMap - throws error when JSON has non-string values', async () => {
+  const invalidFileMap = {
+    'src/file1.ts': 123, // number instead of string
+    'src/file2.ts': 'valid content',
+  }
+  const mockResponse = new Response(JSON.stringify(invalidFileMap), {
+    status: 200,
+    statusText: 'OK',
+  })
+  mockFetch.mockResolvedValueOnce(mockResponse)
+
+  await expect(loadFileMap('http://localhost:3000/fileMap.json')).rejects.toThrow('Failed to load file map from http://localhost:3000/fileMap.json')
+})
+
+test('loadFileMap - accepts numeric keys as strings (JSON behavior)', async () => {
+  const fileMapWithNumericKeys = {
+    123: 'content', // number key becomes string "123" in JSON
+    'src/file2.ts': 'valid content',
+  }
+  const mockResponse = new Response(JSON.stringify(fileMapWithNumericKeys), {
+    status: 200,
+    statusText: 'OK',
+  })
+  mockFetch.mockResolvedValueOnce(mockResponse)
+
+  const result = await loadFileMap('http://localhost:3000/fileMap.json')
+
+  expect(result).toEqual({
+    '123': 'content',
+    'src/file2.ts': 'valid content',
+  })
+})
+
 // Reset mocks after each test
 afterEach(() => {
   jest.clearAllMocks()

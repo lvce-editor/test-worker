@@ -1,5 +1,6 @@
 import type { FileMap } from '../FileMap/FileMap.ts'
 import { VError } from '../VError/VError.ts'
+import { isValidFileMap } from '../IsValidFileMap/IsValidFileMap.ts'
 
 export const loadFileMap = async (fileMapUrl: string): Promise<FileMap> => {
   try {
@@ -7,8 +8,13 @@ export const loadFileMap = async (fileMapUrl: string): Promise<FileMap> => {
     if (!response.ok) {
       throw new Error(`Failed to load filemap.json: ${response.status} ${response.statusText}`)
     }
-    const fileMap: FileMap = await response.json()
-    return fileMap
+    const parsedJson = await response.json()
+
+    if (!isValidFileMap(parsedJson)) {
+      throw new Error('Invalid file map format: expected an object with string values')
+    }
+
+    return parsedJson
   } catch (error) {
     throw new VError(error, `Failed to load file map from ${fileMapUrl}`)
   }
