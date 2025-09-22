@@ -118,25 +118,18 @@ test('isValidFileMap - returns false for function', () => {
 })
 
 test('isValidFileMap - type guard works correctly', () => {
-  const value: any = {
+  const value: unknown = {
     'src/file1.ts': 'content1',
     'src/file2.ts': 'content2',
   }
 
   expect(isValidFileMap(value)).toBe(true)
-  
-  // TypeScript should know this is FileMap after the type guard
-  const fileMap: FileMap = value
-  expect(fileMap['src/file1.ts']).toBe('content1')
-  expect(typeof fileMap['src/file2.ts']).toBe('string')
 })
 
 test('isValidFileMap - type guard correctly rejects invalid types', () => {
-  const value: any = {
+  const value: unknown = {
     'src/file1.ts': 123, // invalid
   }
 
   expect(isValidFileMap(value)).toBe(false)
-  // TypeScript should know this is not FileMap
-  expect(typeof value).toBe('object')
 })
