@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, test, jest } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystem from '../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 
@@ -192,4 +192,44 @@ test('createDroppedFileHandle', async () => {
     id: 123,
   })
   expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', mockFileHandle]])
+})
+
+test('loadFixture - Web platform', async () => {
+  const { PlatformType } = await import('@lvce-editor/constants')
+
+  // Mock loadFileMap to return a file map
+  const mockFileMap = {
+    'src/file1.ts': 'content1',
+    'src/file2.ts': 'content2',
+  }
+
+  // Mock fetch for loadFileMap
+  const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>
+  const mockResponse = new Response(JSON.stringify(mockFileMap), {
+    status: 200,
+    statusText: 'OK',
+  })
+  mockFetch.mockResolvedValueOnce(mockResponse)
+  ;(globalThis as any).fetch = mockFetch
+
+  const result: string = await FileSystem.loadFixture(PlatformType.Web, 'http://localhost:3000/fixture')
+
+  expect(result).toBe('')
+  expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/fixture/fileMap.json')
+})
+
+test('loadFixture - non-Web platform', async () => {
+  const { PlatformType } = await import('@lvce-editor/constants')
+
+  const result: string = await FileSystem.loadFixture(PlatformType.Electron, 'http://localhost:3000/remote/test/fixture')
+
+  expect(result).toBe('file:///test/fixture')
+})
+
+test('loadFixture - Remote platform', async () => {
+  const { PlatformType } = await import('@lvce-editor/constants')
+
+  const result: string = await FileSystem.loadFixture(PlatformType.Remote, 'http://localhost:3000/remote/test/fixture')
+
+  expect(result).toBe('file:///test/fixture')
 })
