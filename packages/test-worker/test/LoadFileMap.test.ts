@@ -1,5 +1,4 @@
 import { expect, test, jest, afterEach } from '@jest/globals'
-import { VError } from '@lvce-editor/verror'
 import type { FileMap } from '../src/parts/FileMap/FileMap.ts'
 import { loadFileMap } from '../src/parts/LoadFileMap/LoadFileMap.ts'
 

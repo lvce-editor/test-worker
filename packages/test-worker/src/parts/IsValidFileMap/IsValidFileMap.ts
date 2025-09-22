@@ -1,10 +1,10 @@
 import type { FileMap } from '../FileMap/FileMap.ts'
 
-const isObject = (value: any): value is object => {
+const isObject = (value: unknown): value is Record<string, any> => {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
 }
 
-export const isValidFileMap = (value: any): value is FileMap => {
+export const isValidFileMap = (value: unknown): value is FileMap => {
   if (!isObject(value)) {
     return false
   }

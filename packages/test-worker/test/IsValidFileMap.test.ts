@@ -127,7 +127,7 @@ test('isValidFileMap - type guard works correctly', () => {
     expect(value['src/file1.ts']).toBe('content1')
     expect(typeof value['src/file2.ts']).toBe('string')
   } else {
-    expect.fail('Expected value to be valid FileMap')
+    throw new Error('Expected value to be valid FileMap')
   }
 })
 
@@ -137,7 +137,7 @@ test('isValidFileMap - type guard correctly rejects invalid types', () => {
   }
 
   if (isValidFileMap(value)) {
-    expect.fail('Expected value to be invalid FileMap')
+    throw new Error('Expected value to be invalid FileMap')
   } else {
     // TypeScript should know this is not FileMap
     expect(typeof value).toBe('object')
