@@ -3,8 +3,8 @@ import { loadFileMap } from '../src/parts/LoadFileMap/LoadFileMap.ts'
 import type { FileMap } from '../src/parts/FileMap/FileMap.ts'
 
 // Mock fetch globally
-const mockFetch = jest.fn()
-;(global as any).fetch = mockFetch
+const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>
+;(globalThis as any).fetch = mockFetch
 
 test('loadFileMap - successful load', async () => {
   const mockFileMap: FileMap = {
@@ -12,14 +12,14 @@ test('loadFileMap - successful load', async () => {
     'src/file2.ts': 'content2',
     'test/test1.test.ts': 'test content'
   }
-
+  
   mockFetch.mockResolvedValueOnce({
     ok: true,
     json: jest.fn().mockResolvedValueOnce(mockFileMap)
-  })
+  } as any)
 
   const result = await loadFileMap('http://localhost:3000/fileMap.json')
-
+  
   expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/fileMap.json')
   expect(result).toEqual(mockFileMap)
 })
@@ -29,7 +29,7 @@ test('loadFileMap - 404 error', async () => {
     ok: false,
     status: 404,
     statusText: 'Not Found'
-  })
+  } as any)
 
   await expect(loadFileMap('http://localhost:3000/nonexistent.json'))
     .rejects
@@ -41,7 +41,7 @@ test('loadFileMap - 500 error', async () => {
     ok: false,
     status: 500,
     statusText: 'Internal Server Error'
-  })
+  } as any)
 
   await expect(loadFileMap('http://localhost:3000/fileMap.json'))
     .rejects
@@ -60,7 +60,7 @@ test('loadFileMap - JSON parsing error', async () => {
   mockFetch.mockResolvedValueOnce({
     ok: true,
     json: jest.fn().mockRejectedValueOnce(new Error('Invalid JSON'))
-  })
+  } as Response)
 
   await expect(loadFileMap('http://localhost:3000/fileMap.json'))
     .rejects
@@ -69,14 +69,14 @@ test('loadFileMap - JSON parsing error', async () => {
 
 test('loadFileMap - empty file map', async () => {
   const emptyFileMap: FileMap = {}
-
+  
   mockFetch.mockResolvedValueOnce({
     ok: true,
     json: jest.fn().mockResolvedValueOnce(emptyFileMap)
-  })
+  } as Response)
 
   const result = await loadFileMap('http://localhost:3000/fileMap.json')
-
+  
   expect(result).toEqual({})
 })
 
@@ -88,14 +88,14 @@ test('loadFileMap - file map with special characters in paths', async () => {
     'src/file.with.dots.ts': 'content with dots',
     'src/中文文件名.ts': '中文内容'
   }
-
+  
   mockFetch.mockResolvedValueOnce({
     ok: true,
     json: jest.fn().mockResolvedValueOnce(fileMapWithSpecialChars)
-  })
+  } as Response)
 
   const result = await loadFileMap('http://localhost:3000/fileMap.json')
-
+  
   expect(result).toEqual(fileMapWithSpecialChars)
 })
 
@@ -104,28 +104,28 @@ test('loadFileMap - file map with empty content', async () => {
     'src/empty.ts': '',
     'src/normal.ts': 'normal content'
   }
-
+  
   mockFetch.mockResolvedValueOnce({
     ok: true,
     json: jest.fn().mockResolvedValueOnce(fileMapWithEmptyContent)
-  })
+  } as Response)
 
   const result = await loadFileMap('http://localhost:3000/fileMap.json')
-
+  
   expect(result).toEqual(fileMapWithEmptyContent)
 })
 
 test('loadFileMap - different URL formats', async () => {
   const mockFileMap: FileMap = { 'test.ts': 'content' }
-
+  
   mockFetch.mockResolvedValueOnce({
     ok: true,
     json: jest.fn().mockResolvedValueOnce(mockFileMap)
-  })
+  } as any)
 
   const httpsUrl = 'https://example.com/fileMap.json'
   await loadFileMap(httpsUrl)
-
+  
   expect(mockFetch).toHaveBeenCalledWith(httpsUrl)
 })
 
