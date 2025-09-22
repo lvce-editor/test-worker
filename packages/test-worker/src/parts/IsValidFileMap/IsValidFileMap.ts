@@ -1,6 +1,6 @@
 import type { FileMap } from '../FileMap/FileMap.ts'
 
-const isObject = (value: unknown): value is Record<string, any> => {
+const isObject = (value: unknown): value is Record<string, unknown> => {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
 }
 
