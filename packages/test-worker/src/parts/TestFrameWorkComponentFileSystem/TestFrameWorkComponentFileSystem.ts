@@ -1,9 +1,12 @@
+import { PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
 import type { FileSystemTmpDirOptions } from '../FileSystemTmpDirOptions/FileSystemTmpDirOptions.ts'
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
+import { loadFileMap } from '../LoadFileMap/LoadFileMap.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import { stringifyJson } from '../StringifyJson/StringifyJson.ts'
+import { toFileUrl } from '../ToFileUrl/ToFileUrl.ts'
 
 export const writeFile = async (uri: string, content: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.writeFile', uri, content)
@@ -76,4 +79,21 @@ export const createDroppedFileHandle = async (): Promise<DroppedFileHandle> => {
     file,
     id,
   }
+}
+
+export const loadFixture = async (platform: number, url: string): Promise<string> => {
+  // Handle fixture URLs in web environment
+  if (platform === PlatformType.Web) {
+    const fileMapUrl = `${url}/fileMap.json`
+    // @ts-ignore
+    const fileMap = loadFileMap(fileMapUrl)
+    // TODO add those files to memory file system
+    // TODO then return the memory file system url
+    return ''
+  }
+
+  // TODO maybe also create a memory file system for consistency with web
+  // TODO covert remote url to file url
+  // then set that as workspace path
+  return toFileUrl(url)
 }
