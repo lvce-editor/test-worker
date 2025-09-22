@@ -1,6 +1,6 @@
 import type { FileMap } from '../FileMap/FileMap.ts'
-import { VError } from '../VError/VError.ts'
 import { isValidFileMap } from '../IsValidFileMap/IsValidFileMap.ts'
+import { VError } from '../VError/VError.ts'
 
 export const loadFileMap = async (fileMapUrl: string): Promise<FileMap> => {
   try {
