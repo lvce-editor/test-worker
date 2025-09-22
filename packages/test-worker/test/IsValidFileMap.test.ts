@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
-import { isValidFileMap } from '../src/parts/IsValidFileMap/IsValidFileMap.ts'
 import type { FileMap } from '../src/parts/FileMap/FileMap.ts'
+import { isValidFileMap } from '../src/parts/IsValidFileMap/IsValidFileMap.ts'
 
 test('isValidFileMap - returns true for valid file map', () => {
   const validFileMap: FileMap = {
@@ -111,8 +111,9 @@ test('isValidFileMap - returns false for object with object values', () => {
   expect(isValidFileMap(invalidFileMap)).toBe(false)
 })
 
+const func = (): string => 'content'
+
 test('isValidFileMap - returns false for function', () => {
-  const func = () => 'content'
   expect(isValidFileMap(func)).toBe(false)
 })
 

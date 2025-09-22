@@ -9,7 +9,6 @@ export const isValidFileMap = (value: unknown): value is FileMap => {
     return false
   }
 
-  // Check that all values are strings
   for (const key in value) {
     if (typeof value[key] !== 'string') {
       return false
