@@ -1,4 +1,5 @@
 import { expect, test, jest } from '@jest/globals'
+import { PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystem from '../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 
@@ -195,8 +196,6 @@ test('createDroppedFileHandle', async () => {
 })
 
 test.skip('loadFixture - Web platform', async () => {
-  const { PlatformType } = await import('@lvce-editor/constants')
-
   // Mock loadFileMap to return a file map
   const mockFileMap = {
     'src/file1.ts': 'content1',
@@ -219,23 +218,18 @@ test.skip('loadFixture - Web platform', async () => {
 })
 
 test('loadFixture - non-Web platform', async () => {
-  const { PlatformType } = await import('@lvce-editor/constants')
-
   const result: string = await FileSystem.loadFixture(PlatformType.Electron, 'http://localhost:3000/remote/test/fixture')
 
   expect(result).toBe('file:///test/fixture')
 })
 
 test('loadFixture - Remote platform', async () => {
-  const { PlatformType } = await import('@lvce-editor/constants')
-
   const result: string = await FileSystem.loadFixture(PlatformType.Remote, 'http://localhost:3000/remote/test/fixture')
 
   expect(result).toBe('file:///test/fixture')
 })
 
 test('loadFixture - invalid url', async () => {
-  const { PlatformType } = await import('@lvce-editor/constants')
   const url = undefined
   // @ts-expect-error
   await expect(FileSystem.loadFixture(PlatformType.Remote, url)).rejects.toThrow(new Error(`fixture url must be of type string`))
