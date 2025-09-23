@@ -1,7 +1,7 @@
+import { createApi } from '../CreateApi/CreateApi.ts'
 import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
-import * as TestFrameWorkComponent from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestState from '../TestState/TestState.ts'
 
@@ -10,21 +10,12 @@ import * as TestState from '../TestState/TestState.ts'
 // 2. execute test
 // 3. print out results
 export const execute = async (href: string, platform: number): Promise<void> => {
-  const globals = {
-    ...TestFrameWorkComponent,
-    FileSystem: {
-      ...TestFrameWorkComponent.FileSystem,
-      loadFixture(url: string): Promise<string> {
-        return TestFrameWorkComponent.FileSystem.loadFixture(platform, url)
-      },
-    },
-    ...TestFrameWork,
-  }
+  const globals = createApi(platform)
   // TODO
   // 0. wait for page to be ready
   // 1. get script to import from renderer process (url or from html)
   const scriptUrl = href
-  TestFrameWorkComponentUrl.setUrl(scriptUrl)
+  TestFrameWorkComponentUrl.setUrl(scriptUrl) // TODO avoid side effect
   // 2. import that script
   const module = await ImportTest.importTest(scriptUrl)
   if (module.mockRpc) {
