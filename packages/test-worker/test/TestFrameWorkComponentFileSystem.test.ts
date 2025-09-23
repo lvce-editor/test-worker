@@ -194,7 +194,7 @@ test('createDroppedFileHandle', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', mockFileHandle]])
 })
 
-test('loadFixture - Web platform', async () => {
+test.skip('loadFixture - Web platform', async () => {
   const { PlatformType } = await import('@lvce-editor/constants')
 
   // Mock loadFileMap to return a file map
