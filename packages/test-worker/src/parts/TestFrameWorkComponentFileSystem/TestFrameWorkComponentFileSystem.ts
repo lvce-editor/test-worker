@@ -82,6 +82,9 @@ export const createDroppedFileHandle = async (): Promise<DroppedFileHandle> => {
 }
 
 export const loadFixture = async (platform: number, url: string): Promise<string> => {
+  if (typeof url !== 'string') {
+    throw new TypeError(`fixture url must be of type string`)
+  }
   // Handle fixture URLs in web environment
   if (platform === PlatformType.Web) {
     const fileMapUrl = `${url}/fileMap.json`
