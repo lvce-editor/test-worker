@@ -233,3 +233,10 @@ test('loadFixture - Remote platform', async () => {
 
   expect(result).toBe('file:///test/fixture')
 })
+
+test('loadFixture - invalid url', async () => {
+  const { PlatformType } = await import('@lvce-editor/constants')
+  const url = undefined
+  // @ts-expect-error
+  await expect(FileSystem.loadFixture(PlatformType.Remote, url)).rejects.toThrow(new Error(`fixture url must be of type string`))
+})
