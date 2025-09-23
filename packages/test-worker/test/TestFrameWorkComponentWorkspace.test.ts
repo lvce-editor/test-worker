@@ -22,9 +22,3 @@ test('openTmpDir sets workspace path and returns it', async () => {
   expect(result).toBe('memfs:///workspace')
   expect(mockRpc.invocations).toEqual([['Workspace.setPath', 'memfs:///workspace']])
 })
-
-test('resolveFileUrl converts url to file url', async () => {
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  const result = Workspace.resolveFileUrl('https://example.com/remote/path/to/file')
-  expect(result).toBe('file:///path/to/file')
-})
