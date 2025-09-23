@@ -17,7 +17,7 @@ export interface LocatorExpect {
   readonly toHaveValue: (value: string) => Promise<void>
   readonly toBeFocused: () => Promise<void>
   readonly toHaveCSS: (key: string, value: string) => Promise<void>
-  readonly toHaveAttribute: (key: string, value: string) => Promise<void>
+  readonly toHaveAttribute: (key: string, value: string | null) => Promise<void>
   readonly toHaveJSProperty: (key: string, value: any) => Promise<void>
   readonly toHaveClass: (className: string) => Promise<void>
   readonly toHaveId: (id: string) => Promise<void>
