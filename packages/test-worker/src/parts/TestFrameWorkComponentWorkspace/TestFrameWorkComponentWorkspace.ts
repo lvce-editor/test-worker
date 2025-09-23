@@ -11,12 +11,3 @@ export const openTmpDir = async (): Promise<string> => {
   await setPath(tmpDir)
   return tmpDir
 }
-
-/**
- * @deprecated use FileSystem.loadFixture instead
- */
-export const resolveFileUrl = (url: string): string => {
-  // TODO covert remote url to file url
-  // then set that as workspace path
-  return toFileUrl(url)
-}
