@@ -85,11 +85,11 @@ export const loadFixture = async (platform: number, url: string): Promise<string
   // Handle fixture URLs in web environment
   if (platform === PlatformType.Web) {
     const fileMapUrl = `${url}/fileMap.json`
-    // @ts-ignore
-    const fileMap = loadFileMap(fileMapUrl)
-    // TODO add those files to memory file system
-    // TODO then return the memory file system url
-    return ''
+    const fileMap = await loadFileMap(fileMapUrl)
+    for (const [key, value] of Object.entries(fileMap)) {
+      await writeFile(`memfs:///${key}`, value)
+    }
+    return 'memfs:///'
   }
 
   // TODO maybe also create a memory file system for consistency with web
