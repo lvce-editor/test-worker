@@ -1,3 +1,4 @@
+import { expect, getTmpDir, Locator, test } from '../TestFrameWork/TestFrameWork.ts'
 import * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import * as BaseUrl from '../TestFrameWorkComponentBaseUrl/TestFrameWorkComponentBaseUrl.ts'
@@ -86,5 +87,9 @@ export const createApi = (platform: number): any => {
     Url,
     WebView,
     Workspace,
+    test,
+    Locator,
+    expect,
+    getTmpDir, // TODO maybe deprecate this or move to file system
   }
 }
