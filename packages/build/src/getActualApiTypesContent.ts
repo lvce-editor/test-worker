@@ -193,7 +193,14 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
       }
 
       if (signature) {
-        newLines.push(`  readonly ${alias}: ${signature}`)
+        // Special handling for FileSystem.loadFixture to remove platform parameter
+        if (namespaceName === 'FileSystem' && alias === 'loadFixture') {
+          // Transform the signature to remove the first parameter (platform: number)
+          const modifiedSignature = signature.replace(/\(platform:\s*number,\s*/, '(')
+          newLines.push(`  readonly ${alias}: ${modifiedSignature}`)
+        } else {
+          newLines.push(`  readonly ${alias}: ${signature}`)
+        }
       }
     }
     newLines.push('}')
