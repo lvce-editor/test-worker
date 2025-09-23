@@ -1,0 +1,11 @@
+Hello from the loadFixture test!
+
+This is a sample file created for testing the FileSystem.loadFixture functionality.
+The e2e test should be able to load this fixture and verify its content in the editor.
+
+Features being tested:
+- FileSystem.loadFixture with single parameter (url)
+- Opening files in the editor
+- Verifying file content
+
+This demonstrates that the type generation fix is working correctly.
