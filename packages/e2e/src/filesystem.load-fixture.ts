@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'filesystem.loadFixture'
+export const name = 'filesystem.load-fixture'
 
 export const test: Test = async ({ Workspace, FileSystem, Main, Editor, Locator, expect }) => {
   // arrange
