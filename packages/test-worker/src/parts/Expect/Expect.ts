@@ -56,7 +56,7 @@ class Expect {
   async toBeFocused(): Promise<void> {
     return this.checkSingleElementCondition('toBeFocused')
   }
-  async toHaveCSS(key: string, value: string): Promise<void> {
+  async toHaveCSS(key: string, value: string | RegExp): Promise<void> {
     return this.checkSingleElementCondition('toHaveCss', {
       key,
       value,
