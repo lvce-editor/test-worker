@@ -18,5 +18,8 @@ test('toFileUrl - invalid remote url', () => {
 
 test('toFileUrl - invalid url', () => {
   const url = 'abc'
-  expect(() => toFileUrl(url)).toThrow(new Error(`Invalid URL`))
+  // @ts-ignore
+  const isBun = process.versions.bun
+  const errorMessage = isBun ? `"abc" cannot be parsed as a URL.` : 'Invalid URL'
+  expect(() => toFileUrl(url)).toThrow(new Error(errorMessage))
 })
