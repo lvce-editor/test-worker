@@ -1,5 +1,7 @@
 import { expect, test } from '@jest/globals'
+import { EditorWorker } from '@lvce-editor/rpc-registry'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { setFactory } from '../src/parts/EditorWorker/EditorWorker.ts'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
 test('setCursor', async () => {
@@ -611,6 +613,42 @@ test('rename2', async () => {
 
   await Editor.rename2('newName')
   expect(mockRpc.invocations).toEqual([['Editor.openRename'], ['EditorRename.handleInput', 'newName', 2], ['EditorRename.accept']])
+})
+
+test('shouldHaveDiagnostics - basic functionality', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getDiagnostics'() {
+      return [
+        {
+          rowIndex: 0,
+          columnIndex: 0,
+          endRowIndex: 0,
+          endColumnIndex: 5,
+          message: 'Syntax error',
+          type: 'error',
+        },
+      ]
+    },
+  })
+
+  setFactory(async () => mockRpc)
+
+  const expectedDiagnostics = [
+    {
+      rowIndex: 0,
+      columnIndex: 0,
+      endRowIndex: 0,
+      endColumnIndex: 5,
+      message: 'Syntax error',
+      type: 'error' as const,
+    },
+  ]
+
+  await Editor.shouldHaveDiagnostics(expectedDiagnostics)
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getDiagnostics', 1]])
 })
 
 // Note: getSelections, shouldHaveSelections, undo, and redo functions use EditorWorker

@@ -1,3 +1,5 @@
 import { createLazyRpc, RpcId } from '@lvce-editor/rpc-registry'
 
-export const { invoke, setFactory } = createLazyRpc(RpcId.EditorWorker)
+const lazyRpc = createLazyRpc(RpcId.EditorWorker)
+
+export const { invoke, setFactory } = lazyRpc
