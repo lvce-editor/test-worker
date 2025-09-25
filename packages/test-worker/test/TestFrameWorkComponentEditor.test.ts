@@ -1,5 +1,6 @@
-import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { expect, test, beforeEach, jest } from '@jest/globals'
+import { MockRpc } from '@lvce-editor/rpc'
+import { RendererWorker, EditorWorker } from '@lvce-editor/rpc-registry'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
 test('setCursor', async () => {
@@ -611,6 +612,45 @@ test('rename2', async () => {
 
   await Editor.rename2('newName')
   expect(mockRpc.invocations).toEqual([['Editor.openRename'], ['EditorRename.handleInput', 'newName', 2], ['EditorRename.accept']])
+})
+
+test('shouldHaveDiagnostics - basic functionality', async () => {
+  const mockRpc = EditorWorker.registerMockRpc({
+    commandMap: {},
+    invoke: async (method: string) => {
+      if (method === 'Editor.getKeys') {
+        return ['1']
+      }
+      if (method === 'Editor.getDiagnostics') {
+        return [
+          {
+            rowIndex: 0,
+            columnIndex: 0,
+            endRowIndex: 0,
+            endColumnIndex: 5,
+            message: 'Syntax error',
+            type: 'error',
+          },
+        ]
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+
+  const expectedDiagnostics = [
+    {
+      rowIndex: 0,
+      columnIndex: 0,
+      endRowIndex: 0,
+      endColumnIndex: 5,
+      message: 'Syntax error',
+      type: 'error' as const,
+    },
+  ]
+
+  await Editor.shouldHaveDiagnostics(expectedDiagnostics)
+  // Test passes if no error is thrown
+  expect(true).toBe(true)
 })
 
 // Note: getSelections, shouldHaveSelections, undo, and redo functions use EditorWorker
