@@ -17,3 +17,8 @@ export const handleWheel = async (deltaMode: number, deltaY: number): Promise<vo
   // @ts-ignore
   await RendererWorker.invoke('EditorCompletion.handleWheel', deltaMode, deltaY)
 }
+
+export const handlePointerdown = async (clientX: number, clientY: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('EditorCompletion.handlePointerdown', clientX, clientY)
+}
