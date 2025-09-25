@@ -1,3 +1,4 @@
+import * as AssetDir from '../AssetDir/AssetDir.ts'
 import { expect, getTmpDir, Locator, test } from '../TestFrameWork/TestFrameWork.ts'
 import * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
@@ -40,11 +41,16 @@ import * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
 import * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
 
-export const createApi = (platform: number): any => {
+export const createApi = (platform: number, assetDir: string): any => {
   return {
     About,
     ActivityBar,
-    BaseUrl,
+    BaseUrl: {
+      ...BaseUrl,
+      getBaseUrl(): string {
+        return assetDir || AssetDir.assetDir
+      },
+    },
     ClipBoard,
     Command,
     ContextMenu,
