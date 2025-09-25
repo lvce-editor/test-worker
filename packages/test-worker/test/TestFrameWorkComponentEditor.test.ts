@@ -1,6 +1,7 @@
-import { expect, test, beforeEach, jest } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
-import { RendererWorker, EditorWorker } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { EditorWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { setFactory } from '../src/parts/EditorWorker/EditorWorker.ts'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
 test('setCursor', async () => {
@@ -632,6 +633,8 @@ test('shouldHaveDiagnostics - basic functionality', async () => {
       ]
     },
   })
+
+  setFactory(async () => mockRpc)
 
   const expectedDiagnostics = [
     {
