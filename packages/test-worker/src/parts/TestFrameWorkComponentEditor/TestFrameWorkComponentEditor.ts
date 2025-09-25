@@ -274,6 +274,6 @@ export const shouldHaveDiagnostics = async (expectedDiagnostics: readonly Diagno
   if (!areDiagnosticsEqual(diagnostics, expectedDiagnostics)) {
     const stringifiedActual = JSON.stringify(diagnostics)
     const stringifiedExpected = JSON.stringify(expectedDiagnostics)
-    throw new Error(`Expected editor to have diagnostics ${stringifiedActual} but was ${stringifiedExpected}`)
+    throw new Error(`Expected editor to have diagnostics ${stringifiedExpected} but was ${stringifiedActual}`)
   }
 }
