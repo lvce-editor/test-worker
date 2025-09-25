@@ -1,6 +1,7 @@
 import { expect, test, beforeEach, jest } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
-import { RendererWorker, EditorWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as EditorWorker from '../src/parts/EditorWorker/EditorWorker.ts'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
 test('setCursor', async () => {
@@ -615,7 +616,7 @@ test('rename2', async () => {
 })
 
 test('shouldHaveDiagnostics - basic functionality', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  const mockRpc = MockRpc.create({
     commandMap: {},
     invoke: async (method: string) => {
       if (method === 'Editor.getKeys') {
@@ -636,6 +637,7 @@ test('shouldHaveDiagnostics - basic functionality', async () => {
       throw new Error(`unexpected method ${method}`)
     },
   })
+  EditorWorker.setFactory(() => mockRpc)
 
   const expectedDiagnostics = [
     {

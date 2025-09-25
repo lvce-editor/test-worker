@@ -1,3 +1,7 @@
 import { createLazyRpc, RpcId } from '@lvce-editor/rpc-registry'
 
-export const { invoke, setFactory, registerMockRpc } = createLazyRpc(RpcId.EditorWorker)
+const lazyRpc = createLazyRpc(RpcId.EditorWorker)
+export const { invoke, setFactory } = lazyRpc
+
+// Add registerMockRpc if it exists
+export const registerMockRpc = (lazyRpc as any).registerMockRpc
