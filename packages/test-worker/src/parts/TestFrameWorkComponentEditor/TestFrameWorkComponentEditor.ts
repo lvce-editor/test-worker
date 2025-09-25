@@ -1,6 +1,7 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
 import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
+import { getEditorKey } from '../GetEditorKey/GetEditorKey.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
@@ -234,25 +235,13 @@ export const growSelection = async (): Promise<void> => {
 }
 
 export const getSelections = async (): Promise<Uint32Array> => {
-  const keys = await EditorWorker.invoke('Editor.getKeys')
-  const key = keys.at(-1)
-  const numeric = Number.parseInt(key)
+  const key = await getEditorKey()
   // @ts-ignore
-  return EditorWorker.invoke('Editor.getSelections', numeric)
-}
-
-const getKey = async (): Promise<number> => {
-  const keys = await EditorWorker.invoke('Editor.getKeys')
-  if (keys.length === 0) {
-    throw new Error(`no editor found`)
-  }
-  const key = keys.at(-1)
-  const numeric = Number.parseInt(key)
-  return numeric
+  return EditorWorker.invoke('Editor.getSelections', key)
 }
 
 export const shouldHaveText = async (expectedText: string): Promise<void> => {
-  const key = await getKey()
+  const key = await getEditorKey()
   const text = await EditorWorker.invoke('Editor.getText', key)
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
@@ -260,7 +249,7 @@ export const shouldHaveText = async (expectedText: string): Promise<void> => {
 }
 
 export const shouldHaveSelections = async (expectedSelections: Uint32Array): Promise<void> => {
-  const key = await getKey()
+  const key = await getEditorKey()
   const selections = await EditorWorker.invoke('Editor.getSelections', key)
   if (!areSelectionsEqual(selections, expectedSelections)) {
     throw new Error(`Expected editor to have selections ${expectedSelections} but was ${selections}`)
