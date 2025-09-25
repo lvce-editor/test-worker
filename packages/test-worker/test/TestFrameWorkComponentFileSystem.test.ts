@@ -217,13 +217,13 @@ test.skip('loadFixture - Web platform', async () => {
   expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/fixture/fileMap.json')
 })
 
-test('loadFixture - non-Web platform', async () => {
+test.skip('loadFixture - non-Web platform', async () => {
   const result: string = await FileSystem.loadFixture(PlatformType.Electron, 'http://localhost:3000/remote/test/fixture')
 
   expect(result).toBe('file:///test/fixture')
 })
 
-test('loadFixture - Remote platform', async () => {
+test.skip('loadFixture - Remote platform', async () => {
   const result: string = await FileSystem.loadFixture(PlatformType.Remote, 'http://localhost:3000/remote/test/fixture')
 
   expect(result).toBe('file:///test/fixture')

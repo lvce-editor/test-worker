@@ -3,10 +3,10 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
 import type { FileSystemTmpDirOptions } from '../FileSystemTmpDirOptions/FileSystemTmpDirOptions.ts'
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
-import { loadFileMap } from '../LoadFileMap/LoadFileMap.ts'
+import { getFileMapNode } from '../GetFIleMapNode/GetFileMapNode.ts'
+import { getFileMapWeb } from '../GetFIleMapWeb/GetFileMapWeb.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import { stringifyJson } from '../StringifyJson/StringifyJson.ts'
-import { toFileUrl } from '../ToFileUrl/ToFileUrl.ts'
 
 export const writeFile = async (uri: string, content: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.writeFile', uri, content)
@@ -23,6 +23,11 @@ export const readFile = async (uri: string): Promise<string> => {
 
 export const mkdir = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.mkdir', uri)
+}
+
+export const readDir = async (uri: string): Promise<void> => {
+  // @ts-ignore
+  return RendererWorker.invoke('FileSystem.readDirWithFileTypes', uri)
 }
 
 export const remove = async (uri: string): Promise<void> => {
@@ -85,18 +90,10 @@ export const loadFixture = async (platform: number, url: string): Promise<string
   if (typeof url !== 'string') {
     throw new TypeError(`fixture url must be of type string`)
   }
-  // Handle fixture URLs in web environment
-  if (platform === PlatformType.Web) {
-    const fileMapUrl = `${url}/fileMap.json`
-    const fileMap = await loadFileMap(fileMapUrl)
-    for (const [key, value] of Object.entries(fileMap)) {
-      await writeFile(`memfs:///${key}`, value)
-    }
-    return 'memfs:///'
+  const fn = platform === PlatformType.Web ? getFileMapWeb : getFileMapNode
+  const fileMap = await fn(url)
+  for (const [key, value] of Object.entries(fileMap)) {
+    await writeFile(`memfs:///${key}`, value)
   }
-
-  // TODO maybe also create a memory file system for consistency with web
-  // TODO covert remote url to file url
-  // then set that as workspace path
-  return toFileUrl(url)
+  return 'memfs://'
 }
