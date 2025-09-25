@@ -1,4 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { Diagnostic } from '../Diagnostic/Diagnostic.ts'
+import { areDiagnosticsEqual } from '../AreDiagnosticsEqual/AreDiagnosticsEqual.ts'
 import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
 import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
 import { getEditorKey } from '../GetEditorKey/GetEditorKey.ts'
@@ -264,4 +266,14 @@ export const undo = async (): Promise<void> => {
 export const redo = async (): Promise<void> => {
   // @ts-ignore
   await EditorWorker.invoke('Editor.redo')
+}
+
+export const shouldHaveDiagnostics = async (expectedDiagnostics: readonly Diagnostic[]): Promise<void> => {
+  const key = await getEditorKey()
+  const diagnostics = await EditorWorker.invoke('Editor.getDiagnostics', key)
+  if (!areDiagnosticsEqual(diagnostics, expectedDiagnostics)) {
+    const stringifiedActual = JSON.stringify(diagnostics)
+    const stringifiedExpected = JSON.stringify(expectedDiagnostics)
+    throw new Error(`Expected editor to have diagnostics ${stringifiedActual} but was ${stringifiedExpected}`)
+  }
 }
