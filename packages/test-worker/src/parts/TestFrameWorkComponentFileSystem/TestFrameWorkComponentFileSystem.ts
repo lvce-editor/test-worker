@@ -95,5 +95,5 @@ export const loadFixture = async (platform: number, url: string): Promise<string
   for (const [key, value] of Object.entries(fileMap)) {
     await writeFile(`memfs:///${key}`, value)
   }
-  return 'memfs:///'
+  return 'memfs://'
 }
