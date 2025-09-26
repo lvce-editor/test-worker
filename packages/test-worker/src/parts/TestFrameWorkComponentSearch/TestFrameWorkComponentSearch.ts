@@ -116,3 +116,13 @@ export const collapseAll = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Search.collapseAll')
 }
+
+export const copy = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.copy')
+}
+
+export const copyPath = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.copyPath')
+}
