@@ -106,3 +106,13 @@ export const setLimit = async (limit: number): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Search.setLimit', limit)
 }
+
+export const handleListBlur = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.handleListBlur')
+}
+
+export const collapseAll = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.collapseAll')
+}
