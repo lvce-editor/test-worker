@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import { PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
@@ -20,6 +21,11 @@ export const writeJson = async (uri: string, data: any): Promise<void> => {
 
 export const readFile = async (uri: string): Promise<string> => {
   return RendererWorker.invoke('FileSystem.readFile', uri)
+}
+
+export const addFileHandle = async (file: File): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('FileSystem.addFileHandle', file)
 }
 
 export const mkdir = async (uri: string): Promise<void> => {
