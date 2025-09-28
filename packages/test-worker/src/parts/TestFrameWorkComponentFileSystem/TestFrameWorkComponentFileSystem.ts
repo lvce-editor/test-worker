@@ -5,6 +5,7 @@ import type { FileSystemTmpDirOptions } from '../FileSystemTmpDirOptions/FileSys
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
 import { getFileMapNode } from '../GetFIleMapNode/GetFileMapNode.ts'
 import { getFileMapWeb } from '../GetFIleMapWeb/GetFileMapWeb.ts'
+import { loadFixtureToMemFs } from '../LoadFixtureToMemFs/LoadFixtureToMemFs.ts'
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.ts'
 import { stringifyJson } from '../StringifyJson/StringifyJson.ts'
 
@@ -92,8 +93,6 @@ export const loadFixture = async (platform: number, url: string): Promise<string
   }
   const fn = platform === PlatformType.Web ? getFileMapWeb : getFileMapNode
   const fileMap = await fn(url)
-  for (const [key, value] of Object.entries(fileMap)) {
-    await writeFile(`memfs:///${key}`, value)
-  }
-  return 'memfs://'
+  const filePath = await loadFixtureToMemFs(fileMap)
+  return filePath
 }
