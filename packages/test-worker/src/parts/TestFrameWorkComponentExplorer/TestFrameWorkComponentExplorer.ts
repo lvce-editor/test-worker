@@ -14,6 +14,11 @@ export const handleBlur = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.handleBlur')
 }
 
+export const handleEscape = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Explorer.handleEscape')
+}
+
 export const handleInputBlur = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.handleInputBlur')
 }
