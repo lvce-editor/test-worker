@@ -90,6 +90,16 @@ export const newFolder = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.newFolder')
 }
 
+export const copyPath = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Explorer.copyPath')
+}
+
+export const copyRelativePath = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Explorer.copyRelativePath')
+}
+
 export const handleClick = async (index: number): Promise<void> => {
   await RendererWorker.invoke('Explorer.handleClick', index)
 }
