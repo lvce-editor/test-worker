@@ -1,190 +1,190 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as TitleBarMenuBar from '../src/parts/TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
+import * as TitleBar from '../src/parts/TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
 
 test('closeMenu', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.closeMenu'() {
+    'TitleBar.closeMenu'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.closeMenu()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.closeMenu']])
+  await TitleBar.closeMenu()
+  expect(mockRpc.invocations).toEqual([['TitleBar.closeMenu']])
 })
 
 test('focus', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.focus'() {
+    'TitleBar.focus'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.focus()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.focus']])
+  await TitleBar.focus()
+  expect(mockRpc.invocations).toEqual([['TitleBar.focus']])
 })
 
 test('focusFirst', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.focusFirst'() {
+    'TitleBar.focusFirst'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.focusFirst()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.focusFirst']])
+  await TitleBar.focusFirst()
+  expect(mockRpc.invocations).toEqual([['TitleBar.focusFirst']])
 })
 
 test('focusIndex', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.focusIndex'() {
+    'TitleBar.focusIndex'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.focusIndex(4)
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.focusIndex', 4]])
+  await TitleBar.focusIndex(4)
+  expect(mockRpc.invocations).toEqual([['TitleBar.focusIndex', 4]])
 })
 
 test('focusLast', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.focusLast'() {
+    'TitleBar.focusLast'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.focusLast()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.focusLast']])
+  await TitleBar.focusLast()
+  expect(mockRpc.invocations).toEqual([['TitleBar.focusLast']])
 })
 
 test('focusNext', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.focusNext'() {
+    'TitleBar.focusNext'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.focusNext()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.focusNext']])
+  await TitleBar.focusNext()
+  expect(mockRpc.invocations).toEqual([['TitleBar.focusNext']])
 })
 
 test('focusPrevious', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.focusPrevious'() {
+    'TitleBar.focusPrevious'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.focusPrevious()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.focusPrevious']])
+  await TitleBar.focusPrevious()
+  expect(mockRpc.invocations).toEqual([['TitleBar.focusPrevious']])
 })
 
 test('handleKeyArrowDown', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.handleKeyArrowDown'() {
+    'TitleBar.handleKeyArrowDown'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.handleKeyArrowDown()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.handleKeyArrowDown']])
+  await TitleBar.handleKeyArrowDown()
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyArrowDown']])
 })
 
 test('handleKeyArrowLeft', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.handleKeyArrowLeft'() {
+    'TitleBar.handleKeyArrowLeft'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.handleKeyArrowLeft()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.handleKeyArrowLeft']])
+  await TitleBar.handleKeyArrowLeft()
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyArrowLeft']])
 })
 
 test('handleKeyArrowRight', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.handleKeyArrowRight'() {
+    'TitleBar.handleKeyArrowRight'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.handleKeyArrowRight()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.handleKeyArrowRight']])
+  await TitleBar.handleKeyArrowRight()
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyArrowRight']])
 })
 
 test('handleKeyArrowUp', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.handleKeyArrowUp'() {
+    'TitleBar.handleKeyArrowUp'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.handleKeyArrowUp()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.handleKeyArrowUp']])
+  await TitleBar.handleKeyArrowUp()
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyArrowUp']])
 })
 
 test('handleKeyEnd', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.handleKeyEnd'() {
+    'TitleBar.handleKeyEnd'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.handleKeyEnd()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.handleKeyEnd']])
+  await TitleBar.handleKeyEnd()
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyEnd']])
 })
 
 test('handleKeyHome', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.handleKeyHome'() {
+    'TitleBar.handleKeyHome'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.handleKeyHome()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.handleKeyHome']])
+  await TitleBar.handleKeyHome()
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyHome']])
 })
 
 test('handleKeySpace', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.handleKeySpace'() {
+    'TitleBar.handleKeySpace'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.handleKeySpace()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.handleKeySpace']])
+  await TitleBar.handleKeySpace()
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeySpace']])
 })
 
 test('handleKeyEscape', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.handleKeyEscape'() {
+    'TitleBar.handleKeyEscape'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.handleKeyEscape()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.handleKeyEscape']])
+  await TitleBar.handleKeyEscape()
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyEscape']])
 })
 
 test('toggleIndex', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.toggleIndex'() {
+    'TitleBar.toggleIndex'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.toggleIndex(2)
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.toggleIndex', 2]])
+  await TitleBar.toggleIndex(2)
+  expect(mockRpc.invocations).toEqual([['TitleBar.toggleIndex', 2]])
 })
 
 test('toggleMenu', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'TitleBarMenuBar.toggleMenu'() {
+    'TitleBar.toggleMenu'() {
       return undefined
     },
   })
 
-  await TitleBarMenuBar.toggleMenu()
-  expect(mockRpc.invocations).toEqual([['TitleBarMenuBar.toggleMenu']])
+  await TitleBar.toggleMenu()
+  expect(mockRpc.invocations).toEqual([['TitleBar.toggleMenu']])
 })
