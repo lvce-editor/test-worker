@@ -1,4 +1,14 @@
 import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
+
+export const show = async (): Promise<void> => {
+  await SideBar.open('Run And Debug')
+}
+
+export const handleClickSectionBreakPoints = async (): Promise<void> => {
+  // @ts-ignore
+  await Rpc.invoke('Run And Debug.handleClickSectionBreakPoints')
+}
 
 export const handleClickSectionWatch = async (): Promise<void> => {
   // @ts-ignore
