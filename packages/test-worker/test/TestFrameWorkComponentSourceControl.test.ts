@@ -32,7 +32,7 @@ test('handleInput', async () => {
   })
 
   await SourceControl.handleInput('feat: message')
-  expect(mockRpc.invocations).toEqual([['Source Control.handleInput', 'feat: message']])
+  expect(mockRpc.invocations).toEqual([['Source Control.handleInput', 'feat: message', 2]])
 })
 
 test('handleClickSourceControlButtons', async () => {
