@@ -1,5 +1,6 @@
 import { InputSource } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
 export const selectIndex = async (index: number): Promise<void> => {
   // @ts-ignore
