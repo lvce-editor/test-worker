@@ -34,11 +34,7 @@ export const verifyE2eTypes = async (): Promise<void> => {
   const e2eSrcDir = join(root, 'packages', 'e2e', 'src')
 
   // Always clean up any existing temp directory to ensure clean state
-  try {
-    await rm(tempDir, { recursive: true, force: true })
-  } catch {
-    // Ignore errors if directory doesn't exist
-  }
+  await rm(tempDir, { recursive: true, force: true })
 
   // Create temporary directory structure
   await mkdir(tempDir, { recursive: true })
