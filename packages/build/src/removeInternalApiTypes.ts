@@ -9,7 +9,6 @@ export const removeInternalApiTypes = (content: string): string => {
   let inInterface = false
   let skipProperty = false
   let inComment = false
-  let currentInterface = ''
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
@@ -25,7 +24,6 @@ export const removeInternalApiTypes = (content: string): string => {
     // Check if we're entering an interface
     if (line.includes('interface ') || line.includes('export interface ')) {
       inInterface = true
-      currentInterface = line
       newLines.push(line)
       continue
     }
@@ -33,7 +31,6 @@ export const removeInternalApiTypes = (content: string): string => {
     // Check if we're exiting an interface
     if (inInterface && line.startsWith('}')) {
       inInterface = false
-      currentInterface = ''
       newLines.push(line)
       continue
     }
