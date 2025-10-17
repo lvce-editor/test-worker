@@ -28,6 +28,18 @@ test('writeJson', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.writeFile', 'memfs:///data.json', expected]])
 })
 
+test('addFileHandle', async () => {
+  const mockFile = new File(['test content'], 'test.txt', { type: 'text/plain' })
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.addFileHandle'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.addFileHandle(mockFile)
+  expect(mockRpc.invocations).toEqual([['FileSystem.addFileHandle', mockFile]])
+})
+
 test('readFile', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readFile'() {
@@ -38,6 +50,18 @@ test('readFile', async () => {
   const content: string = await FileSystem.readFile('memfs:///file.txt')
   expect(content).toBe('content')
   expect(mockRpc.invocations).toEqual([['FileSystem.readFile', 'memfs:///file.txt']])
+})
+
+test('readDir', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
+  const result: any = await FileSystem.readDir('memfs:///dir')
+  expect(result).toEqual([])
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///dir']])
 })
 
 test('mkdir', async () => {
@@ -195,14 +219,19 @@ test('createDroppedFileHandle', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', mockFileHandle]])
 })
 
-test.skip('loadFixture - Web platform', async () => {
-  // Mock loadFileMap to return a file map
+test('loadFixture - Web platform', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return undefined
+    },
+  })
+
+  // Mock the getFileMapWeb function by mocking the fetch call
   const mockFileMap = {
     'src/file1.ts': 'content1',
     'src/file2.ts': 'content2',
   }
 
-  // Mock fetch for loadFileMap
   const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>
   const mockResponse = new Response(JSON.stringify(mockFileMap), {
     status: 200,
@@ -213,20 +242,38 @@ test.skip('loadFixture - Web platform', async () => {
 
   const result: string = await FileSystem.loadFixture(PlatformType.Web, 'http://localhost:3000/fixture')
 
-  expect(result).toBe('')
+  expect(result).toBe('memfs:///fixture')
   expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/fixture/fileMap.json')
 })
 
-test.skip('loadFixture - non-Web platform', async () => {
+test('loadFixture - non-Web platform', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return undefined
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
   const result: string = await FileSystem.loadFixture(PlatformType.Electron, 'http://localhost:3000/remote/test/fixture')
 
-  expect(result).toBe('file:///test/fixture')
+  expect(result).toBe('memfs:///fixture')
 })
 
-test.skip('loadFixture - Remote platform', async () => {
+test('loadFixture - Remote platform', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return undefined
+    },
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
   const result: string = await FileSystem.loadFixture(PlatformType.Remote, 'http://localhost:3000/remote/test/fixture')
 
-  expect(result).toBe('file:///test/fixture')
+  expect(result).toBe('memfs:///fixture')
 })
 
 test('loadFixture - invalid url', async () => {
