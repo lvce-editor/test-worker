@@ -2,6 +2,28 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RunAndDebug from '../src/parts/TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 
+test('show', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SideBar.openViewlet'() {
+      return undefined
+    },
+  })
+
+  await RunAndDebug.show()
+  expect(mockRpc.invocations).toEqual([['SideBar.openViewlet', 'Run And Debug']])
+})
+
+test('handleClickSectionBreakPoints', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Run And Debug.handleClickSectionBreakPoints'() {
+      return undefined
+    },
+  })
+
+  await RunAndDebug.handleClickSectionBreakPoints()
+  expect(mockRpc.invocations).toEqual([['Run And Debug.handleClickSectionBreakPoints']])
+})
+
 test('handleClickSectionWatch', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.handleClickSectionWatch'() {
