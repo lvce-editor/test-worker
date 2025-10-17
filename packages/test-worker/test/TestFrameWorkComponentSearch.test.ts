@@ -277,3 +277,47 @@ test('setLimit', async () => {
   await Search.setLimit(100)
   expect(mockRpc.invocations).toEqual([['Search.setLimit', 100]])
 })
+
+test('handleListBlur', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Search.handleListBlur'() {
+      return undefined
+    },
+  })
+
+  await Search.handleListBlur()
+  expect(mockRpc.invocations).toEqual([['Search.handleListBlur']])
+})
+
+test('collapseAll', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Search.collapseAll'() {
+      return undefined
+    },
+  })
+
+  await Search.collapseAll()
+  expect(mockRpc.invocations).toEqual([['Search.collapseAll']])
+})
+
+test('copy', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Search.copy'() {
+      return undefined
+    },
+  })
+
+  await Search.copy()
+  expect(mockRpc.invocations).toEqual([['Search.copy']])
+})
+
+test('copyPath', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Search.copyPath'() {
+      return undefined
+    },
+  })
+
+  await Search.copyPath()
+  expect(mockRpc.invocations).toEqual([['Search.copyPath']])
+})
