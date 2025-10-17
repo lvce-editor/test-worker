@@ -1,3 +1,4 @@
+import { formatApiTypes } from './formatApiTypes.ts'
 import { removeInternalApiTypes } from './removeInternalApiTypes.ts'
 
 // we want slightly different types,
@@ -226,5 +227,7 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   newLines.push('}')
   newLines.push('')
 
-  return newLines.join('\n')
+  const formatted = formatApiTypes(newLines)
+
+  return formatted.join('\n')
 }
