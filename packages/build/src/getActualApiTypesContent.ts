@@ -1,3 +1,5 @@
+import { removeInternalApiTypes } from './removeInternalApiTypes.ts'
+
 // we want slightly different types,
 // specifically instead of exporting every interface
 // we only export a test api interface for tests
@@ -5,7 +7,10 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   const newLines: string[] = []
   let state: 'default' | 'export' | 'after-export' | 'internal' | 'skip' = 'default'
 
-  const expectLines = contentExpect.split('\n')
+  // Process expect content to remove @internal properties
+  const processedExpectContent = removeInternalApiTypes(contentExpect)
+  const expectLines = processedExpectContent.split('\n')
+
   for (const line of expectLines) {
     if (line.startsWith('// Generated')) {
       continue
