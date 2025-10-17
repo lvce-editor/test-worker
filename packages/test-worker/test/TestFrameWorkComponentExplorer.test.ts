@@ -38,6 +38,18 @@ test('handleBlur', async () => {
   expect(mockRpc.invocations).toEqual([['Explorer.handleBlur']])
 })
 
+test('handleEscape', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handleEscape'() {
+      return undefined
+    },
+  })
+
+  await Explorer.handleEscape()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handleEscape']])
+})
+
 test('handleInputBlur', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleInputBlur'() {
@@ -228,6 +240,30 @@ test('newFolder', async () => {
   await Explorer.newFolder()
 
   expect(mockRpc.invocations).toEqual([['Explorer.newFolder']])
+})
+
+test('copyPath', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.copyPath'() {
+      return undefined
+    },
+  })
+
+  await Explorer.copyPath()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.copyPath']])
+})
+
+test('copyRelativePath', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.copyRelativePath'() {
+      return undefined
+    },
+  })
+
+  await Explorer.copyRelativePath()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.copyRelativePath']])
 })
 
 test('handleClick', async () => {
