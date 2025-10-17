@@ -244,7 +244,10 @@ test('loadFixture - Web platform', async () => {
 
   expect(result).toBe('memfs:///fixture')
   expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/fixture/fileMap.json')
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.writeFile', 'memfs:///fixture/src/file1.ts', 'content1'],
+    ['FileSystem.writeFile', 'memfs:///fixture/src/file2.ts', 'content2'],
+  ])
 })
 
 test('loadFixture - non-Web platform', async () => {
@@ -260,7 +263,9 @@ test('loadFixture - non-Web platform', async () => {
   const result: string = await FileSystem.loadFixture(PlatformType.Electron, 'http://localhost:3000/remote/test/fixture')
 
   expect(result).toBe('memfs:///fixture')
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', 'file:///test/fixture'],
+  ])
 })
 
 test('loadFixture - Remote platform', async () => {
@@ -276,7 +281,9 @@ test('loadFixture - Remote platform', async () => {
   const result: string = await FileSystem.loadFixture(PlatformType.Remote, 'http://localhost:3000/remote/test/fixture')
 
   expect(result).toBe('memfs:///fixture')
-  expect(mockRpc.invocations).toEqual([])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', 'file:///test/fixture'],
+  ])
 })
 
 test('loadFixture - invalid url', async () => {
