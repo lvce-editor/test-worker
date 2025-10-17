@@ -45,3 +45,14 @@ test('handleClickSourceControlButtons', async () => {
   await SourceControl.handleClickSourceControlButtons(1, 'commit')
   expect(mockRpc.invocations).toEqual([['Source Control.handleClickSourceControlButtons', 1, 'commit']])
 })
+
+test('show', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'SideBar.openViewlet'() {
+      return undefined
+    },
+  })
+
+  await SourceControl.show()
+  expect(mockRpc.invocations).toEqual([['SideBar.openViewlet', 'Source Control']])
+})
