@@ -10,7 +10,7 @@ test('selectIndex', async () => {
   })
 
   await SourceControl.selectIndex(2)
-  expect(mockRpc.invocations).toEqual([['Source Control.selectIndex']])
+  expect(mockRpc.invocations).toEqual([['Source Control.selectIndex', 2]])
 })
 
 test('acceptInput', async () => {

@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const selectIndex = async (index: number): Promise<void> => {
   // @ts-ignore
-  await RendererWorker.invoke('Source Control.selectIndex')
+  await RendererWorker.invoke('Source Control.selectIndex', index)
 }
 
 export const acceptInput = async (): Promise<void> => {
