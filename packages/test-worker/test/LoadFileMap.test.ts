@@ -13,7 +13,7 @@ test('loadFileMap - successful load', async () => {
     'test/test1.test.ts': 'test content',
   }
 
-  const mockResponse = new Response(JSON.stringify(mockFileMap), {
+  const mockResponse = Response.json(mockFileMap, {
     status: 200,
     statusText: 'OK',
   })
@@ -65,7 +65,7 @@ test('loadFileMap - JSON parsing error', async () => {
 
 test('loadFileMap - empty file map', async () => {
   const emptyFileMap: FileMap = {}
-  const mockResponse = new Response(JSON.stringify(emptyFileMap), {
+  const mockResponse = Response.json(emptyFileMap, {
     status: 200,
     statusText: 'OK',
   })
@@ -85,7 +85,7 @@ test('loadFileMap - file map with special characters in paths', async () => {
     'src/中文文件名.ts': '中文内容',
   }
 
-  const mockResponse = new Response(JSON.stringify(fileMapWithSpecialChars), {
+  const mockResponse = Response.json(fileMapWithSpecialChars, {
     status: 200,
     statusText: 'OK',
   })
@@ -102,7 +102,7 @@ test('loadFileMap - file map with empty content', async () => {
     'src/normal.ts': 'normal content',
   }
 
-  const mockResponse = new Response(JSON.stringify(fileMapWithEmptyContent), {
+  const mockResponse = Response.json(fileMapWithEmptyContent, {
     status: 200,
     statusText: 'OK',
   })
@@ -116,7 +116,7 @@ test('loadFileMap - file map with empty content', async () => {
 test('loadFileMap - different URL formats', async () => {
   const mockFileMap: FileMap = { 'test.ts': 'content' }
 
-  const mockResponse = new Response(JSON.stringify(mockFileMap), {
+  const mockResponse = Response.json(mockFileMap, {
     status: 200,
     statusText: 'OK',
   })
@@ -137,7 +137,7 @@ test('loadFileMap - VError contains original error and URL context', async () =>
 })
 
 test('loadFileMap - throws error when JSON is null', async () => {
-  const mockResponse = new Response(JSON.stringify(null), {
+  const mockResponse = Response.json(null, {
     status: 200,
     statusText: 'OK',
   })
@@ -147,7 +147,7 @@ test('loadFileMap - throws error when JSON is null', async () => {
 })
 
 test('loadFileMap - throws error when JSON is a number', async () => {
-  const mockResponse = new Response(JSON.stringify(42), {
+  const mockResponse = Response.json(42, {
     status: 200,
     statusText: 'OK',
   })
@@ -157,7 +157,7 @@ test('loadFileMap - throws error when JSON is a number', async () => {
 })
 
 test('loadFileMap - throws error when JSON is an array', async () => {
-  const mockResponse = new Response(JSON.stringify(['file1.ts', 'file2.ts']), {
+  const mockResponse = Response.json(['file1.ts', 'file2.ts'], {
     status: 200,
     statusText: 'OK',
   })
@@ -167,7 +167,7 @@ test('loadFileMap - throws error when JSON is an array', async () => {
 })
 
 test('loadFileMap - throws error when JSON is a string', async () => {
-  const mockResponse = new Response(JSON.stringify('not a file map'), {
+  const mockResponse = Response.json('not a file map', {
     status: 200,
     statusText: 'OK',
   })
@@ -177,7 +177,7 @@ test('loadFileMap - throws error when JSON is a string', async () => {
 })
 
 test('loadFileMap - throws error when JSON is a boolean', async () => {
-  const mockResponse = new Response(JSON.stringify(true), {
+  const mockResponse = Response.json(true, {
     status: 200,
     statusText: 'OK',
   })
@@ -191,7 +191,7 @@ test('loadFileMap - throws error when JSON has non-string values', async () => {
     'src/file1.ts': 123, // number instead of string
     'src/file2.ts': 'valid content',
   }
-  const mockResponse = new Response(JSON.stringify(invalidFileMap), {
+  const mockResponse = Response.json(invalidFileMap, {
     status: 200,
     statusText: 'OK',
   })
@@ -205,7 +205,7 @@ test('loadFileMap - accepts numeric keys as strings (JSON behavior)', async () =
     123: 'content', // number key becomes string "123" in JSON
     'src/file2.ts': 'valid content',
   }
-  const mockResponse = new Response(JSON.stringify(fileMapWithNumericKeys), {
+  const mockResponse = Response.json(fileMapWithNumericKeys, {
     status: 200,
     statusText: 'OK',
   })

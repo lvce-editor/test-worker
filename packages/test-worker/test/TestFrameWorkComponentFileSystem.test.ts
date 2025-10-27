@@ -204,7 +204,7 @@ test.skip('loadFixture - Web platform', async () => {
 
   // Mock fetch for loadFileMap
   const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>
-  const mockResponse = new Response(JSON.stringify(mockFileMap), {
+  const mockResponse = Response.json(mockFileMap, {
     status: 200,
     statusText: 'OK',
   })
