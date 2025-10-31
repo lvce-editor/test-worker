@@ -14,3 +14,13 @@ export const handleContextMenu = async (button: number, x: number, y: number): P
   // @ts-ignore
   await RendererWorker.invoke('Extensions.handleContextMenu', button, x, y)
 }
+
+export const copyExtensionInfo = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Extensions.copyExtensionInfo')
+}
+
+export const copyExtensionId = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Extensions.copyExtensionId')
+}
