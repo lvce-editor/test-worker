@@ -64,7 +64,6 @@ class Expect {
   }
   async toHaveAttribute(key: string, value: string | null): Promise<void> {
     Assert.string(key, 'key must be of type string')
-    // Assert.string(value, 'value must be of type string')
     return this.checkSingleElementCondition('toHaveAttribute', {
       key,
       value,
