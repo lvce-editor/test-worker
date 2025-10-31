@@ -9,3 +9,8 @@ export const handleInput = async (value: string): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Extensions.handleInput', value, InputSource.Script)
 }
+
+export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Extensions.handleContextMenu', button, x, y)
+}
