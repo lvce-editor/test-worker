@@ -5,6 +5,11 @@ export const handleClickCategory = async (categoryId: string): Promise<void> => 
   await RendererWorker.invoke('ExtensionDetail.handleClickCategory', categoryId)
 }
 
+export const handleReadmeContextMenu = async (x: number, y: number, nodeName: string, href: string): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('ExtensionDetail.handleReadmeContextMenu', x, y, nodeName, href)
+}
+
 export const handleClickEnable = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.handleClickEnable')
