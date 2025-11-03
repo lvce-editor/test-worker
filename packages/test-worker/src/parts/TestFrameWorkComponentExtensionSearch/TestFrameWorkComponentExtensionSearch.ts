@@ -1,8 +1,9 @@
 import { InputSource } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
 export const open = async (): Promise<void> => {
-  await RendererWorker.invoke('SideBar.openViewlet', 'Extensions')
+  await SideBar.open('Extensions')
 }
 
 export const handleInput = async (value: string): Promise<void> => {
