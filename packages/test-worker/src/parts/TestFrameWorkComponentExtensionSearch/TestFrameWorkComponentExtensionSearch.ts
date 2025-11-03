@@ -24,3 +24,8 @@ export const copyExtensionId = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Extensions.copyExtensionId')
 }
+
+export const clearSearchResults = async (): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Extensions.clearSearchResults')
+}
