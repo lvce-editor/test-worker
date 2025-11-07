@@ -4,6 +4,7 @@ import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
+import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import * as TestState from '../TestState/TestState.ts'
 import { watchForHotReload } from '../WatchForHotReload/WatchForHotReload.ts'
 
@@ -43,6 +44,13 @@ export const execute = async (href: string, platform: number, assetDir: string):
   // 6. if test succeeds, display success message
 
   // TODO maybe setup file watcher earlier, to not miss events?
+
+  TestInfoCache.push({
+    url: href,
+    assetDir,
+    platform,
+  })
+  // TODO if file watcher was previously added, don't need to add one
   try {
     if (await hotReloadEnabled()) {
       await watchForHotReload(platform, href)
