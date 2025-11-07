@@ -4,6 +4,7 @@ import * as ImportTest from '../ImportTest/ImportTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestState from '../TestState/TestState.ts'
+import { watchForHotReload } from '../WatchForHotReload/WatchForHotReload.ts'
 
 // TODO move this into three steps:
 // 1. import test module
@@ -39,4 +40,11 @@ export const execute = async (href: string, platform: number, assetDir: string):
   // 4. run the test
   // 5. if test fails, display error message
   // 6. if test succeeds, display success message
+
+  // TODO maybe setup file watcher earlier, to not miss events?
+  try {
+    await watchForHotReload(platform, href)
+  } catch {
+    // ignore
+  }
 }
