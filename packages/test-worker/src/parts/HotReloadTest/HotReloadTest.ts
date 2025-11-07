@@ -1,3 +1,4 @@
+import { clearConsole } from '../ClearConsole/ClearConsole.ts'
 import { createUrlWithQueryParameter } from '../CreateUrlWithQueryParameter/CreateUrlWithQueryParameter.ts'
 import { execute } from '../Test/Test.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
@@ -12,5 +13,6 @@ export const hotReloadTest = async (): Promise<void> => {
     return
   }
   const withQueryParameter = createUrlWithQueryParameter(url)
+  clearConsole()
   await execute(withQueryParameter, platform, assetDir)
 }
