@@ -1,3 +1,3 @@
-export const hotReloadEnabled = (): boolean => {
+export const hotReloadEnabled = async (): Promise<boolean> => {
   return false
 }
