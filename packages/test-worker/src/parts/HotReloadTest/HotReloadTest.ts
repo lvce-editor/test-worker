@@ -1,4 +1,4 @@
-import { execute } from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
+import { execute } from '../Test/Test.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 
 export const hotReloadTest = async (): Promise<void> => {
