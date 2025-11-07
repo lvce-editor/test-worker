@@ -44,7 +44,7 @@ export const execute = async (href: string, platform: number, assetDir: string):
 
   // TODO maybe setup file watcher earlier, to not miss events?
   try {
-    if (hotReloadEnabled()) {
+    if (await hotReloadEnabled()) {
       await watchForHotReload(platform, href)
     }
   } catch {
