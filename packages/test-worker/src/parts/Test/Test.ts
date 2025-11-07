@@ -13,6 +13,12 @@ import { watchForHotReload } from '../WatchForHotReload/WatchForHotReload.ts'
 // 2. execute test
 // 3. print out results
 export const execute = async (href: string, platform: number, assetDir: string): Promise<void> => {
+  TestInfoCache.push({
+    url: href,
+    assetDir,
+    platform,
+    inProgress: true,
+  })
   const globals = createApi(platform, assetDir)
   // TODO
   // 0. wait for page to be ready
@@ -49,6 +55,7 @@ export const execute = async (href: string, platform: number, assetDir: string):
     url: href,
     assetDir,
     platform,
+    inProgress: false,
   })
   // TODO if file watcher was previously added, don't need to add one
   try {
