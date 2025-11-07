@@ -1,3 +1,6 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
+
 export const hotReloadEnabled = async (): Promise<boolean> => {
-  return false
+  const preference = await RendererWorker.getPreference('E2eTest.hotReload')
+  return Boolean(preference)
 }
