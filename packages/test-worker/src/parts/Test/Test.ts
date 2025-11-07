@@ -1,5 +1,6 @@
 import { createApi } from '../CreateApi/CreateApi.ts'
 import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
+import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
@@ -43,7 +44,9 @@ export const execute = async (href: string, platform: number, assetDir: string):
 
   // TODO maybe setup file watcher earlier, to not miss events?
   try {
-    await watchForHotReload(platform, href)
+    if (hotReloadEnabled()) {
+      await watchForHotReload(platform, href)
+    }
   } catch {
     // ignore
   }
