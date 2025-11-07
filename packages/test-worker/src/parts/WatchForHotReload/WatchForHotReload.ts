@@ -1,4 +1,4 @@
-import { PlatformType } from '@lvce-editor/constants'
+import { PlatformType, RpcId } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const watchForHotReload = async (platform: number, href: string): Promise<void> => {
@@ -10,7 +10,7 @@ export const watchForHotReload = async (platform: number, href: string): Promise
   }
   const rest = href.slice('/remote'.length)
   const fileUrl = `file://${rest}`
-  const id = Math.random()
+  const callbackCommand = 'FileWatcher.handleEvent'
   // @ts-ignore
-  await RendererWorker.invoke('FileWatcher.watchFile', id, fileUrl)
+  await RendererWorker.invoke('FileWatcher.watchFile', RpcId.TestWorker, callbackCommand, fileUrl)
 }
