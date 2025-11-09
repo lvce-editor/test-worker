@@ -16,6 +16,7 @@ import * as EditorSourceAction from '../TestFrameWorkComponentEditorSourceAction
 import * as Explorer from '../TestFrameWorkComponentExplorer/TestFrameWorkComponentExplorer.ts'
 import * as Extension from '../TestFrameWorkComponentExtension/TestFrameWorkComponentExtension.ts'
 import * as ExtensionDetail from '../TestFrameWorkComponentExtensionDetail/TestFrameWorkComponentExtensionDetail.ts'
+import * as ExtensionSearch from '../TestFrameWorkComponentExtensionSearch/TestFrameWorkComponentExtensionSearch.ts'
 import * as FileSystem from '../TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 import * as FindWidget from '../TestFrameWorkComponentFindWidget/TestFrameWorkComponentFindWidget.ts'
 import * as IconTheme from '../TestFrameWorkComponentIconTheme/TestFrameWorkComponentIconTheme.ts'
@@ -64,6 +65,7 @@ export const createApi = (platform: number, assetDir: string): any => {
     Explorer,
     Extension,
     ExtensionDetail,
+    ExtensionSearch,
     FileSystem: {
       ...FileSystem,
       loadFixture(url: string): Promise<string> {
