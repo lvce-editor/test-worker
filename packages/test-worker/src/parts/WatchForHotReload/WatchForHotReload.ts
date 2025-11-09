@@ -1,11 +1,6 @@
 import { PlatformType, RpcId } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-
-const getFileUri = (href: string): string => {
-  const rest = href.slice('/remote'.length)
-  const fileUrl = `file://${rest}`
-  return fileUrl
-}
+import { getFileUri } from '../GetFileUri/GetFileUri.ts'
 
 export const watchForHotReload = async (platform: number, href: string): Promise<void> => {
   if (platform !== PlatformType.Remote) {
