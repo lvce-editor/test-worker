@@ -2,7 +2,6 @@ import type { test } from '../TestFrameWork/TestFrameWork.ts'
 import type { expect, getTmpDir, Locator } from '../TestFrameWork/TestFrameWork.ts'
 import type * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import type * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
-import type * as BaseUrl from '../TestFrameWorkComponentBaseUrl/TestFrameWorkComponentBaseUrl.ts'
 import type * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import type * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import type * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
@@ -46,10 +45,14 @@ type IFileSystem = Omit<typeof FileSystem, 'loadFixture'> & {
   readonly loadFixture: (url: string) => Promise<string>
 }
 
+type IBaseUrl = {
+  readonly getBaseUrl: () => string
+}
+
 export interface Api {
   About: typeof About
   ActivityBar: typeof ActivityBar
-  BaseUrl: typeof BaseUrl
+  BaseUrl: IBaseUrl
   ClipBoard: typeof ClipBoard
   Command: typeof Command
   ContextMenu: typeof ContextMenu
