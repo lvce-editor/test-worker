@@ -1,3 +1,4 @@
+import type { Api } from '../Api/Api.ts'
 import * as AssetDir from '../AssetDir/AssetDir.ts'
 import { expect, getTmpDir, Locator, test } from '../TestFrameWork/TestFrameWork.ts'
 import * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
@@ -42,7 +43,7 @@ import * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
 import * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
 
-export const createApi = (platform: number, assetDir: string): any => {
+export const createApi = (platform: number, assetDir: string): Api => {
   return {
     About,
     ActivityBar,
