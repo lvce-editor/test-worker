@@ -84,3 +84,8 @@ export const toggleMenu = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('TitleBar.toggleMenu')
 }
+
+export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('TitleBar.handleContextMenu', button, x, y)
+}
