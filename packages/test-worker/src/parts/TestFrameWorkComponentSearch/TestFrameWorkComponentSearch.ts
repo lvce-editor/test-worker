@@ -146,3 +146,13 @@ export const handleInputSelectionChange = async (name: string, start: number, en
   // @ts-ignore
   await RendererWorker.invoke('Search.handleInputSelectionChange', name, start, end)
 }
+
+export const handleInputContextMenu = async (name: string, button: number, x: number, y: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.handleInputConextMenu', name, button, x, y)
+}
+
+export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.handleContextMenu', name, button, x, y)
+}
