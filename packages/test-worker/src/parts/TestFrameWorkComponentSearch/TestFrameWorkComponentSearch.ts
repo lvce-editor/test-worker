@@ -126,3 +126,23 @@ export const copyPath = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Search.copyPath')
 }
+
+export const handleInputCut = async (name: string): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.handleInputCut', name)
+}
+
+export const handleInputPaste = async (name: string): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.handleInputPaste', name)
+}
+
+export const handleInputCopy = async (name: string): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.handleInputCopy', name)
+}
+
+export const handleInputSelectionChange = async (name: string, start: number, end: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Search.handleInputSelectionChange', name, start, end)
+}
