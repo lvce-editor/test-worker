@@ -34,3 +34,8 @@ export const shouldHaveText = async (expectedText: string | RegExp): Promise<voi
     throw new AssertionError(`expected clipboard to have text "${expectedText}" but was "${actualText}"`)
   }
 }
+
+export const writeText = async (text: string): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('ClipBoard.writeText', text)
+}
