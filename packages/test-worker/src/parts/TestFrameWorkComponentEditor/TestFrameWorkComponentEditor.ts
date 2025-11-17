@@ -5,6 +5,7 @@ import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
 import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
 import { getEditorKey } from '../GetEditorKey/GetEditorKey.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
+import * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 
 export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
   await RendererWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)
@@ -276,4 +277,16 @@ export const shouldHaveDiagnostics = async (expectedDiagnostics: readonly Diagno
     const stringifiedExpected = JSON.stringify(expectedDiagnostics)
     throw new Error(`Expected editor to have diagnostics ${stringifiedExpected} but was ${stringifiedActual}`)
   }
+}
+
+export const enableCompletionsOnType = async (): Promise<void> => {
+  await Settings.update({
+    'editor.completionsOnType': true,
+  })
+}
+
+export const disableCompletionsOnType = async (): Promise<void> => {
+  await Settings.update({
+    'editor.completionsOnType': true,
+  })
 }
