@@ -287,6 +287,18 @@ export const enableCompletionsOnType = async (): Promise<void> => {
 
 export const disableCompletionsOnType = async (): Promise<void> => {
   await Settings.update({
-    'editor.completionsOnType': true,
+    'editor.completionsOnType': false,
+  })
+}
+
+export const enableDiagnostics = async (): Promise<void> => {
+  await Settings.update({
+    'editor.diagnostics': true,
+  })
+}
+
+export const disableDiagnostics = async (): Promise<void> => {
+  await Settings.update({
+    'editor.diagnostics': false,
   })
 }
