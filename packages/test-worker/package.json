@@ -40,13 +40,13 @@
     }
   },
   "dependencies": {
-    "@lvce-editor/constants": "^1.35.0"
+    "@lvce-editor/constants": "^1.38.0"
   },
   "devDependencies": {
     "@jest/globals": "^30.2.0",
     "@lvce-editor/assert": "^1.4.0",
     "@lvce-editor/rpc": "^4.20.0",
-    "@lvce-editor/rpc-registry": "^4.3.0",
+    "@lvce-editor/rpc-registry": "^4.7.0",
     "@lvce-editor/verror": "^1.7.0",
     "jest": "^30.2.0",
     "ts-jest": "^29.4.5"
