@@ -20,6 +20,10 @@ export const handleClickSourceControlButtons = async (index: number, name: strin
   await RendererWorker.invoke('Source Control.handleClickSourceControlButtons', index, name)
 }
 
+export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('Source Control.handleContextMenu', button, x, y)
+}
+
 export const show = async (): Promise<void> => {
   // @ts-ignore
   await SideBar.open('Source Control')
