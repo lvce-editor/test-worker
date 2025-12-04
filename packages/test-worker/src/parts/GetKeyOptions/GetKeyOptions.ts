@@ -8,14 +8,14 @@ export const getKeyOptions = (rawKey: string): any => {
     let key = ''
     for (const part of parts) {
       switch (part) {
+        case Key.Alt:
+          altKey = true
+          break
         case Key.Control:
           ctrlKey = true
           break
         case Key.Space:
           key = ' '
-          break
-        case Key.Alt:
-          altKey = true
           break
         default:
           key = part
@@ -23,14 +23,14 @@ export const getKeyOptions = (rawKey: string): any => {
       }
     }
     return {
-      key,
-      ctrlKey,
       altKey,
+      ctrlKey,
+      key,
     }
   }
   return {
-    key: rawKey,
-    ctrlKey: false,
     altKey: false,
+    ctrlKey: false,
+    key: rawKey,
   }
 }

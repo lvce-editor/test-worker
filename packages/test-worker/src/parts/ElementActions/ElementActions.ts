@@ -3,10 +3,10 @@ import * as DomEventType from '../DomEventType/DomEventType.ts'
 
 export const mouseEvent = (eventType: string, options: any): IElementAction => {
   return {
-    type: 'dispatch',
     constructor: 'MouseEvent',
     eventType,
     options,
+    type: 'dispatch',
   }
 }
 
@@ -37,20 +37,20 @@ export const hover = (options: any): readonly IElementAction[] => {
 export const type = (options: any): readonly IElementAction[] => {
   return [
     {
-      type: 'type',
       constructor: '',
       eventType: '',
       options,
+      type: 'type',
     },
   ]
 }
 
 export const keyboardEvent = (eventType: string, options: any): IElementAction => {
   return {
-    type: 'dispatch',
     constructor: 'MouseEvent',
     eventType,
     options,
+    type: 'dispatch',
   }
 }
 

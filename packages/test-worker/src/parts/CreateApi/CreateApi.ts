@@ -62,6 +62,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     EditorHover,
     EditorRename,
     EditorSourceAction,
+    expect,
     Explorer,
     Extension,
     ExtensionDetail,
@@ -73,10 +74,12 @@ export const createApi = (platform: number, assetDir: string): Api => {
       },
     },
     FindWidget,
+    getTmpDir, // TODO maybe deprecate this or move to file system
     IconTheme,
     IframeInspector,
     KeyBindingsEditor,
     KeyBoard,
+    Locator,
     Main,
     Output,
     Panel,
@@ -91,13 +94,10 @@ export const createApi = (platform: number, assetDir: string): Api => {
     SideBar,
     SourceControl,
     StatusBar,
+    test,
     TitleBarMenuBar,
     Url,
     WebView,
     Workspace,
-    test,
-    Locator,
-    expect,
-    getTmpDir, // TODO maybe deprecate this or move to file system
   }
 }

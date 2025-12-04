@@ -14,16 +14,16 @@ test('selectIndex', async () => {
 
 test('focus navigation methods', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'IframeInspector.focusNext'() {
-      return undefined
-    },
-    'IframeInspector.focusPrevious'() {
-      return undefined
-    },
     'IframeInspector.focusFirst'() {
       return undefined
     },
     'IframeInspector.focusLast'() {
+      return undefined
+    },
+    'IframeInspector.focusNext'() {
+      return undefined
+    },
+    'IframeInspector.focusPrevious'() {
       return undefined
     },
   })

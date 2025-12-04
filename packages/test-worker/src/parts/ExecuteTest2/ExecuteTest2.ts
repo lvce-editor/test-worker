@@ -12,26 +12,26 @@ export const executeTest2 = async (name: string, fn: any, globals: any, timestam
   const formattedDuration = formatDuration(duration)
   if (error) {
     return {
-      error,
-      start,
-      end,
+      background: 'red',
       duration,
+      end,
+      error,
       formattedDuration,
       name,
-      type: TestType.Fail,
-      background: 'red',
+      start,
       text: `test failed: ${error}`,
+      type: TestType.Fail,
     }
   }
   return {
-    error: undefined,
-    start,
-    end,
+    background: 'green',
     duration,
+    end,
+    error: undefined,
     formattedDuration,
     name,
-    type: TestType.Pass,
-    background: 'green',
+    start,
     text: `test passed in ${formattedDuration}`,
+    type: TestType.Pass,
   }
 }

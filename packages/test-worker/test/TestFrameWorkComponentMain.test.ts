@@ -52,28 +52,28 @@ test('closeAllEditors', async () => {
 
 test('closeTabsLeft/Right and others', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'Main.closeActiveEditor'() {
+      return undefined
+    },
+    'Main.closeOthers'() {
+      return undefined
+    },
     'Main.closeTabsLeft'() {
       return undefined
     },
     'Main.closeTabsRight'() {
       return undefined
     },
-    'Main.closeOthers'() {
-      return undefined
-    },
-    'Main.closeActiveEditor'() {
-      return undefined
-    },
     'Main.focusFirst'() {
+      return undefined
+    },
+    'Main.focusLast'() {
       return undefined
     },
     'Main.focusNext'() {
       return undefined
     },
     'Main.focusPrevious'() {
-      return undefined
-    },
-    'Main.focusLast'() {
       return undefined
     },
   })

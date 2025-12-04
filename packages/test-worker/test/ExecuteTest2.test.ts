@@ -119,7 +119,7 @@ test('executeTest2 with undefined error', async () => {
 })
 
 test('executeTest2 with globals passed to test function', async () => {
-  const globals = { testValue: 'hello', anotherValue: 42 }
+  const globals = { anotherValue: 42, testValue: 'hello' }
 
   const result = await ExecuteTest2.executeTest2('globals-test', testFunction7, globals, timestampGenerator7)
 

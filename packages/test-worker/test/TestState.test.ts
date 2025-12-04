@@ -2,7 +2,7 @@ import { expect, jest, test } from '@jest/globals'
 import * as TestState from '../src/parts/TestState/TestState.ts'
 
 const createMockRpc = (name: string): any => {
-  return { name, invoke: jest.fn() }
+  return { invoke: jest.fn(), name }
 }
 
 test('addTest and getTests empties queue', () => {

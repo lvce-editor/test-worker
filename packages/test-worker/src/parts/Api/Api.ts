@@ -65,16 +65,19 @@ export interface Api {
   EditorHover: typeof EditorHover
   EditorRename: typeof EditorRename
   EditorSourceAction: typeof EditorSourceAction
+  expect: typeof expect
   Explorer: typeof Explorer
   Extension: typeof Extension
   ExtensionDetail: typeof ExtensionDetail
   ExtensionSearch: typeof ExtensionSearch
   FileSystem: IFileSystem
   FindWidget: typeof FindWidget
+  getTmpDir: typeof getTmpDir
   IconTheme: typeof IconTheme
   IframeInspector: typeof IframeInspector
   KeyBindingsEditor: typeof KeyBindingsEditor
   KeyBoard: typeof KeyBoard
+  Locator: typeof Locator
   Main: typeof Main
   Output: typeof Output
   Panel: typeof Panel
@@ -89,12 +92,9 @@ export interface Api {
   SideBar: typeof SideBar
   SourceControl: typeof SourceControl
   StatusBar: typeof StatusBar
+  test: typeof test
   TitleBarMenuBar: typeof TitleBarMenuBar
   Url: typeof Url
   WebView: typeof WebView
   Workspace: typeof Workspace
-  test: typeof test
-  Locator: typeof Locator
-  expect: typeof expect
-  getTmpDir: typeof getTmpDir
 }

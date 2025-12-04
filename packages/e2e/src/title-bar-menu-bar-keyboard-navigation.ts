@@ -4,7 +4,7 @@ export const name = 'viewlet.title-bar-menu-bar-keyboard-navigation'
 
 export const skip = 1
 
-export const test: Test = async ({ TitleBarMenuBar, Locator, expect }) => {
+export const test: Test = async ({ expect, Locator, TitleBarMenuBar }) => {
   // act
   await TitleBarMenuBar.focus()
 

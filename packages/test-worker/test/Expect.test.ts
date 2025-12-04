@@ -4,9 +4,9 @@ import * as ExpectMod from '../src/parts/Expect/Expect.ts'
 
 const createLocator = (selector: string = 'button'): any => {
   return {
-    _selector: selector,
-    _nth: -1,
     _hasText: '',
+    _nth: -1,
+    _selector: selector,
   }
 }
 
@@ -26,11 +26,11 @@ test('toHaveText: ok path', async () => {
 
 test('toHaveText: error path builds ConditionErrors', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'Hello', wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: 'Hello' }
     },
   })
 
@@ -67,11 +67,11 @@ test('toBeVisible: negated throws guidance', async () => {
 
 test('checkMultiElementCondition: error path builds ConditionErrors', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 1, wasFound: true }
+    },
     'TestFrameWork.checkMultiElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: 1 }
     },
   })
 
@@ -117,11 +117,11 @@ test('toContainText: success path', async () => {
 
 test('toContainText: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'Hello', wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: 'Hello' }
     },
   })
 
@@ -153,11 +153,11 @@ test('toHaveValue: success path', async () => {
 
 test('toHaveValue: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'different value', wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: 'different value' }
     },
   })
 
@@ -186,11 +186,11 @@ test('toBeFocused: success path', async () => {
 
 test('toBeFocused: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: false, wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: false }
     },
   })
 
@@ -222,11 +222,11 @@ test('toHaveCSS: success path', async () => {
 
 test('toHaveCSS: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'blue', wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: 'blue' }
     },
   })
 
@@ -258,11 +258,11 @@ test('toHaveAttribute: success path', async () => {
 
 test('toHaveAttribute: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'password', wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: 'password' }
     },
   })
 
@@ -296,11 +296,11 @@ test('toHaveJSProperty: success path', async () => {
 
 test('toHaveJSProperty: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: '<div>different</div>', wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: '<div>different</div>' }
     },
   })
 
@@ -332,11 +332,11 @@ test('toHaveClass: success path', async () => {
 
 test('toHaveClass: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'inactive', wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: 'inactive' }
     },
   })
 
@@ -368,11 +368,11 @@ test('toHaveId: success path', async () => {
 
 test('toHaveId: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: 'different-id', wasFound: true }
+    },
     'TestFrameWork.checkSingleElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: 'different-id' }
     },
   })
 
@@ -404,11 +404,11 @@ test('toBeHidden: success path', async () => {
 
 test('toBeHidden: error path', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkConditionError'() {
+      return { actual: true, wasFound: true }
+    },
     'TestFrameWork.checkMultiElementCondition'() {
       return { error: true }
-    },
-    'TestFrameWork.checkConditionError'() {
-      return { wasFound: true, actual: true }
     },
   })
 

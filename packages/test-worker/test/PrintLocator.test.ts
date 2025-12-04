@@ -3,27 +3,27 @@ import * as PrintLocator from '../src/parts/PrintLocator/PrintLocator.ts'
 
 test('print locator with nth', () => {
   const locator = {
-    _selector: 'button',
-    _nth: 2,
     _hasText: '',
+    _nth: 2,
+    _selector: 'button',
   }
   expect(PrintLocator.printLocator(locator)).toBe('button:nth(2)')
 })
 
 test('print locator with text', () => {
   const locator = {
-    _selector: 'button',
-    _nth: -1,
     _hasText: 'Submit',
+    _nth: -1,
+    _selector: 'button',
   }
   expect(PrintLocator.printLocator(locator)).toBe('button "Submit"')
 })
 
 test('print locator with selector only', () => {
   const locator = {
-    _selector: 'button',
-    _nth: -1,
     _hasText: '',
+    _nth: -1,
+    _selector: 'button',
   }
   expect(PrintLocator.printLocator(locator)).toBe('button')
 })
