@@ -6,9 +6,9 @@ test('create', () => {
   const selector = 'button'
   const options = {}
   expect(createLocator(selector, options)).toMatchObject({
-    _selector: 'button',
-    _nth: -1,
     _hasText: '',
+    _nth: -1,
+    _selector: 'button',
   })
 })
 

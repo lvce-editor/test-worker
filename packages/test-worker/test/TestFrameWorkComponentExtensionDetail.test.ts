@@ -14,10 +14,10 @@ test('handleClickCategory', async () => {
 
 test('handleClickEnable/Disable/SetColorTheme', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'ExtensionDetail.handleClickEnable'() {
+    'ExtensionDetail.handleClickDisable'() {
       return undefined
     },
-    'ExtensionDetail.handleClickDisable'() {
+    'ExtensionDetail.handleClickEnable'() {
       return undefined
     },
     'ExtensionDetail.handleClickSetColorTheme'() {

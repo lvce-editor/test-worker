@@ -603,10 +603,10 @@ test('rename2', async () => {
     'Editor.openRename'() {
       return undefined
     },
-    'EditorRename.handleInput'() {
+    'EditorRename.accept'() {
       return undefined
     },
-    'EditorRename.accept'() {
+    'EditorRename.handleInput'() {
       return undefined
     },
   })
@@ -617,20 +617,20 @@ test('rename2', async () => {
 
 test('shouldHaveDiagnostics - basic functionality', async () => {
   const mockRpc = EditorWorker.registerMockRpc({
-    'Editor.getKeys'() {
-      return ['1']
-    },
     'Editor.getDiagnostics'() {
       return [
         {
-          rowIndex: 0,
           columnIndex: 0,
-          endRowIndex: 0,
           endColumnIndex: 5,
+          endRowIndex: 0,
           message: 'Syntax error',
+          rowIndex: 0,
           type: 'error',
         },
       ]
+    },
+    'Editor.getKeys'() {
+      return ['1']
     },
   })
 
@@ -638,11 +638,11 @@ test('shouldHaveDiagnostics - basic functionality', async () => {
 
   const expectedDiagnostics = [
     {
-      rowIndex: 0,
       columnIndex: 0,
-      endRowIndex: 0,
       endColumnIndex: 5,
+      endRowIndex: 0,
       message: 'Syntax error',
+      rowIndex: 0,
       type: 'error' as const,
     },
   ]

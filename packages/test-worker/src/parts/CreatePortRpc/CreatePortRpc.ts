@@ -15,9 +15,9 @@ export const createPortRpc = async (webViewId: string): Promise<Rpc> => {
     throw new Error('unexpected first message')
   }
   const rpc = await MessagePortRpcParent.create({
-    messagePort: port1,
     commandMap: {},
     isMessagePortOpen: true,
+    messagePort: port1,
   })
   return rpc
 }

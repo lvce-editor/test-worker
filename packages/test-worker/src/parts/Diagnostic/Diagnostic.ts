@@ -1,8 +1,8 @@
 export interface Diagnostic {
-  readonly rowIndex: number
   readonly columnIndex: number
-  readonly endRowIndex: number
   readonly endColumnIndex: number
+  readonly endRowIndex: number
   readonly message: string
+  readonly rowIndex: number
   readonly type: 'error' | 'warning'
 }

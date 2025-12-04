@@ -22,9 +22,9 @@ class DisposableStore {
 test('createPortRpc: creates RPC successfully with ready message', async (): Promise<any> => {
   const webViewId = 'test-webview-123'
   const mockWebViewInfo = {
-    uid: 12_345,
     origin: 'https://example.com',
     title: 'Test WebView',
+    uid: 12_345,
   }
 
   const store = new DisposableStore()
@@ -56,9 +56,9 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
 test('createPortRpc: throws error when first message is not ready', async (): Promise<void> => {
   const webViewId = 'test-webview-456'
   const mockWebViewInfo = {
-    uid: 67_890,
     origin: 'https://example.com',
     title: 'Test WebView 2',
+    uid: 67_890,
   }
 
   const store = new DisposableStore()
@@ -99,9 +99,9 @@ test.skip('createPortRpc: propagates error from GetWebViewInfo', async (): Promi
 test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<void> => {
   const webViewId = 'test-webview-error'
   const mockWebViewInfo = {
-    uid: 99_999,
     origin: 'https://example.com',
     title: 'Error WebView',
+    uid: 99_999,
   }
 
   const store = new DisposableStore()
@@ -128,9 +128,9 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
 test('createPortRpc: uses correct port type', async (): Promise<any> => {
   const webViewId = 'test-webview-port-type'
   const mockWebViewInfo = {
-    uid: 11_111,
     origin: 'https://example.com',
     title: 'Port Type Test',
+    uid: 11_111,
   }
 
   const store = new DisposableStore()
@@ -160,16 +160,16 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
 
 test('createPortRpc: handles different webViewId values', async (): Promise<any> => {
   const testCases = [
-    { webViewId: 'simple-id', uid: 100, origin: 'https://example.com' },
-    { webViewId: 'complex-id-123', uid: 200, origin: 'https://example.com' },
-    { webViewId: 'special-chars-!@#', uid: 300, origin: 'https://example.com' },
+    { origin: 'https://example.com', uid: 100, webViewId: 'simple-id' },
+    { origin: 'https://example.com', uid: 200, webViewId: 'complex-id-123' },
+    { origin: 'https://example.com', uid: 300, webViewId: 'special-chars-!@#' },
   ]
 
   for (const testCase of testCases) {
     const mockWebViewInfo = {
-      uid: testCase.uid,
       origin: testCase.origin,
       title: `WebView ${testCase.webViewId}`,
+      uid: testCase.uid,
     }
 
     const store = new DisposableStore()

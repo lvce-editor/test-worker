@@ -3,15 +3,15 @@
 import * as Assert from '../Assert/Assert.ts'
 
 const state = {
+  mockRpcs: Object.create(null),
   /**
    * @type {any[]}
    */
   pendingTests: [],
-  mockRpcs: Object.create(null),
 }
 
 export const addTest = (name: string, fn: any): void => {
-  state.pendingTests.push({ name, fn })
+  state.pendingTests.push({ fn, name })
 }
 
 export const getTests = (): any[] => {

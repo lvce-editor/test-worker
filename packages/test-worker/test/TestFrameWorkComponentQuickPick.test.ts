@@ -136,13 +136,13 @@ test('selectCurrentIndex', async () => {
 
 test('executeCommand', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'QuickPick.showCommands'() {
-      return undefined
-    },
     'QuickPick.handleInput'() {
       return undefined
     },
     'QuickPick.selectItem'() {
+      return undefined
+    },
+    'QuickPick.showCommands'() {
       return undefined
     },
   })

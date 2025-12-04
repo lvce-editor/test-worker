@@ -4,9 +4,9 @@ import * as GetWebViewInfo from '../src/parts/GetWebViewInfo/GetWebViewInfo.ts'
 
 test('getWebViewInfo: calls RendererWorker.invoke with correct method and webViewId', async (): Promise<void> => {
   const mockWebViewInfo = {
-    uid: 'test-uid-123',
     origin: 'https://example.com',
     title: 'Test WebView',
+    uid: 'test-uid-123',
   }
 
   const mockRpc = RendererWorker.registerMockRpc({
@@ -23,9 +23,9 @@ test('getWebViewInfo: calls RendererWorker.invoke with correct method and webVie
 
 test('getWebViewInfo: handles different webViewId values', async (): Promise<void> => {
   const mockWebViewInfo = {
-    uid: 'different-uid-456',
     origin: 'https://example.com',
     title: 'Different WebView',
+    uid: 'different-uid-456',
   }
 
   const mockRpc = RendererWorker.registerMockRpc({

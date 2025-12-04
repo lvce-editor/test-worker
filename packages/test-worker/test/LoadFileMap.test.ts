@@ -78,10 +78,10 @@ test('loadFileMap - empty file map', async () => {
 
 test('loadFileMap - file map with special characters in paths', async () => {
   const fileMapWithSpecialChars: FileMap = {
-    'src/file with spaces.ts': 'content with spaces',
-    'src/file-with-dashes.ts': 'content with dashes',
     'src/file_with_underscores.ts': 'content with underscores',
+    'src/file-with-dashes.ts': 'content with dashes',
     'src/file.with.dots.ts': 'content with dots',
+    'src/file with spaces.ts': 'content with spaces',
     'src/中文文件名.ts': '中文内容',
   }
 

@@ -3,12 +3,12 @@ import { getIsFirefox } from '../src/parts/IsFirefox/IsFirefox.ts'
 
 const mockNavigator = (userAgent: string, userAgentData?: any): void => {
   Object.defineProperty(globalThis, 'navigator', {
+    configurable: true,
     value: {
       userAgent,
       userAgentData,
     },
     writable: true,
-    configurable: true,
   })
 }
 

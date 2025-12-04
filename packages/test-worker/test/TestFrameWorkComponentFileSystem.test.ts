@@ -95,17 +95,17 @@ test('chmod', async () => {
 
 test('createExecutable', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'PlatformPaths.getTmpDir'() {
-      return '/tmp'
-    },
-    'PlatformPaths.getNodePath'() {
-      return '/usr/bin/node'
+    'FileSystem.chmod'() {
+      return undefined
     },
     'FileSystem.writeFile'() {
       return undefined
     },
-    'FileSystem.chmod'() {
-      return undefined
+    'PlatformPaths.getNodePath'() {
+      return '/usr/bin/node'
+    },
+    'PlatformPaths.getTmpDir'() {
+      return '/tmp'
     },
   })
 
@@ -122,23 +122,23 @@ test('createExecutable', async () => {
 
 test('createExecutableFrom', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'PlatformPaths.getTestPath'() {
-      return '/tests'
-    },
     'Ajax.getText'() {
       return "console.log('ok')"
     },
-    'PlatformPaths.getTmpDir'() {
-      return '/tmp'
-    },
-    'PlatformPaths.getNodePath'() {
-      return '/usr/bin/node'
+    'FileSystem.chmod'() {
+      return undefined
     },
     'FileSystem.writeFile'() {
       return undefined
     },
-    'FileSystem.chmod'() {
-      return undefined
+    'PlatformPaths.getNodePath'() {
+      return '/usr/bin/node'
+    },
+    'PlatformPaths.getTestPath'() {
+      return '/tests'
+    },
+    'PlatformPaths.getTmpDir'() {
+      return '/tmp'
     },
   })
 

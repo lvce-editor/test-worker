@@ -19,7 +19,7 @@ export const toHaveValue = (
 
 export const toHaveText = async (locator: ILocatorInternal, options: { readonly text: string }): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, options)
+  const { actual, wasFound } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveText', locator, options)
   const { text } = options
   if (!wasFound) {
     return `expected selector ${locatorString} to have text "${text}" element was not found`
@@ -29,7 +29,7 @@ export const toHaveText = async (locator: ILocatorInternal, options: { readonly 
 
 export const toContainText = async (locator: ILocatorInternal, options: { readonly text: string }): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toContainText', locator, options)
+  const { actual, wasFound } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toContainText', locator, options)
   const { text } = options
   if (!wasFound) {
     return `expected selector ${locatorString} to contain text "${text}" element was not found`
@@ -45,7 +45,7 @@ export const toHaveAttribute = async (
   },
 ): Promise<string> => {
   const locatorString = printLocator(locator)
-  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveAttribute', locator, options)
+  const { actual, wasFound } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveAttribute', locator, options)
   const { key, value } = options
   if (!wasFound) {
     return `expected ${locatorString} to have attribute ${key} ${value} but element was not found`
@@ -93,7 +93,7 @@ export const toHaveId = async (
     readonly id: string
   },
 ): Promise<string> => {
-  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveId', locator, options)
+  const { actual, wasFound } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveId', locator, options)
   const locatorString = printLocator(locator)
   const { id } = options
   if (!wasFound) {
@@ -114,7 +114,7 @@ export const toHaveCss = async (
     readonly value: string
   },
 ): Promise<string> => {
-  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveCss', locator, options)
+  const { actual, wasFound } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveCss', locator, options)
   const locatorString = printLocator(locator)
   const { key, value } = options
   if (!wasFound) {
@@ -130,7 +130,7 @@ export const toHaveJSProperty = async (
     readonly value: string
   },
 ): Promise<string> => {
-  const { wasFound, actual } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveJSProperty', locator, options)
+  const { actual, wasFound } = await locatorInvoke(locator, 'TestFrameWork.checkConditionError', 'toHaveJSProperty', locator, options)
   const locatorString = printLocator(locator)
   const { key, value } = options
   if (!wasFound) {

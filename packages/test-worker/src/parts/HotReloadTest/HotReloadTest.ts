@@ -8,7 +8,7 @@ export const hotReloadTest = async (): Promise<void> => {
     return
   }
   const last = TestInfoCache.last()
-  const { platform, url, assetDir, inProgress } = last
+  const { assetDir, inProgress, platform, url } = last
   if (inProgress) {
     return
   }

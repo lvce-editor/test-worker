@@ -4,7 +4,7 @@ import { printTestError } from '../PrintTestError/PrintTestError.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'
 
 export const executeTest = async (name: string, fn: any, globals = {}): Promise<void> => {
-  const { error, formattedDuration, background, text, type } = await executeTest2(name, fn, globals, Timestamp.now)
+  const { background, error, formattedDuration, text, type } = await executeTest2(name, fn, globals, Timestamp.now)
   if (error) {
     await printTestError(error)
   } else {

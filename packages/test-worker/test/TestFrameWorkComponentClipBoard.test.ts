@@ -4,16 +4,16 @@ import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFra
 
 const setup = (): any => {
   const mockRpc = RendererWorker.registerMockRpc({
-    'ClipBoard.readNativeFiles'() {
-      return undefined
-    },
-    'ClipBoard.writeNativeFiles'() {
+    'ClipBoard.disableMemoryClipBoard'() {
       return undefined
     },
     'ClipBoard.enableMemoryClipBoard'() {
       return undefined
     },
-    'ClipBoard.disableMemoryClipBoard'() {
+    'ClipBoard.readNativeFiles'() {
+      return undefined
+    },
+    'ClipBoard.writeNativeFiles'() {
       return undefined
     },
   })

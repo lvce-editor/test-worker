@@ -1,8 +1,8 @@
 export interface TestInfoItem {
-  readonly url: string
-  readonly platform: number
   readonly assetDir: string
   readonly inProgress: boolean
+  readonly platform: number
+  readonly url: string
 }
 
 let items: readonly TestInfoItem[] = []

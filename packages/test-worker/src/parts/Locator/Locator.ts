@@ -16,7 +16,7 @@ class Locator implements ILocator {
   readonly _nth: number
   readonly _hasText: string
 
-  constructor(selector: any, { nth = -1, hasText = '' }: { readonly nth?: number; readonly hasText?: string } = {}) {
+  constructor(selector: any, { hasText = '', nth = -1 }: { readonly nth?: number; readonly hasText?: string } = {}) {
     this._selector = selector
     this._nth = nth
     this._hasText = hasText
@@ -24,9 +24,9 @@ class Locator implements ILocator {
 
   async click({ button = 'left' }: { readonly button?: string } = {}): Promise<void> {
     const options = {
-      cancable: true,
       bubbles: true,
       button: ToButtonNumber.toButtonNumber(button),
+      cancable: true,
       detail: 1,
     }
     return performAction(this, 'click', options)
@@ -34,8 +34,8 @@ class Locator implements ILocator {
 
   async hover(): Promise<void> {
     const options = {
-      cancable: true,
       bubbles: true,
+      cancable: true,
     }
     return performAction(this, 'hover', options)
   }
@@ -63,6 +63,6 @@ class Locator implements ILocator {
   }
 
   async dispatchEvent(type: string, init: any): Promise<void> {
-    return performAction(this, 'dispatchEvent', { type, init })
+    return performAction(this, 'dispatchEvent', { init, type })
   }
 }

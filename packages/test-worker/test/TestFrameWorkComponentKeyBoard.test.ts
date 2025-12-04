@@ -16,11 +16,11 @@ test('press: simple key', async () => {
       'TestFrameWork.performKeyBoardAction',
       'press',
       {
-        cancelable: true,
-        bubbles: true,
-        key: 'a',
-        ctrlKey: false,
         altKey: false,
+        bubbles: true,
+        cancelable: true,
+        ctrlKey: false,
+        key: 'a',
       },
     ],
   ])
@@ -40,11 +40,11 @@ test('press: with modifiers Control+Alt+Space', async () => {
       'TestFrameWork.performKeyBoardAction',
       'press',
       {
-        cancelable: true,
-        bubbles: true,
-        key: ' ',
-        ctrlKey: true,
         altKey: true,
+        bubbles: true,
+        cancelable: true,
+        ctrlKey: true,
+        key: ' ',
       },
     ],
   ])

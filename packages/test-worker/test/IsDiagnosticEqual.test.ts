@@ -10,11 +10,11 @@ const createDiagnostic = (
   message: string,
   type: 'error' | 'warning',
 ): Diagnostic => ({
-  rowIndex,
   columnIndex,
-  endRowIndex,
   endColumnIndex,
+  endRowIndex,
   message,
+  rowIndex,
   type,
 })
 
