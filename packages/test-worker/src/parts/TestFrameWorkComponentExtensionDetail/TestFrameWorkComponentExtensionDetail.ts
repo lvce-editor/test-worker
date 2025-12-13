@@ -55,6 +55,10 @@ export const open = (extensionId: string): Promise<void> => {
   return RendererWorker.invoke('Main.openUri', uri)
 }
 
+export const handleClickUninstall = (): Promise<void> => {
+  return RendererWorker.invoke('ExtensionDetail.handleClickUninstall')
+}
+
 export const openFeature = (featureName: string): Promise<void> => {
   // @ts-ignore
   return RendererWorker.invoke('ExtensionDetail.handleFeaturesClick', featureName)
