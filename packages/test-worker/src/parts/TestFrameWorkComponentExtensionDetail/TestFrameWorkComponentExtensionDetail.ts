@@ -88,3 +88,7 @@ export const handleScroll = async (scrollTop: number): Promise<void> => {
   // @ts-ignore
   return RendererWorker.invoke('ExtensionDetail.handleScroll', scrollTop)
 }
+
+export const hideSizeLink = async (): Promise<void> => {
+  return RendererWorker.invoke('ExtensionDetail.hideSizeLink')
+}
