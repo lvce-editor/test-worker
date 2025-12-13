@@ -10,6 +10,11 @@ export const handleReadmeContextMenu = async (x: number, y: number, nodeName: st
   await RendererWorker.invoke('ExtensionDetail.handleReadmeContextMenu', x, y, nodeName, href)
 }
 
+export const copyReadmeLink = async (href: string): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('ExtensionDetail.copyReadmeLink', href)
+}
+
 export const handleClickEnable = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.handleClickEnable')
