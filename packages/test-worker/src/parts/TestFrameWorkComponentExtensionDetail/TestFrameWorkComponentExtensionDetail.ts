@@ -59,6 +59,10 @@ export const handleClickUninstall = (): Promise<void> => {
   return RendererWorker.invoke('ExtensionDetail.handleClickUninstall')
 }
 
+export const handleImageContextMenu = (): Promise<void> => {
+  return RendererWorker.invoke('ExtensionDetail.handleImageContextMenu')
+}
+
 export const openFeature = (featureName: string): Promise<void> => {
   // @ts-ignore
   return RendererWorker.invoke('ExtensionDetail.handleFeaturesClick', featureName)
