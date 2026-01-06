@@ -10,6 +10,11 @@ export const handleInput = async (searchValue: string): Promise<void> => {
   return RendererWorker.invoke('Settings.handleInput', searchValue, InputSource.Script)
 }
 
+export const handleClickTab = async (name: string): Promise<void> => {
+  // @ts-ignore
+  return RendererWorker.invoke('Settings.handleClickTab', name)
+}
+
 export const usePreviousSearchValue = async (): Promise<void> => {
   // @ts-ignore
   return RendererWorker.invoke('Settings.usePreviousSearchValue')
