@@ -51,3 +51,8 @@ export const handleScroll = async (scrollTop: number): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Settings.handleScroll', scrollTop, InputSource.Script)
 }
+
+export const handleClickFilterButton = async (x: number, y: number): Promise<void> => {
+  // @ts-ignore
+  await RendererWorker.invoke('Settings.handleClickFilterButton', x, y)
+}
