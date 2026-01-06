@@ -30,6 +30,11 @@ export const clear = async (searchValue: string): Promise<void> => {
   return RendererWorker.invoke('Settings.clear', searchValue, InputSource.Script)
 }
 
+export const clearHistory = async (): Promise<void> => {
+  // @ts-ignore
+  return RendererWorker.invoke('Settings.clearHistory', searchValue, InputSource.Script)
+}
+
 export const selectTab = async (tabId: string): Promise<void> => {
   // @ts-ignore
   return RendererWorker.invoke('Settings.handleClickTab', tabId)
