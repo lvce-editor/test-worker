@@ -10,11 +10,6 @@ export const handleInput = async (searchValue: string): Promise<void> => {
   return RendererWorker.invoke('Settings.handleInput', searchValue, InputSource.Script)
 }
 
-export const handleClickTab = async (name: string): Promise<void> => {
-  // @ts-ignore
-  return RendererWorker.invoke('Settings.handleClickTab', name)
-}
-
 export const usePreviousSearchValue = async (): Promise<void> => {
   // @ts-ignore
   return RendererWorker.invoke('Settings.usePreviousSearchValue')
@@ -50,6 +45,10 @@ export const selectTextEditor = async (): Promise<void> => {
 
 export const selectExtensions = async (): Promise<void> => {
   await selectTab('extensions')
+}
+
+export const selectWindow = async (): Promise<void> => {
+  await selectTab('window')
 }
 
 export const handleScroll = async (scrollTop: number): Promise<void> => {
