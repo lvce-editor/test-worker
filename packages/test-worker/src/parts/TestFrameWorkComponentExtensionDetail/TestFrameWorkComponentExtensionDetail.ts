@@ -50,6 +50,14 @@ export const selectChangelog = async (): Promise<void> => {
   await selectTab('Changelog')
 }
 
+export const focusNextTab = async (): Promise<void> => {
+  await RendererWorker.invoke('ExtensionDetail.focusNextTab')
+}
+
+export const focusPreviousTab = async (): Promise<void> => {
+  await RendererWorker.invoke('ExtensionDetail.focusPreviousTab')
+}
+
 export const open = (extensionId: string): Promise<void> => {
   const uri = `extension-detail://${extensionId}`
   return RendererWorker.invoke('Main.openUri', uri)
