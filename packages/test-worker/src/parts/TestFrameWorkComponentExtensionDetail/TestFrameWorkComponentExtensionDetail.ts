@@ -100,3 +100,7 @@ export const handleScroll = async (scrollTop: number): Promise<void> => {
 export const hideSizeLink = async (): Promise<void> => {
   return RendererWorker.invoke('ExtensionDetail.hideSizeLink')
 }
+
+export const handleTabFocus = async (tabName: string): Promise<void> => {
+  return RendererWorker.invoke('ExtensionDetail.handleTabFocus', tabName)
+}
