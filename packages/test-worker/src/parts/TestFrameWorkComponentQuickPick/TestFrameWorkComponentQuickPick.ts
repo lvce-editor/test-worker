@@ -71,7 +71,12 @@ export const executeCommand = async (label: string): Promise<void> => {
   await RendererWorker.invoke('QuickPick.selectItem', label)
 }
 
-export const selectItem2 = async ({ callbackCommand, label }: { readonly label: string; readonly callbackCommand: string }): Promise<void> => {
+interface SelectItem2Options {
+  readonly callbackCommand: string
+  readonly label: string
+}
+
+export const selectItem2 = async ({ callbackCommand, label }: SelectItem2Options): Promise<void> => {
   const { promise } = await registerCallbackCommand(callbackCommand)
   // @ts-ignore
   const outerPromise = RendererWorker.invoke('QuickPick.selectItem', label)
