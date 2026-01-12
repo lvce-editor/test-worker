@@ -1,3 +1,4 @@
+import { executeCallback } from '../Callback/Callback.ts'
 import { handleFileWatcherEvent } from '../HandleFileWatcherEvent/HandleFileWatcherEvent.ts'
 import * as Test from '../Test/Test.ts'
 import * as TestFrameWorkComponentDialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
@@ -5,5 +6,6 @@ import * as TestFrameWorkComponentDialog from '../TestFrameWorkComponentDialog/T
 export const commandMap = {
   'FileWatcher.handleEvent': handleFileWatcherEvent,
   'Test.execute': Test.execute,
+  'Test.executeCallback': executeCallback,
   'Test.executeMock': TestFrameWorkComponentDialog.executeMock,
 }
