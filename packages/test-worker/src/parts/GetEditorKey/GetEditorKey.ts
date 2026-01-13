@@ -1,4 +1,4 @@
-import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
+import { EditorWorker } from '@lvce-editor/rpc-registry'
 
 export const getEditorKey = async (): Promise<number> => {
   const keys = await EditorWorker.invoke('Editor.getKeys')

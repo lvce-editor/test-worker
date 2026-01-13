@@ -1,7 +1,13 @@
-import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
-import { launchEditorWorkerRpc } from '../LaunchEditorWorkerRpc/LaunchEditorWorkerRpc.ts'
+import { LazyTransferMessagePortRpcParent } from '@lvce-editor/rpc'
+import { EditorWorker, RendererWorker, RpcId } from '@lvce-editor/rpc-registry'
 
+const send = async (port: MessagePort): Promise<void> => {
+  await RendererWorker.sendMessagePortToEditorWorker(port, RpcId.TestWorker)
+}
 export const initializeEditorWorker = async (): Promise<void> => {
-  // TODO use lazyrpc
-  EditorWorker.setFactory(launchEditorWorkerRpc)
+  const rpc = await LazyTransferMessagePortRpcParent.create({
+    commandMap: {},
+    send,
+  })
+  EditorWorker.set(rpc)
 }
