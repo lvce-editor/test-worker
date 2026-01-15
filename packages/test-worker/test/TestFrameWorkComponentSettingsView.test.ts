@@ -91,6 +91,50 @@ test('selectExtensions', async () => {
   expect(mockRpc.invocations).toEqual([['Settings.handleClickTab', 'extensions']])
 })
 
+test.skip('clearHistory', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Settings.clearHistory'() {
+      return undefined
+    },
+  })
+
+  await SettingsView.clearHistory()
+  expect(mockRpc.invocations).toEqual([['Settings.clearHistory', InputSource.Script]])
+})
+
+test('selectWindow', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Settings.handleClickTab'() {
+      return undefined
+    },
+  })
+
+  await SettingsView.selectWindow()
+  expect(mockRpc.invocations).toEqual([['Settings.handleClickTab', 'window']])
+})
+
+test('handleClickFilterButton', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Settings.handleClickFilterButton'() {
+      return undefined
+    },
+  })
+
+  await SettingsView.handleClickFilterButton(100, 200)
+  expect(mockRpc.invocations).toEqual([['Settings.handleClickFilterButton', 100, 200]])
+})
+
+test('selectTab', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Settings.handleClickTab'() {
+      return undefined
+    },
+  })
+
+  await SettingsView.selectTab('custom-tab')
+  expect(mockRpc.invocations).toEqual([['Settings.handleClickTab', 'custom-tab']])
+})
+
 test('handleScroll', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Settings.handleScroll'() {
