@@ -23,7 +23,6 @@ export const readFile = async (uri: string): Promise<string> => {
 }
 
 export const addFileHandle = async (file: File): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('FileSystem.addFileHandle', file)
 }
 
@@ -46,7 +45,6 @@ export const setFiles = async (files: readonly FileItem[]): Promise<void> => {
 }
 
 export const readDir = async (uri: string): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('FileSystem.readDirWithFileTypes', uri)
 }
 
@@ -59,19 +57,17 @@ export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: FileSyste
     case FileSystemProtocol.Memfs:
       return 'memfs:///workspace'
     default:
-      // @ts-ignore
       return RendererWorker.invoke('PlatformPaths.getTmpDir')
   }
 }
 
 export const chmod = async (uri: string, permissions: any): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('FileSystem.chmod', uri, permissions)
 }
 
 export const createExecutable = async (content: string): Promise<string> => {
   const tmpDir = await getTmpDir({ scheme: 'file' })
-  // @ts-ignore
+
   const nodePath = await RendererWorker.invoke('PlatformPaths.getNodePath')
   const gitPath = `${tmpDir}/git`
   await writeFile(
@@ -84,10 +80,9 @@ export const createExecutable = async (content: string): Promise<string> => {
 }
 
 export const createExecutableFrom = async (uri: string): Promise<string> => {
-  // @ts-ignore
   const testPath = await RendererWorker.invoke('PlatformPaths.getTestPath')
   const absolutePath = testPath + PathSeparatorType.Slash + uri
-  // @ts-ignore
+
   const content = await RendererWorker.invoke('Ajax.getText', absolutePath)
   return createExecutable(content)
 }
@@ -98,7 +93,7 @@ export const createDroppedFileHandle = async (): Promise<DroppedFileHandle> => {
     create: true,
   })
   const file = await fileHandle.getFile()
-  // @ts-ignore
+
   const id = await RendererWorker.invoke('FileSystemHandle.addFileHandle', fileHandle)
   return {
     file,

@@ -5,6 +5,5 @@ export const show = async (): Promise<void> => {
 }
 
 export const close = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('EditorHover.close')
 }

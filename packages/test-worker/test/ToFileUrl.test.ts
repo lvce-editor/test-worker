@@ -18,6 +18,7 @@ test('toFileUrl - invalid remote url', () => {
 
 test('toFileUrl - invalid url', () => {
   const url = 'abc'
+
   // @ts-ignore
   const isBun = process.versions.bun
   const errorMessage = isBun ? `"abc" cannot be parsed as a URL.` : 'Invalid URL'
