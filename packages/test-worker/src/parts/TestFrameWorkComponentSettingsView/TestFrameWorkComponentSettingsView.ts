@@ -22,7 +22,7 @@ export const clear = async (searchValue: string): Promise<void> => {
 }
 
 export const clearHistory = async (): Promise<void> => {
-  return RendererWorker.invoke('Settings.clearHistory', searchValue, InputSource.Script)
+  return RendererWorker.invoke('Settings.clearHistory')
 }
 
 export const selectTab = async (tabId: string): Promise<void> => {
