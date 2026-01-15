@@ -4,6 +4,9 @@ import * as Output from '../src/parts/TestFrameWorkComponentOutput/TestFrameWork
 
 test('show', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
+    'Layout.showPanel'() {
+      return undefined
+    },
     'Panel.selectIndex'() {
       return undefined
     },
@@ -11,7 +14,10 @@ test('show', async () => {
 
   await Output.show()
 
-  expect(mockRpc.invocations).toEqual([['Panel.selectIndex', 1]])
+  expect(mockRpc.invocations).toEqual([
+    ['Layout.showPanel', 'Output'],
+    ['Panel.selectIndex', 1],
+  ])
 })
 
 test('handleFilterInput', async () => {
