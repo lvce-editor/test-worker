@@ -3,11 +3,7 @@ import * as InputSource from '../InputSource/InputSource.ts'
 import { open } from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 
 export const show = async (): Promise<void> => {
-<<<<<<< HEAD
   await open('Output')
-  // @ts-ignore
-=======
->>>>>>> origin/main
   await RendererWorker.invoke('Panel.selectIndex', 1)
 }
 
