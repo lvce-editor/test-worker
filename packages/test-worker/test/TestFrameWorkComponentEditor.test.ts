@@ -565,25 +565,15 @@ test('openRename', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.openRename']])
 })
 
-test.skip('shouldHaveText', async () => {
+test('growSelection', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Editor.getText'() {
-      return 'test text'
+    'Editor.selectionGrow'() {
+      return undefined
     },
   })
 
-  await Editor.shouldHaveText('test text')
-  expect(mockRpc.invocations).toEqual([['Editor.getText']])
-})
-
-test.skip('shouldHaveText - throws error when text does not match', async () => {
-  RendererWorker.registerMockRpc({
-    'Editor.getText'() {
-      return 'wrong text'
-    },
-  })
-
-  await expect(Editor.shouldHaveText('test text')).rejects.toThrow('Expected editor to have text test text but was wrong text')
+  await Editor.growSelection()
+  expect(mockRpc.invocations).toEqual([['Editor.selectionGrow']])
 })
 
 test('executeTabCompletion', async () => {
@@ -614,28 +604,102 @@ test('rename2', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.openRename'], ['EditorRename.handleInput', 'newName', 2], ['EditorRename.accept']])
 })
 
-test.skip('shouldHaveDiagnostics - basic functionality', async () => {
+test('getSelections', async () => {
   using mockRpc = EditorWorker.registerMockRpc({
-    'Editor.getDiagnostics'() {
-      return [
-        {
-          columnIndex: 0,
-          endColumnIndex: 5,
-          endRowIndex: 0,
-          message: 'Syntax error',
-          rowIndex: 0,
-          type: 'error',
-        },
-      ]
-    },
     'Editor.getKeys'() {
       return ['1']
     },
+    'Editor.getSelections'() {
+      return new Uint32Array([0, 5, 10, 15])
+    },
   })
 
-  // @ts-ignore
-  setFactory(async () => mockRpc)
+  const selections = await Editor.getSelections()
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+  expect(selections).toEqual(new Uint32Array([0, 5, 10, 15]))
+})
 
+test('shouldHaveText - success case', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getText'() {
+      return 'expected text'
+    },
+  })
+
+  await Editor.shouldHaveText('expected text')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+})
+
+test('shouldHaveText - throws error when text does not match', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getText'() {
+      return 'wrong text'
+    },
+  })
+
+  await expect(Editor.shouldHaveText('expected text')).rejects.toThrow('Expected editor to have text expected text but was wrong text')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+})
+
+test('shouldHaveSelections - success case', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getSelections'() {
+      return new Uint32Array([0, 5, 10, 15])
+    },
+  })
+
+  const expectedSelections = new Uint32Array([0, 5, 10, 15])
+  await Editor.shouldHaveSelections(expectedSelections)
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+})
+
+test('shouldHaveSelections - throws error when selections do not match', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getSelections'() {
+      return new Uint32Array([0, 5, 10, 15])
+    },
+  })
+
+  const expectedSelections = new Uint32Array([1, 6, 11, 16])
+  await expect(Editor.shouldHaveSelections(expectedSelections)).rejects.toThrow('Expected editor to have selections')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getSelections', 1]])
+})
+
+test('undo', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.undo'() {
+      return undefined
+    },
+  })
+
+  await Editor.undo()
+  expect(mockRpc.invocations).toEqual([['Editor.undo']])
+})
+
+test('redo', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.redo'() {
+      return undefined
+    },
+  })
+
+  await Editor.redo()
+  expect(mockRpc.invocations).toEqual([['Editor.redo']])
+})
+
+test('shouldHaveDiagnostics - success case', async () => {
   const expectedDiagnostics = [
     {
       columnIndex: 0,
@@ -647,8 +711,97 @@ test.skip('shouldHaveDiagnostics - basic functionality', async () => {
     },
   ]
 
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getDiagnostics'() {
+      return expectedDiagnostics
+    },
+    'Editor.getKeys'() {
+      return ['1']
+    },
+  })
+
   await Editor.shouldHaveDiagnostics(expectedDiagnostics)
   expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getDiagnostics', 1]])
+})
+
+test('shouldHaveDiagnostics - throws error when diagnostics do not match', async () => {
+  const actualDiagnostics = [
+    {
+      columnIndex: 0,
+      endColumnIndex: 5,
+      endRowIndex: 0,
+      message: 'Syntax error',
+      rowIndex: 0,
+      type: 'error' as const,
+    },
+  ]
+
+  const expectedDiagnostics = [
+    {
+      columnIndex: 1,
+      endColumnIndex: 6,
+      endRowIndex: 1,
+      message: 'Different error',
+      rowIndex: 1,
+      type: 'warning' as const,
+    },
+  ]
+
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getDiagnostics'() {
+      return actualDiagnostics
+    },
+    'Editor.getKeys'() {
+      return ['1']
+    },
+  })
+
+  await expect(Editor.shouldHaveDiagnostics(expectedDiagnostics)).rejects.toThrow('Expected editor to have diagnostics')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getDiagnostics', 1]])
+})
+
+test('enableCompletionsOnType', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.update'() {
+      return undefined
+    },
+  })
+
+  await Editor.enableCompletionsOnType()
+  expect(mockRpc.invocations).toEqual([['Preferences.update', { 'editor.completionsOnType': true }]])
+})
+
+test('disableCompletionsOnType', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.update'() {
+      return undefined
+    },
+  })
+
+  await Editor.disableCompletionsOnType()
+  expect(mockRpc.invocations).toEqual([['Preferences.update', { 'editor.completionsOnType': false }]])
+})
+
+test('enableDiagnostics', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.update'() {
+      return undefined
+    },
+  })
+
+  await Editor.enableDiagnostics()
+  expect(mockRpc.invocations).toEqual([['Preferences.update', { 'editor.diagnostics': true }]])
+})
+
+test('disableDiagnostics', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.update'() {
+      return undefined
+    },
+  })
+
+  await Editor.disableDiagnostics()
+  expect(mockRpc.invocations).toEqual([['Preferences.update', { 'editor.diagnostics': false }]])
 })
 
 // Note: getSelections, shouldHaveSelections, undo, and redo functions use EditorWorker
