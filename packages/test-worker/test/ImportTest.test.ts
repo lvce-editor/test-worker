@@ -1,6 +1,5 @@
 import { expect, test } from '@jest/globals'
-
-const ImportTest = await import('../src/parts/ImportTest/ImportTest.ts')
+import * as ImportTest from '../src/parts/ImportTest/ImportTest.js'
 
 const toBase64 = (text: string): string => {
   const base64 = btoa(text)

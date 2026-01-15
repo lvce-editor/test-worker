@@ -1,7 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { EditorWorker } from '@lvce-editor/rpc-registry'
-
-const GetEditorKey = await import('../src/parts/GetEditorKey/GetEditorKey.ts')
+import * as GetEditorKey from '../src/parts/GetEditorKey/GetEditorKey.js'
 
 test('getEditorKey function exists and is exported', () => {
   expect(GetEditorKey.getEditorKey).toBeDefined()

@@ -1,8 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { DirentType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-
-const GetFileMapNode = await import('../src/parts/GetFileMapNode/GetFileMapNode.ts')
+import * as GetFileMapNode from '../src/parts/GetFileMapNode/GetFileMapNode.js'
 
 test('getFileMapNode function exists and is exported', () => {
   expect(GetFileMapNode.getFileMapNode).toBeDefined()

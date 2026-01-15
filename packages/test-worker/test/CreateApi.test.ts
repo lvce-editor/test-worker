@@ -1,6 +1,5 @@
 import { expect, test } from '@jest/globals'
-
-const CreateApi = await import('../src/parts/CreateApi/CreateApi.ts')
+import * as CreateApi from '../src/parts/CreateApi/CreateApi.js'
 
 test('createApi function exists and is exported', () => {
   expect(CreateApi.createApi).toBeDefined()
