@@ -1,5 +1,5 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const getNodePath = (): Promise<string> => {
-  return Rpc.invoke(/* Platform.getNodePath */ 'Platform.getNodePath')
+  return RendererWorker.invoke(/* Platform.getNodePath */ 'Platform.getNodePath')
 }
