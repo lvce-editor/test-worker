@@ -11,6 +11,6 @@ export const watchForHotReload = async (platform: number, href: string): Promise
   }
   const fileUrl = getFileUri(href)
   const callbackCommand = 'FileWatcher.handleEvent'
-  // @ts-ignore
+
   await RendererWorker.invoke('FileWatcher.watchFile', RpcId.TestWorker, callbackCommand, fileUrl)
 }

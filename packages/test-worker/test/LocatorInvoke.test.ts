@@ -32,14 +32,9 @@ test('locatorInvoke: with RendererWorker', async () => {
 
 test('locatorInvoke: asserts', async () => {
   // object assertion
-  await expect(
-    // @ts-ignore
-    LocatorInvoke.locatorInvoke(undefined, 'click'),
-  ).rejects.toThrow(/expected value to be of type object/i)
+  await expect(LocatorInvoke.locatorInvoke(undefined, 'click')).rejects.toThrow(/expected value to be of type object/i)
 
   // string assertion
-  await expect(
-    // @ts-ignore
-    LocatorInvoke.locatorInvoke({}, 123),
-  ).rejects.toThrow(/expected value to be of type string/i)
+  // @ts-ignore
+  await expect(LocatorInvoke.locatorInvoke({}, 123)).rejects.toThrow(/expected value to be of type string/i)
 })

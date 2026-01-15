@@ -39,7 +39,6 @@ export const execute = async (href: string, platform: number, assetDir: string):
   } else {
     const tests = TestState.getTests()
     for (const test of tests) {
-      // @ts-ignore
       await ExecuteTest.executeTest(test.name, test.fn)
     }
   }

@@ -15,6 +15,6 @@ test('getLocatorInvoke: webView locator', (): void => {
 test('getLocatorInvoke: default to RendererWorker', (): void => {
   const locator: any = {}
   const result: any = GetLocatorInvoke.getLocatorInvoke(locator)
-  // @ts-ignore
+
   expect(result).toBe(RendererWorker.invoke)
 })

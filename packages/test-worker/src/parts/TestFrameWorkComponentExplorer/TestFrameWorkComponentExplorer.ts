@@ -1,7 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const openContextMenu = async (index: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.handleContextMenuKeyboard', index)
 }
 
@@ -14,7 +13,6 @@ export const handleBlur = async (): Promise<void> => {
 }
 
 export const handleEscape = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.handleEscape')
 }
 
@@ -27,7 +25,6 @@ export const focus = async (): Promise<void> => {
 }
 
 export const focusNext = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.focusNext')
 }
 
@@ -36,7 +33,6 @@ export const selectUp = async (): Promise<void> => {
 }
 
 export const handleDragOverIndex = async (index: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.handleDragOverIndex', index)
 }
 
@@ -45,7 +41,6 @@ export const selectDown = async (): Promise<void> => {
 }
 
 export const collapseAll = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.collapseAll')
 }
 
@@ -90,12 +85,10 @@ export const newFolder = async (): Promise<void> => {
 }
 
 export const copyPath = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.copyPath')
 }
 
 export const copyRelativePath = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.copyRelativePath')
 }
 
@@ -111,12 +104,10 @@ export const handleClickAt = async (
   x: number,
   y: number,
 ): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.handleClickAt', preventDefault, button, ctrlKey, shiftKey, x, y)
 }
 
 export const handleDrop = async (x: number, y: number, fileIds: readonly number[], fileList: FileList | readonly File[]): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.handleDrop', x, y, fileIds, fileIds)
 }
 
@@ -153,17 +144,14 @@ export const handleDragOver = async (x: number, y: number): Promise<void> => {
 }
 
 export const handleCut = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.handleCut')
 }
 
 export const handleCopy = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.handleCopy')
 }
 
 export const handlePaste = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.handlePaste')
 }
 
@@ -172,6 +160,5 @@ export const selectIndices = async (indices: readonly number[]): Promise<void> =
 }
 
 export const toggleIndividualSelection = async (index: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Explorer.toggleIndividualSelection', index)
 }

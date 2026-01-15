@@ -15,7 +15,6 @@ export const openCompletion = async (): Promise<void> => {
 }
 
 export const closeCompletion = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('EditorCompletion.close')
 }
 
@@ -80,12 +79,10 @@ export const type = async (text: string): Promise<void> => {
 }
 
 export const findAllReferences = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('SideBar.show', 'References', /* focus */ true)
 }
 
 export const findAllImplementations = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('SideBar.show', 'Implementations', /* focus */ true)
 }
 
@@ -122,12 +119,10 @@ export const openCompletionDetails = async (): Promise<void> => {
 }
 
 export const closeCompletionDetails = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('EditorCompletion.closeDetails')
 }
 
 export const toggleCompletionDetails = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('EditorCompletion.toggleDetails')
 }
 
@@ -160,7 +155,6 @@ export const openColorPicker = async (): Promise<void> => {
 }
 
 export const openFind = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Editor.openFind2')
 }
 
@@ -225,20 +219,19 @@ export const openRename = async (): Promise<void> => {
 
 export const rename2 = async (newName: string): Promise<void> => {
   await openRename()
-  // @ts-ignore
+
   await RendererWorker.invoke('EditorRename.handleInput', newName, InputSource.Script)
-  // @ts-ignore
+
   await RendererWorker.invoke('EditorRename.accept')
 }
 
 export const growSelection = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Editor.selectionGrow')
 }
 
 export const getSelections = async (): Promise<Uint32Array> => {
   const key = await getEditorKey()
-  // @ts-ignore
+
   return EditorWorker.invoke('Editor.getSelections', key)
 }
 
@@ -259,12 +252,10 @@ export const shouldHaveSelections = async (expectedSelections: Uint32Array): Pro
 }
 
 export const undo = async (): Promise<void> => {
-  // @ts-ignore
   await EditorWorker.invoke('Editor.undo')
 }
 
 export const redo = async (): Promise<void> => {
-  // @ts-ignore
   await EditorWorker.invoke('Editor.redo')
 }
 

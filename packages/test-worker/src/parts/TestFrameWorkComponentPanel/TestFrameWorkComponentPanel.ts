@@ -6,6 +6,6 @@ export const open = async (id: string): Promise<void> => {
 
 export const openProblems = async (): Promise<void> => {
   await open('Problems')
-  // @ts-ignore
+
   await RendererWorker.invoke('Panel.selectIndex', 0)
 }

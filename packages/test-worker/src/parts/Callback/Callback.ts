@@ -13,7 +13,7 @@ export const registerCallbackCommand = async (commandId: string): Promise<any> =
   const id = createId()
   const { promise, resolve } = Promise.withResolvers()
   callbacks[id] = resolve
-  // @ts-ignore
+
   await Rpc.invoke(`Test.registerTestCommand`, commandId)
   return {
     promise,
