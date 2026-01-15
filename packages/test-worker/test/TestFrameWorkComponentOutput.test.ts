@@ -55,3 +55,15 @@ test('clear', async () => {
 
   expect(mockRpc.invocations).toEqual([['Output.clear']])
 })
+
+test('saveAs', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Output.saveAs'() {
+      return undefined
+    },
+  })
+
+  await Output.saveAs()
+
+  expect(mockRpc.invocations).toEqual([['Output.saveAs']])
+})
