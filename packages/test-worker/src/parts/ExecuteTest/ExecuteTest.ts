@@ -1,4 +1,4 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { executeTest2 } from '../ExecuteTest2/ExecuteTest2.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'
@@ -12,5 +12,5 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
     console.info(`PASS ${name} in ${formattedDuration}`)
   }
 
-  await Rpc.invoke('TestFrameWork.showOverlay', type, background, text)
+  await RendererWorker.invoke('TestFrameWork.showOverlay', type, background, text)
 }
