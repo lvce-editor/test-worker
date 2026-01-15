@@ -91,7 +91,7 @@ test('selectExtensions', async () => {
   expect(mockRpc.invocations).toEqual([['Settings.handleClickTab', 'extensions']])
 })
 
-test.skip('clearHistory', async () => {
+test('clearHistory', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Settings.clearHistory'() {
       return undefined
@@ -99,7 +99,7 @@ test.skip('clearHistory', async () => {
   })
 
   await SettingsView.clearHistory()
-  expect(mockRpc.invocations).toEqual([['Settings.clearHistory', InputSource.Script]])
+  expect(mockRpc.invocations).toEqual([['Settings.clearHistory']])
 })
 
 test('selectWindow', async () => {
