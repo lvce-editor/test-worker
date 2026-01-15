@@ -1,22 +1,14 @@
 import type { ILocator } from '../ILocator/ILocator.ts'
-import { getLocatorInvoke } from '../GetLocatorInvoke/GetLocatorInvoke.ts'
+import type { ILocatorCreateOptions } from '../ILocatorCreateOptions/ILocatorCreateOptions.ts'
+import { performAction } from '../PerformAction/PerformAction.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
-export const create = (selector: string, options: any = {}): Locator => {
-  return new Locator(selector, options)
-}
-
-const performAction = async (locator: any, action: string, options: any): Promise<any> => {
-  const invoke = getLocatorInvoke(locator)
-  return invoke('TestFrameWork.performAction', locator, action, options)
-}
-
-class Locator implements ILocator {
+export class Locator implements ILocator {
   readonly _selector: any
   readonly _nth: number
   readonly _hasText: string
 
-  constructor(selector: any, { hasText = '', nth = -1 }: { readonly nth?: number; readonly hasText?: string } = {}) {
+  constructor(selector: any, { hasText = '', nth = -1 }: ILocatorCreateOptions = {}) {
     this._selector = selector
     this._nth = nth
     this._hasText = hasText
@@ -41,20 +33,20 @@ class Locator implements ILocator {
   }
 
   first(): any {
-    return create(this._selector, {
+    return new Locator(this._selector, {
       nth: 0,
     })
   }
 
   locator(subSelector: string): any {
     if (this._nth !== -1) {
-      return create(`${this._selector}:nth-of-type(${this._nth + 1}) ${subSelector}`)
+      return new Locator(`${this._selector}:nth-of-type(${this._nth + 1}) ${subSelector}`)
     }
-    return create(`${this._selector} ${subSelector}`)
+    return new Locator(`${this._selector} ${subSelector}`)
   }
 
   nth(nth: number): any {
-    return create(this._selector, { nth })
+    return new Locator(this._selector, { nth })
   }
 
   async type(text: string): Promise<void> {
