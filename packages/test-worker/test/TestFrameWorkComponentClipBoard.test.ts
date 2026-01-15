@@ -118,3 +118,44 @@ test('shouldHaveText - regex error', async () => {
   await expect(ClipBoard.shouldHaveText(/Hello.*\d+/)).rejects.toThrow('expected clipboard to have text "/Hello.*\\d+/" but was "Hello World"')
   expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })
+
+test('writeText', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.writeText'(text: string) {
+      return undefined
+    },
+  })
+  const text = 'test content'
+  await ClipBoard.writeText(text)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.writeText', text]])
+})
+
+test('shouldHaveText - empty string', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryText'() {
+      return ''
+    },
+  })
+  await ClipBoard.shouldHaveText('')
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
+})
+
+test('shouldHaveText - special characters', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryText'() {
+      return 'Hello\nWorld\t!'
+    },
+  })
+  await ClipBoard.shouldHaveText('Hello\nWorld\t!')
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
+})
+
+test('shouldHaveText - regex with special characters', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryText'() {
+      return 'test@example.com'
+    },
+  })
+  await ClipBoard.shouldHaveText(/\w+@\w+\.\w+/)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
+})
