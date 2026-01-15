@@ -49,3 +49,15 @@ test('handleWheel', async () => {
 
   expect(mockRpc.invocations).toEqual([['EditorCompletion.handleWheel', 0, 100]])
 })
+
+test('handlePointerdown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'EditorCompletion.handlePointerdown'() {
+      return undefined
+    },
+  })
+
+  await EditorCompletion.handlePointerdown(150, 200)
+
+  expect(mockRpc.invocations).toEqual([['EditorCompletion.handlePointerdown', 150, 200]])
+})
