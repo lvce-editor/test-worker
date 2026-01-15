@@ -22,3 +22,7 @@ export const clear = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Output.clear')
 }
+
+export const saveAs = async (): Promise<void> => {
+  await RendererWorker.invoke('Output.saveAs')
+}
