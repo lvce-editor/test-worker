@@ -32,22 +32,11 @@ export const execute = async (href: string, platform: number, assetDir: string):
   }
   if (module.test) {
     if (module.skip) {
-      await TestFrameWork.test.skip(module.name)
+      await TestFrameWork.skipTest(module.name)
     } else {
       await ExecuteTest.executeTest(module.name, module.test, globals)
     }
-  } else {
-    const tests = TestState.getTests()
-    for (const test of tests) {
-      await ExecuteTest.executeTest(test.name, test.fn)
-    }
   }
-  // 3. if import fails, display error message
-
-  // 4. run the test
-  // 5. if test fails, display error message
-  // 6. if test succeeds, display success message
-
   // TODO maybe setup file watcher earlier, to not miss events?
 
   TestInfoCache.push({
