@@ -633,6 +633,7 @@ test.skip('shouldHaveDiagnostics - basic functionality', async () => {
     },
   })
 
+  // @ts-ignore
   setFactory(async () => mockRpc)
 
   const expectedDiagnostics = [

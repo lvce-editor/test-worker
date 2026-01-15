@@ -35,5 +35,6 @@ test('locatorInvoke: asserts', async () => {
   await expect(LocatorInvoke.locatorInvoke(undefined, 'click')).rejects.toThrow(/expected value to be of type object/i)
 
   // string assertion
+  // @ts-ignore
   await expect(LocatorInvoke.locatorInvoke({}, 123)).rejects.toThrow(/expected value to be of type string/i)
 })

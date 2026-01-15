@@ -9,6 +9,7 @@ export const fromId = async (webViewId: string): Promise<any> => {
     locator(selector: string, options: any): any {
       const baseLocator = createLocator(selector, options)
 
+      // @ts-ignore
       baseLocator.webViewId = webViewId
       return baseLocator
     },

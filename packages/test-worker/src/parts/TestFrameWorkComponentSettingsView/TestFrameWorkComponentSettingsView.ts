@@ -22,7 +22,8 @@ export const clear = async (searchValue: string): Promise<void> => {
 }
 
 export const clearHistory = async (): Promise<void> => {
-  return RendererWorker.invoke('Settings.clearHistory')
+  // @ts-ignore
+  return RendererWorker.invoke('Settings.clearHistory', searchValue, InputSource.Script)
 }
 
 export const selectTab = async (tabId: string): Promise<void> => {
