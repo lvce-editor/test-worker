@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ExtensionDetail from '../src/parts/TestFrameWorkComponentExtensionDetail/TestFrameWorkComponentExtensionDetail.ts'
 
 test('handleClickCategory', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionDetail.handleClickCategory'() {
       return undefined
     },
@@ -13,7 +13,7 @@ test('handleClickCategory', async () => {
 })
 
 test('handleClickEnable/Disable/SetColorTheme', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionDetail.handleClickDisable'() {
       return undefined
     },
@@ -35,7 +35,7 @@ test('handleClickEnable/Disable/SetColorTheme', async () => {
 })
 
 test('selectFeature and selectTab', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionDetail.selectFeature'() {
       return undefined
     },
@@ -52,7 +52,7 @@ test('selectFeature and selectTab', async () => {
 })
 
 test('selectDetails/Features/Changelog', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionDetail.selectTab'() {
       return undefined
     },
@@ -68,7 +68,7 @@ test('selectDetails/Features/Changelog', async () => {
 })
 
 test('open opens uri', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {
       return undefined
     },
@@ -78,7 +78,7 @@ test('open opens uri', async () => {
 })
 
 test('openFeature and openThemes/Commands/WebViews/RuntimeStatus/JsonValidation/Settings', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionDetail.handleFeaturesClick'() {
       return undefined
     },
@@ -102,7 +102,7 @@ test('openFeature and openThemes/Commands/WebViews/RuntimeStatus/JsonValidation/
 })
 
 test('handleScroll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionDetail.handleScroll'() {
       return undefined
     },

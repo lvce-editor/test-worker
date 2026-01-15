@@ -4,7 +4,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystem from '../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 
 test('writeFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return undefined
     },
@@ -16,7 +16,7 @@ test('writeFile', async () => {
 })
 
 test('writeJson', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       return undefined
     },
@@ -29,7 +29,7 @@ test('writeJson', async () => {
 })
 
 test('readFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.readFile'() {
       return 'content'
     },
@@ -41,7 +41,7 @@ test('readFile', async () => {
 })
 
 test('mkdir', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
       return undefined
     },
@@ -52,7 +52,7 @@ test('mkdir', async () => {
 })
 
 test('remove', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.remove'() {
       return undefined
     },
@@ -63,7 +63,7 @@ test('remove', async () => {
 })
 
 test('getTmpDir: memfs default', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   const tmpDir: string = await FileSystem.getTmpDir()
   expect(tmpDir).toBe('memfs:///workspace')
@@ -71,7 +71,7 @@ test('getTmpDir: memfs default', async () => {
 })
 
 test('getTmpDir: file scheme', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'PlatformPaths.getTmpDir'() {
       return '/tmp'
     },
@@ -83,7 +83,7 @@ test('getTmpDir: file scheme', async () => {
 })
 
 test('chmod', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.chmod'() {
       return undefined
     },
@@ -94,7 +94,7 @@ test('chmod', async () => {
 })
 
 test('createExecutable', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.chmod'() {
       return undefined
     },
@@ -121,7 +121,7 @@ test('createExecutable', async () => {
 })
 
 test('createExecutableFrom', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Ajax.getText'() {
       return "console.log('ok')"
     },
@@ -180,7 +180,7 @@ test('createDroppedFileHandle', async () => {
   })
 
   // Mock the RPC call using registerMockRpc
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FileSystemHandle.addFileHandle'() {
       return 123
     },

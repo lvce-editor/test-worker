@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as KeyBindingsEditor from '../src/parts/TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
 
 test('open', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('open', async () => {
 })
 
 test('handleInput', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.handleInput'() {
       return undefined
     },
@@ -25,7 +25,7 @@ test('handleInput', async () => {
 })
 
 test('handleClick', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.handleClick'() {
       return undefined
     },
@@ -36,7 +36,7 @@ test('handleClick', async () => {
 })
 
 test('handleWheel', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.handleWheel'() {
       return undefined
     },
@@ -47,7 +47,7 @@ test('handleWheel', async () => {
 })
 
 test('handleDoubleClick', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.handleDoubleClick'() {
       return undefined
     },
@@ -58,7 +58,7 @@ test('handleDoubleClick', async () => {
 })
 
 test('focusNext', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.focusNext'() {
       return undefined
     },
@@ -69,7 +69,7 @@ test('focusNext', async () => {
 })
 
 test('focusPrevious', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.focusPrevious'() {
       return undefined
     },
@@ -80,7 +80,7 @@ test('focusPrevious', async () => {
 })
 
 test('focusFirst', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.focusFirst'() {
       return undefined
     },
@@ -91,7 +91,7 @@ test('focusFirst', async () => {
 })
 
 test('focusIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.focusIndex'() {
       return undefined
     },
@@ -102,7 +102,7 @@ test('focusIndex', async () => {
 })
 
 test('focusLast', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.focusLast'() {
       return undefined
     },
@@ -113,7 +113,7 @@ test('focusLast', async () => {
 })
 
 test('toggleRecordingKeys', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.toggleRecordingKeys'() {
       return undefined
     },
@@ -124,7 +124,7 @@ test('toggleRecordingKeys', async () => {
 })
 
 test('startRecordingKeys', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.startRecordingKeys'() {
       return undefined
     },
@@ -135,7 +135,7 @@ test('startRecordingKeys', async () => {
 })
 
 test('clearInput', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.clearInput'() {
       return undefined
     },
@@ -146,7 +146,7 @@ test('clearInput', async () => {
 })
 
 test('sortByPrecedence', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.sortByPrecedence'() {
       return undefined
     },
@@ -157,7 +157,7 @@ test('sortByPrecedence', async () => {
 })
 
 test('stopRecordingKeys', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.stopRecordingKeys'() {
       return undefined
     },
@@ -168,7 +168,7 @@ test('stopRecordingKeys', async () => {
 })
 
 test('handleContextMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.handleContextMenu'() {
       return undefined
     },
@@ -179,7 +179,7 @@ test('handleContextMenu', async () => {
 })
 
 test('copyCommandId', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.copyCommandId'() {
       return undefined
     },
@@ -190,7 +190,7 @@ test('copyCommandId', async () => {
 })
 
 test('copyCommandTitle', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.copyCommandTitle'() {
       return undefined
     },
@@ -201,7 +201,7 @@ test('copyCommandTitle', async () => {
 })
 
 test('addKeyBinding', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.addKeyBinding'() {
       return undefined
     },
@@ -212,7 +212,7 @@ test('addKeyBinding', async () => {
 })
 
 test('removeKeyBinding', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.removeKeyBinding'() {
       return undefined
     },
@@ -223,7 +223,7 @@ test('removeKeyBinding', async () => {
 })
 
 test('changeWhenExpression', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.changeWhenExpression'() {
       return undefined
     },
@@ -234,7 +234,7 @@ test('changeWhenExpression', async () => {
 })
 
 test('showSameKeyBindings', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.showSameKeyBindings'() {
       return undefined
     },
@@ -245,7 +245,7 @@ test('showSameKeyBindings', async () => {
 })
 
 test('resetKeyBinding', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'KeyBindings.resetKeyBinding'() {
       return undefined
     },

@@ -12,7 +12,7 @@ test('transferWebViewPort transfers port successfully', async () => {
 
   const mockPort = new MessageChannel().port1
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(id: string): Promise<any> {
       expect(id).toBe(webViewId)
       return mockInfo
@@ -49,7 +49,7 @@ test('transferWebViewPort handles different webViewIds', async () => {
 
     const mockPort = new MessageChannel().port1
 
-    const mockRpc = RendererWorker.registerMockRpc({
+    using mockRpc = RendererWorker.registerMockRpc({
       async 'WebView.getWebViewInfo2'(id: string): Promise<any> {
         expect(id).toBe(testCase.webViewId)
         return mockInfo

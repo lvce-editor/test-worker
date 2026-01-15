@@ -4,7 +4,7 @@ import * as Mock from '../src/parts/Mock/Mock.ts'
 import * as Dialog from '../src/parts/TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 
 test('showSaveFilePicker', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FilePicker.showSaveFilePicker'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('showSaveFilePicker', async () => {
 })
 
 test('mockSaveFilePicker registers and forwards id', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FilePicker.mockSaveFilePicker'() {
       return undefined
     },
@@ -30,7 +30,7 @@ test('executeMock returns value', () => {
 })
 
 test('mockConfirm registers and forwards id', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ConfirmPrompt.mock'() {
       return undefined
     },

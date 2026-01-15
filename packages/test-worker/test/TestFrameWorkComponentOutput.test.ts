@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Output from '../src/parts/TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 
 test('show', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Layout.showPanel'() {
       return undefined
     },
@@ -21,7 +21,7 @@ test('show', async () => {
 })
 
 test('handleFilterInput', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Output.handleFilterInput'() {
       return undefined
     },
@@ -33,7 +33,7 @@ test('handleFilterInput', async () => {
 })
 
 test('selectChannel', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Output.selectChannel'() {
       return undefined
     },
@@ -45,7 +45,7 @@ test('selectChannel', async () => {
 })
 
 test('clear', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Output.clear'() {
       return undefined
     },

@@ -30,7 +30,7 @@ test('createPortRpc: creates RPC successfully with ready message', async (): Pro
   const store = new DisposableStore()
 
   // Mock RendererWorker for GetWebViewInfo and SetWebViewPort
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
@@ -63,7 +63,7 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
 
   const store = new DisposableStore()
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
@@ -86,7 +86,7 @@ test('createPortRpc: throws error when first message is not ready', async (): Pr
 test.skip('createPortRpc: propagates error from GetWebViewInfo', async (): Promise<void> => {
   const webViewId = 'non-existent-webview'
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return Promise.reject(new Error('WebView not found'))
     },
@@ -106,7 +106,7 @@ test('createPortRpc: propagates error from SetWebViewPort', async (): Promise<vo
 
   const store = new DisposableStore()
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
@@ -135,7 +135,7 @@ test('createPortRpc: uses correct port type', async (): Promise<any> => {
 
   const store = new DisposableStore()
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
@@ -174,7 +174,7 @@ test('createPortRpc: handles different webViewId values', async (): Promise<any>
 
     const store = new DisposableStore()
 
-    const mockRpc = RendererWorker.registerMockRpc({
+    using mockRpc = RendererWorker.registerMockRpc({
       async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
         return mockWebViewInfo
       },

@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as EditorSourceAction from '../src/parts/TestFrameWorkComponentEditorSourceAction/TestFrameWorkComponentEditorSourceAction.ts'
 
 test('selectIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorSourceAction.selectIndex'() {
       return undefined
     },
@@ -13,7 +13,7 @@ test('selectIndex', async () => {
 })
 
 test('selectCurrentIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorSourceAction.selectCurrentIndex'() {
       return undefined
     },

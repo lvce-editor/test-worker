@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Developer from '../src/parts/TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 
 test('openIframeInspector', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Developer.openIframeInspector'() {
       return undefined
     },
@@ -13,7 +13,7 @@ test('openIframeInspector', async () => {
 })
 
 test('openCacheFolder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Developer.openCacheFolder'() {
       return undefined
     },
@@ -23,7 +23,7 @@ test('openCacheFolder', async () => {
 })
 
 test('openConfigFolder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Developer.openConfigFolder'() {
       return undefined
     },
@@ -33,7 +33,7 @@ test('openConfigFolder', async () => {
 })
 
 test('openLogsFolder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Developer.openLogsFolder'() {
       return undefined
     },
@@ -43,7 +43,7 @@ test('openLogsFolder', async () => {
 })
 
 test('openProcessExplorer', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Developer.openProcessExplorer'() {
       return undefined
     },
@@ -53,7 +53,7 @@ test('openProcessExplorer', async () => {
 })
 
 test('reloadColorTheme and reloadIconTheme and toggleDeveloperTools', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Developer.reloadColorTheme'() {
       return undefined
     },

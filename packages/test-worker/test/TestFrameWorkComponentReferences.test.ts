@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as References from '../src/parts/TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 
 test('clear', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'References.clear'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('clear', async () => {
 })
 
 test('collapseAll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'References.collapseAll'() {
       return undefined
     },
@@ -27,7 +27,7 @@ test('collapseAll', async () => {
 })
 
 test('refresh', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'References.refresh'() {
       return undefined
     },

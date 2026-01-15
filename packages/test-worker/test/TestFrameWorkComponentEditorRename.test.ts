@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as EditorRename from '../src/parts/TestFrameWorkComponentEditorRename/TestFrameWorkComponentEditorRename.ts'
 
 test('handleInput', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorRename.handleInput'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('handleInput', async () => {
 })
 
 test('accept', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorRename.accept'() {
       return undefined
     },
@@ -25,7 +25,7 @@ test('accept', async () => {
 })
 
 test('cancel', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorRename.cancel'() {
       return undefined
     },

@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Settings from '../src/parts/TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 
 test('update', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.update'() {
       return undefined
     },

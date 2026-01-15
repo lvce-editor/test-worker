@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Explorer from '../src/parts/TestFrameWorkComponentExplorer/TestFrameWorkComponentExplorer.ts'
 
 test('openContextMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleContextMenuKeyboard'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('openContextMenu', async () => {
 })
 
 test('handleDragLeave', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleDragLeave'() {
       return undefined
     },
@@ -27,7 +27,7 @@ test('handleDragLeave', async () => {
 })
 
 test('handleBlur', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleBlur'() {
       return undefined
     },
@@ -39,7 +39,7 @@ test('handleBlur', async () => {
 })
 
 test('handleEscape', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleEscape'() {
       return undefined
     },
@@ -51,7 +51,7 @@ test('handleEscape', async () => {
 })
 
 test('handleInputBlur', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleInputBlur'() {
       return undefined
     },
@@ -63,7 +63,7 @@ test('handleInputBlur', async () => {
 })
 
 test('focus', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.focusIndex'() {
       return undefined
     },
@@ -75,7 +75,7 @@ test('focus', async () => {
 })
 
 test('focusNext', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.focusNext'() {
       return undefined
     },
@@ -87,7 +87,7 @@ test('focusNext', async () => {
 })
 
 test('selectUp', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.selectUp'() {
       return undefined
     },
@@ -99,7 +99,7 @@ test('selectUp', async () => {
 })
 
 test('handleDragOverIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleDragOverIndex'() {
       return undefined
     },
@@ -111,7 +111,7 @@ test('handleDragOverIndex', async () => {
 })
 
 test('selectDown', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.selectDown'() {
       return undefined
     },
@@ -123,7 +123,7 @@ test('selectDown', async () => {
 })
 
 test('refresh', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.refresh'() {
       return undefined
     },
@@ -135,7 +135,7 @@ test('refresh', async () => {
 })
 
 test('focusIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.focusIndex'() {
       return undefined
     },
@@ -147,7 +147,7 @@ test('focusIndex', async () => {
 })
 
 test('clickCurrent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleClickCurrent'() {
       return undefined
     },
@@ -159,7 +159,7 @@ test('clickCurrent', async () => {
 })
 
 test('handleArrowLeft', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleArrowLeft'() {
       return undefined
     },
@@ -171,7 +171,7 @@ test('handleArrowLeft', async () => {
 })
 
 test('focusLast', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.focusLast'() {
       return undefined
     },
@@ -183,7 +183,7 @@ test('focusLast', async () => {
 })
 
 test('focusFirst', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.focusFirst'() {
       return undefined
     },
@@ -195,7 +195,7 @@ test('focusFirst', async () => {
 })
 
 test('removeDirent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.removeDirent'() {
       return undefined
     },
@@ -207,7 +207,7 @@ test('removeDirent', async () => {
 })
 
 test('expandRecursively', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.expandRecursively'() {
       return undefined
     },
@@ -219,7 +219,7 @@ test('expandRecursively', async () => {
 })
 
 test('newFile', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.newFile'() {
       return undefined
     },
@@ -231,7 +231,7 @@ test('newFile', async () => {
 })
 
 test('newFolder', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.newFolder'() {
       return undefined
     },
@@ -243,7 +243,7 @@ test('newFolder', async () => {
 })
 
 test('copyPath', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.copyPath'() {
       return undefined
     },
@@ -255,7 +255,7 @@ test('copyPath', async () => {
 })
 
 test('copyRelativePath', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.copyRelativePath'() {
       return undefined
     },
@@ -267,7 +267,7 @@ test('copyRelativePath', async () => {
 })
 
 test('handleClick', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleClick'() {
       return undefined
     },
@@ -279,7 +279,7 @@ test('handleClick', async () => {
 })
 
 test('handleClickAt', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleClickAt'() {
       return undefined
     },
@@ -291,7 +291,7 @@ test('handleClickAt', async () => {
 })
 
 test('handleDrop', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleDrop'() {
       return undefined
     },
@@ -306,7 +306,7 @@ test('handleDrop', async () => {
 })
 
 test('rename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.renameDirent'() {
       return undefined
     },
@@ -318,7 +318,7 @@ test('rename', async () => {
 })
 
 test('selectAll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.selectAll'() {
       return undefined
     },
@@ -330,7 +330,7 @@ test('selectAll', async () => {
 })
 
 test('renameDirent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.renameDirent'() {
       return undefined
     },
@@ -342,7 +342,7 @@ test('renameDirent', async () => {
 })
 
 test('cancelEdit', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.cancelEdit'() {
       return undefined
     },
@@ -354,7 +354,7 @@ test('cancelEdit', async () => {
 })
 
 test('acceptEdit', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.acceptEdit'() {
       return undefined
     },
@@ -366,7 +366,7 @@ test('acceptEdit', async () => {
 })
 
 test('updateEditingValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.updateEditingValue'() {
       return undefined
     },
@@ -378,7 +378,7 @@ test('updateEditingValue', async () => {
 })
 
 test('expandAll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.expandAll'() {
       return undefined
     },
@@ -390,7 +390,7 @@ test('expandAll', async () => {
 })
 
 test('collapseAll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.collapseAll'() {
       return undefined
     },
@@ -402,7 +402,7 @@ test('collapseAll', async () => {
 })
 
 test('handleDragOver', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleDragOver'() {
       return undefined
     },
@@ -414,7 +414,7 @@ test('handleDragOver', async () => {
 })
 
 test('handleCut', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleCut'() {
       return undefined
     },
@@ -426,7 +426,7 @@ test('handleCut', async () => {
 })
 
 test('handleCopy', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleCopy'() {
       return undefined
     },
@@ -438,7 +438,7 @@ test('handleCopy', async () => {
 })
 
 test('handlePaste', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handlePaste'() {
       return undefined
     },
@@ -450,7 +450,7 @@ test('handlePaste', async () => {
 })
 
 test('selectIndices', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.selectIndices'() {
       return undefined
     },
@@ -463,7 +463,7 @@ test('selectIndices', async () => {
 })
 
 test('toggleIndividualSelection', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.toggleIndividualSelection'() {
       return undefined
     },

@@ -21,32 +21,32 @@ const setup = (): any => {
 }
 
 test('readNativeFiles', async () => {
-  const mockRpc = setup()
+  using mockRpc = setup()
   await ClipBoard.readNativeFiles()
   expect(mockRpc.invocations).toEqual([['ClipBoard.readNativeFiles']])
 })
 
 test('writeNativeFiles', async () => {
-  const mockRpc = setup()
+  using mockRpc = setup()
   const uris = ['file:///a', 'file:///b']
   await ClipBoard.writeNativeFiles(uris)
   expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', uris]])
 })
 
 test('enableMemoryClipBoard', async () => {
-  const mockRpc = setup()
+  using mockRpc = setup()
   await ClipBoard.enableMemoryClipBoard()
   expect(mockRpc.invocations).toEqual([['ClipBoard.enableMemoryClipBoard']])
 })
 
 test('disableMemoryClipBoard', async () => {
-  const mockRpc = setup()
+  using mockRpc = setup()
   await ClipBoard.disableMemoryClipBoard()
   expect(mockRpc.invocations).toEqual([['ClipBoard.disableMemoryClipBoard']])
 })
 
 test('shouldHaveText - correct', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readMemoryText'() {
       return 'hello'
     },
@@ -56,7 +56,7 @@ test('shouldHaveText - correct', async () => {
 })
 
 test('shouldHaveText - wrong', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readMemoryText'() {
       return 'world'
     },
@@ -66,7 +66,7 @@ test('shouldHaveText - wrong', async () => {
 })
 
 test('shouldHaveText - regex success', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readMemoryText'() {
       return 'Hello World 123'
     },
@@ -76,7 +76,7 @@ test('shouldHaveText - regex success', async () => {
 })
 
 test('shouldHaveText - regex error', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readMemoryText'() {
       return 'Hello World'
     },

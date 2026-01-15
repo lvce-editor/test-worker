@@ -4,7 +4,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
 test('setCursor', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorSet'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('setCursor', async () => {
 })
 
 test('openCompletion', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.openCompletion'() {
       return undefined
     },
@@ -26,7 +26,7 @@ test('openCompletion', async () => {
 })
 
 test('closeCompletion', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorCompletion.close'() {
       return undefined
     },
@@ -37,7 +37,7 @@ test('closeCompletion', async () => {
 })
 
 test('openEditorContextMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.handleContextMenu'() {
       return undefined
     },
@@ -48,7 +48,7 @@ test('openEditorContextMenu', async () => {
 })
 
 test('invokeTabCompletion', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.tabCompletion'() {
       return undefined
     },
@@ -59,7 +59,7 @@ test('invokeTabCompletion', async () => {
 })
 
 test('invokeBraceCompletion', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.braceCompletion'() {
       return undefined
     },
@@ -70,7 +70,7 @@ test('invokeBraceCompletion', async () => {
 })
 
 test('cursorCharacterRight', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorCharacterRight'() {
       return undefined
     },
@@ -81,7 +81,7 @@ test('cursorCharacterRight', async () => {
 })
 
 test('cursorCharacterLeft', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorCharacterLeft'() {
       return undefined
     },
@@ -92,7 +92,7 @@ test('cursorCharacterLeft', async () => {
 })
 
 test('copyLineDown', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.copyLineDown'() {
       return undefined
     },
@@ -103,7 +103,7 @@ test('copyLineDown', async () => {
 })
 
 test('cursorDown', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorDown'() {
       return undefined
     },
@@ -114,7 +114,7 @@ test('cursorDown', async () => {
 })
 
 test('cursorUp', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorUp'() {
       return undefined
     },
@@ -125,7 +125,7 @@ test('cursorUp', async () => {
 })
 
 test('cursorWordLeft', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorWordLeft'() {
       return undefined
     },
@@ -136,7 +136,7 @@ test('cursorWordLeft', async () => {
 })
 
 test('cursorWordRight', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorWordRight'() {
       return undefined
     },
@@ -147,7 +147,7 @@ test('cursorWordRight', async () => {
 })
 
 test('goToDefinition', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.goToDefinition'() {
       return undefined
     },
@@ -158,7 +158,7 @@ test('goToDefinition', async () => {
 })
 
 test('openHover', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.showHover2'() {
       return undefined
     },
@@ -169,7 +169,7 @@ test('openHover', async () => {
 })
 
 test('goToTypeDefinition', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.goToTypeDefinition'() {
       return undefined
     },
@@ -180,7 +180,7 @@ test('goToTypeDefinition', async () => {
 })
 
 test('type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.type'() {
       return undefined
     },
@@ -191,7 +191,7 @@ test('type', async () => {
 })
 
 test('findAllReferences', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'SideBar.show'() {
       return undefined
     },
@@ -202,7 +202,7 @@ test('findAllReferences', async () => {
 })
 
 test('findAllImplementations', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'SideBar.show'() {
       return undefined
     },
@@ -213,7 +213,7 @@ test('findAllImplementations', async () => {
 })
 
 test('setSelections', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.setSelections'() {
       return undefined
     },
@@ -224,7 +224,7 @@ test('setSelections', async () => {
 })
 
 test('openFindWidget', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.openFind'() {
       return undefined
     },
@@ -235,7 +235,7 @@ test('openFindWidget', async () => {
 })
 
 test('setDeltaY', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.setDeltaY'() {
       return undefined
     },
@@ -246,7 +246,7 @@ test('setDeltaY', async () => {
 })
 
 test('format', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.format'() {
       return undefined
     },
@@ -257,7 +257,7 @@ test('format', async () => {
 })
 
 test('insertLineBreak', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.insertLineBreak'() {
       return undefined
     },
@@ -268,7 +268,7 @@ test('insertLineBreak', async () => {
 })
 
 test('openSourceActions', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.showSourceActions2'() {
       return undefined
     },
@@ -279,7 +279,7 @@ test('openSourceActions', async () => {
 })
 
 test('sourceActionsSelectCurrent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorSourceActions.selectCurrent'() {
       return undefined
     },
@@ -290,7 +290,7 @@ test('sourceActionsSelectCurrent', async () => {
 })
 
 test('openCompletionDetails', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorCompletion.openDetails'() {
       return undefined
     },
@@ -301,7 +301,7 @@ test('openCompletionDetails', async () => {
 })
 
 test('closeCompletionDetails', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorCompletion.closeDetails'() {
       return undefined
     },
@@ -312,7 +312,7 @@ test('closeCompletionDetails', async () => {
 })
 
 test('toggleCompletionDetails', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorCompletion.toggleDetails'() {
       return undefined
     },
@@ -323,7 +323,7 @@ test('toggleCompletionDetails', async () => {
 })
 
 test('organizeImports', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.organizeImports'() {
       return undefined
     },
@@ -334,7 +334,7 @@ test('organizeImports', async () => {
 })
 
 test('addAllMissingImports', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.addAllMissingImports'() {
       return undefined
     },
@@ -345,7 +345,7 @@ test('addAllMissingImports', async () => {
 })
 
 test('sortImports', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.sortImports'() {
       return undefined
     },
@@ -356,7 +356,7 @@ test('sortImports', async () => {
 })
 
 test('toggleLineComment', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.toggleLineComment'() {
       return undefined
     },
@@ -367,7 +367,7 @@ test('toggleLineComment', async () => {
 })
 
 test('toggleBlockComment', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.toggleBlockComment'() {
       return undefined
     },
@@ -378,7 +378,7 @@ test('toggleBlockComment', async () => {
 })
 
 test('selectAll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.toggleBlockComment'() {
       return undefined
     },
@@ -389,7 +389,7 @@ test('selectAll', async () => {
 })
 
 test('openColorPicker', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.openColorPicker'() {
       return undefined
     },
@@ -400,7 +400,7 @@ test('openColorPicker', async () => {
 })
 
 test('openFind', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.openFind2'() {
       return undefined
     },
@@ -411,7 +411,7 @@ test('openFind', async () => {
 })
 
 test('deleteAllLeft', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.deleteAllLeft'() {
       return undefined
     },
@@ -422,7 +422,7 @@ test('deleteAllLeft', async () => {
 })
 
 test('deleteAllRight', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.deleteAllRight'() {
       return undefined
     },
@@ -433,7 +433,7 @@ test('deleteAllRight', async () => {
 })
 
 test('cursorWordPartLeft', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorWordPartLeft'() {
       return undefined
     },
@@ -444,7 +444,7 @@ test('cursorWordPartLeft', async () => {
 })
 
 test('cursorWordPartRight', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorWordPartRight'() {
       return undefined
     },
@@ -455,7 +455,7 @@ test('cursorWordPartRight', async () => {
 })
 
 test('cursorEnd', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorEnd'() {
       return undefined
     },
@@ -466,7 +466,7 @@ test('cursorEnd', async () => {
 })
 
 test('cursorHome', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorHome'() {
       return undefined
     },
@@ -477,7 +477,7 @@ test('cursorHome', async () => {
 })
 
 test('copyLineUp', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.copyLineUp'() {
       return undefined
     },
@@ -488,7 +488,7 @@ test('copyLineUp', async () => {
 })
 
 test('copy', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.copy'() {
       return undefined
     },
@@ -499,7 +499,7 @@ test('copy', async () => {
 })
 
 test('closeColorPicker', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.closeColorPicker'() {
       return undefined
     },
@@ -510,7 +510,7 @@ test('closeColorPicker', async () => {
 })
 
 test('openContextMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.contextMenu'() {
       return undefined
     },
@@ -521,7 +521,7 @@ test('openContextMenu', async () => {
 })
 
 test('getText', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.getText'() {
       return 'test text'
     },
@@ -533,7 +533,7 @@ test('getText', async () => {
 })
 
 test('rename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.rename'() {
       return undefined
     },
@@ -544,7 +544,7 @@ test('rename', async () => {
 })
 
 test('showHover', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.showHover2'() {
       return undefined
     },
@@ -555,7 +555,7 @@ test('showHover', async () => {
 })
 
 test('openRename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.openRename'() {
       return undefined
     },
@@ -566,7 +566,7 @@ test('openRename', async () => {
 })
 
 test.skip('shouldHaveText', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.getText'() {
       return 'test text'
     },
@@ -587,7 +587,7 @@ test.skip('shouldHaveText - throws error when text does not match', async () => 
 })
 
 test('executeTabCompletion', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.tabCompletion'() {
       return undefined
     },
@@ -598,7 +598,7 @@ test('executeTabCompletion', async () => {
 })
 
 test('rename2', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.openRename'() {
       return undefined
     },
@@ -615,7 +615,7 @@ test('rename2', async () => {
 })
 
 test.skip('shouldHaveDiagnostics - basic functionality', async () => {
-  const mockRpc = EditorWorker.registerMockRpc({
+  using mockRpc = EditorWorker.registerMockRpc({
     'Editor.getDiagnostics'() {
       return [
         {

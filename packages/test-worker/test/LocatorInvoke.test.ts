@@ -4,7 +4,7 @@ import * as LocatorInvoke from '../src/parts/LocatorInvoke/LocatorInvoke.ts'
 import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
 test('locatorInvoke: with WebViewState', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performAction'() {
       return 'ok'
     },
@@ -18,7 +18,7 @@ test('locatorInvoke: with WebViewState', async () => {
 })
 
 test('locatorInvoke: with RendererWorker', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performAction'() {
       return 'ok'
     },

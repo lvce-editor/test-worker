@@ -4,7 +4,7 @@ import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as SettingsView from '../src/parts/TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
 
 test('show', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('show', async () => {
 })
 
 test('handleInput', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Settings.handleInput'() {
       return undefined
     },
@@ -26,7 +26,7 @@ test('handleInput', async () => {
 })
 
 test('usePreviousSearchValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Settings.usePreviousSearchValue'() {
       return undefined
     },
@@ -37,7 +37,7 @@ test('usePreviousSearchValue', async () => {
 })
 
 test('useNextSearchValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Settings.useNextSearchValue'() {
       return undefined
     },
@@ -48,7 +48,7 @@ test('useNextSearchValue', async () => {
 })
 
 test('clear', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Settings.clear'() {
       return undefined
     },
@@ -59,7 +59,7 @@ test('clear', async () => {
 })
 
 test('selectWorkspace', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Settings.handleClickTab'() {
       return undefined
     },
@@ -70,7 +70,7 @@ test('selectWorkspace', async () => {
 })
 
 test('selectTextEditor', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Settings.handleClickTab'() {
       return undefined
     },
@@ -81,7 +81,7 @@ test('selectTextEditor', async () => {
 })
 
 test('selectExtensions', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Settings.handleClickTab'() {
       return undefined
     },
@@ -92,7 +92,7 @@ test('selectExtensions', async () => {
 })
 
 test('handleScroll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Settings.handleScroll'() {
       return undefined
     },

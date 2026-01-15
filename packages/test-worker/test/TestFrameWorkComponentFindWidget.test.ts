@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FindWidget from '../src/parts/TestFrameWorkComponentFindWidget/TestFrameWorkComponentFindWidget.ts'
 
 test('focusNext', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.focusNext'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('focusNext', async () => {
 })
 
 test('setValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.handleInput'() {
       return undefined
     },
@@ -27,7 +27,7 @@ test('setValue', async () => {
 })
 
 test('focusPrevious', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.focusPrevious'() {
       return undefined
     },
@@ -39,7 +39,7 @@ test('focusPrevious', async () => {
 })
 
 test('close', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.close'() {
       return undefined
     },
@@ -51,7 +51,7 @@ test('close', async () => {
 })
 
 test('setReplaceValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.handleReplaceInput'() {
       return undefined
     },
@@ -63,7 +63,7 @@ test('setReplaceValue', async () => {
 })
 
 test('toggleReplace', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.toggleReplace'() {
       return undefined
     },
@@ -75,7 +75,7 @@ test('toggleReplace', async () => {
 })
 
 test('toggleMatchCase', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.toggleMatchCase'() {
       return undefined
     },
@@ -87,7 +87,7 @@ test('toggleMatchCase', async () => {
 })
 
 test('toggleMatchWholeWord', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.toggleMatchWholeWord'() {
       return undefined
     },
@@ -99,7 +99,7 @@ test('toggleMatchWholeWord', async () => {
 })
 
 test('togglePreserveCase', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.togglePreserveCase'() {
       return undefined
     },
@@ -111,7 +111,7 @@ test('togglePreserveCase', async () => {
 })
 
 test('toggleUseRegularExpression', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.toggleUseRegularExpression'() {
       return undefined
     },
@@ -123,7 +123,7 @@ test('toggleUseRegularExpression', async () => {
 })
 
 test('replace', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.replace'() {
       return undefined
     },
@@ -135,7 +135,7 @@ test('replace', async () => {
 })
 
 test('replaceAll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.replaceAll'() {
       return undefined
     },
@@ -147,7 +147,7 @@ test('replaceAll', async () => {
 })
 
 test('focusElement', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.focusElement'() {
       return undefined
     },
@@ -159,7 +159,7 @@ test('focusElement', async () => {
 })
 
 test('focusNextElement', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.focusNextElement'() {
       return undefined
     },
@@ -171,7 +171,7 @@ test('focusNextElement', async () => {
 })
 
 test('focusPreviousElement', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'FindWidget.focusPreviousElement'() {
       return undefined
     },

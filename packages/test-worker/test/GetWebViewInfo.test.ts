@@ -9,7 +9,7 @@ test('getWebViewInfo: calls RendererWorker.invoke with correct method and webVie
     uid: 'test-uid-123',
   }
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
@@ -28,7 +28,7 @@ test('getWebViewInfo: handles different webViewId values', async (): Promise<voi
     uid: 'different-uid-456',
   }
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return mockWebViewInfo
     },
@@ -41,7 +41,7 @@ test('getWebViewInfo: handles different webViewId values', async (): Promise<voi
 })
 
 test('getWebViewInfo: propagates errors from RendererWorker.invoke', async (): Promise<void> => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'WebView.getWebViewInfo2'(webViewId: string): Promise<any> {
       return Promise.reject(new Error('WebView not found'))
     },

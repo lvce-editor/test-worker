@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RunAndDebug from '../src/parts/TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 
 test('show', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'SideBar.openViewlet'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('show', async () => {
 })
 
 test('handleClickSectionBreakPoints', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.handleClickSectionBreakPoints'() {
       return undefined
     },
@@ -25,7 +25,7 @@ test('handleClickSectionBreakPoints', async () => {
 })
 
 test('handleClickSectionWatch', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.handleClickSectionWatch'() {
       return undefined
     },
@@ -36,7 +36,7 @@ test('handleClickSectionWatch', async () => {
 })
 
 test('addWatchExpression', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.addWatchExpression'() {
       return undefined
     },
@@ -47,7 +47,7 @@ test('addWatchExpression', async () => {
 })
 
 test('handleWatchValueChange', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.handleWatchValueChange'() {
       return undefined
     },
@@ -58,7 +58,7 @@ test('handleWatchValueChange', async () => {
 })
 
 test('acceptWatchExpressionEdit', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.acceptWatchExpressionEdit'() {
       return undefined
     },
@@ -69,7 +69,7 @@ test('acceptWatchExpressionEdit', async () => {
 })
 
 test('selectIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.selectIndex'() {
       return undefined
     },
@@ -80,7 +80,7 @@ test('selectIndex', async () => {
 })
 
 test('setPauseOnExceptions', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.setPauseOnExceptions'() {
       return undefined
     },
@@ -91,7 +91,7 @@ test('setPauseOnExceptions', async () => {
 })
 
 test('handleRename', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.handleRename'() {
       return undefined
     },
@@ -102,7 +102,7 @@ test('handleRename', async () => {
 })
 
 test('handleSpace', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Run And Debug.handleSpace'() {
       return undefined
     },
