@@ -138,5 +138,5 @@ export const handleInputContextMenu = async (name: string, button: number, x: nu
 }
 
 export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('Search.handleContextMenu', name, button, x, y)
+  await RendererWorker.invoke('Search.handleContextMenu', button, x, y)
 }
