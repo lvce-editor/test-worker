@@ -12,7 +12,8 @@ export const hotReloadTest = async (): Promise<void> => {
   if (inProgress) {
     return
   }
-  const withQueryParameter = createUrlWithQueryParameter(url)
+  const locationHref = location.href
+  const withQueryParameter = createUrlWithQueryParameter(url, locationHref)
   clearConsole()
   await execute(withQueryParameter, platform, assetDir)
 }
