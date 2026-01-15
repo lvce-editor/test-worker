@@ -94,7 +94,7 @@ test('getFileMapNode handles nested directories', async () => {
     ['FileSystem.readDirWithFileTypes', 'file:///test/path'],
     ['FileSystem.readDirWithFileTypes', 'file:///test/path/subdir'],
     ['FileSystem.readFile', 'file:///test/path/subdir/nested.txt'],
-    ['FileSystem.readFile', 'file:///test/path/file.txt']
+    ['FileSystem.readFile', 'file:///test/path/file.txt'],
   ])
 })
 
