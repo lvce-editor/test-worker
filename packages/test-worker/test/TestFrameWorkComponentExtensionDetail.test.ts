@@ -110,3 +110,77 @@ test('handleScroll', async () => {
   await ExtensionDetail.handleScroll(123)
   expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleScroll', 123]])
 })
+
+test('handleReadmeContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.handleReadmeContextMenu'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.handleReadmeContextMenu(100, 200, 'nodeName', 'http://example.com')
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleReadmeContextMenu', 100, 200, 'nodeName', 'http://example.com']])
+})
+
+test('copyReadmeLink', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.copyReadmeLink'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.copyReadmeLink('http://example.com/link')
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.copyReadmeLink', 'http://example.com/link']])
+})
+
+test('focusNextTab and focusPreviousTab', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.focusNextTab'() {
+      return undefined
+    },
+    'ExtensionDetail.focusPreviousTab'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.focusNextTab()
+  await ExtensionDetail.focusPreviousTab()
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.focusNextTab'], ['ExtensionDetail.focusPreviousTab']])
+})
+
+test('handleClickUninstall', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.handleClickUninstall'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.handleClickUninstall()
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleClickUninstall']])
+})
+
+test('handleImageContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.handleImageContextMenu'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.handleImageContextMenu()
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleImageContextMenu']])
+})
+
+test('hideSizeLink', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.hideSizeLink'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.hideSizeLink()
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.hideSizeLink']])
+})
+
+test('handleTabFocus', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.handleTabFocus'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.handleTabFocus('Details')
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleTabFocus', 'Details']])
+})
