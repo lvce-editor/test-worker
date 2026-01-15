@@ -90,3 +90,53 @@ test('first', () => {
     _nth: 0,
   })
 })
+
+test('locator with nth', () => {
+  const selector = 'button'
+  const options = { nth: 2 }
+  const locator = createLocator(selector, options)
+  const subLocator = locator.locator('span')
+  expect((subLocator as any)._selector).toBe('button:nth-of-type(3) span')
+})
+
+test('locator without nth', () => {
+  const selector = 'button'
+  const options = {}
+  const locator = createLocator(selector, options)
+  const subLocator = locator.locator('span')
+  expect((subLocator as any)._selector).toBe('button span')
+})
+
+test('nth', () => {
+  const selector = 'button'
+  const options = {}
+  const locator = createLocator(selector, options)
+  const nthLocator = locator.nth(1)
+  expect(nthLocator as any).toMatchObject({
+    _nth: 1,
+    _selector: 'button',
+  })
+})
+
+test('dispatchEvent', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.performAction'() {
+      return undefined
+    },
+  })
+  const selector = 'button'
+  const options = {}
+  const locator = createLocator(selector, options)
+  await locator.dispatchEvent('click', '{"bubbles": true}')
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.performAction',
+      locator,
+      'dispatchEvent',
+      {
+        init: '{"bubbles": true}',
+        type: 'click',
+      },
+    ],
+  ])
+})
