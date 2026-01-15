@@ -2,8 +2,8 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
-const setup = (): any => {
-  const mockRpc = RendererWorker.registerMockRpc({
+test('readNativeFiles', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.disableMemoryClipBoard'() {
       return undefined
     },
@@ -17,30 +17,64 @@ const setup = (): any => {
       return undefined
     },
   })
-  return mockRpc
-}
-
-test('readNativeFiles', async () => {
-  using mockRpc = setup()
   await ClipBoard.readNativeFiles()
   expect(mockRpc.invocations).toEqual([['ClipBoard.readNativeFiles']])
 })
 
 test('writeNativeFiles', async () => {
-  using mockRpc = setup()
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.disableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.enableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.readNativeFiles'() {
+      return undefined
+    },
+    'ClipBoard.writeNativeFiles'() {
+      return undefined
+    },
+  })
   const uris = ['file:///a', 'file:///b']
   await ClipBoard.writeNativeFiles(uris)
   expect(mockRpc.invocations).toEqual([['ClipBoard.writeNativeFiles', uris]])
 })
 
 test('enableMemoryClipBoard', async () => {
-  using mockRpc = setup()
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.disableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.enableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.readNativeFiles'() {
+      return undefined
+    },
+    'ClipBoard.writeNativeFiles'() {
+      return undefined
+    },
+  })
   await ClipBoard.enableMemoryClipBoard()
   expect(mockRpc.invocations).toEqual([['ClipBoard.enableMemoryClipBoard']])
 })
 
 test('disableMemoryClipBoard', async () => {
-  using mockRpc = setup()
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.disableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.enableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.readNativeFiles'() {
+      return undefined
+    },
+    'ClipBoard.writeNativeFiles'() {
+      return undefined
+    },
+  })
   await ClipBoard.disableMemoryClipBoard()
   expect(mockRpc.invocations).toEqual([['ClipBoard.disableMemoryClipBoard']])
 })
