@@ -3,7 +3,7 @@ import { MockRpc } from '@lvce-editor/rpc'
 import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
 const invoke: jest.Mock = jest.fn()
-using mockRpc = MockRpc.create({ commandMap: {}, invoke })
+const mockRpc = MockRpc.create({ commandMap: {}, invoke })
 
 jest.unstable_mockModule('../src/parts/CreatePortRpc/CreatePortRpc.ts', () => ({
   // @ts-ignore

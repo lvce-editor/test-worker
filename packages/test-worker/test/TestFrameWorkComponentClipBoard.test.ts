@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
 const setup = (): any => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.disableMemoryClipBoard'() {
       return undefined
     },
