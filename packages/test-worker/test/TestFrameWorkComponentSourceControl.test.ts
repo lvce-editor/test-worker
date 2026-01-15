@@ -46,6 +46,17 @@ test('handleClickSourceControlButtons', async () => {
   expect(mockRpc.invocations).toEqual([['Source Control.handleClickSourceControlButtons', 1, 'commit']])
 })
 
+test('handleContextMenu', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'Source Control.handleContextMenu'() {
+      return undefined
+    },
+  })
+
+  await SourceControl.handleContextMenu(2, 100, 200)
+  expect(mockRpc.invocations).toEqual([['Source Control.handleContextMenu', 2, 100, 200]])
+})
+
 test('show', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'SideBar.openViewlet'() {
