@@ -3,7 +3,7 @@ export interface LocatorClickOptions {
 }
 
 export interface ILocatorExternal {
-  readonly click: (options: LocatorClickOptions) => Promise<void>
+  readonly click: (options?: LocatorClickOptions) => Promise<void>
   readonly dispatchEvent: (type: string, init: string) => Promise<void>
   readonly first: () => ILocatorExternal
   readonly hover: () => Promise<void>
