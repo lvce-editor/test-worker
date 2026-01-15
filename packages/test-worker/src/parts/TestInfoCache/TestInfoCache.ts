@@ -22,3 +22,7 @@ export const last = (): TestInfoItem => {
   }
   return item
 }
+
+export const clear = (): void => {
+  items = []
+}

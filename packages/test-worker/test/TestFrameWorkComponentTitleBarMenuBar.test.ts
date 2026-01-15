@@ -188,3 +188,14 @@ test('toggleMenu', async () => {
   await TitleBar.toggleMenu()
   expect(mockRpc.invocations).toEqual([['TitleBar.toggleMenu']])
 })
+
+test('handleContextMenu', async () => {
+  const mockRpc = RendererWorker.registerMockRpc({
+    'TitleBar.handleContextMenu'() {
+      return undefined
+    },
+  })
+
+  await TitleBar.handleContextMenu(1, 150, 50)
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleContextMenu', 1, 150, 50]])
+})
