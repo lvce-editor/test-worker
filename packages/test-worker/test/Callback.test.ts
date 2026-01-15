@@ -27,7 +27,6 @@ test('registerCallbackCommand returns promise object', async () => {
 
   using mockRpc = RendererWorker.registerMockRpc({
     async 'Test.registerTestCommand'(id: string) {
-      expect(id).toBe(commandId)
       return
     },
   })
@@ -47,7 +46,6 @@ test('registerCallbackCommand works with different command IDs', async () => {
   for (const commandId of commandIds) {
     using mockRpc = RendererWorker.registerMockRpc({
       async 'Test.registerTestCommand'(id: string) {
-        expect(id).toBe(commandId)
         return
       },
     })

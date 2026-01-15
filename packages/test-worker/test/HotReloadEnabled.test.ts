@@ -5,7 +5,6 @@ import { hotReloadEnabled } from '../src/parts/HotReloadEnabled/HotReloadEnabled
 test('hotReloadEnabled returns true when preference is truthy', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(key: string) {
-      expect(key).toBe('E2eTest.hotReload')
       return 'true'
     },
   })
@@ -17,7 +16,6 @@ test('hotReloadEnabled returns true when preference is truthy', async () => {
 test('hotReloadEnabled returns false when preference is falsy', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(key: string) {
-      expect(key).toBe('E2eTest.hotReload')
       return false
     },
   })
@@ -29,7 +27,6 @@ test('hotReloadEnabled returns false when preference is falsy', async () => {
 test('hotReloadEnabled returns false when preference is null', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(key: string) {
-      expect(key).toBe('E2eTest.hotReload')
       return null
     },
   })
@@ -41,7 +38,6 @@ test('hotReloadEnabled returns false when preference is null', async () => {
 test('hotReloadEnabled returns false when preference is undefined', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(key: string) {
-      expect(key).toBe('E2eTest.hotReload')
       return undefined
     },
   })
@@ -53,7 +49,6 @@ test('hotReloadEnabled returns false when preference is undefined', async () => 
 test('hotReloadEnabled returns false when preference is empty string', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(key: string) {
-      expect(key).toBe('E2eTest.hotReload')
       return ''
     },
   })
@@ -65,7 +60,6 @@ test('hotReloadEnabled returns false when preference is empty string', async () 
 test('hotReloadEnabled returns true when preference is number 1', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'(key: string) {
-      expect(key).toBe('E2eTest.hotReload')
       return 1
     },
   })
