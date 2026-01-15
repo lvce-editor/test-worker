@@ -13,7 +13,7 @@ test('create', () => {
 })
 
 test('click', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performAction'() {
       return undefined
     },
@@ -37,7 +37,7 @@ test('click', async () => {
 })
 
 test('hover', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performAction'() {
       return undefined
     },
@@ -59,7 +59,7 @@ test('hover', async () => {
 })
 
 test('type', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performAction'() {
       return undefined
     },

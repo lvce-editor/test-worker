@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { launchEditorWorkerRpc } from '../src/parts/LaunchEditorWorkerRpc/LaunchEditorWorkerRpc.ts'
 
 test('launchEditorWorkerRpc creates RPC with correct configuration', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
       return undefined
     },
@@ -37,7 +37,7 @@ test('launchEditorWorkerRpc returns RPC with empty commandMap', async () => {
 })
 
 test('launchEditorWorkerRpc calls sendMessagePortToEditorWorker with correct parameters', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'() {
       return undefined
     },

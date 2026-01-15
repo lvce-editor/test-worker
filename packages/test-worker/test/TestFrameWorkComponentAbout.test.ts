@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as About from '../src/parts/TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 
 test('show', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'About.showAbout'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('show', async () => {
 })
 
 test('handleClickOk', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'About.handleClickOk'() {
       return undefined
     },
@@ -25,7 +25,7 @@ test('handleClickOk', async () => {
 })
 
 test('handleClickClose', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'About.handleClickClose'() {
       return undefined
     },
@@ -36,7 +36,7 @@ test('handleClickClose', async () => {
 })
 
 test('handleClickCopy', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'About.handleClickCopy'() {
       return undefined
     },
@@ -47,7 +47,7 @@ test('handleClickCopy', async () => {
 })
 
 test('focusNext', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'About.focusNext'() {
       return undefined
     },
@@ -58,7 +58,7 @@ test('focusNext', async () => {
 })
 
 test('focusPrevious', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'About.focusPrevious'() {
       return undefined
     },

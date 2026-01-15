@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as TitleBar from '../src/parts/TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
 
 test('closeMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.closeMenu'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('closeMenu', async () => {
 })
 
 test('focus', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.focus'() {
       return undefined
     },
@@ -25,7 +25,7 @@ test('focus', async () => {
 })
 
 test('focusFirst', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.focusFirst'() {
       return undefined
     },
@@ -36,7 +36,7 @@ test('focusFirst', async () => {
 })
 
 test('focusIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.focusIndex'() {
       return undefined
     },
@@ -47,7 +47,7 @@ test('focusIndex', async () => {
 })
 
 test('focusLast', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.focusLast'() {
       return undefined
     },
@@ -58,7 +58,7 @@ test('focusLast', async () => {
 })
 
 test('focusNext', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.focusNext'() {
       return undefined
     },
@@ -69,7 +69,7 @@ test('focusNext', async () => {
 })
 
 test('focusPrevious', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.focusPrevious'() {
       return undefined
     },
@@ -80,7 +80,7 @@ test('focusPrevious', async () => {
 })
 
 test('handleKeyArrowDown', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeyArrowDown'() {
       return undefined
     },
@@ -91,7 +91,7 @@ test('handleKeyArrowDown', async () => {
 })
 
 test('handleKeyArrowLeft', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeyArrowLeft'() {
       return undefined
     },
@@ -102,7 +102,7 @@ test('handleKeyArrowLeft', async () => {
 })
 
 test('handleKeyArrowRight', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeyArrowRight'() {
       return undefined
     },
@@ -113,7 +113,7 @@ test('handleKeyArrowRight', async () => {
 })
 
 test('handleKeyArrowUp', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeyArrowUp'() {
       return undefined
     },
@@ -124,7 +124,7 @@ test('handleKeyArrowUp', async () => {
 })
 
 test('handleKeyEnd', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeyEnd'() {
       return undefined
     },
@@ -135,7 +135,7 @@ test('handleKeyEnd', async () => {
 })
 
 test('handleKeyHome', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeyHome'() {
       return undefined
     },
@@ -146,7 +146,7 @@ test('handleKeyHome', async () => {
 })
 
 test('handleKeySpace', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeySpace'() {
       return undefined
     },
@@ -157,7 +157,7 @@ test('handleKeySpace', async () => {
 })
 
 test('handleKeyEscape', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeyEscape'() {
       return undefined
     },
@@ -168,7 +168,7 @@ test('handleKeyEscape', async () => {
 })
 
 test('toggleIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.toggleIndex'() {
       return undefined
     },
@@ -179,7 +179,7 @@ test('toggleIndex', async () => {
 })
 
 test('toggleMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.toggleMenu'() {
       return undefined
     },
@@ -190,7 +190,7 @@ test('toggleMenu', async () => {
 })
 
 test('handleContextMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleContextMenu'() {
       return undefined
     },

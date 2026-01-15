@@ -6,7 +6,7 @@ import * as WatchForHotReload from '../src/parts/WatchForHotReload/WatchForHotRe
 test('watchForHotReload returns early when platform is not Remote', async () => {
   const href = '/some/path'
 
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   await WatchForHotReload.watchForHotReload(PlatformType.Web, href)
 
@@ -16,7 +16,7 @@ test('watchForHotReload returns early when platform is not Remote', async () => 
 test('watchForHotReload returns early when href does not start with /remote', async () => {
   const href = '/some/other/path'
 
-  const mockRpc = RendererWorker.registerMockRpc({})
+  using mockRpc = RendererWorker.registerMockRpc({})
 
   await WatchForHotReload.watchForHotReload(PlatformType.Remote, href)
 
@@ -27,7 +27,7 @@ test('watchForHotReload calls RendererWorker.invoke when conditions are met', as
   const href = '/remote/some/file'
   const expectedFileUrl = 'file:///some/file'
 
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     async 'FileWatcher.watchFile'(rpcId: string, callbackCommand: string, fileUrl: string): Promise<void> {
       expect(rpcId).toBe(RpcId.TestWorker)
       expect(callbackCommand).toBe('FileWatcher.handleEvent')
@@ -47,7 +47,7 @@ test('watchForHotReload handles different remote hrefs', async () => {
     const rest = href.slice('/remote'.length)
     const expectedFileUrl = `file://${rest}`
 
-    const mockRpc = RendererWorker.registerMockRpc({
+    using mockRpc = RendererWorker.registerMockRpc({
       async 'FileWatcher.watchFile'(rpcId: string, callbackCommand: string, fileUrl: string): Promise<void> {
         expect(rpcId).toBe(RpcId.TestWorker)
         expect(callbackCommand).toBe('FileWatcher.handleEvent')

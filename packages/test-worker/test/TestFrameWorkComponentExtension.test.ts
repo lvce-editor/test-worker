@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Extension from '../src/parts/TestFrameWorkComponentExtension/TestFrameWorkComponentExtension.ts'
 
 test('addWebExtension', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionMeta.addWebExtension'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('addWebExtension', async () => {
 })
 
 test('addNodeExtension', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionMeta.addNodeExtension'() {
       return undefined
     },

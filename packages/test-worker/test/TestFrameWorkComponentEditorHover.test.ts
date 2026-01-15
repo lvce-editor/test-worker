@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as EditorHover from '../src/parts/TestFrameWorkComponentEditorHover/TestFrameWorkComponentEditorHover.ts'
 
 test('show', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.showHover2'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('show', async () => {
 })
 
 test('close', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorHover.close'() {
       return undefined
     },

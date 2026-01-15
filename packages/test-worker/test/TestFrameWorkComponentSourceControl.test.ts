@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SourceControl from '../src/parts/TestFrameWorkComponentSourceControl/TestFrameWorkComponentSourceControl.ts'
 
 test('selectIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Source Control.selectIndex'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('selectIndex', async () => {
 })
 
 test('acceptInput', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Source Control.acceptInput'() {
       return undefined
     },
@@ -25,7 +25,7 @@ test('acceptInput', async () => {
 })
 
 test('handleInput', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Source Control.handleInput'() {
       return undefined
     },
@@ -36,7 +36,7 @@ test('handleInput', async () => {
 })
 
 test('handleClickSourceControlButtons', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Source Control.handleClickSourceControlButtons'() {
       return undefined
     },
@@ -47,7 +47,7 @@ test('handleClickSourceControlButtons', async () => {
 })
 
 test('handleContextMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Source Control.handleContextMenu'() {
       return undefined
     },
@@ -58,7 +58,7 @@ test('handleContextMenu', async () => {
 })
 
 test('show', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'SideBar.openViewlet'() {
       return undefined
     },

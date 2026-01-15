@@ -5,7 +5,7 @@ import * as KeyBoard from '../src/parts/TestFrameWorkComponentKeyBoard/TestFrame
 // basic case
 
 test('press: simple key', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performKeyBoardAction'() {
       return undefined
     },
@@ -29,7 +29,7 @@ test('press: simple key', async () => {
 // modifier parsing
 
 test('press: with modifiers Control+Alt+Space', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performKeyBoardAction'() {
       return undefined
     },

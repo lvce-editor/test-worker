@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as QuickPick from '../src/parts/TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 
 test('open', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Viewlet.openWidget'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('open', async () => {
 })
 
 test('handleInput', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.handleInput'() {
       return undefined
     },
@@ -25,7 +25,7 @@ test('handleInput', async () => {
 })
 
 test('handleClickAt', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.handleClickAt'() {
       return undefined
     },
@@ -36,7 +36,7 @@ test('handleClickAt', async () => {
 })
 
 test('setValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.setValue'() {
       return undefined
     },
@@ -47,7 +47,7 @@ test('setValue', async () => {
 })
 
 test('focusNext', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.focusNext'() {
       return undefined
     },
@@ -58,7 +58,7 @@ test('focusNext', async () => {
 })
 
 test('focusFirst', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.focusFirst'() {
       return undefined
     },
@@ -69,7 +69,7 @@ test('focusFirst', async () => {
 })
 
 test('focusLast', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.focusLast'() {
       return undefined
     },
@@ -80,7 +80,7 @@ test('focusLast', async () => {
 })
 
 test('focusIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.focusIndex'() {
       return undefined
     },
@@ -91,7 +91,7 @@ test('focusIndex', async () => {
 })
 
 test('focusPrevious', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.focusPrevious'() {
       return undefined
     },
@@ -102,7 +102,7 @@ test('focusPrevious', async () => {
 })
 
 test('selectItem', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.selectItem'() {
       return undefined
     },
@@ -113,7 +113,7 @@ test('selectItem', async () => {
 })
 
 test('selectIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.selectIndex'() {
       return undefined
     },
@@ -124,7 +124,7 @@ test('selectIndex', async () => {
 })
 
 test('selectCurrentIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.selectCurrentIndex'() {
       return undefined
     },
@@ -135,7 +135,7 @@ test('selectCurrentIndex', async () => {
 })
 
 test('executeCommand', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.handleInput'() {
       return undefined
     },

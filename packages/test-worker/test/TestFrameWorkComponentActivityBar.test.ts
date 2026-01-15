@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ActivityBar from '../src/parts/TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 
 test('focus', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focus'() {
       return undefined
     },
@@ -14,7 +14,7 @@ test('focus', async () => {
 })
 
 test('focusFirst', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusFirst'() {
       return undefined
     },
@@ -25,7 +25,7 @@ test('focusFirst', async () => {
 })
 
 test('focusLast', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusLast'() {
       return undefined
     },
@@ -36,7 +36,7 @@ test('focusLast', async () => {
 })
 
 test('focusNext', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusNext'() {
       return undefined
     },
@@ -47,7 +47,7 @@ test('focusNext', async () => {
 })
 
 test('focusPrevious', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusPrevious'() {
       return undefined
     },
@@ -58,7 +58,7 @@ test('focusPrevious', async () => {
 })
 
 test('handleClick', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.handleClick'() {
       return undefined
     },
@@ -69,7 +69,7 @@ test('handleClick', async () => {
 })
 
 test('handleContextMenu', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.handleContextMenu'() {
       return undefined
     },
@@ -80,7 +80,7 @@ test('handleContextMenu', async () => {
 })
 
 test('selectCurrent', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.selectCurrent'() {
       return undefined
     },

@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as EditorCompletion from '../src/parts/TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
 
 test('selectIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorCompletion.selectIndex'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('selectIndex', async () => {
 })
 
 test('selectCurrentIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorCompletion.selectCurrentIndex'() {
       return undefined
     },
@@ -27,7 +27,7 @@ test('selectCurrentIndex', async () => {
 })
 
 test('close', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorCompletion.close'() {
       return undefined
     },
@@ -39,7 +39,7 @@ test('close', async () => {
 })
 
 test('handleWheel', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'EditorCompletion.handleWheel'() {
       return undefined
     },

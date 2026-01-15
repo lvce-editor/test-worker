@@ -4,7 +4,7 @@ import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as Search from '../src/parts/TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 
 test('setValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.handleInput'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('setValue', async () => {
 })
 
 test('setReplaceValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.handleReplaceInput'() {
       return undefined
     },
@@ -26,7 +26,7 @@ test('setReplaceValue', async () => {
 })
 
 test('setExcludeValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.handleExcludeInput'() {
       return undefined
     },
@@ -37,7 +37,7 @@ test('setExcludeValue', async () => {
 })
 
 test('replaceAll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.replaceAll'() {
       return undefined
     },
@@ -48,7 +48,7 @@ test('replaceAll', async () => {
 })
 
 test('setIncludeValue', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.handleIncludeInput'() {
       return undefined
     },
@@ -59,7 +59,7 @@ test('setIncludeValue', async () => {
 })
 
 test('clearSearchResults', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.clearSearchResults'() {
       return undefined
     },
@@ -70,7 +70,7 @@ test('clearSearchResults', async () => {
 })
 
 test('openDetails', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.openDetails'() {
       return undefined
     },
@@ -81,7 +81,7 @@ test('openDetails', async () => {
 })
 
 test('collapseDetails', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.collapseDetails'() {
       return undefined
     },
@@ -92,7 +92,7 @@ test('collapseDetails', async () => {
 })
 
 test('dismissItem', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.dismissItem'() {
       return undefined
     },
@@ -103,7 +103,7 @@ test('dismissItem', async () => {
 })
 
 test('focusFirst', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.focusFirst'() {
       return undefined
     },
@@ -114,7 +114,7 @@ test('focusFirst', async () => {
 })
 
 test('focusIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.focusIndex'() {
       return undefined
     },
@@ -125,7 +125,7 @@ test('focusIndex', async () => {
 })
 
 test('selectIndex', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.selectIndex'() {
       return undefined
     },
@@ -136,7 +136,7 @@ test('selectIndex', async () => {
 })
 
 test('focusNext', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.focusNext'() {
       return undefined
     },
@@ -147,7 +147,7 @@ test('focusNext', async () => {
 })
 
 test('handleWheel', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.handleWheel'() {
       return undefined
     },
@@ -158,7 +158,7 @@ test('handleWheel', async () => {
 })
 
 test('focusNextPage', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.focusPage'() {
       return undefined
     },
@@ -169,7 +169,7 @@ test('focusNextPage', async () => {
 })
 
 test('focusPreviousPage', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.focusPreviousPage'() {
       return undefined
     },
@@ -180,7 +180,7 @@ test('focusPreviousPage', async () => {
 })
 
 test('focusPrevious', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.focusPrevious'() {
       return undefined
     },
@@ -191,7 +191,7 @@ test('focusPrevious', async () => {
 })
 
 test('toggleSearchDetails', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.toggleSearchDetails'() {
       return undefined
     },
@@ -202,7 +202,7 @@ test('toggleSearchDetails', async () => {
 })
 
 test('toggleMatchCase', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.toggleMatchCase'() {
       return undefined
     },
@@ -213,7 +213,7 @@ test('toggleMatchCase', async () => {
 })
 
 test('toggleMatchWholeWord', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.toggleMatchWholeWord'() {
       return undefined
     },
@@ -224,7 +224,7 @@ test('toggleMatchWholeWord', async () => {
 })
 
 test('togglePreserveCase', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.togglePreserveCase'() {
       return undefined
     },
@@ -235,7 +235,7 @@ test('togglePreserveCase', async () => {
 })
 
 test('toggleUseRegularExpression', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.toggleUseRegularExpression'() {
       return undefined
     },
@@ -246,7 +246,7 @@ test('toggleUseRegularExpression', async () => {
 })
 
 test('toggleReplace', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.toggleReplace'() {
       return undefined
     },
@@ -257,7 +257,7 @@ test('toggleReplace', async () => {
 })
 
 test('open', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'SideBar.openViewlet'() {
       return undefined
     },
@@ -268,7 +268,7 @@ test('open', async () => {
 })
 
 test('setLimit', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.setLimit'() {
       return undefined
     },
@@ -279,7 +279,7 @@ test('setLimit', async () => {
 })
 
 test('handleListBlur', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.handleListBlur'() {
       return undefined
     },
@@ -290,7 +290,7 @@ test('handleListBlur', async () => {
 })
 
 test('collapseAll', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.collapseAll'() {
       return undefined
     },
@@ -301,7 +301,7 @@ test('collapseAll', async () => {
 })
 
 test('copy', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.copy'() {
       return undefined
     },
@@ -312,7 +312,7 @@ test('copy', async () => {
 })
 
 test('copyPath', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Search.copyPath'() {
       return undefined
     },

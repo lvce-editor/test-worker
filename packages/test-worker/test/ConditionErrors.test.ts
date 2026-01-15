@@ -27,7 +27,7 @@ test('toHaveText - element not found', async () => {
     _nth: -1,
     _selector: '.text',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
     },
@@ -43,7 +43,7 @@ test('toHaveText - wrong text', async () => {
     _nth: -1,
     _selector: '.text',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'world', wasFound: true }
     },
@@ -59,7 +59,7 @@ test('toHaveText - with hasText selector', async () => {
     _nth: -1,
     _selector: '.item',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'wrong', wasFound: true }
     },
@@ -75,7 +75,7 @@ test('toHaveAttribute - element not found', async () => {
     _nth: -1,
     _selector: '.link',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
     },
@@ -101,7 +101,7 @@ test('toHaveAttribute - wrong value', async () => {
     _nth: -1,
     _selector: '.link',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '/test', wasFound: true }
     },
@@ -127,7 +127,7 @@ test('toHaveCount', async () => {
     _nth: -1,
     _selector: '.items',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 1 }
     },
@@ -143,7 +143,7 @@ test('toBeFocused', async () => {
     _nth: -1,
     _selector: '.input',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'BUTTON' }
     },
@@ -159,7 +159,7 @@ test('toBeFocused - with document.body', async () => {
     _nth: -1,
     _selector: '.input',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'document.body' }
     },
@@ -184,7 +184,7 @@ test('toHaveClass - element not found', async () => {
     _nth: -1,
     _selector: '.button',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { wasFound: false }
     },
@@ -200,7 +200,7 @@ test('toHaveClass - wrong class', async () => {
     _nth: -1,
     _selector: '.button',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { wasFound: true }
     },
@@ -216,7 +216,7 @@ test('toHaveId - element not found', async () => {
     _nth: -1,
     _selector: '.button',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
     },
@@ -232,7 +232,7 @@ test('toHaveId - wrong id', async () => {
     _nth: -1,
     _selector: '.button',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'cancel', wasFound: true }
     },
@@ -248,7 +248,7 @@ test('toHaveCss - element not found', async () => {
     _nth: -1,
     _selector: '.button',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
     },
@@ -274,7 +274,7 @@ test('toHaveCss - wrong value', async () => {
     _nth: -1,
     _selector: '.button',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'block', wasFound: true }
     },
@@ -300,7 +300,7 @@ test('toContainText - element not found', async () => {
     _nth: -1,
     _selector: '.text',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
     },
@@ -316,7 +316,7 @@ test('toContainText - wrong text', async () => {
     _nth: -1,
     _selector: '.text',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'world', wasFound: true }
     },
@@ -332,7 +332,7 @@ test('toHaveJSProperty - element not found', async () => {
     _nth: -1,
     _selector: '.button',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
     },
@@ -358,7 +358,7 @@ test('toHaveJSProperty - wrong value', async () => {
     _nth: -1,
     _selector: '.button',
   }
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'false', wasFound: true }
     },

@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Workspace from '../src/parts/TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
 
 test('setPath forwards to rpc', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Workspace.setPath'() {
       return undefined
     },
@@ -13,7 +13,7 @@ test('setPath forwards to rpc', async () => {
 })
 
 test('openTmpDir sets workspace path and returns it', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Workspace.setPath'() {
       return undefined
     },

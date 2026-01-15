@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Main from '../src/parts/TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 
 test('openUri', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {
       return undefined
     },
@@ -15,7 +15,7 @@ test('openUri', async () => {
 })
 
 test('splitRight', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.splitRight'() {
       return undefined
     },
@@ -27,7 +27,7 @@ test('splitRight', async () => {
 })
 
 test('openKeyBindings', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.openKeyBindings'() {
       return undefined
     },
@@ -39,7 +39,7 @@ test('openKeyBindings', async () => {
 })
 
 test('closeAllEditors', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.closeAllEditors'() {
       return undefined
     },
@@ -51,7 +51,7 @@ test('closeAllEditors', async () => {
 })
 
 test('closeTabsLeft/Right and others', async () => {
-  const mockRpc = RendererWorker.registerMockRpc({
+  using mockRpc = RendererWorker.registerMockRpc({
     'Main.closeActiveEditor'() {
       return undefined
     },
