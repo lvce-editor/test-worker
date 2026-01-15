@@ -11,6 +11,6 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
     // eslint-disable-next-line no-console
     console.info(`PASS ${name} in ${formattedDuration}`)
   }
-  // @ts-ignore
+
   await Rpc.invoke('TestFrameWork.showOverlay', type, background, text)
 }

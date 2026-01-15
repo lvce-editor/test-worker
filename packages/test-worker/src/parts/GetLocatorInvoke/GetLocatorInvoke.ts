@@ -10,6 +10,6 @@ export const getLocatorInvoke = (locator: any): Invoke => {
     const module = WebViewState.get(locator.webViewId)
     return module.invoke
   }
-  // @ts-ignore
+
   return RendererWorker.invoke
 }

@@ -33,7 +33,6 @@ export const focusFirst = (): Promise<void> => {
 }
 
 export const focusIndex = (index: number): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('KeyBindings.focusIndex', index)
 }
 

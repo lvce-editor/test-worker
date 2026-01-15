@@ -8,6 +8,6 @@ export const press = async (key: string): Promise<void> => {
     cancelable: true,
     ...keyOptions,
   }
-  // @ts-ignore
+
   await Rpc.invoke('TestFrameWork.performKeyBoardAction', 'press', options)
 }

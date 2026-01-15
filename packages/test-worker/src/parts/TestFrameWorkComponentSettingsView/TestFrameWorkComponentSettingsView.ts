@@ -6,32 +6,26 @@ export const show = async (): Promise<void> => {
 }
 
 export const handleInput = async (searchValue: string): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('Settings.handleInput', searchValue, InputSource.Script)
 }
 
 export const usePreviousSearchValue = async (): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('Settings.usePreviousSearchValue')
 }
 
 export const useNextSearchValue = async (): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('Settings.useNextSearchValue')
 }
 
 export const clear = async (searchValue: string): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('Settings.clear', searchValue, InputSource.Script)
 }
 
 export const clearHistory = async (): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('Settings.clearHistory', searchValue, InputSource.Script)
 }
 
 export const selectTab = async (tabId: string): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('Settings.handleClickTab', tabId)
 }
 
@@ -52,11 +46,9 @@ export const selectWindow = async (): Promise<void> => {
 }
 
 export const handleScroll = async (scrollTop: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Settings.handleScroll', scrollTop, InputSource.Script)
 }
 
 export const handleClickFilterButton = async (x: number, y: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Settings.handleClickFilterButton', x, y)
 }

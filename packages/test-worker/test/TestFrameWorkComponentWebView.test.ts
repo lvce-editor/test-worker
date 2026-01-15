@@ -6,7 +6,6 @@ const invoke: jest.Mock = jest.fn()
 const mockRpc = MockRpc.create({ commandMap: {}, invoke })
 
 jest.unstable_mockModule('../src/parts/CreatePortRpc/CreatePortRpc.ts', () => ({
-  // @ts-ignore
   createPortRpc: jest.fn().mockResolvedValue(mockRpc as any),
 }))
 

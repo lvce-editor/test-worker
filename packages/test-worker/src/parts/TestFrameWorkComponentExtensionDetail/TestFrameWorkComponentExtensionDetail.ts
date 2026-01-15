@@ -1,32 +1,26 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const handleClickCategory = async (categoryId: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.handleClickCategory', categoryId)
 }
 
 export const handleReadmeContextMenu = async (x: number, y: number, nodeName: string, href: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.handleReadmeContextMenu', x, y, nodeName, href)
 }
 
 export const copyReadmeLink = async (href: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.copyReadmeLink', href)
 }
 
 export const handleClickEnable = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.handleClickEnable')
 }
 
 export const handleClickDisable = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.handleClickDisable')
 }
 
 export const handleClickSetColorTheme = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('ExtensionDetail.handleClickSetColorTheme')
 }
 
@@ -72,7 +66,6 @@ export const handleImageContextMenu = (): Promise<void> => {
 }
 
 export const openFeature = (featureName: string): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('ExtensionDetail.handleFeaturesClick', featureName)
 }
 
@@ -101,7 +94,6 @@ export const openSettings = async (): Promise<void> => {
 }
 
 export const handleScroll = async (scrollTop: number): Promise<void> => {
-  // @ts-ignore
   return RendererWorker.invoke('ExtensionDetail.handleScroll', scrollTop)
 }
 

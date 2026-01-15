@@ -2,17 +2,14 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const setValue = async (value: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleInput', value, InputSource.Script)
 }
 
 export const setReplaceValue = async (value: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleReplaceInput', value, InputSource.Script)
 }
 
 export const setExcludeValue = async (value: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleExcludeInput', value, InputSource.Script)
 }
 
@@ -21,7 +18,6 @@ export const replaceAll = async (): Promise<void> => {
 }
 
 export const setIncludeValue = async (value: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleIncludeInput', value, InputSource.Script)
 }
 
@@ -62,7 +58,6 @@ export const handleWheel = async (deltaMode: number, deltaY: number): Promise<vo
 }
 
 export const focusNextPage = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.focusPage')
 }
 
@@ -103,56 +98,45 @@ export const open = async (): Promise<void> => {
 }
 
 export const setLimit = async (limit: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.setLimit', limit)
 }
 
 export const handleListBlur = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleListBlur')
 }
 
 export const collapseAll = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.collapseAll')
 }
 
 export const copy = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.copy')
 }
 
 export const copyPath = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.copyPath')
 }
 
 export const handleInputCut = async (name: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleInputCut', name)
 }
 
 export const handleInputPaste = async (name: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleInputPaste', name)
 }
 
 export const handleInputCopy = async (name: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleInputCopy', name)
 }
 
 export const handleInputSelectionChange = async (name: string, start: number, end: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleInputSelectionChange', name, start, end)
 }
 
 export const handleInputContextMenu = async (name: string, button: number, x: number, y: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleInputConextMenu', name, button, x, y)
 }
 
 export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Search.handleContextMenu', name, button, x, y)
 }

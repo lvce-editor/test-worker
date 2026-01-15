@@ -3,7 +3,6 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
 export const selectIndex = async (index: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Source Control.selectIndex', index)
 }
 
@@ -12,7 +11,6 @@ export const acceptInput = async (): Promise<void> => {
 }
 
 export const handleInput = async (text: string): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('Source Control.handleInput', text, InputSource.Script)
 }
 
@@ -25,6 +23,5 @@ export const handleContextMenu = async (button: number, x: number, y: number): P
 }
 
 export const show = async (): Promise<void> => {
-  // @ts-ignore
   await SideBar.open('Source Control')
 }

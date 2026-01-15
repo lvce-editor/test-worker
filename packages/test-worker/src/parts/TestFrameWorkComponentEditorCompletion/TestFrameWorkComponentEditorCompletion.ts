@@ -9,16 +9,13 @@ export const selectCurrentIndex = async (): Promise<void> => {
 }
 
 export const close = async (): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('EditorCompletion.close')
 }
 
 export const handleWheel = async (deltaMode: number, deltaY: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('EditorCompletion.handleWheel', deltaMode, deltaY)
 }
 
 export const handlePointerdown = async (clientX: number, clientY: number): Promise<void> => {
-  // @ts-ignore
   await RendererWorker.invoke('EditorCompletion.handlePointerdown', clientX, clientY)
 }
