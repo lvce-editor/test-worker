@@ -3,7 +3,7 @@ import { createUrlWithQueryParameter } from '../CreateUrlWithQueryParameter/Crea
 import { execute } from '../Test/Test.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 
-export const hotReloadTest = async (): Promise<void> => {
+export const hotReloadTest = async (locationHref: string): Promise<void> => {
   if (!TestInfoCache.hasItems()) {
     return
   }
@@ -12,7 +12,6 @@ export const hotReloadTest = async (): Promise<void> => {
   if (inProgress) {
     return
   }
-  const locationHref = location.href
   const withQueryParameter = createUrlWithQueryParameter(url, locationHref)
   clearConsole()
   await execute(withQueryParameter, platform, assetDir)
