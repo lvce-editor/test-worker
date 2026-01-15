@@ -321,3 +321,69 @@ test('copyPath', async () => {
   await Search.copyPath()
   expect(mockRpc.invocations).toEqual([['Search.copyPath']])
 })
+
+test('handleInputCut', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Search.handleInputCut'() {
+      return undefined
+    },
+  })
+
+  await Search.handleInputCut('inputName')
+  expect(mockRpc.invocations).toEqual([['Search.handleInputCut', 'inputName']])
+})
+
+test('handleInputPaste', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Search.handleInputPaste'() {
+      return undefined
+    },
+  })
+
+  await Search.handleInputPaste('inputName')
+  expect(mockRpc.invocations).toEqual([['Search.handleInputPaste', 'inputName']])
+})
+
+test('handleInputCopy', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Search.handleInputCopy'() {
+      return undefined
+    },
+  })
+
+  await Search.handleInputCopy('inputName')
+  expect(mockRpc.invocations).toEqual([['Search.handleInputCopy', 'inputName']])
+})
+
+test('handleInputSelectionChange', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Search.handleInputSelectionChange'() {
+      return undefined
+    },
+  })
+
+  await Search.handleInputSelectionChange('inputName', 10, 20)
+  expect(mockRpc.invocations).toEqual([['Search.handleInputSelectionChange', 'inputName', 10, 20]])
+})
+
+test('handleInputContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Search.handleInputConextMenu'() {
+      return undefined
+    },
+  })
+
+  await Search.handleInputContextMenu('inputName', 2, 100, 200)
+  expect(mockRpc.invocations).toEqual([['Search.handleInputConextMenu', 'inputName', 2, 100, 200]])
+})
+
+test('handleContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Search.handleContextMenu'() {
+      return undefined
+    },
+  })
+
+  await Search.handleContextMenu(2, 150, 250)
+  expect(mockRpc.invocations).toEqual([['Search.handleContextMenu', 2, 150, 250]])
+})
