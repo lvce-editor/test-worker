@@ -1,6 +1,5 @@
 import { expect, jest, test } from '@jest/globals'
-
-const PrintTestError = await import('../src/parts/PrintTestError/PrintTestError.ts')
+import * as PrintTestError from '../src/parts/PrintTestError/PrintTestError.js'
 
 test('printTestError calls console.error', async () => {
   const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})

@@ -1,7 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-
-const Callback = await import('../src/parts/Callback/Callback.ts')
+import * as Callback from '../src/parts/Callback/Callback.js'
 
 test('executeCallback function exists and is exported', () => {
   expect(Callback.executeCallback).toBeDefined()

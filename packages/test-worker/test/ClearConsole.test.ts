@@ -1,6 +1,5 @@
 import { expect, test, jest } from '@jest/globals'
-
-const ClearConsole = await import('../src/parts/ClearConsole/ClearConsole.ts')
+import * as ClearConsole from '../src/parts/ClearConsole/ClearConsole.js'
 
 test('clearConsole function exists and is exported', () => {
   expect(ClearConsole.clearConsole).toBeDefined()
