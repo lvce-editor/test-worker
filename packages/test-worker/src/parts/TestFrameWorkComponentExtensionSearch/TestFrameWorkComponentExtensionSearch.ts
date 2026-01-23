@@ -14,6 +14,10 @@ export const handleClick = async (index: number): Promise<void> => {
   await RendererWorker.invoke('Extensions.handleClick', index)
 }
 
+export const handleClickFilter = async (): Promise<void> => {
+  await RendererWorker.invoke('Extensions.handleClickFilter')
+}
+
 export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
   await RendererWorker.invoke('Extensions.handleContextMenu', button, x, y)
 }
