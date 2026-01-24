@@ -12,6 +12,10 @@ export const focusFirst = async (): Promise<void> => {
   await RendererWorker.invoke('TitleBar.focusFirst')
 }
 
+export const setTitleTemplate = async (template: string): Promise<void> => {
+  await RendererWorker.invoke('TitleBar.setTitleTemplate', template)
+}
+
 export const focusIndex = async (index: number): Promise<void> => {
   await RendererWorker.invoke('TitleBar.focusIndex', index)
 }
