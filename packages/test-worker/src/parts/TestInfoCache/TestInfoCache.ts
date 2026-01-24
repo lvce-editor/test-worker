@@ -1,9 +1,4 @@
-export interface TestInfoItem {
-  readonly assetDir: string
-  readonly inProgress: boolean
-  readonly platform: number
-  readonly url: string
-}
+import type { TestInfoItem } from './TestInfoItem.ts'
 
 let items: readonly TestInfoItem[] = []
 
