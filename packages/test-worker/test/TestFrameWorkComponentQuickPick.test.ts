@@ -150,3 +150,27 @@ test('executeCommand', async () => {
   await QuickPick.executeCommand('test')
   expect(mockRpc.invocations).toEqual([['QuickPick.showCommands'], ['QuickPick.handleInput', 'test', 0], ['QuickPick.selectItem', 'test']])
 })
+
+test('selectItem2', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    async 'Test.registerTestCommand'(commandId: string) {
+      return
+    },
+    async 'QuickPick.selectItem'(label: string) {
+      return
+    },
+  })
+
+  // Create a promise that we can resolve from outside
+  const callbackPromise = new Promise<void>((resolve) => {
+    setTimeout(resolve, 0)
+  })
+
+  const selectPromise = QuickPick.selectItem2({ callbackCommand: 'testCommand', label: 'testLabel' })
+
+  // The test will pass if both RPC calls are made
+  await callbackPromise
+
+  expect(mockRpc.invocations).toContainEqual(['Test.registerTestCommand', 'testCommand'])
+  expect(mockRpc.invocations).toContainEqual(['QuickPick.selectItem', 'testLabel'])
+}, 10000)
