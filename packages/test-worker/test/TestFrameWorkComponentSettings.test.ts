@@ -14,3 +14,27 @@ test('update', async () => {
 
   expect(mockRpc.invocations).toEqual([['Preferences.update', testSettings]])
 })
+
+test('enableDiagnostics', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.update'() {
+      return undefined
+    },
+  })
+
+  await Settings.enableDiagnostics()
+
+  expect(mockRpc.invocations).toEqual([['Preferences.update', { 'editor.diagnostics': true }]])
+})
+
+test('disableDiagnostics', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.update'() {
+      return undefined
+    },
+  })
+
+  await Settings.disableDiagnostics()
+
+  expect(mockRpc.invocations).toEqual([['Preferences.update', { 'editor.diagnostics': false }]])
+})
