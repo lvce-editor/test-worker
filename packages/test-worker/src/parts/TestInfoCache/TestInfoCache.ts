@@ -1,5 +1,7 @@
 import type { TestInfoItem } from './TestInfoItem.ts'
 
+export type { TestInfoItem } from './TestInfoItem.ts'
+
 let items: readonly TestInfoItem[] = []
 
 export const hasItems = (): boolean => {
