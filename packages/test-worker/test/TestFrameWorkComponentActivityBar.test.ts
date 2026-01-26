@@ -24,6 +24,17 @@ test('focusFirst', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.focusFirst']])
 })
 
+test('setAccountEnabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.setAccountEnabled'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.setAccountEnabled(true)
+  expect(mockRpc.invocations).toEqual([['ActivityBar.setAccountEnabled']])
+})
+
 test('focusLast', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusLast'() {
