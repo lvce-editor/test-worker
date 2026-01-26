@@ -83,8 +83,8 @@ test('setFiles', async () => {
   })
 
   const files = [
-    { uri: 'memfs:///file1.txt', content: 'content1' },
-    { uri: 'memfs:///file2.txt', content: 'content2' },
+    { content: 'content1', uri: 'memfs:///file1.txt' },
+    { content: 'content2', uri: 'memfs:///file2.txt' },
   ]
   await FileSystem.setFiles(files)
 
@@ -258,29 +258,6 @@ test.skip('loadFixture - Web platform', async () => {
 
   expect(result).toBe('')
   expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/fixture/fileMap.json')
-})
-
-test('loadFixture - valid string url', async () => {
-  const mockFileMap = {
-    'src/file1.ts': 'content1',
-    'src/file2.ts': 'content2',
-  }
-
-  using mockRpc = RendererWorker.registerMockRpc({})
-
-  // Mock getFileMapNode to return a file map
-  const getFileMapNode = jest.fn()
-  getFileMapNode.mockResolvedValueOnce(mockFileMap)
-
-  // Call the function with valid string URL
-  try {
-    await FileSystem.loadFixture(PlatformType.Electron, 'http://localhost:3000/fixture')
-  } catch {
-    // Expected to fail since we're mocking, but it should validate the URL type first
-  }
-
-  // Verify that the function accepts a string URL
-  expect(typeof 'http://localhost:3000/fixture').toBe('string')
 })
 
 test.skip('loadFixture - non-Web platform', async () => {
