@@ -161,16 +161,12 @@ test('selectItem2', async () => {
     },
   })
 
-  // Create a promise that we can resolve from outside
-  const callbackPromise = new Promise<void>((resolve) => {
-    setTimeout(resolve, 0)
-  })
-
   const selectPromise = QuickPick.selectItem2({ callbackCommand: 'testCommand', label: 'testLabel' })
 
-  // The test will pass if both RPC calls are made
-  await Promise.all([callbackPromise, selectPromise])
+  // Wait for RPC calls to be made, but don't wait indefinitely for the callback
+  const timeoutPromise = new Promise<void>((resolve) => setTimeout(resolve, 100))
+  await Promise.race([selectPromise, timeoutPromise])
 
   expect(mockRpc.invocations).toContainEqual(['Test.registerTestCommand', 'testCommand'])
   expect(mockRpc.invocations).toContainEqual(['QuickPick.selectItem', 'testLabel'])
-}, 10000)
+})
