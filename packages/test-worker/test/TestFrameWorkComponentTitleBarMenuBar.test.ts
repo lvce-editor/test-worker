@@ -35,6 +35,17 @@ test('focusFirst', async () => {
   expect(mockRpc.invocations).toEqual([['TitleBar.focusFirst']])
 })
 
+test('setTitleTemplate', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TitleBar.setTitleTemplate'() {
+      return undefined
+    },
+  })
+
+  await TitleBar.setTitleTemplate('{fileName} - {folderName}')
+  expect(mockRpc.invocations).toEqual([['TitleBar.setTitleTemplate', '{fileName} - {folderName}']])
+})
+
 test('focusIndex', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.focusIndex'() {
