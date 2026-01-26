@@ -169,7 +169,7 @@ test('selectItem2', async () => {
   const selectPromise = QuickPick.selectItem2({ callbackCommand: 'testCommand', label: 'testLabel' })
 
   // The test will pass if both RPC calls are made
-  await callbackPromise
+  await Promise.all([callbackPromise, selectPromise])
 
   expect(mockRpc.invocations).toContainEqual(['Test.registerTestCommand', 'testCommand'])
   expect(mockRpc.invocations).toContainEqual(['QuickPick.selectItem', 'testLabel'])
