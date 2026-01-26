@@ -153,10 +153,10 @@ test('executeCommand', async () => {
 
 test('selectItem2', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    async 'Test.registerTestCommand'(commandId: string) {
+    async 'QuickPick.selectItem'(label: string) {
       return
     },
-    async 'QuickPick.selectItem'(label: string) {
+    async 'Test.registerTestCommand'(commandId: string) {
       return
     },
   })
