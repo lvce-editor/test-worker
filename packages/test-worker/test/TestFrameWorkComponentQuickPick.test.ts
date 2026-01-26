@@ -150,3 +150,23 @@ test('executeCommand', async () => {
   await QuickPick.executeCommand('test')
   expect(mockRpc.invocations).toEqual([['QuickPick.showCommands'], ['QuickPick.handleInput', 'test', 0], ['QuickPick.selectItem', 'test']])
 })
+
+test('selectItem2', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    async 'QuickPick.selectItem'(label: string) {
+      return
+    },
+    async 'Test.registerTestCommand'(commandId: string) {
+      return
+    },
+  })
+
+  const selectPromise = QuickPick.selectItem2({ callbackCommand: 'testCommand', label: 'testLabel' })
+
+  // Wait for RPC calls to be made, but don't wait indefinitely for the callback
+  const timeoutPromise = new Promise<void>((resolve) => setTimeout(resolve, 100))
+  await Promise.race([selectPromise, timeoutPromise])
+
+  expect(mockRpc.invocations).toContainEqual(['Test.registerTestCommand', 'testCommand'])
+  expect(mockRpc.invocations).toContainEqual(['QuickPick.selectItem', 'testLabel'])
+})
