@@ -40,6 +40,19 @@ test('readFile', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.readFile', 'memfs:///file.txt']])
 })
 
+test('addFileHandle', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.addFileHandle'() {
+      return undefined
+    },
+  })
+
+  const file = new File(['content'], 'test.txt', { type: 'text/plain' })
+  await FileSystem.addFileHandle(file)
+
+  expect(mockRpc.invocations).toEqual([['FileSystem.addFileHandle', file]])
+})
+
 test('mkdir', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
@@ -60,6 +73,25 @@ test('remove', async () => {
 
   await FileSystem.remove('memfs:///file.txt')
   expect(mockRpc.invocations).toEqual([['FileSystem.remove', 'memfs:///file.txt']])
+})
+
+test('setFiles', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      return undefined
+    },
+  })
+
+  const files = [
+    { content: 'content1', uri: 'memfs:///file1.txt' },
+    { content: 'content2', uri: 'memfs:///file2.txt' },
+  ]
+  await FileSystem.setFiles(files)
+
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.writeFile', 'memfs:///file1.txt', 'content1'],
+    ['FileSystem.writeFile', 'memfs:///file2.txt', 'content2'],
+  ])
 })
 
 test('getTmpDir: memfs default', async () => {
@@ -91,6 +123,17 @@ test('chmod', async () => {
 
   await FileSystem.chmod('file:///bin', '755')
   expect(mockRpc.invocations).toEqual([['FileSystem.chmod', 'file:///bin', '755']])
+})
+
+test('readDir', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.readDir('memfs:///dir')
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///dir']])
 })
 
 test('createExecutable', async () => {
