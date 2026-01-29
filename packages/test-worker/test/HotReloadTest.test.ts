@@ -4,17 +4,13 @@ import { hotReloadTest } from '../src/parts/HotReloadTest/HotReloadTest.ts'
 
 test('hotReloadTest returns early when test info cache is empty', async () => {
   const clearConsoleSpy = jest.fn()
-  const testInfoCache = {
-    hasItems: (): boolean => false,
-    last: (): any => {
-      throw new Error('Should not be called')
-    },
-  }
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => {
+      throw new Error('Should not be called')
+    },
+    hastTestInfoItems: (): boolean => false,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -24,20 +20,16 @@ test('hotReloadTest returns early when test info cache is empty', async () => {
 
 test('hotReloadTest returns early when test is in progress', async () => {
   const clearConsoleSpy = jest.fn()
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
+
+  await hotReloadTest({
+    clearConsole: clearConsoleSpy,
+    getLastTestInfoItem: (): any => ({
       assetDir: '/assets',
       inProgress: true,
       platform: 1,
       url: 'http://example.com',
     }),
-  }
-
-  await hotReloadTest({
-    clearConsole: clearConsoleSpy,
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -47,15 +39,6 @@ test('hotReloadTest returns early when test is in progress', async () => {
 
 test('hotReloadTest clears console when test info exists and not in progress', async () => {
   const clearConsoleSpy = jest.fn()
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
 
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'() {
@@ -65,8 +48,13 @@ test('hotReloadTest clears console when test info exists and not in progress', a
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -77,15 +65,6 @@ test('hotReloadTest clears console when test info exists and not in progress', a
 
 test('hotReloadTest executes test when conditions are met', async () => {
   const clearConsoleSpy = jest.fn()
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
 
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'() {
@@ -95,8 +74,13 @@ test('hotReloadTest executes test when conditions are met', async () => {
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -106,15 +90,6 @@ test('hotReloadTest executes test when conditions are met', async () => {
 
 test('hotReloadTest passes time as query parameter', async () => {
   const testTime = 1_234_567_890
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
 
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'(url: string) {
@@ -125,8 +100,13 @@ test('hotReloadTest passes time as query parameter', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: testTime,
   })
@@ -136,15 +116,6 @@ test('hotReloadTest passes time as query parameter', async () => {
 
 test('hotReloadTest passes correct asset directory', async () => {
   const assetDir = '/custom/assets'
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir,
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
 
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'(url: string, platform: number, assetDirArg: string) {
@@ -155,8 +126,13 @@ test('hotReloadTest passes correct asset directory', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir,
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -166,15 +142,6 @@ test('hotReloadTest passes correct asset directory', async () => {
 
 test('hotReloadTest passes correct platform', async () => {
   const platform = 42
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform,
-      url: 'http://example.com/test.ts',
-    }),
-  }
 
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'(url: string, platformArg: number) {
@@ -185,8 +152,13 @@ test('hotReloadTest passes correct platform', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -195,16 +167,6 @@ test('hotReloadTest passes correct platform', async () => {
 })
 
 test('hotReloadTest with different URL schemes', async () => {
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
-
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'() {
       return undefined
@@ -213,8 +175,13 @@ test('hotReloadTest with different URL schemes', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'https://secure.example.com/page',
     time: Date.now(),
   })
@@ -223,16 +190,6 @@ test('hotReloadTest with different URL schemes', async () => {
 })
 
 test('hotReloadTest with complex URL with query parameters', async () => {
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts?param1=value1&param2=value2',
-    }),
-  }
-
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'(url: string) {
       expect(typeof url).toBe('string')
@@ -243,8 +200,13 @@ test('hotReloadTest with complex URL with query parameters', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts?param1=value1&param2=value2',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -254,15 +216,6 @@ test('hotReloadTest with complex URL with query parameters', async () => {
 
 test('hotReloadTest with multiple consecutive calls', async () => {
   const clearConsoleSpy = jest.fn()
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
 
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'() {
@@ -273,16 +226,26 @@ test('hotReloadTest with multiple consecutive calls', async () => {
   // Call multiple times
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now() + 1000,
   })
@@ -292,16 +255,6 @@ test('hotReloadTest with multiple consecutive calls', async () => {
 })
 
 test('hotReloadTest with platform 0', async () => {
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 0,
-      url: 'http://example.com/test.ts',
-    }),
-  }
-
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'(url: string, platform: number) {
       expect(platform).toBe(0)
@@ -311,8 +264,13 @@ test('hotReloadTest with platform 0', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 0,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -322,15 +280,6 @@ test('hotReloadTest with platform 0', async () => {
 
 test('hotReloadTest with large time value', async () => {
   const largeTime = 9_999_999_999_999
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
 
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'(url: string) {
@@ -341,8 +290,13 @@ test('hotReloadTest with large time value', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: largeTime,
   })
@@ -351,16 +305,6 @@ test('hotReloadTest with large time value', async () => {
 })
 
 test('hotReloadTest with localhost URL', async () => {
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://localhost:3000/test.ts',
-    }),
-  }
-
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'() {
       return undefined
@@ -369,8 +313,13 @@ test('hotReloadTest with localhost URL', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://localhost:3000/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://localhost:3000',
     time: Date.now(),
   })
@@ -379,16 +328,6 @@ test('hotReloadTest with localhost URL', async () => {
 })
 
 test('hotReloadTest with file:// URL scheme', async () => {
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'file:///home/user/test.ts',
-    }),
-  }
-
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'() {
       return undefined
@@ -397,8 +336,13 @@ test('hotReloadTest with file:// URL scheme', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'file:///home/user/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'file:///home/user',
     time: Date.now(),
   })
@@ -407,16 +351,6 @@ test('hotReloadTest with file:// URL scheme', async () => {
 })
 
 test('hotReloadTest with empty asset directory', async () => {
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
-
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'() {
       return undefined
@@ -425,8 +359,13 @@ test('hotReloadTest with empty asset directory', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: Date.now(),
   })
@@ -435,16 +374,6 @@ test('hotReloadTest with empty asset directory', async () => {
 })
 
 test('hotReloadTest preserves URL base before adding time parameter', async () => {
-  const testInfoCache = {
-    hasItems: (): boolean => true,
-    last: (): any => ({
-      assetDir: '/assets',
-      inProgress: false,
-      platform: 1,
-      url: 'http://example.com/test.ts',
-    }),
-  }
-
   using mockRpc = RendererWorker.registerMockRpc({
     'Test.execute'(url: string) {
       expect(url).toContain('example.com')
@@ -455,8 +384,13 @@ test('hotReloadTest preserves URL base before adding time parameter', async () =
 
   await hotReloadTest({
     clearConsole: jest.fn(),
-    getLastTestInfoItem: (): any => testInfoCache.last(),
-    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+    getLastTestInfoItem: (): any => ({
+      assetDir: '/assets',
+      inProgress: false,
+      platform: 1,
+      url: 'http://example.com/test.ts',
+    }),
+    hastTestInfoItems: (): boolean => true,
     locationHref: 'http://example.com',
     time: 1000,
   })
