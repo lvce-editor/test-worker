@@ -1,13 +1,19 @@
-import { clearConsole } from '../ClearConsole/ClearConsole.ts'
+import type * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import { createUrlWithQueryParameter } from '../CreateUrlWithQueryParameter/CreateUrlWithQueryParameter.ts'
 import { execute } from '../Test/Test.ts'
-import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 
-export const hotReloadTest = async (locationHref: string, time: number): Promise<void> => {
-  if (!TestInfoCache.hasItems()) {
+export interface HotReloadTestOptions {
+  readonly clearConsole: () => void
+  readonly locationHref: string
+  readonly testInfoCache: TestInfoCache.ITestInfoCache
+  readonly time: number
+}
+
+export const hotReloadTest = async ({ clearConsole, locationHref, testInfoCache, time }: HotReloadTestOptions): Promise<void> => {
+  if (!testInfoCache.hasItems()) {
     return
   }
-  const last = TestInfoCache.last()
+  const last = testInfoCache.last()
   const { assetDir, inProgress, platform, url } = last
   if (inProgress) {
     return
