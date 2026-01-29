@@ -27,6 +27,10 @@ export const last = (): TestInfoItem => {
   return item
 }
 
+export const maybeLast = (): TestInfoItem | undefined => {
+  return items.at(-1)
+}
+
 export const clear = (): void => {
   items = []
 }
