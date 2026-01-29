@@ -11,13 +11,9 @@ export const handleFileWatcherEvent = async (event: any): Promise<void> => {
   const time = Date.now()
   await hotReloadTest({
     clearConsole,
+    getLastTestInfoItem: TestInfoCache.last,
+    hastTestInfoItems: TestInfoCache.hasItems,
     locationHref,
-    testInfoCache: {
-      clear: TestInfoCache.clear,
-      hasItems: TestInfoCache.hasItems,
-      last: TestInfoCache.last,
-      push: TestInfoCache.push,
-    },
     time,
   })
 }

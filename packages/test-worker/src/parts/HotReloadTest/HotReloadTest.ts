@@ -4,16 +4,23 @@ import { execute } from '../Test/Test.ts'
 
 export interface HotReloadTestOptions {
   readonly clearConsole: () => void
+  readonly getLastTestInfoItem: () => TestInfoCache.TestInfoItem
+  readonly hastTestInfoItems: () => boolean
   readonly locationHref: string
-  readonly testInfoCache: TestInfoCache.ITestInfoCache
   readonly time: number
 }
 
-export const hotReloadTest = async ({ clearConsole, locationHref, testInfoCache, time }: HotReloadTestOptions): Promise<void> => {
-  if (!testInfoCache.hasItems()) {
+export const hotReloadTest = async ({
+  clearConsole,
+  getLastTestInfoItem,
+  hastTestInfoItems,
+  locationHref,
+  time,
+}: HotReloadTestOptions): Promise<void> => {
+  if (!hastTestInfoItems()) {
     return
   }
-  const last = testInfoCache.last()
+  const last = getLastTestInfoItem()
   const { assetDir, inProgress, platform, url } = last
   if (inProgress) {
     return
