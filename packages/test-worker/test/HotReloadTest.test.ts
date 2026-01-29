@@ -3,6 +3,13 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { TestInfoItem } from '../src/parts/TestInfoCache/TestInfoItem.ts'
 import { hotReloadTest } from '../src/parts/HotReloadTest/HotReloadTest.ts'
 
+// Helper to create data URLs with base64-encoded JavaScript modules
+const createDataUrl = (code: string = ''): string => {
+  // Convert string to base64 without using Buffer
+  const encodedCode = btoa(code)
+  return `data:text/javascript;base64,${encodedCode}`
+}
+
 test('hotReloadTest returns early when test info cache is empty', async () => {
   const clearConsoleSpy = jest.fn()
 
