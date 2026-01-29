@@ -15,11 +15,11 @@ const createMockTestInfoItem = (overrides?: Partial<TestInfoCache.TestInfoItem>)
 
 describe('getHotReloadArgs', () => {
   test('returns shouldHotReload false when latestItem is undefined', () => {
-    const result = getHotReloadArgs({
-      latestItem: undefined,
-      locationHref: mockLocationHref,
-      time: mockTime,
-    })
+    const result = getHotReloadArgs(
+      undefined,
+      mockLocationHref,
+      mockTime,
+    )
 
     expect(result).toEqual({
       assetDir: '',
@@ -31,11 +31,11 @@ describe('getHotReloadArgs', () => {
 
   test('returns shouldHotReload false when inProgress is true', () => {
     const latestItem = createMockTestInfoItem({ inProgress: true })
-    const result = getHotReloadArgs({
+    const result = getHotReloadArgs(
       latestItem,
-      locationHref: mockLocationHref,
-      time: mockTime,
-    })
+      mockLocationHref,
+      mockTime,
+    )
 
     expect(result).toEqual({
       assetDir: '',
@@ -53,11 +53,11 @@ describe('getHotReloadArgs', () => {
       url: 'http://example.com/bundle.js',
     })
 
-    const result = getHotReloadArgs({
+    const result = getHotReloadArgs(
       latestItem,
-      locationHref: mockLocationHref,
-      time: mockTime,
-    })
+      mockLocationHref,
+      mockTime,
+    )
 
     expect(result.shouldHotReload).toBe(true)
     expect(result.assetDir).toBe('/my-assets')
@@ -72,11 +72,11 @@ describe('getHotReloadArgs', () => {
     })
     const time = 9_876_543_210
 
-    const result = getHotReloadArgs({
+    const result = getHotReloadArgs(
       latestItem,
-      locationHref: mockLocationHref,
+      mockLocationHref,
       time,
-    })
+    )
 
     expect(result.url).toContain(`time=${time}`)
   })
@@ -85,11 +85,11 @@ describe('getHotReloadArgs', () => {
     const assetDir = '/custom/assets/path'
     const latestItem = createMockTestInfoItem({ assetDir })
 
-    const result = getHotReloadArgs({
+    const result = getHotReloadArgs(
       latestItem,
-      locationHref: mockLocationHref,
-      time: mockTime,
-    })
+      mockLocationHref,
+      mockTime,
+    )
 
     expect(result.assetDir).toBe(assetDir)
   })
@@ -98,11 +98,11 @@ describe('getHotReloadArgs', () => {
     const platform = 5
     const latestItem = createMockTestInfoItem({ platform })
 
-    const result = getHotReloadArgs({
+    const result = getHotReloadArgs(
       latestItem,
-      locationHref: mockLocationHref,
-      time: mockTime,
-    })
+      mockLocationHref,
+      mockTime,
+    )
 
     expect(result.platform).toBe(platform)
   })
@@ -118,11 +118,11 @@ describe('getHotReloadArgs', () => {
     for (const url of testCases) {
       const latestItem = createMockTestInfoItem({ url })
 
-      const result = getHotReloadArgs({
+      const result = getHotReloadArgs(
         latestItem,
-        locationHref: mockLocationHref,
-        time: mockTime,
-      })
+        mockLocationHref,
+        mockTime,
+      )
 
       expect(result.url).toContain(url.split('?')[0])
       expect(result.url).toContain(`time=${mockTime}`)
@@ -133,11 +133,11 @@ describe('getHotReloadArgs', () => {
   test('handles empty assetDir', () => {
     const latestItem = createMockTestInfoItem({ assetDir: '' })
 
-    const result = getHotReloadArgs({
+    const result = getHotReloadArgs(
       latestItem,
-      locationHref: mockLocationHref,
-      time: mockTime,
-    })
+      mockLocationHref,
+      mockTime,
+    )
 
     expect(result.assetDir).toBe('')
     expect(result.shouldHotReload).toBe(true)
@@ -146,11 +146,11 @@ describe('getHotReloadArgs', () => {
   test('handles platform 0', () => {
     const latestItem = createMockTestInfoItem({ platform: 0 })
 
-    const result = getHotReloadArgs({
+    const result = getHotReloadArgs(
       latestItem,
-      locationHref: mockLocationHref,
-      time: mockTime,
-    })
+      mockLocationHref,
+      mockTime,
+    )
 
     expect(result.platform).toBe(0)
     expect(result.shouldHotReload).toBe(true)
@@ -160,11 +160,11 @@ describe('getHotReloadArgs', () => {
     const latestItem = createMockTestInfoItem()
     const customLocationHref = 'http://custom-host:9000'
 
-    const result = getHotReloadArgs({
+    const result = getHotReloadArgs(
       latestItem,
-      locationHref: customLocationHref,
-      time: mockTime,
-    })
+      customLocationHref,
+      mockTime,
+    )
 
     expect(result.shouldHotReload).toBe(true)
     expect(result.url).toContain(`time=${mockTime}`)

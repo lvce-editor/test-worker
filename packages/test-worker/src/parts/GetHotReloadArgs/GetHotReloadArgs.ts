@@ -1,12 +1,6 @@
 import type * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
+import type { HotReloadArgs } from '../HotReloadArgs/HotReloadArgs.ts'
 import { createUrlWithQueryParameter } from '../CreateUrlWithQueryParameter/CreateUrlWithQueryParameter.ts'
-
-export interface HotReloadArgs {
-  readonly assetDir: string
-  readonly platform: number
-  readonly shouldHotReload: boolean
-  readonly url: string
-}
 
 export const getHotReloadArgs = (latestItem: TestInfoCache.TestInfoItem | undefined, locationHref: string, time: number): HotReloadArgs => {
   if (!latestItem) {
