@@ -1,49 +1,49 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const openUri = async (uri: string): Promise<void> => {
-  await Rpc.invoke('Main.openUri', uri)
+  await RendererWorker.invoke('Main.openUri', uri)
 }
 
 export const splitRight = async (): Promise<void> => {
-  await Rpc.invoke('Main.splitRight')
+  await RendererWorker.invoke('Main.splitRight')
 }
 
 export const openKeyBindings = async (): Promise<void> => {
-  await Rpc.invoke('Main.openKeyBindings')
+  await RendererWorker.invoke('Main.openKeyBindings')
 }
 
 export const closeAllEditors = async (): Promise<void> => {
-  await Rpc.invoke('Main.closeAllEditors')
+  await RendererWorker.invoke('Main.closeAllEditors')
 }
 
 export const closeTabsLeft = async (): Promise<void> => {
-  await Rpc.invoke('Main.closeTabsLeft')
+  await RendererWorker.invoke('Main.closeTabsLeft')
 }
 
 export const closeTabsRight = async (): Promise<void> => {
-  await Rpc.invoke('Main.closeTabsRight')
+  await RendererWorker.invoke('Main.closeTabsRight')
 }
 
 export const closeOthers = async (): Promise<void> => {
-  await Rpc.invoke('Main.closeOthers')
+  await RendererWorker.invoke('Main.closeOthers')
 }
 
 export const closeActiveEditor = async (): Promise<void> => {
-  await Rpc.invoke('Main.closeActiveEditor')
+  await RendererWorker.invoke('Main.closeActiveEditor')
 }
 
 export const focusFirst = async (): Promise<void> => {
-  await Rpc.invoke('Main.focusFirst')
+  await RendererWorker.invoke('Main.focusFirst')
 }
 
 export const focusNext = async (): Promise<void> => {
-  await Rpc.invoke('Main.focusNext')
+  await RendererWorker.invoke('Main.focusNext')
 }
 
 export const focusPrevious = async (): Promise<void> => {
-  await Rpc.invoke('Main.focusPrevious')
+  await RendererWorker.invoke('Main.focusPrevious')
 }
 
 export const focusLast = async (): Promise<void> => {
-  await Rpc.invoke('Main.focusLast')
+  await RendererWorker.invoke('Main.focusLast')
 }
