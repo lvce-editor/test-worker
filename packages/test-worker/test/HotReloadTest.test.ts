@@ -1,19 +1,13 @@
 import { expect, test, jest } from '@jest/globals'
+import type { TestInfoItem } from '../src/parts/TestInfoCache/TestInfoItem.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { hotReloadTest } from '../src/parts/HotReloadTest/HotReloadTest.ts'
 
-const createMockTestInfoCache = (hasItems: boolean, lastItem?: any) => ({
-  hasItems: (): boolean => hasItems,
-  last: (): any => lastItem,
-})
-
-const createTestOptions = (testInfoCache: any, overrides: any = {}) => ({
-  clearConsole: jest.fn(),
-  getLastTestInfoItem: (): any => testInfoCache.last(),
-  hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
-  locationHref: 'http://example.com',
-  testInfoCache,
-  time: Date.now(),
+const createTestItem = (overrides?: Partial<TestInfoItem>): TestInfoItem => ({
+  assetDir: '/assets',
+  inProgress: false,
+  platform: 1,
+  url: 'http://example.com/test.ts',
   ...overrides,
 })
 
