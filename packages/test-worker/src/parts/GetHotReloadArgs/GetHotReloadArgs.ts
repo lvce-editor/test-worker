@@ -1,38 +1,15 @@
+import type { HotReloadArgs } from '../HotReloadArgs/HotReloadArgs.ts'
 import type * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import { createUrlWithQueryParameter } from '../CreateUrlWithQueryParameter/CreateUrlWithQueryParameter.ts'
+import { emptyHotReloadArgs } from '../EmptyHotReloadArgs/EmptyHotReloadArgs.ts'
 
-export interface HotReloadArgs {
-  readonly assetDir: string
-  readonly platform: number
-  readonly shouldHotReload: boolean
-  readonly url: string
-}
-
-export const getHotReloadArgs = ({
-  latestItem,
-  locationHref,
-  time,
-}: {
-  readonly latestItem: TestInfoCache.TestInfoItem | undefined
-  readonly locationHref: string
-  readonly time: number
-}): HotReloadArgs => {
+export const getHotReloadArgs = (latestItem: TestInfoCache.TestInfoItem | undefined, locationHref: string, time: number): HotReloadArgs => {
   if (!latestItem) {
-    return {
-      assetDir: '',
-      platform: 0,
-      shouldHotReload: false,
-      url: '',
-    }
+    return emptyHotReloadArgs
   }
   const { assetDir, inProgress, platform, url } = latestItem
   if (inProgress) {
-    return {
-      assetDir: '',
-      platform: 0,
-      shouldHotReload: false,
-      url: '',
-    }
+    return emptyHotReloadArgs
   }
   const withQueryParameter = createUrlWithQueryParameter(url, locationHref, time)
   return {
