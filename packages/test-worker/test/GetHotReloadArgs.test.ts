@@ -102,7 +102,7 @@ test('handles different URL formats', () => {
   const testCases = [
     { expected: `http://example.com/test.js?time=${mockTime}`, url: 'http://example.com/test.js' },
     { expected: `https://example.com:8080/path/to/file.js?time=${mockTime}`, url: 'https://example.com:8080/path/to/file.js' },
-    { expected: `/relative/path.js?time=${mockTime}`, url: '/relative/path.js' },
+    { expected: `http://localhost:3000/relative/path.js?time=${mockTime}`, url: '/relative/path.js' },
     { expected: `http://example.com/test.js?existing=param&time=${mockTime}`, url: 'http://example.com/test.js?existing=param' },
   ]
 
