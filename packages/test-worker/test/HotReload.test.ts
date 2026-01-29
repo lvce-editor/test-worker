@@ -46,8 +46,9 @@ test('hotReloadTest returns early when test is in progress', async () => {
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -74,8 +75,9 @@ test('hotReloadTest clears console when test info exists and not in progress', a
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -103,8 +105,9 @@ test('hotReloadTest executes test when conditions are met', async () => {
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -132,8 +135,9 @@ test('hotReloadTest passes time as query parameter', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: testTime,
   })
 
@@ -161,8 +165,9 @@ test('hotReloadTest passes correct asset directory', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -190,8 +195,9 @@ test('hotReloadTest passes correct platform', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -217,8 +223,9 @@ test('hotReloadTest with different URL schemes', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'https://secure.example.com/page',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -246,8 +253,9 @@ test('hotReloadTest with complex URL with query parameters', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -275,15 +283,17 @@ test('hotReloadTest with multiple consecutive calls', async () => {
   // Call multiple times
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now() + 1000,
   })
 
@@ -311,8 +321,9 @@ test('hotReloadTest with platform 0', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -340,8 +351,9 @@ test('hotReloadTest with large time value', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: largeTime,
   })
 
@@ -367,8 +379,9 @@ test('hotReloadTest with localhost URL', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://localhost:3000',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -394,8 +407,9 @@ test('hotReloadTest with file:// URL scheme', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'file:///home/user',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -421,8 +435,9 @@ test('hotReloadTest with empty asset directory', async () => {
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: Date.now(),
   })
 
@@ -450,8 +465,9 @@ test('hotReloadTest preserves URL base before adding time parameter', async () =
 
   await hotReloadTest({
     clearConsole: jest.fn(),
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
-    testInfoCache: testInfoCache as any,
     time: 1000,
   })
 
