@@ -9,6 +9,7 @@ const clearConsole = (): void => {
 export const handleFileWatcherEvent = async (event: any): Promise<void> => {
   const locationHref = location.href
   const time = Date.now()
+  const lastItem = TestInfoCache.hasItems() ? TestInfoCache.last() : undefined
   await hotReloadTest({
     clearConsole,
     getLastTestInfoItem: TestInfoCache.last,

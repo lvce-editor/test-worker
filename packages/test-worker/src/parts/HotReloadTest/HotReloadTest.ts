@@ -10,14 +10,8 @@ export interface HotReloadTestOptions {
   readonly time: number
 }
 
-export const hotReloadTest = async ({
-  clearConsole,
-  getLastTestInfoItem,
-  hastTestInfoItems,
-  locationHref,
-  time,
-}: HotReloadTestOptions): Promise<void> => {
-  const { assetDir, platform, shouldHotReload, url } = getHotReloadArgs({ latestItem: getLastTestInfoItem(), locationHref, time })
+export const hotReloadTest = async (lastItem: TestInfoCache.TestInfoItem | undefined, locationHref: string, time: number): Promise<void> => {
+  const { assetDir, platform, shouldHotReload, url } = getHotReloadArgs({ latestItem: lastItem, locationHref, time })
   if (!shouldHotReload) {
     return
   }
