@@ -46,11 +46,12 @@ test('returns shouldHotReload true when latestItem is valid and inProgress is fa
 
   const result = getHotReloadArgs(latestItem, mockLocationHref, mockTime)
 
-  expect(result.shouldHotReload).toBe(true)
-  expect(result.assetDir).toBe('/my-assets')
-  expect(result.platform).toBe(2)
-  expect(result.url).toContain('http://example.com/bundle.js')
-  expect(result.url).toContain(`time=${mockTime}`)
+  expect(result).toEqual({
+    assetDir: '/my-assets',
+    platform: 2,
+    shouldHotReload: true,
+    url: `http://example.com/bundle.js?time=${mockTime}`,
+  })
 })
 
 test('adds time query parameter to URL', () => {
@@ -61,7 +62,12 @@ test('adds time query parameter to URL', () => {
 
   const result = getHotReloadArgs(latestItem, mockLocationHref, time)
 
-  expect(result.url).toContain(`time=${time}`)
+  expect(result).toEqual({
+    assetDir: '/assets',
+    platform: 1,
+    shouldHotReload: true,
+    url: `http://example.com/test.js?time=${time}`,
+  })
 })
 
 test('preserves assetDir from latestItem', () => {
@@ -70,7 +76,12 @@ test('preserves assetDir from latestItem', () => {
 
   const result = getHotReloadArgs(latestItem, mockLocationHref, mockTime)
 
-  expect(result.assetDir).toBe(assetDir)
+  expect(result).toEqual({
+    assetDir,
+    platform: 1,
+    shouldHotReload: true,
+    url: `http://example.com/test.js?time=${mockTime}`,
+  })
 })
 
 test('preserves platform from latestItem', () => {
@@ -79,25 +90,33 @@ test('preserves platform from latestItem', () => {
 
   const result = getHotReloadArgs(latestItem, mockLocationHref, mockTime)
 
-  expect(result.platform).toBe(platform)
+  expect(result).toEqual({
+    assetDir: '/assets',
+    platform,
+    shouldHotReload: true,
+    url: `http://example.com/test.js?time=${mockTime}`,
+  })
 })
 
 test('handles different URL formats', () => {
   const testCases = [
-    'http://example.com/test.js',
-    'https://example.com:8080/path/to/file.js',
-    '/relative/path.js',
-    'http://example.com/test.js?existing=param',
+    { expected: `http://example.com/test.js?time=${mockTime}`, url: 'http://example.com/test.js' },
+    { expected: `https://example.com:8080/path/to/file.js?time=${mockTime}`, url: 'https://example.com:8080/path/to/file.js' },
+    { expected: `http://localhost:3000/relative/path.js?time=${mockTime}`, url: '/relative/path.js' },
+    { expected: `http://example.com/test.js?existing=param&time=${mockTime}`, url: 'http://example.com/test.js?existing=param' },
   ]
 
-  for (const url of testCases) {
-    const latestItem = createMockTestInfoItem({ url })
+  for (const testCase of testCases) {
+    const latestItem = createMockTestInfoItem({ url: testCase.url })
 
     const result = getHotReloadArgs(latestItem, mockLocationHref, mockTime)
 
-    expect(result.url).toContain(url.split('?')[0])
-    expect(result.url).toContain(`time=${mockTime}`)
-    expect(result.shouldHotReload).toBe(true)
+    expect(result).toEqual({
+      assetDir: '/assets',
+      platform: 1,
+      shouldHotReload: true,
+      url: testCase.expected,
+    })
   }
 })
 
@@ -106,8 +125,12 @@ test('handles empty assetDir', () => {
 
   const result = getHotReloadArgs(latestItem, mockLocationHref, mockTime)
 
-  expect(result.assetDir).toBe('')
-  expect(result.shouldHotReload).toBe(true)
+  expect(result).toEqual({
+    assetDir: '',
+    platform: 1,
+    shouldHotReload: true,
+    url: `http://example.com/test.js?time=${mockTime}`,
+  })
 })
 
 test('handles platform 0', () => {
@@ -115,8 +138,12 @@ test('handles platform 0', () => {
 
   const result = getHotReloadArgs(latestItem, mockLocationHref, mockTime)
 
-  expect(result.platform).toBe(0)
-  expect(result.shouldHotReload).toBe(true)
+  expect(result).toEqual({
+    assetDir: '/assets',
+    platform: 0,
+    shouldHotReload: true,
+    url: `http://example.com/test.js?time=${mockTime}`,
+  })
 })
 
 test('uses locationHref for query parameter construction', () => {
@@ -125,6 +152,10 @@ test('uses locationHref for query parameter construction', () => {
 
   const result = getHotReloadArgs(latestItem, customLocationHref, mockTime)
 
-  expect(result.shouldHotReload).toBe(true)
-  expect(result.url).toContain(`time=${mockTime}`)
+  expect(result).toEqual({
+    assetDir: '/assets',
+    platform: 1,
+    shouldHotReload: true,
+    url: `http://example.com/test.js?time=${mockTime}`,
+  })
 })
