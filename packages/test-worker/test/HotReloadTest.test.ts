@@ -2,17 +2,34 @@ import { expect, test, jest } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { hotReloadTest } from '../src/parts/HotReloadTest/HotReloadTest.ts'
 
+const createMockTestInfoCache = (hasItems: boolean, lastItem?: any) => ({
+  hasItems: (): boolean => hasItems,
+  last: (): any => lastItem,
+})
+
+const createTestOptions = (testInfoCache: any, overrides: any = {}) => ({
+  clearConsole: jest.fn(),
+  getLastTestInfoItem: (): any => testInfoCache.last(),
+  hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
+  locationHref: 'http://example.com',
+  testInfoCache,
+  time: Date.now(),
+  ...overrides,
+})
+
 test('hotReloadTest returns early when test info cache is empty', async () => {
   const clearConsoleSpy = jest.fn()
   const testInfoCache = {
-    hasItems: () => false,
-    last: () => {
+    hasItems: (): boolean => false,
+    last: (): any => {
       throw new Error('Should not be called')
     },
   }
 
   await hotReloadTest({
     clearConsole: clearConsoleSpy,
+    getLastTestInfoItem: (): any => testInfoCache.last(),
+    hastTestInfoItems: (): boolean => testInfoCache.hasItems(),
     locationHref: 'http://example.com',
     testInfoCache: testInfoCache as any,
     time: Date.now(),
@@ -24,8 +41,8 @@ test('hotReloadTest returns early when test info cache is empty', async () => {
 test('hotReloadTest returns early when test is in progress', async () => {
   const clearConsoleSpy = jest.fn()
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: true,
       platform: 1,
@@ -46,8 +63,8 @@ test('hotReloadTest returns early when test is in progress', async () => {
 test('hotReloadTest clears console when test info exists and not in progress', async () => {
   const clearConsoleSpy = jest.fn()
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -75,8 +92,8 @@ test('hotReloadTest clears console when test info exists and not in progress', a
 test('hotReloadTest executes test when conditions are met', async () => {
   const clearConsoleSpy = jest.fn()
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -103,8 +120,8 @@ test('hotReloadTest executes test when conditions are met', async () => {
 test('hotReloadTest passes time as query parameter', async () => {
   const testTime = 1_234_567_890
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -132,8 +149,8 @@ test('hotReloadTest passes time as query parameter', async () => {
 test('hotReloadTest passes correct asset directory', async () => {
   const assetDir = '/custom/assets'
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir,
       inProgress: false,
       platform: 1,
@@ -161,8 +178,8 @@ test('hotReloadTest passes correct asset directory', async () => {
 test('hotReloadTest passes correct platform', async () => {
   const platform = 42
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform,
@@ -189,8 +206,8 @@ test('hotReloadTest passes correct platform', async () => {
 
 test('hotReloadTest with different URL schemes', async () => {
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -216,8 +233,8 @@ test('hotReloadTest with different URL schemes', async () => {
 
 test('hotReloadTest with complex URL with query parameters', async () => {
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -246,8 +263,8 @@ test('hotReloadTest with complex URL with query parameters', async () => {
 test('hotReloadTest with multiple consecutive calls', async () => {
   const clearConsoleSpy = jest.fn()
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -282,8 +299,8 @@ test('hotReloadTest with multiple consecutive calls', async () => {
 
 test('hotReloadTest with platform 0', async () => {
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 0,
@@ -311,8 +328,8 @@ test('hotReloadTest with platform 0', async () => {
 test('hotReloadTest with large time value', async () => {
   const largeTime = 9_999_999_999_999
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -339,8 +356,8 @@ test('hotReloadTest with large time value', async () => {
 
 test('hotReloadTest with localhost URL', async () => {
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -366,8 +383,8 @@ test('hotReloadTest with localhost URL', async () => {
 
 test('hotReloadTest with file:// URL scheme', async () => {
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
@@ -393,8 +410,8 @@ test('hotReloadTest with file:// URL scheme', async () => {
 
 test('hotReloadTest with empty asset directory', async () => {
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '',
       inProgress: false,
       platform: 1,
@@ -420,8 +437,8 @@ test('hotReloadTest with empty asset directory', async () => {
 
 test('hotReloadTest preserves URL base before adding time parameter', async () => {
   const testInfoCache = {
-    hasItems: () => true,
-    last: () => ({
+    hasItems: (): boolean => true,
+    last: (): any => ({
       assetDir: '/assets',
       inProgress: false,
       platform: 1,
