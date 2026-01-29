@@ -85,6 +85,28 @@ test('handleContextMenu with different button numbers', async () => {
   ])
 })
 
+test('handleClickFilter', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Extensions.handleClickFilter'() {
+      return undefined
+    },
+  })
+  await ExtensionSearch.handleClickFilter()
+  expect(mockRpc.invocations).toEqual([['Extensions.handleClickFilter']])
+})
+
+test('handleClickFilter can be called multiple times', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Extensions.handleClickFilter'() {
+      return undefined
+    },
+  })
+  await ExtensionSearch.handleClickFilter()
+  await ExtensionSearch.handleClickFilter()
+  await ExtensionSearch.handleClickFilter()
+  expect(mockRpc.invocations).toEqual([['Extensions.handleClickFilter'], ['Extensions.handleClickFilter'], ['Extensions.handleClickFilter']])
+})
+
 test('copyExtensionInfo', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Extensions.copyExtensionInfo'() {
@@ -126,6 +148,9 @@ test('multiple operations in sequence', async () => {
     'Extensions.handleClick'() {
       return undefined
     },
+    'Extensions.handleClickFilter'() {
+      return undefined
+    },
     'Extensions.handleInput'() {
       return undefined
     },
@@ -136,6 +161,7 @@ test('multiple operations in sequence', async () => {
 
   await ExtensionSearch.open()
   await ExtensionSearch.handleInput('search term')
+  await ExtensionSearch.handleClickFilter()
   await ExtensionSearch.handleClick(2)
   await ExtensionSearch.copyExtensionInfo()
   await ExtensionSearch.clearSearchResults()
@@ -143,6 +169,7 @@ test('multiple operations in sequence', async () => {
   expect(mockRpc.invocations).toEqual([
     ['SideBar.openViewlet', 'Extensions'],
     ['Extensions.handleInput', 'search term', InputSource.Script],
+    ['Extensions.handleClickFilter'],
     ['Extensions.handleClick', 2],
     ['Extensions.copyExtensionInfo'],
     ['Extensions.clearSearchResults'],
