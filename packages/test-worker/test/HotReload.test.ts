@@ -3,6 +3,14 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { TestInfoItem } from '../src/parts/TestInfoCache/TestInfoItem.ts'
 import { hotReloadTest } from '../src/parts/HotReloadTest/HotReloadTest.ts'
 
+const createTestItem = (overrides?: Partial<TestInfoItem>): TestInfoItem => ({
+  assetDir: '/assets',
+  inProgress: false,
+  platform: 1,
+  url: 'http://example.com/test.ts',
+  ...overrides,
+})
+
 test('hotReloadTest returns early when test info cache is empty', async () => {
   const clearConsoleSpy = jest.fn()
   const testInfoCache = {
