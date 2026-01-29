@@ -1,5 +1,4 @@
 import type * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
-import type { HotReloadTestOptions } from './HotReloadTestOptions.ts'
 import { getHotReloadArgs } from '../GetHotReloadArgs/GetHotReloadArgs.ts'
 import { doHotReload } from './DoHotReload.ts'
 
