@@ -1,5 +1,5 @@
 import type * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
-import { createUrlWithQueryParameter } from '../CreateUrlWithQueryParameter/CreateUrlWithQueryParameter.ts'
+import { getHotReloadArgs } from '../GetHotReloadArgs/GetHotReloadArgs.ts'
 import { execute } from '../Test/Test.ts'
 
 export interface HotReloadTestOptions {
@@ -10,6 +10,15 @@ export interface HotReloadTestOptions {
   readonly time: number
 }
 
+<<<<<<< HEAD
+=======
+const doHotReload = async (url: string, platform: number, assetDir: string): Promise<void> => {
+  // eslint-disable-next-line no-console
+  console.clear()
+  await execute(url, platform, assetDir)
+}
+
+>>>>>>> origin/main
 export const hotReloadTest = async ({
   clearConsole,
   getLastTestInfoItem,
@@ -17,6 +26,7 @@ export const hotReloadTest = async ({
   locationHref,
   time,
 }: HotReloadTestOptions): Promise<void> => {
+<<<<<<< HEAD
   if (!hastTestInfoItems()) {
     return
   }
@@ -28,4 +38,11 @@ export const hotReloadTest = async ({
   const withQueryParameter = createUrlWithQueryParameter(url, locationHref, time)
   clearConsole()
   await execute(withQueryParameter, platform, assetDir)
+=======
+  const { assetDir, platform, shouldHotReload, url } = getHotReloadArgs({ latestItem: getLastTestInfoItem(), locationHref, time })
+  if (!shouldHotReload) {
+    return
+  }
+  await doHotReload(url, platform, assetDir)
+>>>>>>> origin/main
 }
