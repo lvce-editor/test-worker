@@ -1,6 +1,6 @@
 import type * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import { getHotReloadArgs } from '../GetHotReloadArgs/GetHotReloadArgs.ts'
-import { execute } from '../Test/Test.ts'
+import { doHotReload } from './DoHotReload.ts'
 
 export interface HotReloadTestOptions {
   readonly clearConsole: () => void
@@ -8,12 +8,6 @@ export interface HotReloadTestOptions {
   readonly hastTestInfoItems: () => boolean
   readonly locationHref: string
   readonly time: number
-}
-
-const doHotReload = async (url: string, platform: number, assetDir: string): Promise<void> => {
-  // eslint-disable-next-line no-console
-  console.clear()
-  await execute(url, platform, assetDir)
 }
 
 export const hotReloadTest = async ({
