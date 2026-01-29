@@ -14,15 +14,15 @@ const createMockTestInfoItem = (overrides?: Partial<TestInfoCache.TestInfoItem>)
 })
 
 test('returns shouldHotReload false when latestItem is undefined', () => {
-    const result = getHotReloadArgs(undefined, mockLocationHref, mockTime)
+  const result = getHotReloadArgs(undefined, mockLocationHref, mockTime)
 
-    expect(result).toEqual({
-      assetDir: '',
-      platform: 0,
-      shouldHotReload: false,
-      url: '',
-    })
+  expect(result).toEqual({
+    assetDir: '',
+    platform: 0,
+    shouldHotReload: false,
+    url: '',
   })
+})
 
 test('returns shouldHotReload false when inProgress is true', () => {
   const latestItem = createMockTestInfoItem({ inProgress: true })
@@ -126,4 +126,5 @@ test('uses locationHref for query parameter construction', () => {
   const result = getHotReloadArgs(latestItem, customLocationHref, mockTime)
 
   expect(result.shouldHotReload).toBe(true)
-  expect(result.url).toContain(`time=${mockTime}`)})
+  expect(result.url).toContain(`time=${mockTime}`)
+})
