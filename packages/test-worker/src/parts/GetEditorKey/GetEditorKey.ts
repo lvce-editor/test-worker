@@ -6,6 +6,6 @@ export const getEditorKey = async (): Promise<number> => {
     throw new Error(`no editor found`)
   }
   const key = keys.at(-1)
-  const numeric = Number.parseInt(key)
+  const numeric = Number.parseFloat(key)
   return numeric
 }
