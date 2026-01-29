@@ -8,15 +8,11 @@ export interface HotReloadArgs {
   readonly url: string
 }
 
-export const getHotReloadArgs = ({
-  latestItem,
-  locationHref,
-  time,
-}: {
-  readonly latestItem: TestInfoCache.TestInfoItem | undefined
-  readonly locationHref: string
-  readonly time: number
-}): HotReloadArgs => {
+export const getHotReloadArgs = (
+  latestItem: TestInfoCache.TestInfoItem | undefined,
+  locationHref: string,
+  time: number,
+): HotReloadArgs => {
   if (!latestItem) {
     return {
       assetDir: '',
