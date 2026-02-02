@@ -24,6 +24,10 @@ export const closeTabsRight = async (): Promise<void> => {
   await RendererWorker.invoke('Main.closeTabsRight')
 }
 
+export const selectTab = async (groupIndex: number, tabIndex: number): Promise<void> => {
+  await RendererWorker.invoke('Main.selectTab', groupIndex, tabIndex)
+}
+
 export const closeOthers = async (): Promise<void> => {
   await RendererWorker.invoke('Main.closeOthers')
 }
