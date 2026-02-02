@@ -98,3 +98,27 @@ test('closeTabsLeft/Right and others', async () => {
     ['Main.focusLast'],
   ])
 })
+
+test('save', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.save'() {
+      return undefined
+    },
+  })
+
+  await Main.save()
+
+  expect(mockRpc.invocations).toEqual([['Main.save']])
+})
+
+test('handleTabsContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.handleTabsContextMenu'() {
+      return undefined
+    },
+  })
+
+  await Main.handleTabsContextMenu(100, 200)
+
+  expect(mockRpc.invocations).toEqual([['Main.handleTabsContextMenu', 100, 200]])
+})
