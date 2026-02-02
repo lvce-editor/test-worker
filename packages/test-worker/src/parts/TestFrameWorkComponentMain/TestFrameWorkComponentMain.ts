@@ -20,6 +20,10 @@ export const closeTabsLeft = async (): Promise<void> => {
   await RendererWorker.invoke('Main.closeTabsLeft')
 }
 
+export const handleModifiedStatusChange = async (uri: string, newStatus: boolean): Promise<void> => {
+  await RendererWorker.invoke('Main.handleModifiedStatusChange', uri, newStatus)
+}
+
 export const closeTabsRight = async (): Promise<void> => {
   await RendererWorker.invoke('Main.closeTabsRight')
 }
