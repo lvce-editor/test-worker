@@ -3,28 +3,23 @@ import { RendererWorker, EditorWorker } from '@lvce-editor/rpc-registry'
 import { initializeEditorWorker } from '../src/parts/InitializeEditorWorker/InitializeEditorWorker.ts'
 
 test('initializeEditorWorker: initializes lazy RPC and responds to messages', async () => {
-  let capturedPort: MessagePort | null = null
-
   using _mockRpc = RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker'(port: MessagePort): undefined {
-      capturedPort = port
-      // Listen for messages on the port and send back a response
-      port.onmessage = (): void => {
-        port.postMessage({ response: 'ack' })
+      port.onmessage = (event: any): void => {
+        const { data, target } = event
+        target.postMessage({
+          id: data.id,
+          jsonrpc: '2.0',
+          result: 123,
+        })
       }
       return undefined
     },
   })
-
   await initializeEditorWorker()
-
-  // Verify that the port was captured
-  expect(capturedPort).toBeDefined()
-
-  // Trigger the lazy RPC by invoking a command to cause the port to be sent
-  try {
-    await EditorWorker.invoke('test.command', {})
-  } catch {
-    // Command may not exist, but we're testing the lazy initialization
-  }
+  await EditorWorker.invoke('test.command', {})
+  expect(_mockRpc.invocations).toEqual([
+    ['SendMessagePortToExtensionHostWorker.sendMessagePortToEditorWorker', expect.anything(), 'HandleMessagePort.handleMessagePort', 9001],
+  ])
+  await EditorWorker.dispose()
 })
