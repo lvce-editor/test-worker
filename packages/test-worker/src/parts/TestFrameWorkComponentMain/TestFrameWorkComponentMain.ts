@@ -51,3 +51,7 @@ export const focusPrevious = async (): Promise<void> => {
 export const focusLast = async (): Promise<void> => {
   await RendererWorker.invoke('Main.focusLast')
 }
+
+export const handleTabsContextMenu = async (x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('Main.handleTabsContextMenu', x, y)
+}
