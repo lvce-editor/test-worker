@@ -32,6 +32,10 @@ export const closeActiveEditor = async (): Promise<void> => {
   await RendererWorker.invoke('Main.closeActiveEditor')
 }
 
+export const save = async (): Promise<void> => {
+  await RendererWorker.invoke('Main.save')
+}
+
 export const focusFirst = async (): Promise<void> => {
   await RendererWorker.invoke('Main.focusFirst')
 }
