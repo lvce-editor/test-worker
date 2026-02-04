@@ -122,3 +122,51 @@ test('handleTabContextMenu', async () => {
 
   expect(mockRpc.invocations).toEqual([['Main.handleTabContextMenu', 0, 100, 200]])
 })
+
+test('handleModifiedStatusChange', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.handleModifiedStatusChange'() {
+      return undefined
+    },
+  })
+
+  await Main.handleModifiedStatusChange('file:///test.txt', true)
+
+  expect(mockRpc.invocations).toEqual([['Main.handleModifiedStatusChange', 'file:///test.txt', true]])
+})
+
+test('selectTab', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.selectTab'() {
+      return undefined
+    },
+  })
+
+  await Main.selectTab(0, 1)
+
+  expect(mockRpc.invocations).toEqual([['Main.selectTab', 0, 1]])
+})
+
+test('copyPath', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.copyPath'() {
+      return undefined
+    },
+  })
+
+  await Main.copyPath()
+
+  expect(mockRpc.invocations).toEqual([['Main.copyPath']])
+})
+
+test('copyRelativePath', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.copyRelativePath'() {
+      return undefined
+    },
+  })
+
+  await Main.copyRelativePath()
+
+  expect(mockRpc.invocations).toEqual([['Main.copyRelativePath']])
+})
