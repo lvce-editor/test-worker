@@ -23,6 +23,7 @@ import * as IconTheme from '../TestFrameWorkComponentIconTheme/TestFrameWorkComp
 import * as IframeInspector from '../TestFrameWorkComponentIframeInspector/TestFrameWorkComponentIframeInspector.ts'
 import * as KeyBindingsEditor from '../TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
 import * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkComponentKeyBoard.ts'
+import * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 import * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 import * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
@@ -79,6 +80,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     IframeInspector,
     KeyBindingsEditor,
     KeyBoard,
+    LanguageModels,
     Locator,
     Main,
     Output,
