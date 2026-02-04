@@ -111,14 +111,14 @@ test('save', async () => {
   expect(mockRpc.invocations).toEqual([['Main.save']])
 })
 
-test('handleTabsContextMenu', async () => {
+test('handleTabContextMenu', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Main.handleTabsContextMenu'() {
+    'Main.handleTabContextMenu'() {
       return undefined
     },
   })
 
-  await Main.handleTabsContextMenu(100, 200)
+  await Main.handleTabContextMenu(0, 100, 200)
 
-  expect(mockRpc.invocations).toEqual([['Main.handleTabsContextMenu', 100, 200]])
+  expect(mockRpc.invocations).toEqual([['Main.handleTabContextMenu', 0, 100, 200]])
 })
