@@ -63,3 +63,11 @@ export const focusLast = async (): Promise<void> => {
 export const handleTabsContextMenu = async (x: number, y: number): Promise<void> => {
   await RendererWorker.invoke('Main.handleTabsContextMenu', x, y)
 }
+
+export const copyPath = async (): Promise<void> => {
+  await RendererWorker.invoke('Main.copyPath')
+}
+
+export const copyRelativePath = async (): Promise<void> => {
+  await RendererWorker.invoke('Main.copyRelativePath')
+}
