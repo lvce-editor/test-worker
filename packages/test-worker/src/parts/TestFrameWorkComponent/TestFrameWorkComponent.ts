@@ -22,6 +22,7 @@ export * as IconTheme from '../TestFrameWorkComponentIconTheme/TestFrameWorkComp
 export * as IframeInspector from '../TestFrameWorkComponentIframeInspector/TestFrameWorkComponentIframeInspector.ts'
 export * as KeyBindingsEditor from '../TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
 export * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkComponentKeyBoard.ts'
+export * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 export * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 export * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 export * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
