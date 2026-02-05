@@ -10,6 +10,8 @@ export default [
   {
     files: ['**/*.ts'],
     rules: {
+      '@cspell/spellchecker': 'off',
+
       'no-useless-catch': 'off',
       'no-ex-assign': 'off',
       'jest/no-restricted-jest-methods': 'off',
