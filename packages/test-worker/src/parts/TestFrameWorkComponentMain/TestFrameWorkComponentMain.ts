@@ -12,6 +12,10 @@ export const openKeyBindings = async (): Promise<void> => {
   await RendererWorker.invoke('Main.openKeyBindings')
 }
 
+export const handleClickTogglePreview = async (): Promise<void> => {
+  await RendererWorker.invoke('Main.handleClickTogglePreview')
+}
+
 export const closeAllEditors = async (): Promise<void> => {
   await RendererWorker.invoke('Main.closeAllEditors')
 }
