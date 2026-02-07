@@ -27,6 +27,7 @@ export * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.
 export * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 export * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 export * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
+export * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponentPreview.ts'
 export * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 export * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 export * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'

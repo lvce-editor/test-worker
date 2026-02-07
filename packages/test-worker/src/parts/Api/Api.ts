@@ -28,6 +28,7 @@ import type * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponent
 import type * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import type * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 import type * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
+import type * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponentPreview.ts'
 import type * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 import type * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 import type * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
@@ -84,6 +85,7 @@ export interface Api {
   Output: typeof Output
   Panel: typeof Panel
   Platform: typeof Platform
+  Preview: typeof Preview
   Problems: typeof Problems
   QuickPick: typeof QuickPick
   References: typeof References
