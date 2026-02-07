@@ -28,6 +28,7 @@ import * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.
 import * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 import * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
+import * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponentPreview.ts'
 import * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 import * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 import * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
@@ -86,6 +87,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     Output,
     Panel,
     Platform,
+    Preview,
     Problems,
     QuickPick,
     References,
