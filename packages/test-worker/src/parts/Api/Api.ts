@@ -3,6 +3,7 @@ import type { expect, getTmpDir, Locator } from '../TestFrameWork/TestFrameWork.
 import type { ColorPicker } from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
 import type * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import type * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
+import type * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
 import type * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import type * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import type * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
@@ -55,6 +56,7 @@ type IBaseUrl = {
 export interface Api {
   About: typeof About
   ActivityBar: typeof ActivityBar
+  Audio: typeof Audio
   BaseUrl: IBaseUrl
   ClipBoard: typeof ClipBoard
   ColorPicker: typeof ColorPicker
