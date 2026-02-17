@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { SearchInputType } from '../SearchInputType/SearchInputType.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const setValue = async (value: string): Promise<void> => {
@@ -117,23 +118,23 @@ export const copyPath = async (): Promise<void> => {
   await RendererWorker.invoke('Search.copyPath')
 }
 
-export const handleInputCut = async (name: string): Promise<void> => {
+export const handleInputCut = async (name: SearchInputType): Promise<void> => {
   await RendererWorker.invoke('Search.handleInputCut', name)
 }
 
-export const handleInputPaste = async (name: string): Promise<void> => {
+export const handleInputPaste = async (name: SearchInputType): Promise<void> => {
   await RendererWorker.invoke('Search.handleInputPaste', name)
 }
 
-export const handleInputCopy = async (name: string): Promise<void> => {
+export const handleInputCopy = async (name: SearchInputType): Promise<void> => {
   await RendererWorker.invoke('Search.handleInputCopy', name)
 }
 
-export const handleInputSelectionChange = async (name: string, start: number, end: number): Promise<void> => {
+export const handleInputSelectionChange = async (name: SearchInputType, start: number, end: number): Promise<void> => {
   await RendererWorker.invoke('Search.handleInputSelectionChange', name, start, end)
 }
 
-export const handleInputContextMenu = async (name: string, button: number, x: number, y: number): Promise<void> => {
+export const handleInputContextMenu = async (name: SearchInputType, button: number, x: number, y: number): Promise<void> => {
   await RendererWorker.invoke('Search.handleInputConextMenu', name, button, x, y)
 }
 
