@@ -3,6 +3,7 @@ import { expect, getTmpDir, Locator, test } from '../TestFrameWork/TestFrameWork
 import { ColorPicker } from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
 import * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
+import * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
 import * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
@@ -48,6 +49,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
   return {
     About,
     ActivityBar,
+    Audio,
     BaseUrl: {
       getBaseUrl(): string {
         return assetDir

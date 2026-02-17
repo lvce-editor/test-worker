@@ -1,5 +1,6 @@
 import type { test } from '../TestFrameWork/TestFrameWork.ts'
 import type { expect, getTmpDir, Locator } from '../TestFrameWork/TestFrameWork.ts'
+import type * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
 import type { ColorPicker } from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
 import type * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import type * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
@@ -55,6 +56,7 @@ type IBaseUrl = {
 export interface Api {
   About: typeof About
   ActivityBar: typeof ActivityBar
+  Audio: typeof Audio
   BaseUrl: IBaseUrl
   ClipBoard: typeof ClipBoard
   ColorPicker: typeof ColorPicker
