@@ -50,6 +50,30 @@ export const cursorDown = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.cursorDown')
 }
 
+export const selectDown = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectDown')
+}
+
+export const selectAllLeft = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectAllLeft')
+}
+
+export const selectionGrow = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectionGrow')
+}
+
+export const selectAllRight = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectAllRight')
+}
+
+export const selectAllOccurrences = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectAllOccurrences')
+}
+
+export const selectUp = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectUp')
+}
+
 export const cursorUp = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.cursorUp')
 }
