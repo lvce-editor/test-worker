@@ -329,8 +329,8 @@ test('handleInputCut', async () => {
     },
   })
 
-  await Search.handleInputCut('inputName')
-  expect(mockRpc.invocations).toEqual([['Search.handleInputCut', 'inputName']])
+  await Search.handleInputCut('SearchValue')
+  expect(mockRpc.invocations).toEqual([['Search.handleInputCut', 'SearchValue']])
 })
 
 test('handleInputPaste', async () => {
@@ -340,8 +340,8 @@ test('handleInputPaste', async () => {
     },
   })
 
-  await Search.handleInputPaste('inputName')
-  expect(mockRpc.invocations).toEqual([['Search.handleInputPaste', 'inputName']])
+  await Search.handleInputPaste('SearchValue')
+  expect(mockRpc.invocations).toEqual([['Search.handleInputPaste', 'SearchValue']])
 })
 
 test('handleInputCopy', async () => {
@@ -351,8 +351,8 @@ test('handleInputCopy', async () => {
     },
   })
 
-  await Search.handleInputCopy('inputName')
-  expect(mockRpc.invocations).toEqual([['Search.handleInputCopy', 'inputName']])
+  await Search.handleInputCopy('SearchValue')
+  expect(mockRpc.invocations).toEqual([['Search.handleInputCopy', 'SearchValue']])
 })
 
 test('handleInputSelectionChange', async () => {
@@ -362,8 +362,8 @@ test('handleInputSelectionChange', async () => {
     },
   })
 
-  await Search.handleInputSelectionChange('inputName', 10, 20)
-  expect(mockRpc.invocations).toEqual([['Search.handleInputSelectionChange', 'inputName', 10, 20]])
+  await Search.handleInputSelectionChange('SearchValue', 10, 20)
+  expect(mockRpc.invocations).toEqual([['Search.handleInputSelectionChange', 'SearchValue', 10, 20]])
 })
 
 test('handleInputContextMenu', async () => {
@@ -373,8 +373,8 @@ test('handleInputContextMenu', async () => {
     },
   })
 
-  await Search.handleInputContextMenu('inputName', 2, 100, 200)
-  expect(mockRpc.invocations).toEqual([['Search.handleInputConextMenu', 'inputName', 2, 100, 200]])
+  await Search.handleInputContextMenu('SearchValue', 2, 100, 200)
+  expect(mockRpc.invocations).toEqual([['Search.handleInputConextMenu', 'SearchValue', 2, 100, 200]])
 })
 
 test('handleContextMenu', async () => {
