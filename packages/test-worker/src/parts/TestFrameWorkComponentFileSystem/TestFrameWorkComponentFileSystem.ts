@@ -44,7 +44,7 @@ export const setFiles = async (files: readonly FileItem[]): Promise<void> => {
   )
 }
 
-export const readDir = async (uri: string): Promise<void> => {
+export const readDir = async (uri: string): Promise<readonly any[]> => {
   return RendererWorker.invoke('FileSystem.readDirWithFileTypes', uri)
 }
 
