@@ -102,6 +102,10 @@ export const format = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.format')
 }
 
+export const unIndent = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.unIndent')
+}
+
 export const insertLineBreak = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.insertLineBreak')
 }
