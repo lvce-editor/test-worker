@@ -24,6 +24,10 @@ export const focus = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.focusIndex', -1)
 }
 
+export const setDeltaY = async (deltaY: number): Promise<void> => {
+  await RendererWorker.invoke('Explorer.setDeltaY', deltaY)
+}
+
 export const focusNext = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.focusNext')
 }
