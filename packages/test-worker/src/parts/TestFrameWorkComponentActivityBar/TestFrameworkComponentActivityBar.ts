@@ -48,3 +48,7 @@ export const setUpdateState = async (config: UpdateConfig): Promise<void> => {
 export const selectCurrent = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.selectCurrent')
 }
+
+export const handleClickSettings = async (x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.handleClickSettings', x, y)
+}
