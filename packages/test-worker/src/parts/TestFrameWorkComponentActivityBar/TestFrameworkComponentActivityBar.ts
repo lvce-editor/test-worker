@@ -4,6 +4,10 @@ export const focus = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.focus')
 }
 
+export const toggleActivityBarItem = async (id: string): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.toggleActivityBarItem', id)
+}
+
 export const focusFirst = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.focusFirst')
 }
