@@ -141,3 +141,11 @@ export const handleInputContextMenu = async (name: SearchInputType, button: numb
 export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
   await RendererWorker.invoke('Search.handleContextMenu', button, x, y)
 }
+
+export const enableRenderFolderPaths = async (): Promise<void> => {
+  await RendererWorker.invoke('Search.enableRenderFolderPaths')
+}
+
+export const disableRenderFolderPaths = async (): Promise<void> => {
+  await RendererWorker.invoke('Search.disableRenderFolderPaths')
+}
