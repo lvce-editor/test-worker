@@ -32,7 +32,7 @@ test('setAccountEnabled', async () => {
   })
 
   await ActivityBar.setAccountEnabled(true)
-  expect(mockRpc.invocations).toEqual([['ActivityBar.setAccountEnabled']])
+  expect(mockRpc.invocations).toEqual([['ActivityBar.setAccountEnabled', true]])
 })
 
 test('focusLast', async () => {
