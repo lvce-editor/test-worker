@@ -13,7 +13,7 @@ export const focusFirst = async (): Promise<void> => {
 }
 
 export const setAccountEnabled = async (enabled: boolean): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.setAccountEnabled')
+  await RendererWorker.invoke('ActivityBar.setAccountEnabled', enabled)
 }
 
 export const focusLast = async (): Promise<void> => {
