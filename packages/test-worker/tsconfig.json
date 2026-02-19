@@ -7,7 +7,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
-    "noEmit": true,
+    "noEmit": false,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
@@ -19,7 +19,10 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUncheckedSideEffectImports": true,
-    "composite": true
+    "composite": true,
+    "rewriteRelativeImportExtensions": true,
+    "outDir": "dist",
+    "emitDeclarationOnly": true
   },
   "include": ["src", "test"]
 }
