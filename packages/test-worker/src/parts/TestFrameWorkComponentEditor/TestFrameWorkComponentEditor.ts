@@ -82,6 +82,14 @@ export const cursorWordLeft = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.cursorWordLeft')
 }
 
+export const setText = async (text: string): Promise<void> => {
+  await RendererWorker.invoke('Editor.setText', text)
+}
+
+export const deleteAll = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.deleteAll')
+}
+
 export const cursorWordRight = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.cursorWordRight')
 }
