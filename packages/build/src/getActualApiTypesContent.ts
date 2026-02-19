@@ -61,6 +61,11 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
       continue
     }
 
+    if (line.startsWith('export declare class Locator implements ILocator ')) {
+      newLines.push(line.replace('ILocator', 'ILocatorExternal'))
+      continue
+    }
+
     newLines.push(line)
   }
 
@@ -76,8 +81,11 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   let currentFunction: string | null = null
   let currentSignature: string[] = []
   const exportedInterfaces: string[] = []
+  const exportedTypeAliases: string[] = []
   let inExportedInterface = false
   let currentInterface: string[] = []
+  let inExportedTypeAlias = false
+  let currentTypeAlias: string[] = []
 
   for (let i = 0; i < contentLines.length; i++) {
     const line = contentLines[i]
@@ -101,6 +109,23 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
       inExportedInterface = false
     } else if (inExportedInterface) {
       currentInterface.push(line)
+    }
+
+    // Collect exported type aliases
+    if (line.startsWith('export type ')) {
+      if (line.trim().endsWith(';')) {
+        exportedTypeAliases.push(line)
+      } else {
+        inExportedTypeAlias = true
+        currentTypeAlias = [line]
+      }
+    } else if (inExportedTypeAlias) {
+      currentTypeAlias.push(line)
+      if (line.trim().endsWith(';')) {
+        exportedTypeAliases.push(currentTypeAlias.join('\n'))
+        currentTypeAlias = []
+        inExportedTypeAlias = false
+      }
     }
 
     // Collect function signatures (handle multi-line)
@@ -177,6 +202,12 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   // Add exported interfaces
   for (const exportedInterface of exportedInterfaces) {
     newLines.push(exportedInterface)
+    newLines.push('')
+  }
+
+  // Add exported type aliases
+  for (const exportedTypeAlias of exportedTypeAliases) {
+    newLines.push(exportedTypeAlias)
     newLines.push('')
   }
 
