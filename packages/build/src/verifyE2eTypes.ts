@@ -48,10 +48,13 @@ export const verifyE2eTypes = async (): Promise<void> => {
   // Copy all e2e test files and replace imports
   await copyE2eTestFiles(e2eSrcDir, tempSrcDir)
 
-  // Copy the tsconfig.json from the e2e package
+  // Copy the tsconfig.json from the e2e package and enforce strict library checking
   const e2eTsconfigPath = join(root, 'packages', 'e2e', 'tsconfig.json')
-  const e2eTsconfig = await readFile(e2eTsconfigPath, 'utf8')
-  await writeFile(join(tempDir, 'tsconfig.json'), e2eTsconfig)
+  const e2eTsconfigContent = await readFile(e2eTsconfigPath, 'utf8')
+  const e2eTsconfig = JSON.parse(e2eTsconfigContent)
+  e2eTsconfig.compilerOptions = e2eTsconfig.compilerOptions || {}
+  e2eTsconfig.compilerOptions.skipLibCheck = false
+  await writeFile(join(tempDir, 'tsconfig.json'), JSON.stringify(e2eTsconfig, null, 2))
 
   // Run TypeScript compiler to check for errors
   const { stdout, stderr, exitCode } = await execa('npx', ['tsc', '--noEmit'], {
