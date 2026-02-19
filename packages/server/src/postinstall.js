@@ -32,7 +32,7 @@ if (!content.includes('// const testWorkerUrl = ')) {
   await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')
   const occurrence = `const testWorkerUrl = \`\${assetDir}/packages/test-worker/dist/testWorkerMain.js\``
   const replacement = `// const testWorkerUrl = \`\${assetDir}/packages/test-worker/dist/testWorkerMain.js\`
-  const testWorkerUrl = \`${remoteUrl}\``
+const testWorkerUrl = \`${remoteUrl}\``
 
   const newContent = content.replace(occurrence, replacement)
   await writeFile(rendererWorkerMainPath, newContent)
