@@ -3,6 +3,7 @@ import { babel } from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { join } from 'path'
 import { rollup, type RollupOptions } from 'rollup'
+import { removeProtoNullPlugin } from './removeProtoNullPlugin.ts'
 import { root } from './root.ts'
 
 const options: RollupOptions = {
@@ -28,6 +29,7 @@ const options: RollupOptions = {
       presets: [pluginTypeScript],
     }),
     nodeResolve(),
+    removeProtoNullPlugin(),
   ],
 }
 
