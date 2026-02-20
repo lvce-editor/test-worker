@@ -8,6 +8,10 @@ export const splitRight = async (): Promise<void> => {
   await RendererWorker.invoke('Main.splitRight')
 }
 
+export const splitDown = async (): Promise<void> => {
+  await RendererWorker.invoke('Main.splitDown')
+}
+
 export const openKeyBindings = async (): Promise<void> => {
   await RendererWorker.invoke('Main.openKeyBindings')
 }
