@@ -74,6 +74,18 @@ test('focus', async () => {
   expect(mockRpc.invocations).toEqual([['Explorer.focusIndex', -1]])
 })
 
+test('setDeltaY', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.setDeltaY'() {
+      return undefined
+    },
+  })
+
+  await Explorer.setDeltaY(42)
+
+  expect(mockRpc.invocations).toEqual([['Explorer.setDeltaY', 42]])
+})
+
 test('focusNext', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.focusNext'() {

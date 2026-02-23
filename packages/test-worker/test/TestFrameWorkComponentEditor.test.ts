@@ -113,6 +113,72 @@ test('cursorDown', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.cursorDown']])
 })
 
+test('selectDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectDown'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectDown()
+  expect(mockRpc.invocations).toEqual([['Editor.selectDown']])
+})
+
+test('selectAllLeft', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectAllLeft'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectAllLeft()
+  expect(mockRpc.invocations).toEqual([['Editor.selectAllLeft']])
+})
+
+test('selectionGrow', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectionGrow'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectionGrow()
+  expect(mockRpc.invocations).toEqual([['Editor.selectionGrow']])
+})
+
+test('selectAllRight', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectAllRight'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectAllRight()
+  expect(mockRpc.invocations).toEqual([['Editor.selectAllRight']])
+})
+
+test('selectAllOccurrences', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectAllOccurrences'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectAllOccurrences()
+  expect(mockRpc.invocations).toEqual([['Editor.selectAllOccurrences']])
+})
+
+test('selectUp', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectUp'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectUp()
+  expect(mockRpc.invocations).toEqual([['Editor.selectUp']])
+})
+
 test('cursorUp', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorUp'() {
@@ -133,6 +199,28 @@ test('cursorWordLeft', async () => {
 
   await Editor.cursorWordLeft()
   expect(mockRpc.invocations).toEqual([['Editor.cursorWordLeft']])
+})
+
+test('setText', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.setText'() {
+      return undefined
+    },
+  })
+
+  await Editor.setText('text')
+  expect(mockRpc.invocations).toEqual([['Editor.setText', 'text']])
+})
+
+test('deleteAll', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.deleteAll'() {
+      return undefined
+    },
+  })
+
+  await Editor.deleteAll()
+  expect(mockRpc.invocations).toEqual([['Editor.deleteAll']])
 })
 
 test('cursorWordRight', async () => {
@@ -254,6 +342,17 @@ test('format', async () => {
 
   await Editor.format()
   expect(mockRpc.invocations).toEqual([['Editor.format']])
+})
+
+test('unIndent', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.unIndent'() {
+      return undefined
+    },
+  })
+
+  await Editor.unIndent()
+  expect(mockRpc.invocations).toEqual([['Editor.unIndent']])
 })
 
 test('insertLineBreak', async () => {

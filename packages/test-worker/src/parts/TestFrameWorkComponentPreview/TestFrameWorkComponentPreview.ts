@@ -17,5 +17,9 @@ export const handleKeyDown = async (hdId: string, key: string, code: string): Pr
 }
 
 export const setUri = async (uri: string): Promise<void> => {
-  await RendererWorker.invoke('Preview.setUri')
+  await RendererWorker.invoke('Preview.setUri', uri)
+}
+
+export const waitForClick = async (): Promise<void> => {
+  await RendererWorker.invoke('Preview.waitForClick')
 }
