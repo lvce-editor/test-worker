@@ -13,6 +13,17 @@ test('focus', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.focus']])
 })
 
+test('toggleActivityBarItem', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.toggleActivityBarItem'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.toggleActivityBarItem('explorer')
+  expect(mockRpc.invocations).toEqual([['ActivityBar.toggleActivityBarItem', 'explorer']])
+})
+
 test('focusFirst', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusFirst'() {
@@ -90,6 +101,28 @@ test('handleContextMenu', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleContextMenu']])
 })
 
+test('setUpdateState', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.setUpdateState'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.setUpdateState({
+    progress: 1,
+    state: 2,
+  })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'ActivityBar.setUpdateState',
+      {
+        progress: 1,
+        state: 2,
+      },
+    ],
+  ])
+})
+
 test('selectCurrent', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.selectCurrent'() {
@@ -99,4 +132,15 @@ test('selectCurrent', async () => {
 
   await ActivityBar.selectCurrent()
   expect(mockRpc.invocations).toEqual([['ActivityBar.selectCurrent']])
+})
+
+test('handleClickSettings', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleClickSettings'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleClickSettings(100, 200)
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickSettings', 100, 200]])
 })
