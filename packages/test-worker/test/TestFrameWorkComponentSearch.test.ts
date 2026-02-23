@@ -387,3 +387,25 @@ test('handleContextMenu', async () => {
   await Search.handleContextMenu(2, 150, 250)
   expect(mockRpc.invocations).toEqual([['Search.handleContextMenu', 2, 150, 250]])
 })
+
+test('enableRenderFolderPaths', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Search.enableRenderFolderPaths'() {
+      return undefined
+    },
+  })
+
+  await Search.enableRenderFolderPaths()
+  expect(mockRpc.invocations).toEqual([['Search.enableRenderFolderPaths']])
+})
+
+test('disableRenderFolderPaths', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Search.disableRenderFolderPaths'() {
+      return undefined
+    },
+  })
+
+  await Search.disableRenderFolderPaths()
+  expect(mockRpc.invocations).toEqual([['Search.disableRenderFolderPaths']])
+})
