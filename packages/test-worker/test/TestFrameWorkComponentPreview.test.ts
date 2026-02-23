@@ -54,5 +54,5 @@ test('setUri', async () => {
   })
 
   await Preview.setUri('file:///tmp/updated-preview.html')
-  expect(mockRpc.invocations).toEqual([['Preview.setUri']])
+  expect(mockRpc.invocations).toEqual([['Preview.setUri', 'file:///tmp/updated-preview.html']])
 })
