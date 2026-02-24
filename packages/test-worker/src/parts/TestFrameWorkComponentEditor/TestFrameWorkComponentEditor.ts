@@ -331,6 +331,37 @@ export const shouldHaveText = async (expectedText: string): Promise<void> => {
   }
 }
 
+export type TokenRow = readonly string[]
+
+const areTokensEqual = (actual: readonly TokenRow[], expected: readonly TokenRow[]): boolean => {
+  if (actual.length !== expected.length) {
+    return false
+  }
+  for (let i = 0; i < actual.length; i++) {
+    const actualRow = actual[i]
+    const expectedRow = expected[i]
+    if (actualRow.length !== expectedRow.length) {
+      return false
+    }
+    for (let j = 0; j < actualRow.length; j++) {
+      if (actualRow[j] !== expectedRow[j]) {
+        return false
+      }
+    }
+  }
+  return true
+}
+
+export const shouldHaveTokens = async (expectedTokens: readonly TokenRow[]): Promise<void> => {
+  const key = await getEditorKey()
+  const text = await EditorWorker.invoke('Editor.getTokens', key)
+  if (!areTokensEqual(text, expectedTokens)) {
+    const stringifiedActual = JSON.stringify(text)
+    const stringifiedExpected = JSON.stringify(expectedTokens)
+    throw new Error(`Expected editor to have tokens ${stringifiedExpected} but was ${stringifiedActual}`)
+  }
+}
+
 export const shouldHaveSelections = async (expectedSelections: Uint32Array): Promise<void> => {
   const key = await getEditorKey()
   const selections = await EditorWorker.invoke('Editor.getSelections', key)
