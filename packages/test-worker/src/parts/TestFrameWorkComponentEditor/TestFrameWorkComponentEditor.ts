@@ -10,6 +10,10 @@ export const setCursor = async (rowIndex: number, columnIndex: number): Promise<
   await RendererWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)
 }
 
+export const cancelSelection = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.cancelSelection')
+}
+
 export const openCompletion = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.openCompletion')
 }
@@ -54,6 +58,10 @@ export const selectDown = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.selectDown')
 }
 
+export const selectLine = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectLine')
+}
+
 export const selectAllLeft = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.selectAllLeft')
 }
@@ -88,6 +96,42 @@ export const setText = async (text: string): Promise<void> => {
 
 export const deleteAll = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.deleteAll')
+}
+
+export const selectCharacterLeft = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectCharacterLeft')
+}
+
+export const selectCharacterRight = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectCharacterRight')
+}
+
+export const deleteCharacterLeft = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.deleteCharacterLeft')
+}
+
+export const deleteWordPartRight = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.deleteWordPartRight')
+}
+
+export const deleteWordRight = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.deleteWordRight')
+}
+
+export const deleteWordPartLeft = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.deleteWordPartLeft')
+}
+
+export const deleteWordLeft = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.deleteWordLeft')
+}
+
+export const deleteHorizontalRight = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.deleteHorizontalRight')
+}
+
+export const deleteCharacterRight = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.deleteCharacterRight')
 }
 
 export const cursorWordRight = async (): Promise<void> => {
