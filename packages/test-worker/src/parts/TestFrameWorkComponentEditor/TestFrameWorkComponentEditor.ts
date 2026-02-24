@@ -122,6 +122,14 @@ export const setSelections = async (selections: any): Promise<void> => {
   await RendererWorker.invoke('Editor.setSelections', selections)
 }
 
+export const selectNextOccurrence = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectNextOccurrence')
+}
+
+export const selectPreviousOccurrence = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectPreviousOccurrence')
+}
+
 export const openFindWidget = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.openFind')
 }
