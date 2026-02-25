@@ -31,6 +31,13 @@ export const setUri = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('Preview.setUri', uri)
 }
 
+/**
+ * @deprecated use waitForMutation instead
+ */
 export const waitForClick = async (): Promise<void> => {
   await RendererWorker.invoke('Preview.waitForClick')
+}
+
+export const waitForMutation = async (): Promise<void> => {
+  await RendererWorker.invoke('Preview.waitForMutation')
 }
