@@ -1,5 +1,13 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
+export const handleClickBack = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleClickBack')
+}
+
+export const handleClickSettings = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleClickSettings')
+}
+
 export const show = async (): Promise<void> => {
   await RendererWorker.invoke('Layout.showSecondarySideBar')
   await RendererWorker.invoke('Chat.reset')
