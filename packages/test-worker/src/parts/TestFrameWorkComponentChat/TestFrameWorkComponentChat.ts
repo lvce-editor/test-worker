@@ -41,6 +41,14 @@ export const reset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.reset')
 }
 
+export const mockOpenApiStreamFinish = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.mockOpenApiStreamFinish')
+}
+
+export const mockOpenApiStreamPushChunk = async (chunk: string): Promise<void> => {
+  await RendererWorker.invoke('Chat.mockOpenApiStreamPushChunk', chunk)
+}
+
 export const handleSubmit = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleSubmit')
 }
