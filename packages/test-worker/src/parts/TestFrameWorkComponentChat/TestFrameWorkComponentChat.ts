@@ -8,6 +8,10 @@ export const handleClickSettings = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickSettings')
 }
 
+export const selectIndex = async (index: number): Promise<void> => {
+  await RendererWorker.invoke('Chat.selectIndex', index)
+}
+
 export const handleClickClose = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickClose')
 }
