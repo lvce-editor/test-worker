@@ -8,6 +8,10 @@ export const handleClickSettings = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickSettings')
 }
 
+export const handleClickClose = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleClickClose')
+}
+
 export const show = async (): Promise<void> => {
   await RendererWorker.invoke('Layout.showSecondarySideBar')
   await RendererWorker.invoke('Chat.reset')
