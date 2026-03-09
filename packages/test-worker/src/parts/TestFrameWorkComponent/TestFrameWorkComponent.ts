@@ -7,6 +7,7 @@ export * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponen
 export * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 export * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 export * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
+export * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 export * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 export * as EditorCompletion from '../TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
 export * as EditorHover from '../TestFrameWorkComponentEditorHover/TestFrameWorkComponentEditorHover.ts'

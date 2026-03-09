@@ -4,6 +4,7 @@ import type { ColorPicker } from '../TestFrameWorkComponent/TestFrameWorkCompone
 import type * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import type * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import type * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
+import type * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 import type * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import type * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import type * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
@@ -58,6 +59,7 @@ export interface Api {
   ActivityBar: typeof ActivityBar
   Audio: typeof Audio
   BaseUrl: IBaseUrl
+  Chat: typeof Chat
   ClipBoard: typeof ClipBoard
   ColorPicker: typeof ColorPicker
   Command: typeof Command
