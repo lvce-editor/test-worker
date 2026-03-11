@@ -52,6 +52,10 @@ export const save = async (): Promise<void> => {
   await RendererWorker.invoke('Main.save')
 }
 
+export const saveAll = async (): Promise<void> => {
+  await RendererWorker.invoke('Main.saveAll')
+}
+
 export const focusFirst = async (): Promise<void> => {
   await RendererWorker.invoke('Main.focusFirst')
 }
