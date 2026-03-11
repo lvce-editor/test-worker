@@ -64,3 +64,12 @@ export const useMockApi = async (): Promise<void> => {
 export const handleModelChange = async (modelId: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleModelChange', modelId)
 }
+
+export interface MockOpenAiResponseOptions {
+  readonly status: number
+  readonly value: any
+}
+
+export const mockOpenAiResponse = async (options: MockOpenAiResponseOptions): Promise<void> => {
+  return RendererWorker.invoke('Chat.mockOpenAiResponse', options)
+}
