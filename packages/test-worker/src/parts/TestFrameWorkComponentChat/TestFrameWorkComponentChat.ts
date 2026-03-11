@@ -61,6 +61,18 @@ export const useMockApi = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.useMockApi', true)
 }
 
+export const rerender = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.rerender')
+}
+
+export const handleClickDelete = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleClickDelete')
+}
+
+export const deleteSessionAtIndex = async (index: number): Promise<void> => {
+  await RendererWorker.invoke('Chat.deleteSessionAtIndex', index)
+}
+
 export const handleModelChange = async (modelId: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleModelChange', modelId)
 }
