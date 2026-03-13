@@ -61,8 +61,18 @@ export const useMockApi = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.useMockApi', true)
 }
 
+export const mockOpenApiRequestGetAll = async (): Promise<readonly any[]> => {
+  return RendererWorker.invoke('Chat.mockOpenApiRequestGetAll')
+}
+
 export const rerender = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.rerender')
+}
+export const mockOpenApiRequestReset = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.mockOpenApiRequestReset')
+}
+export const mockOpenApiStreamReset = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.mockOpenApiStreamReset')
 }
 
 export const handleClickDelete = async (): Promise<void> => {
