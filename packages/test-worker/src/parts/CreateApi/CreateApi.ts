@@ -27,6 +27,7 @@ import * as KeyBindingsEditor from '../TestFrameWorkComponentKeyBindingsEditor/T
 import * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkComponentKeyBoard.ts'
 import * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 import * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
+import * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
 import * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 import * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
@@ -88,6 +89,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     LanguageModels,
     Locator,
     Main,
+    Open,
     Output,
     Panel,
     Platform,
