@@ -35,6 +35,39 @@ test('handleInput', async () => {
   expect(mockRpc.invocations).toEqual([['Preview.handleInput', 'hd-1', 'new value']])
 })
 
+test('handleMouseDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preview.handleMouseDown'() {
+      return undefined
+    },
+  })
+
+  await Preview.handleMouseDown('hd-1', 12, 34)
+  expect(mockRpc.invocations).toEqual([['Preview.handleMouseDown', 'hd-1', 12, 34]])
+})
+
+test('handleMouseUp', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preview.handleMouseUp'() {
+      return undefined
+    },
+  })
+
+  await Preview.handleMouseUp('hd-1', 'value', 12, 34)
+  expect(mockRpc.invocations).toEqual([['Preview.handleMouseUp', 'hd-1', 'value', 12, 34]])
+})
+
+test('handleMouseMove', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preview.handleMouseMove'() {
+      return undefined
+    },
+  })
+
+  await Preview.handleMouseMove('hd-1', 'value', 12, 34)
+  expect(mockRpc.invocations).toEqual([['Preview.handleMouseMove', 'hd-1', 'value', 12, 34]])
+})
+
 test('handleKeyDown', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preview.handleKeyDown'() {
@@ -55,4 +88,27 @@ test('setUri', async () => {
 
   await Preview.setUri('file:///tmp/updated-preview.html')
   expect(mockRpc.invocations).toEqual([['Preview.setUri', 'file:///tmp/updated-preview.html']])
+})
+
+test('waitForClick', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preview.waitForClick'() {
+      return undefined
+    },
+  })
+
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
+  await Preview.waitForClick()
+  expect(mockRpc.invocations).toEqual([['Preview.waitForClick']])
+})
+
+test('waitForMutation', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preview.waitForMutation'() {
+      return undefined
+    },
+  })
+
+  await Preview.waitForMutation()
+  expect(mockRpc.invocations).toEqual([['Preview.waitForMutation']])
 })
