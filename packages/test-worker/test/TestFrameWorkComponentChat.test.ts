@@ -64,10 +64,10 @@ test('enterNewLine', async () => {
 
 test('show', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Layout.showSecondarySideBar'() {
+    'Chat.reset'() {
       return undefined
     },
-    'Chat.reset'() {
+    'Layout.showSecondarySideBar'() {
       return undefined
     },
   })
