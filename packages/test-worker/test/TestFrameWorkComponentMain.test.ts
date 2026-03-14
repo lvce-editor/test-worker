@@ -26,6 +26,30 @@ test('splitRight', async () => {
   expect(mockRpc.invocations).toEqual([['Main.splitRight']])
 })
 
+test('splitDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.splitDown'() {
+      return undefined
+    },
+  })
+
+  await Main.splitDown()
+
+  expect(mockRpc.invocations).toEqual([['Main.splitDown']])
+})
+
+test('handleClickTogglePreview', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.handleClickTogglePreview'() {
+      return undefined
+    },
+  })
+
+  await Main.handleClickTogglePreview()
+
+  expect(mockRpc.invocations).toEqual([['Main.handleClickTogglePreview']])
+})
+
 test('openKeyBindings', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.openKeyBindings'() {
@@ -109,6 +133,18 @@ test('save', async () => {
   await Main.save()
 
   expect(mockRpc.invocations).toEqual([['Main.save']])
+})
+
+test('saveAll', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveAll'() {
+      return undefined
+    },
+  })
+
+  await Main.saveAll()
+
+  expect(mockRpc.invocations).toEqual([['Main.saveAll']])
 })
 
 test('handleTabContextMenu', async () => {
