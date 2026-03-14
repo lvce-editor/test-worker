@@ -14,6 +14,17 @@ test('setCursor', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.cursorSet', 1, 2]])
 })
 
+test('cancelSelection', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.cancelSelection'() {
+      return undefined
+    },
+  })
+
+  await Editor.cancelSelection()
+  expect(mockRpc.invocations).toEqual([['Editor.cancelSelection']])
+})
+
 test('openCompletion', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.openCompletion'() {
@@ -124,6 +135,17 @@ test('selectDown', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.selectDown']])
 })
 
+test('selectLine', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectLine'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectLine()
+  expect(mockRpc.invocations).toEqual([['Editor.selectLine']])
+})
+
 test('selectAllLeft', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.selectAllLeft'() {
@@ -223,6 +245,105 @@ test('deleteAll', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.deleteAll']])
 })
 
+test('selectCharacterLeft', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectCharacterLeft'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectCharacterLeft()
+  expect(mockRpc.invocations).toEqual([['Editor.selectCharacterLeft']])
+})
+
+test('selectCharacterRight', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectCharacterRight'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectCharacterRight()
+  expect(mockRpc.invocations).toEqual([['Editor.selectCharacterRight']])
+})
+
+test('deleteCharacterLeft', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.deleteCharacterLeft'() {
+      return undefined
+    },
+  })
+
+  await Editor.deleteCharacterLeft()
+  expect(mockRpc.invocations).toEqual([['Editor.deleteCharacterLeft']])
+})
+
+test('deleteWordPartRight', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.deleteWordPartRight'() {
+      return undefined
+    },
+  })
+
+  await Editor.deleteWordPartRight()
+  expect(mockRpc.invocations).toEqual([['Editor.deleteWordPartRight']])
+})
+
+test('deleteWordRight', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.deleteWordRight'() {
+      return undefined
+    },
+  })
+
+  await Editor.deleteWordRight()
+  expect(mockRpc.invocations).toEqual([['Editor.deleteWordRight']])
+})
+
+test('deleteWordPartLeft', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.deleteWordPartLeft'() {
+      return undefined
+    },
+  })
+
+  await Editor.deleteWordPartLeft()
+  expect(mockRpc.invocations).toEqual([['Editor.deleteWordPartLeft']])
+})
+
+test('deleteWordLeft', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.deleteWordLeft'() {
+      return undefined
+    },
+  })
+
+  await Editor.deleteWordLeft()
+  expect(mockRpc.invocations).toEqual([['Editor.deleteWordLeft']])
+})
+
+test('deleteHorizontalRight', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.deleteHorizontalRight'() {
+      return undefined
+    },
+  })
+
+  await Editor.deleteHorizontalRight()
+  expect(mockRpc.invocations).toEqual([['Editor.deleteHorizontalRight']])
+})
+
+test('deleteCharacterRight', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.deleteCharacterRight'() {
+      return undefined
+    },
+  })
+
+  await Editor.deleteCharacterRight()
+  expect(mockRpc.invocations).toEqual([['Editor.deleteCharacterRight']])
+})
+
 test('cursorWordRight', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cursorWordRight'() {
@@ -309,6 +430,28 @@ test('setSelections', async () => {
 
   await Editor.setSelections([])
   expect(mockRpc.invocations).toEqual([['Editor.setSelections', []]])
+})
+
+test('selectNextOccurrence', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectNextOccurrence'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectNextOccurrence()
+  expect(mockRpc.invocations).toEqual([['Editor.selectNextOccurrence']])
+})
+
+test('selectPreviousOccurrence', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectPreviousOccurrence'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectPreviousOccurrence()
+  expect(mockRpc.invocations).toEqual([['Editor.selectPreviousOccurrence']])
 })
 
 test('openFindWidget', async () => {
@@ -744,6 +887,65 @@ test('shouldHaveText - throws error when text does not match', async () => {
 
   await expect(Editor.shouldHaveText('expected text')).rejects.toThrow('Expected editor to have text expected text but was wrong text')
   expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+})
+
+test('shouldHaveTokens - success case', async () => {
+  const expectedTokens = [['keyword', 'const']]
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getTokens'() {
+      return [['keyword', 'const']]
+    },
+  })
+
+  await Editor.shouldHaveTokens(expectedTokens)
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getTokens', 1]])
+})
+
+test('shouldHaveTokens - throws error when row count does not match', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getTokens'() {
+      return [['keyword', 'const']]
+    },
+  })
+
+  await expect(Editor.shouldHaveTokens([])).rejects.toThrow('Expected editor to have tokens [] but was [["keyword","const"]]')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getTokens', 1]])
+})
+
+test('shouldHaveTokens - throws error when row length does not match', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getTokens'() {
+      return [['keyword', 'const']]
+    },
+  })
+
+  await expect(Editor.shouldHaveTokens([['keyword']])).rejects.toThrow('Expected editor to have tokens [["keyword"]] but was [["keyword","const"]]')
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getTokens', 1]])
+})
+
+test('shouldHaveTokens - throws error when token value does not match', async () => {
+  using mockRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getTokens'() {
+      return [['keyword', 'const']]
+    },
+  })
+
+  await expect(Editor.shouldHaveTokens([['keyword', 'let']])).rejects.toThrow(
+    'Expected editor to have tokens [["keyword","let"]] but was [["keyword","const"]]',
+  )
+  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getTokens', 1]])
 })
 
 test('shouldHaveSelections - success case', async () => {
