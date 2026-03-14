@@ -97,6 +97,7 @@ test('waitForClick', async () => {
     },
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   await Preview.waitForClick()
   expect(mockRpc.invocations).toEqual([['Preview.waitForClick']])
 })
