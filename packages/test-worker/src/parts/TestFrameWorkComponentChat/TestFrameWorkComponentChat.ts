@@ -61,6 +61,14 @@ export const useMockApi = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.useMockApi', true)
 }
 
+export const setAuthEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setAuthEnabled', enabled)
+}
+
+export const mockBackendAuthResponse = async (response: any): Promise<void> => {
+  await RendererWorker.invoke('Chat.mockBackendAuthResponse', response)
+}
+
 export const mockOpenApiRequestGetAll = async (): Promise<readonly any[]> => {
   return RendererWorker.invoke('Chat.mockOpenApiRequestGetAll')
 }
