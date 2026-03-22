@@ -99,6 +99,18 @@ export const handleModelChange = async (modelId: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleModelChange', modelId)
 }
 
+export const handleInputPaste = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleInputPaste')
+}
+
+export const handleInputCopy = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleInputCopy')
+}
+
+export const handleInputCut = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleInputCut')
+}
+
 export interface MockOpenAiResponseOptions {
   readonly status: number
   readonly value: any
