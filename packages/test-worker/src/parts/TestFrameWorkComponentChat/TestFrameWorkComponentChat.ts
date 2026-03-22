@@ -123,3 +123,7 @@ export interface MockOpenAiResponseOptions {
 export const mockOpenAiResponse = async (options: MockOpenAiResponseOptions): Promise<void> => {
   return RendererWorker.invoke('Chat.mockOpenAiResponse', options)
 }
+
+export const handleInputFocus = async (): Promise<void> => {
+  return RendererWorker.invoke('Chat.handleInputFocus')
+}
