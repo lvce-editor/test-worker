@@ -2,6 +2,16 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Chat from '../src/parts/TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 
+test('handleChatListContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleChatListContextMenu'() {
+      return undefined
+    },
+  })
+  await Chat.handleChatListContextMenu(10, 20)
+  expect(mockRpc.invocations).toEqual([['Chat.handleChatListContextMenu', 10, 20]])
+})
+
 test('handleClickBack', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.handleClickBack'() {
@@ -20,6 +30,16 @@ test('handleClickSettings', async () => {
   })
   await Chat.handleClickSettings()
   expect(mockRpc.invocations).toEqual([['Chat.handleClickSettings']])
+})
+
+test('setNewChatModelPickerEnabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setNewChatModelPickerEnabled'() {
+      return undefined
+    },
+  })
+  await Chat.setNewChatModelPickerEnabled(true)
+  expect(mockRpc.invocations).toEqual([['Chat.setNewChatModelPickerEnabled', true]])
 })
 
 test('selectIndex', async () => {
@@ -156,6 +176,40 @@ test('useMockApi', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.useMockApi', true]])
 })
 
+test('setAuthEnabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setAuthEnabled'() {
+      return undefined
+    },
+  })
+  await Chat.setAuthEnabled(false)
+  expect(mockRpc.invocations).toEqual([['Chat.setAuthEnabled', false]])
+})
+
+test('mockBackendAuthResponse', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.mockBackendAuthResponse'() {
+      return undefined
+    },
+  })
+  const response = {
+    ok: true,
+  }
+  await Chat.mockBackendAuthResponse(response)
+  expect(mockRpc.invocations).toEqual([['Chat.mockBackendAuthResponse', response]])
+})
+
+test('mockOpenApiRequestGetAll', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.mockOpenApiRequestGetAll'() {
+      return [{ id: 1 }]
+    },
+  })
+  const result = await Chat.mockOpenApiRequestGetAll()
+  expect(result).toEqual([{ id: 1 }])
+  expect(mockRpc.invocations).toEqual([['Chat.mockOpenApiRequestGetAll']])
+})
+
 test('rerender', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.rerender'() {
@@ -164,6 +218,26 @@ test('rerender', async () => {
   })
   await Chat.rerender()
   expect(mockRpc.invocations).toEqual([['Chat.rerender']])
+})
+
+test('mockOpenApiRequestReset', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.mockOpenApiRequestReset'() {
+      return undefined
+    },
+  })
+  await Chat.mockOpenApiRequestReset()
+  expect(mockRpc.invocations).toEqual([['Chat.mockOpenApiRequestReset']])
+})
+
+test('mockOpenApiStreamReset', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.mockOpenApiStreamReset'() {
+      return undefined
+    },
+  })
+  await Chat.mockOpenApiStreamReset()
+  expect(mockRpc.invocations).toEqual([['Chat.mockOpenApiStreamReset']])
 })
 
 test('handleClickDelete', async () => {
@@ -196,6 +270,36 @@ test('handleModelChange', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleModelChange', 'gpt-5.3-codex']])
 })
 
+test('handleInputPaste', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleInputPaste'() {
+      return undefined
+    },
+  })
+  await Chat.handleInputPaste()
+  expect(mockRpc.invocations).toEqual([['Chat.handleInputPaste']])
+})
+
+test('handleInputCopy', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleInputCopy'() {
+      return undefined
+    },
+  })
+  await Chat.handleInputCopy()
+  expect(mockRpc.invocations).toEqual([['Chat.handleInputCopy']])
+})
+
+test('handleInputCut', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleInputCut'() {
+      return undefined
+    },
+  })
+  await Chat.handleInputCut()
+  expect(mockRpc.invocations).toEqual([['Chat.handleInputCut']])
+})
+
 test('mockOpenAiResponse', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.mockOpenAiResponse'() {
@@ -209,4 +313,15 @@ test('mockOpenAiResponse', async () => {
   const result = await Chat.mockOpenAiResponse(options)
   expect(result).toBeUndefined()
   expect(mockRpc.invocations).toEqual([['Chat.mockOpenAiResponse', options]])
+})
+
+test('handleInputFocus', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleInputFocus'() {
+      return undefined
+    },
+  })
+  const result = await Chat.handleInputFocus()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.handleInputFocus']])
 })
