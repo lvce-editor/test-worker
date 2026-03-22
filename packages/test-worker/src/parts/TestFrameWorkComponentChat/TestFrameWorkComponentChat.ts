@@ -80,6 +80,11 @@ export const mockOpenApiRequestGetAll = async (): Promise<readonly any[]> => {
 export const rerender = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.rerender')
 }
+
+export const setSearchEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setSearchEnabled', enabled)
+}
+
 export const mockOpenApiRequestReset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.mockOpenApiRequestReset')
 }
