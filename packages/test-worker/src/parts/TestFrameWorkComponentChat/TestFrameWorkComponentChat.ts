@@ -1,5 +1,9 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
+export const handleChatListContextMenu = async (eventX: number, eventY: number): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleChatListContextMenu', eventX, eventY)
+}
+
 export const handleClickBack = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickBack')
 }
