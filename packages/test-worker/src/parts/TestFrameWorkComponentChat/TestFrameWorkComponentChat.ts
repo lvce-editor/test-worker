@@ -4,6 +4,10 @@ export const handleClickBack = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickBack')
 }
 
+export const setNewChatModelPickerEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setNewChatModelPickerEnabled', enabled)
+}
+
 export const handleClickSettings = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickSettings')
 }
