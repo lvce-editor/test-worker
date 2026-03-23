@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/only-throw-error, @typescript-eslint/prefer-readonly-parameter-types */
 import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
 import type { LocatorExpect } from '../LocatorExpect/LocatorExpect.ts'
 import { AssertionError } from '../AssertionError/AssertionError.ts'

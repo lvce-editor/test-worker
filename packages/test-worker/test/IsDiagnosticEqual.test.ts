@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import { expect, test } from '@jest/globals'
 import type { Diagnostic } from '../src/parts/Diagnostic/Diagnostic.ts'
 import { isDiagnosticEqual } from '../src/parts/IsDiagnosticEqual/IsDiagnosticEqual.ts'
