@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/only-throw-error */
 import { type Rpc, TransferMessagePortRpcParent } from '@lvce-editor/rpc'
 import { VError } from '@lvce-editor/verror'
 import { sendMessagePortToErrorWorker } from '../SendMessagePortToErrorWorker/SendMessagePortToErrorWorker.ts'
