@@ -140,6 +140,16 @@ test('handleDropFiles', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleDropFiles', 'composer-drop-target', [file]]])
 })
 
+test('handleClickSessionDebug', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleClickSessionDebug'() {
+      return undefined
+    },
+  })
+  await Chat.handleClickSessionDebug()
+  expect(mockRpc.invocations).toEqual([['Chat.handleClickSessionDebug']])
+})
+
 test('reset', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.reset'() {
