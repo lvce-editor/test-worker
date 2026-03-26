@@ -149,7 +149,7 @@ export const mockOpenAiResponse = async (options: MockOpenAiResponseOptions): Pr
 }
 
 export const handleInputFocus = async (): Promise<void> => {
-  return RendererWorker.invoke('Chat.handleInputFocus')
+  return Command.execute('Chat.handleInputFocus', 'chat-list')
 }
 
 export const getAuthState = async (): Promise<any> => {

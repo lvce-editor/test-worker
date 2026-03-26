@@ -347,7 +347,7 @@ test('handleInputFocus', async () => {
   })
   const result = await Chat.handleInputFocus()
   expect(result).toBeUndefined()
-  expect(mockRpc.invocations).toEqual([['Chat.handleInputFocus']])
+  expect(mockRpc.invocations).toEqual([['Chat.handleInputFocus', 'chat-list']])
 })
 
 test('getAuthState', async () => {
