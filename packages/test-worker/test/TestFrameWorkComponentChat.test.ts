@@ -116,6 +116,20 @@ test('handleInput', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleInput', 'composer', 'hello', 'script']])
 })
 
+test('handleDropFiles', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleDropFiles'() {
+      return undefined
+    },
+  })
+  const file = {
+    file: new File(['content'], 'test.txt', { type: 'text/plain' }),
+    id: 1,
+  }
+  await Chat.handleDropFiles(file)
+  expect(mockRpc.invocations).toEqual([['Chat.handleDropFiles', 'composer-drop-target', [file]]])
+})
+
 test('reset', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.reset'() {

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
+import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 export const handleChatListContextMenu = async (eventX: number, eventY: number): Promise<void> => {
   await RendererWorker.invoke('Chat.handleChatListContextMenu', eventX, eventY)
@@ -48,6 +50,10 @@ export const getSelectedSessionId = async (): Promise<string> => {
 
 export const handleInput = async (text: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInput', 'composer', text, 'script')
+}
+
+export const handleDropFiles = async (file: DroppedFileHandle): Promise<void> => {
+  await Command.execute('Chat.handleDropFiles', 'composer-drop-target', [file])
 }
 
 export const reset = async (): Promise<void> => {
