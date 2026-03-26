@@ -42,6 +42,16 @@ test('setNewChatModelPickerEnabled', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.setNewChatModelPickerEnabled', true]])
 })
 
+test('openAgentModePicker', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.openAgentModePicker'() {
+      return undefined
+    },
+  })
+  await Chat.openAgentModePicker()
+  expect(mockRpc.invocations).toEqual([['Chat.openAgentModePicker']])
+})
+
 test('selectIndex', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.selectIndex'() {

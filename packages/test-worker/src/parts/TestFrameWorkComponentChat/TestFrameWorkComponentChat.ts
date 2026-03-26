@@ -19,6 +19,10 @@ export const setNewChatModelPickerEnabled = async (enabled: boolean): Promise<vo
   await RendererWorker.invoke('Chat.setNewChatModelPickerEnabled', enabled)
 }
 
+export const openAgentModePicker = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.openAgentModePicker')
+}
+
 export const handleClickSettings = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickSettings')
 }
