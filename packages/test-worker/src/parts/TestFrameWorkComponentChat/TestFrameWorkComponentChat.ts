@@ -60,6 +60,10 @@ export const handleDropFiles = async (file: DroppedFileHandle): Promise<void> =>
   await Command.execute('Chat.handleDropFiles', 'composer-drop-target', [file])
 }
 
+export const handleChatHeaderContextMenu = async (): Promise<void> => {
+  await Command.execute('Chat.handleChatHeaderContextMenu', 0, 0)
+}
+
 export const reset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.reset')
 }
