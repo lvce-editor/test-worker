@@ -131,6 +131,10 @@ export const handleModelChange = async (modelId: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleModelChange', modelId)
 }
 
+export const handleModelInputBlur = async (): Promise<void> => {
+  await Command.execute('Chat.handleModelInputBlur')
+}
+
 export const handleInputPaste = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputPaste')
 }

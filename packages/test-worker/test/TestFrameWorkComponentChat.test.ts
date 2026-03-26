@@ -304,6 +304,17 @@ test('handleModelChange', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleModelChange', 'gpt-5.3-codex']])
 })
 
+test('handleModelInputBlur', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleModelInputBlur'() {
+      return undefined
+    },
+  })
+  const result = await Chat.handleModelInputBlur()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.handleModelInputBlur']])
+})
+
 test('handleInputPaste', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.handleInputPaste'() {
