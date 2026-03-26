@@ -62,6 +62,10 @@ export const mockOpenApiStreamPushChunk = async (chunk: string): Promise<void> =
   await RendererWorker.invoke('Chat.mockOpenApiStreamPushChunk', chunk)
 }
 
+export const openMockSession = async (sessionId: string, messages: readonly any[]): Promise<void> => {
+  await RendererWorker.invoke('Chat.openMockSession', sessionId, messages)
+}
+
 export const handleSubmit = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleSubmit')
 }
