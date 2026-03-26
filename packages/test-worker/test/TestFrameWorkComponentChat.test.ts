@@ -140,7 +140,6 @@ test('handleDropFiles', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleDropFiles', 'composer-drop-target', [file]]])
 })
 
-<<<<<<< HEAD
 test('handleClickSessionDebug', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.handleClickSessionDebug'() {
@@ -149,7 +148,8 @@ test('handleClickSessionDebug', async () => {
   })
   await Chat.handleClickSessionDebug()
   expect(mockRpc.invocations).toEqual([['Chat.handleClickSessionDebug']])
-=======
+})
+
 test('handleChatHeaderContextMenu', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.handleChatHeaderContextMenu'() {
@@ -158,7 +158,6 @@ test('handleChatHeaderContextMenu', async () => {
   })
   await Chat.handleChatHeaderContextMenu()
   expect(mockRpc.invocations).toEqual([['Chat.handleChatHeaderContextMenu', 0, 0]])
->>>>>>> origin/main
 })
 
 test('reset', async () => {
