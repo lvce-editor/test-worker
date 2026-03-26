@@ -135,6 +135,10 @@ export const handleInputCut = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputCut')
 }
 
+export const clearInput = async (): Promise<void> => {
+  await Command.execute('Chat.clearInput')
+}
+
 export interface MockOpenAiResponseOptions {
   readonly status: number
   readonly value: any
