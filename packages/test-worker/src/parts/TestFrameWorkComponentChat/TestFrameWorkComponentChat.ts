@@ -60,13 +60,12 @@ export const handleDropFiles = async (file: DroppedFileHandle): Promise<void> =>
   await Command.execute('Chat.handleDropFiles', 'composer-drop-target', [file])
 }
 
-<<<<<<< HEAD
 export const handleClickSessionDebug = async (): Promise<void> => {
   await Command.execute('Chat.handleClickSessionDebug')
-=======
+}
+
 export const handleChatHeaderContextMenu = async (): Promise<void> => {
   await Command.execute('Chat.handleChatHeaderContextMenu', 0, 0)
->>>>>>> origin/main
 }
 
 export const reset = async (): Promise<void> => {
