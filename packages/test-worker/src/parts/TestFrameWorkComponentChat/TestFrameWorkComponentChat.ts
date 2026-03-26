@@ -60,8 +60,13 @@ export const handleDropFiles = async (file: DroppedFileHandle): Promise<void> =>
   await Command.execute('Chat.handleDropFiles', 'composer-drop-target', [file])
 }
 
+<<<<<<< HEAD
 export const handleClickSessionDebug = async (): Promise<void> => {
   await Command.execute('Chat.handleClickSessionDebug')
+=======
+export const handleChatHeaderContextMenu = async (): Promise<void> => {
+  await Command.execute('Chat.handleChatHeaderContextMenu', 0, 0)
+>>>>>>> origin/main
 }
 
 export const reset = async (): Promise<void> => {
@@ -131,6 +136,10 @@ export const handleModelChange = async (modelId: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleModelChange', modelId)
 }
 
+export const handleModelInputBlur = async (): Promise<void> => {
+  await Command.execute('Chat.handleModelInputBlur')
+}
+
 export const handleInputPaste = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputPaste')
 }
@@ -143,6 +152,10 @@ export const handleInputCut = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputCut')
 }
 
+export const clearInput = async (): Promise<void> => {
+  await Command.execute('Chat.clearInput')
+}
+
 export interface MockOpenAiResponseOptions {
   readonly status: number
   readonly value: any
@@ -153,7 +166,7 @@ export const mockOpenAiResponse = async (options: MockOpenAiResponseOptions): Pr
 }
 
 export const handleInputFocus = async (): Promise<void> => {
-  return RendererWorker.invoke('Chat.handleInputFocus')
+  return Command.execute('Chat.handleInputFocus', 'chat-list')
 }
 
 export const getAuthState = async (): Promise<any> => {
