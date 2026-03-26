@@ -324,6 +324,16 @@ test('handleInputCut', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleInputCut']])
 })
 
+test('clearInput', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.clearInput'() {
+      return undefined
+    },
+  })
+  await Chat.clearInput()
+  expect(mockRpc.invocations).toEqual([['Chat.clearInput']])
+})
+
 test('mockOpenAiResponse', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.mockOpenAiResponse'() {
