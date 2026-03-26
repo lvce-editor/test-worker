@@ -325,3 +325,18 @@ test('handleInputFocus', async () => {
   expect(result).toBeUndefined()
   expect(mockRpc.invocations).toEqual([['Chat.handleInputFocus']])
 })
+
+test('getAuthState', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.getAuthState'() {
+      return {
+        authenticated: true,
+      }
+    },
+  })
+  const result = await Chat.getAuthState()
+  expect(result).toEqual({
+    authenticated: true,
+  })
+  expect(mockRpc.invocations).toEqual([['Chat.getAuthState']])
+})
