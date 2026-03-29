@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
+import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 export const handleChatListContextMenu = async (eventX: number, eventY: number): Promise<void> => {
   await RendererWorker.invoke('Chat.handleChatListContextMenu', eventX, eventY)
@@ -54,8 +56,23 @@ export const handleInput = async (text: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInput', 'composer', text, 'script')
 }
 
+export const handleDropFiles = async (file: DroppedFileHandle): Promise<void> => {
+  await Command.execute('Chat.handleDropFiles', 'composer-drop-target', [file])
+}
+
+export const handleClickSessionDebug = async (): Promise<void> => {
+  await Command.execute('Chat.handleClickSessionDebug')
+}
+
+export const handleChatHeaderContextMenu = async (): Promise<void> => {
+  await Command.execute('Chat.handleChatHeaderContextMenu', 0, 0)
+}
+
 export const reset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.reset')
+}
+export const handleMessagesScroll = async (id: number, x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleMessagesScroll', id, x, y)
 }
 
 export const mockOpenApiStreamFinish = async (): Promise<void> => {
@@ -64,6 +81,10 @@ export const mockOpenApiStreamFinish = async (): Promise<void> => {
 
 export const mockOpenApiStreamPushChunk = async (chunk: string): Promise<void> => {
   await RendererWorker.invoke('Chat.mockOpenApiStreamPushChunk', chunk)
+}
+
+export const openMockSession = async (sessionId: string, messages: readonly any[]): Promise<void> => {
+  await RendererWorker.invoke('Chat.openMockSession', sessionId, messages)
 }
 
 export const handleSubmit = async (): Promise<void> => {
@@ -117,6 +138,10 @@ export const handleModelChange = async (modelId: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleModelChange', modelId)
 }
 
+export const handleModelInputBlur = async (): Promise<void> => {
+  await Command.execute('Chat.handleModelInputBlur')
+}
+
 export const handleInputPaste = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputPaste')
 }
@@ -129,6 +154,10 @@ export const handleInputCut = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputCut')
 }
 
+export const clearInput = async (): Promise<void> => {
+  await Command.execute('Chat.clearInput')
+}
+
 export interface MockOpenAiResponseOptions {
   readonly status: number
   readonly value: any
@@ -139,5 +168,9 @@ export const mockOpenAiResponse = async (options: MockOpenAiResponseOptions): Pr
 }
 
 export const handleInputFocus = async (): Promise<void> => {
-  return RendererWorker.invoke('Chat.handleInputFocus')
+  return Command.execute('Chat.handleInputFocus', 'chat-list')
+}
+
+export const getAuthState = async (): Promise<any> => {
+  return RendererWorker.invoke('Chat.getAuthState')
 }
