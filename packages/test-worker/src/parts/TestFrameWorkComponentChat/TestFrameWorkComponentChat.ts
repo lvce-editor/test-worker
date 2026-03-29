@@ -194,3 +194,7 @@ export const handleInputFocus = async (): Promise<void> => {
 export const getAuthState = async (): Promise<any> => {
   return RendererWorker.invoke('Chat.getAuthState')
 }
+
+export const handleAgentModeChange = async (newAgentMode: string): Promise<void> => {
+  return RendererWorker.invoke('Chat.handleAgentModeChange', newAgentMode)
+}
