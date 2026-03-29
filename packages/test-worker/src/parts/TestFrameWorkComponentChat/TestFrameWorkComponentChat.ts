@@ -103,7 +103,11 @@ export const openMockSession = async (sessionId: string, messages: readonly any[
   await RendererWorker.invoke('Chat.openMockSession', sessionId, messages)
 }
 
-export const registerMockResponse = async (options: { readonly text: string }): Promise<void> => {
+export interface MockResponseOptions {
+  readonly text: string
+}
+
+export const registerMockResponse = async (options: MockResponseOptions): Promise<void> => {
   await RendererWorker.invoke('Chat.registerMockResponse', options)
 }
 
