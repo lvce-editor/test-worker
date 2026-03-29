@@ -167,6 +167,10 @@ export const handleClickDelete = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickDelete')
 }
 
+export const handleContextMenuChatImageAttachment = async (id: string, x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleContextMenuChatImageAttachment', id, x, y)
+}
+
 export const setAddContextButtonEnabled = async (enabled: boolean): Promise<void> => {
   await RendererWorker.invoke('Chat.setAddContextButtonEnabled', enabled)
 }
