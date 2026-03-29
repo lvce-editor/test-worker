@@ -3,6 +3,14 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
+export const setReasoningPickerEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setReasoningPickerEnabled', enabled)
+}
+
+export const setReasoningEffort = async (effort: string): Promise<void> => {
+  await RendererWorker.invoke('Chat.setReasoningEffort', effort)
+}
+
 export const handleChatListContextMenu = async (eventX: number, eventY: number): Promise<void> => {
   await RendererWorker.invoke('Chat.handleChatListContextMenu', eventX, eventY)
 }
@@ -43,6 +51,10 @@ export const enterNewLine = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.enterNewLine')
 }
 
+export const setScrollDownButtonEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setScrollDownButtonEnabled', enabled)
+}
+
 export const show = async (): Promise<void> => {
   await RendererWorker.invoke('Layout.showSecondarySideBar')
   await RendererWorker.invoke('Chat.reset')
@@ -58,6 +70,10 @@ export const handleInput = async (text: string): Promise<void> => {
 
 export const handleDropFiles = async (file: DroppedFileHandle): Promise<void> => {
   await Command.execute('Chat.handleDropFiles', 'composer-drop-target', [file])
+}
+
+export const showComposerAttachmentPreviewOverlay = async (attachmentId: string): Promise<void> => {
+  await Command.execute('Chat.showComposerAttachmentPreviewOverlay', attachmentId)
 }
 
 export const handleClickSessionDebug = async (): Promise<void> => {
@@ -103,6 +119,14 @@ export const useMockApi = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.useMockApi', true)
 }
 
+export const openGitBranchPicker = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.openGitBranchPicker')
+}
+
+export const closeGitBranchPicker = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.closeGitBranchPicker')
+}
+
 export const setAuthEnabled = async (enabled: boolean): Promise<void> => {
   await RendererWorker.invoke('Chat.setAuthEnabled', enabled)
 }
@@ -126,12 +150,21 @@ export const setSearchEnabled = async (enabled: boolean): Promise<void> => {
 export const mockOpenApiRequestReset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.mockOpenApiRequestReset')
 }
+
 export const mockOpenApiStreamReset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.mockOpenApiStreamReset')
 }
 
+export const openModelPicker = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.openModelPicker')
+}
+
 export const handleClickDelete = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickDelete')
+}
+
+export const setAddContextButtonEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setAddContextButtonEnabled', enabled)
 }
 
 export const deleteSessionAtIndex = async (index: number): Promise<void> => {
@@ -150,8 +183,16 @@ export const handleInputPaste = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputPaste')
 }
 
+export const setQuestionToolEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setQuestionToolEnabled', enabled)
+}
+
 export const handleInputCopy = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputCopy')
+}
+
+export const handleClickFileName = async (fileName: string): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleClickFileName', fileName)
 }
 
 export const handleInputCut = async (): Promise<void> => {
@@ -160,6 +201,10 @@ export const handleInputCut = async (): Promise<void> => {
 
 export const clearInput = async (): Promise<void> => {
   await Command.execute('Chat.clearInput')
+}
+
+export const handleProjectListContextMenu = async (id: number, x: number, y: number): Promise<void> => {
+  await Command.execute('Chat.handleProjectListContextMenu', id, x, y)
 }
 
 export interface MockOpenAiResponseOptions {
@@ -177,4 +222,8 @@ export const handleInputFocus = async (): Promise<void> => {
 
 export const getAuthState = async (): Promise<any> => {
   return RendererWorker.invoke('Chat.getAuthState')
+}
+
+export const handleAgentModeChange = async (newAgentMode: string): Promise<void> => {
+  return RendererWorker.invoke('Chat.handleAgentModeChange', newAgentMode)
 }
