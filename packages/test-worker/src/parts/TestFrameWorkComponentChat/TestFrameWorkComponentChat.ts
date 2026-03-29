@@ -158,6 +158,10 @@ export const handleInputPaste = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputPaste')
 }
 
+export const setQuestionToolEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setQuestionToolEnabled', enabled)
+}
+
 export const handleInputCopy = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputCopy')
 }
