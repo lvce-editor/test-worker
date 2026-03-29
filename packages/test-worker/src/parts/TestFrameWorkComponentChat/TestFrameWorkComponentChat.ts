@@ -96,6 +96,14 @@ export const useMockApi = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.useMockApi', true)
 }
 
+export const openGitBranchPicker = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.openGitBranchPicker')
+}
+
+export const closeGitBranchPicker = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.closeGitBranchPicker')
+}
+
 export const setAuthEnabled = async (enabled: boolean): Promise<void> => {
   await RendererWorker.invoke('Chat.setAuthEnabled', enabled)
 }
