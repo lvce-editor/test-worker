@@ -130,8 +130,13 @@ export const setSearchEnabled = async (enabled: boolean): Promise<void> => {
 export const mockOpenApiRequestReset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.mockOpenApiRequestReset')
 }
+
 export const mockOpenApiStreamReset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.mockOpenApiStreamReset')
+}
+
+export const openModelPicker = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.openModelPicker')
 }
 
 export const handleClickDelete = async (): Promise<void> => {
