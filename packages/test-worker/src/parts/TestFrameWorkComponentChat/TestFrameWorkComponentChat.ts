@@ -79,6 +79,9 @@ export const handleChatHeaderContextMenu = async (): Promise<void> => {
 export const reset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.reset')
 }
+export const handleMessagesScroll = async (id: number, x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleMessagesScroll', id, x, y)
+}
 
 export const mockOpenApiStreamFinish = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.mockOpenApiStreamFinish')
