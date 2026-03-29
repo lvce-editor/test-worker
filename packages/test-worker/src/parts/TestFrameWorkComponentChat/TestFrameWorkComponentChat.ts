@@ -43,6 +43,10 @@ export const enterNewLine = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.enterNewLine')
 }
 
+export const setScrollDownButtonEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setScrollDownButtonEnabled', enabled)
+}
+
 export const show = async (): Promise<void> => {
   await RendererWorker.invoke('Layout.showSecondarySideBar')
   await RendererWorker.invoke('Chat.reset')
