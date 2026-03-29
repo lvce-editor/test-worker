@@ -42,6 +42,16 @@ test('setNewChatModelPickerEnabled', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.setNewChatModelPickerEnabled', true]])
 })
 
+test('openAgentModePicker', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.openAgentModePicker'() {
+      return undefined
+    },
+  })
+  await Chat.openAgentModePicker()
+  expect(mockRpc.invocations).toEqual([['Chat.openAgentModePicker']])
+})
+
 test('selectIndex', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.selectIndex'() {
@@ -114,6 +124,40 @@ test('handleInput', async () => {
   })
   await Chat.handleInput('hello')
   expect(mockRpc.invocations).toEqual([['Chat.handleInput', 'composer', 'hello', 'script']])
+})
+
+test('handleDropFiles', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleDropFiles'() {
+      return undefined
+    },
+  })
+  const file = {
+    file: new File(['content'], 'test.txt', { type: 'text/plain' }),
+    id: 1,
+  }
+  await Chat.handleDropFiles(file)
+  expect(mockRpc.invocations).toEqual([['Chat.handleDropFiles', 'composer-drop-target', [file]]])
+})
+
+test('handleClickSessionDebug', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleClickSessionDebug'() {
+      return undefined
+    },
+  })
+  await Chat.handleClickSessionDebug()
+  expect(mockRpc.invocations).toEqual([['Chat.handleClickSessionDebug']])
+})
+
+test('handleChatHeaderContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleChatHeaderContextMenu'() {
+      return undefined
+    },
+  })
+  await Chat.handleChatHeaderContextMenu()
+  expect(mockRpc.invocations).toEqual([['Chat.handleChatHeaderContextMenu', 0, 0]])
 })
 
 test('reset', async () => {
@@ -270,6 +314,17 @@ test('handleModelChange', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleModelChange', 'gpt-5.3-codex']])
 })
 
+test('handleModelInputBlur', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleModelInputBlur'() {
+      return undefined
+    },
+  })
+  const result = await Chat.handleModelInputBlur()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.handleModelInputBlur']])
+})
+
 test('handleInputPaste', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.handleInputPaste'() {
@@ -300,6 +355,16 @@ test('handleInputCut', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleInputCut']])
 })
 
+test('clearInput', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.clearInput'() {
+      return undefined
+    },
+  })
+  await Chat.clearInput()
+  expect(mockRpc.invocations).toEqual([['Chat.clearInput']])
+})
+
 test('mockOpenAiResponse', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.mockOpenAiResponse'() {
@@ -323,5 +388,20 @@ test('handleInputFocus', async () => {
   })
   const result = await Chat.handleInputFocus()
   expect(result).toBeUndefined()
-  expect(mockRpc.invocations).toEqual([['Chat.handleInputFocus']])
+  expect(mockRpc.invocations).toEqual([['Chat.handleInputFocus', 'chat-list']])
+})
+
+test('getAuthState', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.getAuthState'() {
+      return {
+        authenticated: true,
+      }
+    },
+  })
+  const result = await Chat.getAuthState()
+  expect(result).toEqual({
+    authenticated: true,
+  })
+  expect(mockRpc.invocations).toEqual([['Chat.getAuthState']])
 })
