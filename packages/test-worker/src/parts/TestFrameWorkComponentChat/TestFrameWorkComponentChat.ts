@@ -178,6 +178,10 @@ export const clearInput = async (): Promise<void> => {
   await Command.execute('Chat.clearInput')
 }
 
+export const handleProjectListContextMenu = async (id: number, x: number, y: number): Promise<void> => {
+  await Command.execute('Chat.handleProjectListContextMenu', id, x, y)
+}
+
 export interface MockOpenAiResponseOptions {
   readonly status: number
   readonly value: any
