@@ -147,6 +147,10 @@ export const handleInputCopy = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputCopy')
 }
 
+export const handleClickFileName = async (fileName: string): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleClickFileName', fileName)
+}
+
 export const handleInputCut = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputCut')
 }
