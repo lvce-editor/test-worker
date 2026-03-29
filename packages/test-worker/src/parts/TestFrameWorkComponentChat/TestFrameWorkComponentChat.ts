@@ -127,6 +127,10 @@ export const handleClickDelete = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickDelete')
 }
 
+export const handleContextMenuChatImageAttachment = async (id: string, x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleContextMenuChatImageAttachment', id, x, y)
+}
+
 export const deleteSessionAtIndex = async (index: number): Promise<void> => {
   await RendererWorker.invoke('Chat.deleteSessionAtIndex', index)
 }
