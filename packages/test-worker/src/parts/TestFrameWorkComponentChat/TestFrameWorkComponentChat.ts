@@ -19,6 +19,10 @@ export const setNewChatModelPickerEnabled = async (enabled: boolean): Promise<vo
   await RendererWorker.invoke('Chat.setNewChatModelPickerEnabled', enabled)
 }
 
+export const openAgentModePicker = async (): Promise<void> => {
+  await RendererWorker.invoke('Chat.openAgentModePicker')
+}
+
 export const handleClickSettings = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickSettings')
 }
@@ -56,8 +60,19 @@ export const handleDropFiles = async (file: DroppedFileHandle): Promise<void> =>
   await Command.execute('Chat.handleDropFiles', 'composer-drop-target', [file])
 }
 
+export const handleClickSessionDebug = async (): Promise<void> => {
+  await Command.execute('Chat.handleClickSessionDebug')
+}
+
+export const handleChatHeaderContextMenu = async (): Promise<void> => {
+  await Command.execute('Chat.handleChatHeaderContextMenu', 0, 0)
+}
+
 export const reset = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.reset')
+}
+export const handleMessagesScroll = async (id: number, x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleMessagesScroll', id, x, y)
 }
 
 export const mockOpenApiStreamFinish = async (): Promise<void> => {
@@ -123,6 +138,10 @@ export const handleModelChange = async (modelId: string): Promise<void> => {
   await RendererWorker.invoke('Chat.handleModelChange', modelId)
 }
 
+export const handleModelInputBlur = async (): Promise<void> => {
+  await Command.execute('Chat.handleModelInputBlur')
+}
+
 export const handleInputPaste = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleInputPaste')
 }
@@ -149,5 +168,9 @@ export const mockOpenAiResponse = async (options: MockOpenAiResponseOptions): Pr
 }
 
 export const handleInputFocus = async (): Promise<void> => {
-  return RendererWorker.invoke('Chat.handleInputFocus')
+  return Command.execute('Chat.handleInputFocus', 'chat-list')
+}
+
+export const getAuthState = async (): Promise<any> => {
+  return RendererWorker.invoke('Chat.getAuthState')
 }
