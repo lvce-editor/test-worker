@@ -3,6 +3,14 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
+export const setReasoningPickerEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setReasoningPickerEnabled', enabled)
+}
+
+export const setReasoningEffort = async (effort: string): Promise<void> => {
+  await RendererWorker.invoke('Chat.setReasoningEffort', effort)
+}
+
 export const handleChatListContextMenu = async (eventX: number, eventY: number): Promise<void> => {
   await RendererWorker.invoke('Chat.handleChatListContextMenu', eventX, eventY)
 }
