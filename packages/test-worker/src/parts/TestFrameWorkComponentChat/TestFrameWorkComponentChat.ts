@@ -60,6 +60,10 @@ export const handleDropFiles = async (file: DroppedFileHandle): Promise<void> =>
   await Command.execute('Chat.handleDropFiles', 'composer-drop-target', [file])
 }
 
+export const showComposerAttachmentPreviewOverlay = async (attachmentId: string): Promise<void> => {
+  await Command.execute('Chat.showComposerAttachmentPreviewOverlay', attachmentId)
+}
+
 export const handleClickSessionDebug = async (): Promise<void> => {
   await Command.execute('Chat.handleClickSessionDebug')
 }
