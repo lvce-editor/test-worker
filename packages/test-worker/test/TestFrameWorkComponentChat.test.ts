@@ -405,3 +405,165 @@ test('getAuthState', async () => {
   })
   expect(mockRpc.invocations).toEqual([['Chat.getAuthState']])
 })
+
+test('setReasoningPickerEnabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setReasoningPickerEnabled'() {
+      return undefined
+    },
+  })
+  await Chat.setReasoningPickerEnabled(true)
+  expect(mockRpc.invocations).toEqual([['Chat.setReasoningPickerEnabled', true]])
+})
+
+test('setReasoningEffort', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setReasoningEffort'() {
+      return undefined
+    },
+  })
+  await Chat.setReasoningEffort('high')
+  expect(mockRpc.invocations).toEqual([['Chat.setReasoningEffort', 'high']])
+})
+
+test('setBackendUrl', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setBackendUrl'() {
+      return undefined
+    },
+  })
+  await Chat.setBackendUrl('http://localhost:3000')
+  expect(mockRpc.invocations).toEqual([['Chat.setBackendUrl', 'http://localhost:3000']])
+})
+
+test('setScrollDownButtonEnabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setScrollDownButtonEnabled'() {
+      return undefined
+    },
+  })
+  await Chat.setScrollDownButtonEnabled(false)
+  expect(mockRpc.invocations).toEqual([['Chat.setScrollDownButtonEnabled', false]])
+})
+
+test('showComposerAttachmentPreviewOverlay', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.showComposerAttachmentPreviewOverlay'() {
+      return undefined
+    },
+  })
+  await Chat.showComposerAttachmentPreviewOverlay('attachment-1')
+  expect(mockRpc.invocations).toEqual([['Chat.showComposerAttachmentPreviewOverlay', 'attachment-1']])
+})
+
+test('handleMessagesScroll', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleMessagesScroll'() {
+      return undefined
+    },
+  })
+  await Chat.handleMessagesScroll(1, 10, 20)
+  expect(mockRpc.invocations).toEqual([['Chat.handleMessagesScroll', 1, 10, 20]])
+})
+
+test('openMockSession', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.openMockSession'() {
+      return undefined
+    },
+  })
+  const messages = [{ content: 'hello', role: 'user' }]
+  await Chat.openMockSession('session-1', messages)
+  expect(mockRpc.invocations).toEqual([['Chat.openMockSession', 'session-1', messages]])
+})
+
+test('openGitBranchPicker', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.openGitBranchPicker'() {
+      return undefined
+    },
+  })
+  await Chat.openGitBranchPicker()
+  expect(mockRpc.invocations).toEqual([['Chat.openGitBranchPicker']])
+})
+
+test('closeGitBranchPicker', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.closeGitBranchPicker'() {
+      return undefined
+    },
+  })
+  await Chat.closeGitBranchPicker()
+  expect(mockRpc.invocations).toEqual([['Chat.closeGitBranchPicker']])
+})
+
+test('setSearchEnabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setSearchEnabled'() {
+      return undefined
+    },
+  })
+  await Chat.setSearchEnabled(true)
+  expect(mockRpc.invocations).toEqual([['Chat.setSearchEnabled', true]])
+})
+
+test('openModelPicker', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.openModelPicker'() {
+      return undefined
+    },
+  })
+  await Chat.openModelPicker()
+  expect(mockRpc.invocations).toEqual([['Chat.openModelPicker']])
+})
+
+test('setAddContextButtonEnabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setAddContextButtonEnabled'() {
+      return undefined
+    },
+  })
+  await Chat.setAddContextButtonEnabled(false)
+  expect(mockRpc.invocations).toEqual([['Chat.setAddContextButtonEnabled', false]])
+})
+
+test('setQuestionToolEnabled', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setQuestionToolEnabled'() {
+      return undefined
+    },
+  })
+  await Chat.setQuestionToolEnabled(true)
+  expect(mockRpc.invocations).toEqual([['Chat.setQuestionToolEnabled', true]])
+})
+
+test('handleClickFileName', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleClickFileName'() {
+      return undefined
+    },
+  })
+  await Chat.handleClickFileName('src/test.ts')
+  expect(mockRpc.invocations).toEqual([['Chat.handleClickFileName', 'src/test.ts']])
+})
+
+test('handleProjectListContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleProjectListContextMenu'() {
+      return undefined
+    },
+  })
+  await Chat.handleProjectListContextMenu(5, 10, 20)
+  expect(mockRpc.invocations).toEqual([['Chat.handleProjectListContextMenu', 5, 10, 20]])
+})
+
+test('handleAgentModeChange', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleAgentModeChange'() {
+      return undefined
+    },
+  })
+  const result = await Chat.handleAgentModeChange('agent')
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.handleAgentModeChange', 'agent']])
+})
