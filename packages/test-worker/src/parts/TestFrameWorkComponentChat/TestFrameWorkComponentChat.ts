@@ -130,6 +130,10 @@ export const handleClickDelete = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickDelete')
 }
 
+export const setAddContextButtonEnabled = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setAddContextButtonEnabled', enabled)
+}
+
 export const deleteSessionAtIndex = async (index: number): Promise<void> => {
   await RendererWorker.invoke('Chat.deleteSessionAtIndex', index)
 }
