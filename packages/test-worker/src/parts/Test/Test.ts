@@ -27,14 +27,15 @@ export const execute = async (href: string, platform: number, assetDir: string):
   TestFrameWorkComponentUrl.setUrl(scriptUrl) // TODO avoid side effect
   // 2. import that script
   const module = await ImportTest.importTest(scriptUrl)
-  if (module.mockRpc) {
-    TestState.setMockRpc(module.mockRpc)
+  const { mockRpc, name, skip, test } = module
+  if (mockRpc) {
+    TestState.setMockRpc(mockRpc)
   }
-  if (module.test) {
-    if (module.skip) {
-      await TestFrameWork.skipTest(module.name)
+  if (test) {
+    if (skip) {
+      await TestFrameWork.skipTest(name)
     } else {
-      await ExecuteTest.executeTest(module.name, module.test, globals)
+      await ExecuteTest.executeTest(name, test, globals)
     }
   }
   // TODO maybe setup file watcher earlier, to not miss events?
