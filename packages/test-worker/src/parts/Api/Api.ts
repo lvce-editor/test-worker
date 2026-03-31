@@ -25,6 +25,7 @@ import type * as IconTheme from '../TestFrameWorkComponentIconTheme/TestFrameWor
 import type * as IframeInspector from '../TestFrameWorkComponentIframeInspector/TestFrameWorkComponentIframeInspector.ts'
 import type * as KeyBindingsEditor from '../TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
 import type * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkComponentKeyBoard.ts'
+import type * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 import type * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 import type * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 import type * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
@@ -84,6 +85,7 @@ export interface Api {
   IframeInspector: typeof IframeInspector
   KeyBindingsEditor: typeof KeyBindingsEditor
   KeyBoard: typeof KeyBoard
+  Layout: typeof Layout
   LanguageModels: typeof LanguageModels
   Locator: typeof Locator
   Main: typeof Main

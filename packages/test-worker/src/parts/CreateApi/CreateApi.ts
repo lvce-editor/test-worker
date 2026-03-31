@@ -26,6 +26,7 @@ import * as IframeInspector from '../TestFrameWorkComponentIframeInspector/TestF
 import * as KeyBindingsEditor from '../TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
 import * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkComponentKeyBoard.ts'
 import * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
+import * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 import * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 import * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
 import * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
@@ -87,6 +88,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     KeyBindingsEditor,
     KeyBoard,
     LanguageModels,
+    Layout,
     Locator,
     Main,
     Open,
