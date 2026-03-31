@@ -17,6 +17,15 @@ export const handleEscape = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.handleEscape')
 }
 
+export const handleDropIndex = async (
+  fileHandles: readonly FileSystemHandle[],
+  files: readonly any[],
+  paths: readonly string[],
+  index: number,
+): Promise<void> => {
+  await RendererWorker.invoke('Explorer.handleDropIndex', fileHandles, files, paths, index)
+}
+
 export const handleInputBlur = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.handleInputBlur')
 }
