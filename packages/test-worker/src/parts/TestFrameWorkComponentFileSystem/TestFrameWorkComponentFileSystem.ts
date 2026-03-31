@@ -23,7 +23,7 @@ export const readFile = async (uri: string): Promise<string> => {
   return RendererWorker.invoke('FileSystem.readFile', uri)
 }
 
-export const addFileHandle = async (file: File): Promise<void> => {
+export const addFileHandle = async (file: File | FileSystemHandle): Promise<void> => {
   await RendererWorker.invoke('FileSystem.addFileHandle', file)
 }
 
