@@ -3,6 +3,9 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as LocatorInvoke from '../src/parts/LocatorInvoke/LocatorInvoke.ts'
 import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
+const expectedObjectError = /expected value to be of type object/i
+const expectedStringError = /expected value to be of type string/i
+
 test('locatorInvoke: with WebViewState', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performAction'() {
@@ -32,9 +35,9 @@ test('locatorInvoke: with RendererWorker', async () => {
 
 test('locatorInvoke: asserts', async () => {
   // object assertion
-  await expect(LocatorInvoke.locatorInvoke(undefined, 'click')).rejects.toThrow(/expected value to be of type object/i)
+  await expect(LocatorInvoke.locatorInvoke(undefined, 'click')).rejects.toThrow(expectedObjectError)
 
   // string assertion
   // @ts-ignore
-  await expect(LocatorInvoke.locatorInvoke({}, 123)).rejects.toThrow(/expected value to be of type string/i)
+  await expect(LocatorInvoke.locatorInvoke({}, 123)).rejects.toThrow(expectedStringError)
 })

@@ -2,6 +2,8 @@ import { expect, test } from '@jest/globals'
 import { OpenerWorker } from '@lvce-editor/rpc-registry'
 import * as Open from '../src/parts/TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
 
+const openedUrlRegex = /https:\/\/example\.com\/path\/\d+/
+
 test('enableMemoryOpener', async () => {
   using mockRpc = OpenerWorker.registerMockRpc({
     'Open.enableMemoryOpener'() {
@@ -50,7 +52,7 @@ test('shouldHaveUrl - regex success', async () => {
       return 'https://example.com/path/123'
     },
   })
-  await Open.shouldHaveUrl(/https:\/\/example\.com\/path\/\d+/)
+  await Open.shouldHaveUrl(openedUrlRegex)
   expect(mockRpc.invocations).toEqual([['Open.readOpenedUrl']])
 })
 
@@ -60,7 +62,7 @@ test('shouldHaveUrl - regex error', async () => {
       return 'https://example.com/path/no-number'
     },
   })
-  await expect(Open.shouldHaveUrl(/https:\/\/example\.com\/path\/\d+/)).rejects.toThrow(
+  await expect(Open.shouldHaveUrl(openedUrlRegex)).rejects.toThrow(
     'expected opened url to be "/https:\\/\\/example\\.com\\/path\\/\\d+/" but was "https://example.com/path/no-number"',
   )
   expect(mockRpc.invocations).toEqual([['Open.readOpenedUrl']])

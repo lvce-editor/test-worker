@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
 export const toFileUrl = (url: string): string => {
   const urlObject = new URL(url)
   const pathName = urlObject.pathname

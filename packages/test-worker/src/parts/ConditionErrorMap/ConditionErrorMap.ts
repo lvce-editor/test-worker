@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
 import * as ConditionErrors from '../ConditionErrors/ConditionErrors.ts'
 
 export const getFunction = (fnName: string): any => {

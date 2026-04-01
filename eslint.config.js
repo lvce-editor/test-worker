@@ -1,9 +1,11 @@
 import config from '@lvce-editor/eslint-config'
 import actions from '@lvce-editor/eslint-plugin-github-actions'
+import regex from '@lvce-editor/eslint-plugin-regex'
 
 export default [
   ...config,
   ...actions,
+  ...regex,
   {
     ignores: ['src/testWorkerMain.ts'],
   },

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
 import { EditorWorker } from '@lvce-editor/rpc-registry'
 
 export const getEditorKey = async (): Promise<number> => {

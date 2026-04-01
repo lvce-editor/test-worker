@@ -2,6 +2,9 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
+const helloNumberRegex = /Hello.*\d+/
+const emailRegex = /\w+@\w+\.\w+/
+
 test('readNativeFiles', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.disableMemoryClipBoard'() {
@@ -105,7 +108,7 @@ test('shouldHaveText - regex success', async () => {
       return 'Hello World 123'
     },
   })
-  await ClipBoard.shouldHaveText(/Hello.*\d+/)
+  await ClipBoard.shouldHaveText(helloNumberRegex)
   expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })
 
@@ -115,7 +118,7 @@ test('shouldHaveText - regex error', async () => {
       return 'Hello World'
     },
   })
-  await expect(ClipBoard.shouldHaveText(/Hello.*\d+/)).rejects.toThrow('expected clipboard to have text "/Hello.*\\d+/" but was "Hello World"')
+  await expect(ClipBoard.shouldHaveText(helloNumberRegex)).rejects.toThrow('expected clipboard to have text "/Hello.*\\d+/" but was "Hello World"')
   expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })
 
@@ -156,6 +159,6 @@ test('shouldHaveText - regex with special characters', async () => {
       return 'test@example.com'
     },
   })
-  await ClipBoard.shouldHaveText(/\w+@\w+\.\w+/)
+  await ClipBoard.shouldHaveText(emailRegex)
   expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })
