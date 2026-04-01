@@ -49,6 +49,56 @@ test('setFilter', async () => {
   expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'filter', 'beta', false]])
 })
 
+test('setEventCategoryFilter', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.setEventCategoryFilter('request')
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'eventCategoryFilter', 'request', false]])
+})
+
+test('setTimelineRangePreset', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.setTimelineRangePreset('all')
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'timelineRangePreset', 'all', false]])
+})
+
+test('setShowInputEvents', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.setShowInputEvents(true)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'showInputEvents', '', true]])
+})
+
+test('setShowResponsePartEvents', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.setShowResponsePartEvents(true)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'showResponsePartEvents', '', true]])
+})
+
+test('setShowEventStreamFinishedEvents', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.setShowEventStreamFinishedEvents(true)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'showEventStreamFinishedEvents', '', true]])
+})
+
 test('selectEventRow', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.handleEventRowClick'() {
