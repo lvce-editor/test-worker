@@ -2,6 +2,7 @@ export * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbo
 export * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 export * as BaseUrl from '../TestFrameWorkComponentBaseUrl/TestFrameWorkComponentBaseUrl.ts'
 export * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
+export * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
 export * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 export * as ColorPicker from '../TestFrameWorkComponentColorPicker/TestFrameWorkComponentColorPicker.ts'
 export * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
