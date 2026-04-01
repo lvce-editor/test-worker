@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
+ 
 import { EditorWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { Diagnostic } from '../Diagnostic/Diagnostic.ts'
 import { areDiagnosticsEqual } from '../AreDiagnosticsEqual/AreDiagnosticsEqual.ts'

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/only-throw-error, @typescript-eslint/prefer-readonly-parameter-types */
+ 
 import { OpenerWorker } from '@lvce-editor/rpc-registry'
 import { AssertionError } from '../AssertionError/AssertionError.ts'
 

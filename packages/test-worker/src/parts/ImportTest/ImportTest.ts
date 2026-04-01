@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
+ 
 import * as ImportScript from '../ImportScript/ImportScript.ts'
 import { VError } from '../VError/VError.ts'
 
