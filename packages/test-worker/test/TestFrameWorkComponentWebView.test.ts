@@ -1,9 +1,10 @@
 import { expect, jest, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { createMockRpc } from '@lvce-editor/rpc'
 import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
 const invoke: jest.Mock = jest.fn()
-const mockRpc = MockRpc.create({ commandMap: {}, invoke })
+const mockRpc = createMockRpc({ commandMap: {} })
+mockRpc.invoke = invoke
 
 jest.unstable_mockModule('../src/parts/CreatePortRpc/CreatePortRpc.ts', () => ({
   // @ts-ignore
