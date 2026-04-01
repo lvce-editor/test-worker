@@ -5,6 +5,7 @@ import type * as About from '../TestFrameWorkComponentAbout/TestFrameWorkCompone
 import type * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import type * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
 import type * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
+import type * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
 import type * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import type * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import type * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
@@ -62,6 +63,7 @@ export interface Api {
   Audio: typeof Audio
   BaseUrl: IBaseUrl
   Chat: typeof Chat
+  ChatDebug: typeof ChatDebug
   ClipBoard: typeof ClipBoard
   ColorPicker: typeof ColorPicker
   Command: typeof Command
