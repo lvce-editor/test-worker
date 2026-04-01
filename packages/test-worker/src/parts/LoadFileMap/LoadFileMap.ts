@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
 import type { FileMap } from '../FileMap/FileMap.ts'
 import { isValidFileMap } from '../IsValidFileMap/IsValidFileMap.ts'
 import { VError } from '../VError/VError.ts'

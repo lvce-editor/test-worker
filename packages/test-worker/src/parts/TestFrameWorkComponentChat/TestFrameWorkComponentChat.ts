@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
