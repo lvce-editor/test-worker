@@ -1,4 +1,3 @@
- 
 export const string = (value: any, message: string): void => {
   if (typeof value !== 'string') {
     throw new TypeError(message)

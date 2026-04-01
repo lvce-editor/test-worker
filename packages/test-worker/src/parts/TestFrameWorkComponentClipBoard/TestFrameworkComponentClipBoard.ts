@@ -1,4 +1,3 @@
- 
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { AssertionError } from '../AssertionError/AssertionError.ts'
 

@@ -1,4 +1,3 @@
- 
 import type { Rpc } from '@lvce-editor/rpc'
 import { MessagePortRpcParent } from '@lvce-editor/rpc'
 import * as GetPortTuple from '../GetPortTuple/GetPortTuple.ts'

@@ -1,4 +1,3 @@
- 
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const openContextMenu = async (index: number): Promise<void> => {
