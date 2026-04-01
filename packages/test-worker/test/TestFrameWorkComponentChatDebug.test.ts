@@ -18,11 +18,13 @@ test('setEvents', async () => {
       return undefined
     },
   })
-  const events = [{
-    sessionId: 'e2e-session',
-    timestamp: '2026-03-08T00:00:00.000Z',
-    type: 'request',
-  }]
+  const events = [
+    {
+      sessionId: 'e2e-session',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
   await ChatDebug.setEvents(events)
   expect(mockRpc.invocations).toEqual([['ChatDebug.setEvents', events]])
 })
