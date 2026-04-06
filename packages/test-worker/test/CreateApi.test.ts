@@ -72,6 +72,7 @@ test('createApi includes FileSystem with loadFixture method', () => {
   const api = CreateApi.createApi(platform, assetDir)
 
   expect(api.FileSystem).toBeDefined()
+  expect(typeof api.FileSystem.getOpfsRoot).toBe('function')
   expect(typeof api.FileSystem.loadFixture).toBe('function')
 })
 
