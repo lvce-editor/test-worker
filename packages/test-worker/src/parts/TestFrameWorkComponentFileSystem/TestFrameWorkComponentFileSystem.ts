@@ -23,11 +23,11 @@ export const readFile = async (uri: string): Promise<string> => {
 }
 
 export const addFileHandle = async (file: File | FileSystemHandle): Promise<void> => {
-  await RendererWorker.invoke('FileSystem.addFileHandle', file)
+  return RendererWorker.invoke('FileSystem.addFileHandle', file)
 }
 
 export const mkdir = async (uri: string): Promise<void> => {
-  await RendererWorker.invoke('FileSystem.mkdir', uri)
+  return RendererWorker.invoke('FileSystem.mkdir', uri)
 }
 
 interface FileItem {
