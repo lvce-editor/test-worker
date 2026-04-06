@@ -114,6 +114,29 @@ test('getTmpDir: file scheme', async () => {
   expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir']])
 })
 
+test('getOpfsRoot', async () => {
+  const mockDirectory = {
+    async getFileHandle(): Promise<never> {
+      throw new Error('should not be called')
+    },
+  }
+
+  Object.defineProperty(globalThis, 'navigator', {
+    value: {
+      storage: {
+        async getDirectory(): Promise<typeof mockDirectory> {
+          return mockDirectory
+        },
+      },
+    },
+    writable: true,
+  })
+
+  const root = await FileSystem.getOpfsRoot()
+
+  expect(root).toBe(mockDirectory)
+})
+
 test('chmod', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.chmod'() {

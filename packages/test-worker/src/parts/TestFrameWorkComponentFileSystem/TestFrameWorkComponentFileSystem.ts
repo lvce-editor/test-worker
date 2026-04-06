@@ -92,8 +92,12 @@ export const createExecutableFrom = async (uri: string): Promise<string> => {
   return createExecutable(content)
 }
 
+export const getOpfsRoot = async (): Promise<FileSystemDirectoryHandle> => {
+  return navigator.storage.getDirectory()
+}
+
 export const createDroppedFileHandle = async (): Promise<DroppedFileHandle> => {
-  const directory = await navigator.storage.getDirectory()
+  const directory = await getOpfsRoot()
   const fileHandle = await directory.getFileHandle('dropped-file.txt', {
     create: true,
   })
