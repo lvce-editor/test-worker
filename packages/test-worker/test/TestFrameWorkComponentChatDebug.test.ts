@@ -119,6 +119,36 @@ test('closeDetails', async () => {
   expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'closeDetails', 'close', false]])
 })
 
+test('openTabPreview', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.openTabPreview()
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'detailTab', 'preview', false]])
+})
+
+test('openTabResponse', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.openTabResponse()
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'detailTab', 'response', false]])
+})
+
+test('openTabTiming', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.openTabTiming()
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'detailTab', 'timing', false]])
+})
+
 test('setIndexedDbSupportForTest', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.setIndexedDbSupportForTest'() {
