@@ -69,3 +69,15 @@ export const setShowEventStreamFinishedEvents = async (enabled: boolean): Promis
 export const closeDetails = async (): Promise<void> => {
   await handleInput('closeDetails', 'close', false)
 }
+
+export const openTabPreview = async (): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'preview', false)
+}
+
+export const openTabResponse = async (): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'response', false)
+}
+
+export const openTabTiming = async (): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'timing', false)
+}
