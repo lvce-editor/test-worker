@@ -1,5 +1,7 @@
 import { htmlElements } from '../HtmlElements/HtmlElements.ts'
 
+const startTokenRegex = /^[a-z][a-z0-9-]*/
+
 export type ParsedCssSelector =
   | {
       readonly text: string
@@ -20,7 +22,7 @@ const isElement = (selector: string): boolean => {
 }
 
 const getStartToken = (selector: string): string => {
-  const match = selector.match(/^[a-z][a-z0-9-]*/)
+  const match = selector.match(startTokenRegex)
   return match ? match[0] : ''
 }
 
