@@ -1,6 +1,4 @@
-import { htmlElements } from '../HtmlElements/HtmlElements.ts'
-
-const startTokenRegex = /^[a-z][a-z0-9-]*/
+import { isCssSelector } from '../IsCssSelector/IsCssSelector.ts'
 
 export type ParsedCssSelector =
   | {
@@ -16,29 +14,6 @@ export type ParsedCssSelector =
       readonly text: string
       readonly type: 'css+text'
     }
-
-const isElement = (selector: string): boolean => {
-  return htmlElements.includes(selector)
-}
-
-const getStartToken = (selector: string): string => {
-  const match = selector.match(startTokenRegex)
-  return match ? match[0] : ''
-}
-
-const isCssSelector = (selector: string): boolean => {
-  if (!selector) {
-    return false
-  }
-  if (selector.startsWith('.') || selector.startsWith('#') || selector.startsWith('[') || selector.startsWith('*') || selector.startsWith(':')) {
-    return true
-  }
-  const startToken = getStartToken(selector)
-  if (!startToken) {
-    return false
-  }
-  return isElement(startToken)
-}
 
 export const parseCssSelector = (selector: string): ParsedCssSelector => {
   if (typeof selector !== 'string') {
