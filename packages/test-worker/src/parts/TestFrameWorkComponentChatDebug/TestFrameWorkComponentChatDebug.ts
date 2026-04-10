@@ -85,3 +85,11 @@ export const openTabTiming = async (): Promise<void> => {
 export const setSessionId = async (sessionId: string): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.setSessionId', sessionId)
 }
+
+export const appendStoredEventForTest = async (event: any): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.appendStoredEventForTest', event)
+}
+
+export const handleClickRefresh = async (): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleClickRefresh')
+}
