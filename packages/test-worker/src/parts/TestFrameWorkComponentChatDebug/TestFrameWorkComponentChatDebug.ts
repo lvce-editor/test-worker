@@ -74,6 +74,10 @@ export const openTabPreview = async (): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'preview', false)
 }
 
+export const openTabPayload = async (): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'payload', false)
+}
+
 export const openTabResponse = async (): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'response', false)
 }
