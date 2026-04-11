@@ -18,6 +18,22 @@ export const open = async (sessionId: string): Promise<void> => {
   await RendererWorker.invoke('Main.openUri', `chat-debug://${sessionId}`)
 }
 
+export interface OpenChatDebugOptions {
+  readonly events?: readonly ChatDebugEvent[]
+  readonly sessionId: string
+  readonly useDevtoolsLayout: boolean
+}
+
+export const open2 = async ({ events, sessionId, useDevtoolsLayout }: OpenChatDebugOptions): Promise<void> => {
+  await RendererWorker.invoke('Main.openUri', `chat-debug://${sessionId}`)
+  if (events) {
+    await setEvents(events)
+  }
+  if (useDevtoolsLayout) {
+    await handleInput('useDevtoolsLayout', '', true)
+  }
+}
+
 export const setEvents = async (events: readonly ChatDebugEvent[]): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.setEvents', events)
 }
