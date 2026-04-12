@@ -1,15 +1,18 @@
 import type { ILocator } from '../ILocator/ILocator.ts'
 import type { ILocatorCreateOptions } from '../ILocatorCreateOptions/ILocatorCreateOptions.ts'
+import type { ParsedCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
+import { parseCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
 import { performAction } from '../PerformAction/PerformAction.ts'
 import * as Assert from '../TestAssert/TestAssert.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export class Locator implements ILocator {
-  readonly _selector: any
+  readonly _selector: string
   readonly _nth: number
   readonly _hasText: string
+  readonly _parsed: ParsedCssSelector
 
-  constructor(selector: any, options: ILocatorCreateOptions = {}) {
+  constructor(selector: string, options: ILocatorCreateOptions = {}) {
     if (!options || typeof options !== 'object' || Array.isArray(options)) {
       throw new TypeError('options must be of type object')
     }
@@ -17,6 +20,7 @@ export class Locator implements ILocator {
     Assert.string(hasText, 'options.hasText must be of type string')
     Assert.number(nth, 'options.nth must be of type number')
     this._selector = selector
+    this._parsed = parseCssSelector(selector)
     this._nth = nth
     this._hasText = hasText
   }

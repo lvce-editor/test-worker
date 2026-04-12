@@ -9,6 +9,10 @@ test('create', () => {
   expect(createLocator(selector, options)).toMatchObject({
     _hasText: '',
     _nth: -1,
+    _parsed: {
+      selector: 'button',
+      type: 'css',
+    },
     _selector: 'button',
   })
 })
@@ -152,4 +156,18 @@ test('constructor throws for non-string hasText', () => {
 
 test('constructor throws for non-number nth', () => {
   expect(() => new Locator('button', { nth: '1' as any })).toThrow(new TypeError('options.nth must be of type number'))
+})
+
+test('constructor parses selector', () => {
+  expect(new Locator('.button text=Save')).toMatchObject({
+    _parsed: {
+      selector: '.button',
+      text: 'Save',
+      type: 'css+text',
+    },
+  })
+})
+
+test('constructor throws for unsupported selector', () => {
+  expect(() => new Locator('buttonish')).toThrow(new Error('unsupported selector: buttonish'))
 })

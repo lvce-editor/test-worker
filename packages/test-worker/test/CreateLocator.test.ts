@@ -8,6 +8,10 @@ test('create locator with selector only', () => {
   expect(locator._selector).toBe('button')
   expect(locator._nth).toBe(-1)
   expect(locator._hasText).toBe('')
+  expect(locator._parsed).toEqual({
+    selector: 'button',
+    type: 'css',
+  })
 })
 
 test('create locator with selector and hasText option', () => {
@@ -19,6 +23,10 @@ test('create locator with selector and hasText option', () => {
   expect(locator._selector).toBe('button')
   expect(locator._nth).toBe(-1)
   expect(locator._hasText).toBe('Submit')
+  expect(locator._parsed).toEqual({
+    selector: 'button',
+    type: 'css',
+  })
 })
 
 test('create locator with selector and nth option', () => {
@@ -30,6 +38,10 @@ test('create locator with selector and nth option', () => {
   expect(locator._selector).toBe('button')
   expect(locator._nth).toBe(2)
   expect(locator._hasText).toBe('')
+  expect(locator._parsed).toEqual({
+    selector: 'button',
+    type: 'css',
+  })
 })
 
 test('create locator with all options', () => {
@@ -42,6 +54,10 @@ test('create locator with all options', () => {
   expect(locator._selector).toBe('button')
   expect(locator._nth).toBe(1)
   expect(locator._hasText).toBe('Submit')
+  expect(locator._parsed).toEqual({
+    selector: 'button',
+    type: 'css',
+  })
 })
 
 test('create locator with empty options object', () => {
@@ -51,6 +67,20 @@ test('create locator with empty options object', () => {
   expect(locator._selector).toBe('button')
   expect(locator._nth).toBe(-1)
   expect(locator._hasText).toBe('')
+  expect(locator._parsed).toEqual({
+    selector: 'button',
+    type: 'css',
+  })
+})
+
+test('create locator parses combined css and text selector', () => {
+  const locator = createLocator('.button text=Save')
+
+  expect(locator._parsed).toEqual({
+    selector: '.button',
+    text: 'Save',
+    type: 'css+text',
+  })
 })
 
 test('create locator returns instance with expected methods', () => {
