@@ -1,22 +1,29 @@
 import type { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
 
 export const printLocator = (locator: ILocatorInternal): string => {
-  return locator._parsed.reduce((result, part) => {
+  let result = ''
+  for (const part of locator._parsed) {
     if (part.type === 'css') {
       if (!result) {
-        return part.selector
+        result = part.selector
+        continue
       }
-      return `${result} >> ${part.selector}`
+      result = `${result} >> ${part.selector}`
+      continue
     }
     if (part.type === 'text') {
       if (!result) {
-        return `text=${part.text}`
+        result = `text=${part.text}`
+        continue
       }
-      return `${result} text=${part.text}`
+      result = `${result} text=${part.text}`
+      continue
     }
     if (part.type === 'has-text') {
-      return `${result} "${part.text}"`
+      result = `${result} "${part.text}"`
+      continue
     }
-    return `${result}:nth(${part.index})`
-  }, '')
+    result = `${result}:nth(${part.index})`
+  }
+  return result
 }
