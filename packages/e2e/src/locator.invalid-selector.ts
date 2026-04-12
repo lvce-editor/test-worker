@@ -11,7 +11,7 @@ export const test: Test = async ({ Locator }) => {
       throw error
     }
     if (error.message !== 'selector must be of type string') {
-      throw new Error(`expected "selector must be of type string" but got "${error.message}"`)
+      throw new Error(`expected "selector must be of type string" but got "${error.message}"`, { cause: error })
     }
   }
 }

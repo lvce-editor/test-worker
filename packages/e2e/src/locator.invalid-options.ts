@@ -11,7 +11,7 @@ export const test: Test = async ({ Locator }) => {
       throw error
     }
     if (error.message !== 'options must be of type object') {
-      throw new Error(`expected "options must be of type object" but got "${error.message}"`)
+      throw new Error(`expected "options must be of type object" but got "${error.message}"`, { cause: error })
     }
   }
 }

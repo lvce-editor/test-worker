@@ -11,7 +11,7 @@ export const test: Test = async ({ Locator }) => {
       throw error
     }
     if (error.message !== 'options.nth must be of type number') {
-      throw new Error(`expected "options.nth must be of type number" but got "${error.message}"`)
+      throw new Error(`expected "options.nth must be of type number" but got "${error.message}"`, { cause: error })
     }
   }
 }

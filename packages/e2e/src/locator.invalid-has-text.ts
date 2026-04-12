@@ -11,7 +11,7 @@ export const test: Test = async ({ Locator }) => {
       throw error
     }
     if (error.message !== 'options.hasText must be of type string') {
-      throw new Error(`expected "options.hasText must be of type string" but got "${error.message}"`)
+      throw new Error(`expected "options.hasText must be of type string" but got "${error.message}"`, { cause: error })
     }
   }
 }
