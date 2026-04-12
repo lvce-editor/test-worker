@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { CssParsingError } from '../src/parts/CssParsingError/CssParsingError.ts'
 import { parseCssSelector } from '../src/parts/ParseCssSelector/ParseCssSelector.ts'
 
 test('parseCssSelector: parses text selector', () => {
@@ -56,13 +57,13 @@ test('parseCssSelector: throws for non-string selector', () => {
 })
 
 test('parseCssSelector: throws for unsupported selector', () => {
-  expect(() => parseCssSelector('buttonish')).toThrow(new Error('unsupported selector: buttonish'))
+  expect(() => parseCssSelector('buttonish')).toThrow(new CssParsingError('unsupported selector: buttonish'))
 })
 
 test('parseCssSelector: throws for unsupported css selector before text filter', () => {
-  expect(() => parseCssSelector('123 text=Save')).toThrow(new Error('unsupported selector: 123 text=Save'))
+  expect(() => parseCssSelector('123 text=Save')).toThrow(new CssParsingError('unsupported selector: 123 text=Save'))
 })
 
 test('parseCssSelector: throws for empty selector', () => {
-  expect(() => parseCssSelector('')).toThrow(new Error('unsupported selector: '))
+  expect(() => parseCssSelector('')).toThrow(new CssParsingError('unsupported selector: '))
 })
