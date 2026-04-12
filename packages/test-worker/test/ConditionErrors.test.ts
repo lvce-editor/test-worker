@@ -2,31 +2,46 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ILocatorInternal } from '../src/parts/ILocatorInternal/ILocatorInternal.ts'
 import * as ConditionErrors from '../src/parts/ConditionErrors/ConditionErrors.ts'
+import { parseCssSelector } from '../src/parts/ParseCssSelector/ParseCssSelector.ts'
+
+const createLocator = (selector: string, { hasText = '', nth = -1 }: { readonly hasText?: string; readonly nth?: number } = {}): ILocatorInternal => {
+  const parsed = parseCssSelector(selector)
+  return {
+    _parsed: [
+      ...parsed,
+      ...(hasText
+        ? [
+            {
+              text: hasText,
+              type: 'has-text' as const,
+            },
+          ]
+        : []),
+      ...(nth === -1
+        ? []
+        : [
+            {
+              index: nth,
+              type: 'nth' as const,
+            },
+          ]),
+    ],
+    _selector: selector,
+  }
+}
 
 test('toBeVisible', () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   expect(ConditionErrors.toBeVisible(locator)).toBe('expected selector to be visible .button')
 })
 
 test('toHaveValue', () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.input',
-  }
+  const locator = createLocator('.input')
   expect(ConditionErrors.toHaveValue(locator, { value: 'test' })).toBe('expected selector .input to have value test')
 })
 
 test('toHaveText - element not found', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.text',
-  }
+  const locator = createLocator('.text')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
@@ -38,11 +53,7 @@ test('toHaveText - element not found', async () => {
 })
 
 test('toHaveText - wrong text', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.text',
-  }
+  const locator = createLocator('.text')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'world', wasFound: true }
@@ -54,11 +65,7 @@ test('toHaveText - wrong text', async () => {
 })
 
 test('toHaveText - with hasText selector', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: 'hello',
-    _nth: -1,
-    _selector: '.item',
-  }
+  const locator = createLocator('.item', { hasText: 'hello' })
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'wrong', wasFound: true }
@@ -70,11 +77,7 @@ test('toHaveText - with hasText selector', async () => {
 })
 
 test('toHaveAttribute - element not found', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.link',
-  }
+  const locator = createLocator('.link')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
@@ -96,11 +99,7 @@ test('toHaveAttribute - element not found', async () => {
 })
 
 test('toHaveAttribute - wrong value', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.link',
-  }
+  const locator = createLocator('.link')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '/test', wasFound: true }
@@ -122,11 +121,7 @@ test('toHaveAttribute - wrong value', async () => {
 })
 
 test('toHaveCount', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.items',
-  }
+  const locator = createLocator('.items')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 1 }
@@ -138,11 +133,7 @@ test('toHaveCount', async () => {
 })
 
 test('toBeFocused', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.input',
-  }
+  const locator = createLocator('.input')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'BUTTON' }
@@ -154,11 +145,7 @@ test('toBeFocused', async () => {
 })
 
 test('toBeFocused - with document.body', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.input',
-  }
+  const locator = createLocator('.input')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'document.body' }
@@ -170,20 +157,12 @@ test('toBeFocused - with document.body', async () => {
 })
 
 test('toBeHidden', () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.modal',
-  }
+  const locator = createLocator('.modal')
   expect(ConditionErrors.toBeHidden(locator)).toBe('expected .modal to be hidden')
 })
 
 test('toHaveClass - element not found', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { wasFound: false }
@@ -195,11 +174,7 @@ test('toHaveClass - element not found', async () => {
 })
 
 test('toHaveClass - wrong class', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { wasFound: true }
@@ -211,11 +186,7 @@ test('toHaveClass - wrong class', async () => {
 })
 
 test('toHaveId - element not found', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
@@ -227,11 +198,7 @@ test('toHaveId - element not found', async () => {
 })
 
 test('toHaveId - wrong id', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'cancel', wasFound: true }
@@ -243,11 +210,7 @@ test('toHaveId - wrong id', async () => {
 })
 
 test('toHaveCss - element not found', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
@@ -269,11 +232,7 @@ test('toHaveCss - element not found', async () => {
 })
 
 test('toHaveCss - wrong value', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'block', wasFound: true }
@@ -295,11 +254,7 @@ test('toHaveCss - wrong value', async () => {
 })
 
 test('toContainText - element not found', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.text',
-  }
+  const locator = createLocator('.text')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
@@ -311,11 +266,7 @@ test('toContainText - element not found', async () => {
 })
 
 test('toContainText - wrong text', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.text',
-  }
+  const locator = createLocator('.text')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'world', wasFound: true }
@@ -327,11 +278,7 @@ test('toContainText - wrong text', async () => {
 })
 
 test('toHaveJSProperty - element not found', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: '', wasFound: false }
@@ -353,11 +300,7 @@ test('toHaveJSProperty - element not found', async () => {
 })
 
 test('toHaveJSProperty - wrong value', async () => {
-  const locator: ILocatorInternal = {
-    _hasText: '',
-    _nth: -1,
-    _selector: '.button',
-  }
+  const locator = createLocator('.button')
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkConditionError'() {
       return { actual: 'false', wasFound: true }

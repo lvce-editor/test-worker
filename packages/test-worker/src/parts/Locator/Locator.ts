@@ -8,11 +8,9 @@ import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export class Locator implements ILocator {
   readonly _selector: string
-  readonly _nth: number
-  readonly _hasText: string
   readonly _parsed: ParsedCssSelector
 
-  constructor(selector: string, options: ILocatorCreateOptions = {}) {
+  constructor(selector: string, options: ILocatorCreateOptions = {}, parsed?: ParsedCssSelector) {
     if (!options || typeof options !== 'object' || Array.isArray(options)) {
       throw new TypeError('options must be of type object')
     }
@@ -20,9 +18,7 @@ export class Locator implements ILocator {
     Assert.string(hasText, 'options.hasText must be of type string')
     Assert.number(nth, 'options.nth must be of type number')
     this._selector = selector
-    this._parsed = parseCssSelector(selector)
-    this._nth = nth
-    this._hasText = hasText
+    this._parsed = parsed || applyLocatorOptions(parseCssSelector(selector), options)
   }
 
   async click({ button = 'left' }: { readonly button?: string } = {}): Promise<void> {
@@ -44,20 +40,17 @@ export class Locator implements ILocator {
   }
 
   first(): any {
-    return new Locator(this._selector, {
-      nth: 0,
-    })
+    return new Locator(this._selector, {}, withNth(this._parsed, 0))
   }
 
   locator(subSelector: string): any {
-    if (this._nth !== -1) {
-      return new Locator(`${this._selector}:nth-of-type(${this._nth + 1}) ${subSelector}`)
-    }
-    return new Locator(`${this._selector} ${subSelector}`)
+    const selector = `${this._selector} ${subSelector}`
+    return new Locator(selector, {}, [...this._parsed, ...parseCssSelector(subSelector)])
   }
 
   nth(nth: number): any {
-    return new Locator(this._selector, { nth })
+    Assert.number(nth, 'nth must be of type number')
+    return new Locator(this._selector, {}, withNth(this._parsed, nth))
   }
 
   async type(text: string): Promise<void> {
@@ -68,4 +61,20 @@ export class Locator implements ILocator {
   async dispatchEvent(type: string, init: any): Promise<void> {
     return performAction(this, 'dispatchEvent', { init, type })
   }
+}
+
+const applyLocatorOptions = (parsed: ParsedCssSelector, { hasText = '', nth = -1 }: ILocatorCreateOptions): ParsedCssSelector => {
+  let nextParsed = parsed
+  if (hasText) {
+    nextParsed = [...nextParsed, { text: hasText, type: 'has-text' }]
+  }
+  if (nth !== -1) {
+    nextParsed = withNth(nextParsed, nth)
+  }
+  return nextParsed
+}
+
+const withNth = (parsed: ParsedCssSelector, nth: number): ParsedCssSelector => {
+  const filtered = parsed.filter((part) => part.type !== 'nth')
+  return [...filtered, { index: nth, type: 'nth' }]
 }

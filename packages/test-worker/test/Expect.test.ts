@@ -1,11 +1,11 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ExpectMod from '../src/parts/Expect/Expect.ts'
+import { parseCssSelector } from '../src/parts/ParseCssSelector/ParseCssSelector.ts'
 
 const createLocator = (selector: string = 'button'): any => {
   return {
-    _hasText: '',
-    _nth: -1,
+    _parsed: parseCssSelector(selector),
     _selector: selector,
   }
 }
