@@ -6,7 +6,6 @@ import { parseCssSelector } from '../src/parts/ParseCssSelector/ParseCssSelector
 const createLocator = (selector: string = 'button'): any => {
   return {
     _parsed: parseCssSelector(selector),
-    _selector: selector,
   }
 }
 

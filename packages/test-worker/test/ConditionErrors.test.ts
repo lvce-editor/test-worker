@@ -26,7 +26,6 @@ const createLocator = (selector: string, { hasText = '', nth = -1 }: { readonly 
             },
           ]),
     ],
-    _selector: selector,
   }
 }
 

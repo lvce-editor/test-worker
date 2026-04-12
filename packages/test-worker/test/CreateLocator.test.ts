@@ -5,7 +5,6 @@ import { createLocator } from '../src/parts/CreateLocator/CreateLocator.ts'
 test('create locator with selector only', () => {
   const locator = createLocator('button')
 
-  expect(locator._selector).toBe('button')
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
@@ -20,7 +19,6 @@ test('create locator with selector and hasText option', () => {
   }
   const locator = createLocator('button', options)
 
-  expect(locator._selector).toBe('button')
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
@@ -39,7 +37,6 @@ test('create locator with selector and nth option', () => {
   }
   const locator = createLocator('button', options)
 
-  expect(locator._selector).toBe('button')
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
@@ -59,7 +56,6 @@ test('create locator with all options', () => {
   }
   const locator = createLocator('button', options)
 
-  expect(locator._selector).toBe('button')
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
@@ -80,7 +76,6 @@ test('create locator with empty options object', () => {
   const options: ILocatorCreateOptions = {}
   const locator = createLocator('button', options)
 
-  expect(locator._selector).toBe('button')
   expect(locator._parsed).toEqual([
     {
       selector: 'button',

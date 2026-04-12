@@ -7,7 +7,6 @@ import * as Assert from '../TestAssert/TestAssert.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export class Locator implements ILocator {
-  readonly _selector: string
   readonly _parsed: ParsedCssSelector
 
   constructor(selector: string, options: ILocatorCreateOptions = {}, parsed?: ParsedCssSelector) {
@@ -17,7 +16,6 @@ export class Locator implements ILocator {
     const { hasText = '', nth = -1 } = options
     Assert.string(hasText, 'options.hasText must be of type string')
     Assert.number(nth, 'options.nth must be of type number')
-    this._selector = selector
     this._parsed = parsed || applyLocatorOptions(parseCssSelector(selector), options)
   }
 
@@ -40,17 +38,16 @@ export class Locator implements ILocator {
   }
 
   first(): any {
-    return new Locator(this._selector, {}, withNth(this._parsed, 0))
+    return new Locator('', {}, withNth(this._parsed, 0))
   }
 
   locator(subSelector: string): any {
-    const selector = `${this._selector} ${subSelector}`
-    return new Locator(selector, {}, [...this._parsed, ...parseCssSelector(subSelector)])
+    return new Locator(subSelector, {}, [...this._parsed, ...parseCssSelector(subSelector)])
   }
 
   nth(nth: number): any {
     Assert.number(nth, 'nth must be of type number')
-    return new Locator(this._selector, {}, withNth(this._parsed, nth))
+    return new Locator('', {}, withNth(this._parsed, nth))
   }
 
   async type(text: string): Promise<void> {

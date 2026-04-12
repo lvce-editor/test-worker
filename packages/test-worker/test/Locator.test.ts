@@ -13,7 +13,6 @@ test('create', () => {
         type: 'css',
       },
     ],
-    _selector: 'button',
   })
 })
 
@@ -110,7 +109,6 @@ test('locator with nth', () => {
   const options = { nth: 2 }
   const locator = createLocator(selector, options)
   const subLocator = locator.locator('span')
-  expect((subLocator as any)._selector).toBe('button span')
   expect((subLocator as any)._parsed).toEqual([
     {
       selector: 'button',
@@ -132,7 +130,16 @@ test('locator without nth', () => {
   const options = {}
   const locator = createLocator(selector, options)
   const subLocator = locator.locator('span')
-  expect((subLocator as any)._selector).toBe('button span')
+  expect((subLocator as any)._parsed).toEqual([
+    {
+      selector: 'button',
+      type: 'css',
+    },
+    {
+      selector: 'span',
+      type: 'css',
+    },
+  ])
 })
 
 test('nth', () => {
@@ -151,7 +158,6 @@ test('nth', () => {
         type: 'nth',
       },
     ],
-    _selector: 'button',
   })
 })
 
