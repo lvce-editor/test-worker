@@ -7,8 +7,12 @@ test('create', () => {
   const selector = 'button'
   const options = {}
   expect(createLocator(selector, options)).toMatchObject({
-    _hasText: '',
-    _nth: -1,
+    _parsed: [
+      {
+        selector: 'button',
+        type: 'css',
+      },
+    ],
     _selector: 'button',
   })
 })
@@ -88,7 +92,16 @@ test('first', () => {
   const options = {}
   const locator = createLocator(selector, options)
   expect(locator.first()).toMatchObject({
-    _nth: 0,
+    _parsed: [
+      {
+        selector: 'button',
+        type: 'css',
+      },
+      {
+        index: 0,
+        type: 'nth',
+      },
+    ],
   })
 })
 
@@ -97,7 +110,21 @@ test('locator with nth', () => {
   const options = { nth: 2 }
   const locator = createLocator(selector, options)
   const subLocator = locator.locator('span')
-  expect((subLocator as any)._selector).toBe('button:nth-of-type(3) span')
+  expect((subLocator as any)._selector).toBe('button span')
+  expect((subLocator as any)._parsed).toEqual([
+    {
+      selector: 'button',
+      type: 'css',
+    },
+    {
+      index: 2,
+      type: 'nth',
+    },
+    {
+      selector: 'span',
+      type: 'css',
+    },
+  ])
 })
 
 test('locator without nth', () => {
@@ -114,7 +141,16 @@ test('nth', () => {
   const locator = createLocator(selector, options)
   const nthLocator = locator.nth(1)
   expect(nthLocator as any).toMatchObject({
-    _nth: 1,
+    _parsed: [
+      {
+        selector: 'button',
+        type: 'css',
+      },
+      {
+        index: 1,
+        type: 'nth',
+      },
+    ],
     _selector: 'button',
   })
 })
@@ -152,4 +188,23 @@ test('constructor throws for non-string hasText', () => {
 
 test('constructor throws for non-number nth', () => {
   expect(() => new Locator('button', { nth: '1' as any })).toThrow(new TypeError('options.nth must be of type number'))
+})
+
+test('constructor parses selector', () => {
+  expect(new Locator('.button text=Save')).toMatchObject({
+    _parsed: [
+      {
+        selector: '.button',
+        type: 'css',
+      },
+      {
+        text: 'Save',
+        type: 'text',
+      },
+    ],
+  })
+})
+
+test('constructor throws for unsupported selector', () => {
+  expect(() => new Locator('buttonish')).toThrow(new Error('unsupported selector: buttonish'))
 })

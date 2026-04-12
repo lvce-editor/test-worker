@@ -3,7 +3,7 @@ import { locatorInvoke } from '../LocatorInvoke/LocatorInvoke.ts'
 import { printLocator } from '../PrintLocator/PrintLocator.ts'
 
 export const toBeVisible = (locator: ILocatorInternal): string => {
-  return `expected selector to be visible ${locator._selector}`
+  return `expected selector to be visible ${printLocator(locator)}`
 }
 
 export const toHaveValue = (
@@ -14,7 +14,7 @@ export const toHaveValue = (
     readonly value: string
   },
 ): string => {
-  return `expected selector ${locator._selector} to have value ${value}`
+  return `expected selector ${printLocator(locator)} to have value ${value}`
 }
 
 export const toHaveText = async (locator: ILocatorInternal, options: { readonly text: string }): Promise<string> => {

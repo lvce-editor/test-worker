@@ -1,11 +1,11 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ExpectMod from '../src/parts/Expect/Expect.ts'
+import { parseCssSelector } from '../src/parts/ParseCssSelector/ParseCssSelector.ts'
 
 const createLocator = (selector: string = 'button'): any => {
   return {
-    _hasText: '',
-    _nth: -1,
+    _parsed: parseCssSelector(selector),
     _selector: selector,
   }
 }
@@ -53,14 +53,14 @@ test('toHaveCount: validates number', async () => {
       return {}
     },
   })
-  const locator = createLocator('item')
+  const locator = createLocator('.item')
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toHaveCount(2)
   expect(mockRpc.invocations).toEqual([['TestFrameWork.checkMultiElementCondition', locator, 'toHaveCount', { count: 2 }]])
 })
 
 test('toBeVisible: negated throws guidance', async () => {
-  const locator = createLocator('panel')
+  const locator = createLocator('.panel')
   const expectLocator = ExpectMod.expect(locator).not
   await expect(expectLocator.toBeVisible()).rejects.toThrow('use toBeHidden instead of not.toBeVisible')
 })
@@ -75,10 +75,10 @@ test('checkMultiElementCondition: error path builds ConditionErrors', async () =
     },
   })
 
-  const locator = createLocator('item')
+  const locator = createLocator('.item')
   const expectLocator = ExpectMod.expect(locator)
   await expect(expectLocator.toHaveCount(2)).rejects.toMatchObject({
-    message: expect.stringContaining('expected item to have count 2 but was 1'),
+    message: expect.stringContaining('expected .item to have count 2 but was 1'),
   })
 
   expect(mockRpc.invocations).toEqual([

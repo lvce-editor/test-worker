@@ -9,10 +9,12 @@ export const parseCssSelector = (selector: string): ParsedCssSelector => {
     throw new TypeError('selector must be of type string')
   }
   if (selector.startsWith('text=')) {
-    return {
-      text: selector.slice('text='.length),
-      type: 'text',
-    }
+    return [
+      {
+        text: selector.slice('text='.length),
+        type: 'text',
+      },
+    ]
   }
   if (selector.includes('text=')) {
     const index = selector.indexOf('text=')
@@ -20,17 +22,24 @@ export const parseCssSelector = (selector: string): ParsedCssSelector => {
     if (!isCssSelector(cssSelector)) {
       throw new CssParsingError(`unsupported selector: ${selector}`)
     }
-    return {
-      selector: cssSelector,
-      text: selector.slice(index + 'text='.length),
-      type: 'css+text',
-    }
+    return [
+      {
+        selector: cssSelector,
+        type: 'css',
+      },
+      {
+        text: selector.slice(index + 'text='.length),
+        type: 'text',
+      },
+    ]
   }
   if (isCssSelector(selector)) {
-    return {
-      selector,
-      type: 'css',
-    }
+    return [
+      {
+        selector,
+        type: 'css',
+      },
+    ]
   }
   throw new CssParsingError(`unsupported selector: ${selector}`)
 }
