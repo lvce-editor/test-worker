@@ -1,6 +1,7 @@
 import type { ILocator } from '../ILocator/ILocator.ts'
 import type { ILocatorCreateOptions } from '../ILocatorCreateOptions/ILocatorCreateOptions.ts'
 import { performAction } from '../PerformAction/PerformAction.ts'
+import * as Assert from '../TestAssert/TestAssert.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
 export class Locator implements ILocator {
@@ -8,7 +9,13 @@ export class Locator implements ILocator {
   readonly _nth: number
   readonly _hasText: string
 
-  constructor(selector: any, { hasText = '', nth = -1 }: ILocatorCreateOptions = {}) {
+  constructor(selector: any, options: ILocatorCreateOptions = {}) {
+    if (!options || typeof options !== 'object' || Array.isArray(options)) {
+      throw new TypeError('options must be of type object')
+    }
+    const { hasText = '', nth = -1 } = options
+    Assert.string(hasText, 'options.hasText must be of type string')
+    Assert.number(nth, 'options.nth must be of type number')
     this._selector = selector
     this._nth = nth
     this._hasText = hasText

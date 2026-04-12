@@ -64,3 +64,19 @@ test('create locator returns instance with expected methods', () => {
   expect(typeof locator.type).toBe('function')
   expect(typeof locator.dispatchEvent).toBe('function')
 })
+
+test('create locator throws for non-string selector', () => {
+  expect(() => createLocator(42 as any)).toThrow(new TypeError('selector must be of type string'))
+})
+
+test('create locator throws for non-object options', () => {
+  expect(() => createLocator('button', null as any)).toThrow(new TypeError('options must be of type object'))
+})
+
+test('create locator throws for non-string hasText', () => {
+  expect(() => createLocator('button', { hasText: 42 as any })).toThrow(new TypeError('options.hasText must be of type string'))
+})
+
+test('create locator throws for non-number nth', () => {
+  expect(() => createLocator('button', { nth: '1' as any })).toThrow(new TypeError('options.nth must be of type number'))
+})
