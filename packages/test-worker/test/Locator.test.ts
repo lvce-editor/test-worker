@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createLocator } from '../src/parts/CreateLocator/CreateLocator.ts'
+import { Locator } from '../src/parts/Locator/Locator.ts'
 
 test('create', () => {
   const selector = 'button'
@@ -139,4 +140,16 @@ test('dispatchEvent', async () => {
       },
     ],
   ])
+})
+
+test('constructor throws for non-object options', () => {
+  expect(() => new Locator('button', null as any)).toThrow(new TypeError('options must be of type object'))
+})
+
+test('constructor throws for non-string hasText', () => {
+  expect(() => new Locator('button', { hasText: 42 as any })).toThrow(new TypeError('options.hasText must be of type string'))
+})
+
+test('constructor throws for non-number nth', () => {
+  expect(() => new Locator('button', { nth: '1' as any })).toThrow(new TypeError('options.nth must be of type number'))
 })
