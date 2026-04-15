@@ -4,6 +4,10 @@ export const openUri = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('Main.openUri', uri)
 }
 
+export const saveState = async (uid: number): Promise<any> => {
+  return RendererWorker.invoke('Main.saveState', uid)
+}
+
 export const splitRight = async (): Promise<void> => {
   await RendererWorker.invoke('Main.splitRight')
 }
