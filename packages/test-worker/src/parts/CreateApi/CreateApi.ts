@@ -1,6 +1,6 @@
 import type { Api } from '../Api/Api.ts'
 import { expect, getTmpDir, Locator, test } from '../TestFrameWork/TestFrameWork.ts'
-import { ColorPicker } from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
+import { ColorPicker, DiffView } from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
 import * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
@@ -67,6 +67,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     ContextMenu,
     Developer,
     Dialog,
+    DiffView,
     Editor,
     EditorCompletion,
     EditorHover,
