@@ -33,6 +33,7 @@ test('createApi includes all expected components', () => {
   expect(api.ContextMenu).toBeDefined()
   expect(api.Developer).toBeDefined()
   expect(api.Dialog).toBeDefined()
+  expect(api.DiffView).toBeDefined()
   expect(api.Editor).toBeDefined()
   expect(api.Explorer).toBeDefined()
   expect(api.Extension).toBeDefined()

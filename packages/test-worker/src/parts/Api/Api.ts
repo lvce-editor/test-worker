@@ -1,6 +1,6 @@
 import type { test } from '../TestFrameWork/TestFrameWork.ts'
 import type { expect, getTmpDir, Locator } from '../TestFrameWork/TestFrameWork.ts'
-import type { ColorPicker } from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
+import type { ColorPicker, DiffView } from '../TestFrameWorkComponent/TestFrameWorkComponent.ts'
 import type * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import type * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import type * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
@@ -70,6 +70,7 @@ export interface Api {
   ContextMenu: typeof ContextMenu
   Developer: typeof Developer
   Dialog: typeof Dialog
+  DiffView: typeof DiffView
   Editor: typeof Editor
   EditorCompletion: typeof EditorCompletion
   EditorHover: typeof EditorHover
