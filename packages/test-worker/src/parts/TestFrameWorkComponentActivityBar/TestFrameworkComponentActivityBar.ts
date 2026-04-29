@@ -32,6 +32,10 @@ export const handleClick = async (index: number): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleClick', index)
 }
 
+export const handleSideBarHidden = async (): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.handleSideBarHidden')
+}
+
 export const handleContextMenu = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleContextMenu')
 }
