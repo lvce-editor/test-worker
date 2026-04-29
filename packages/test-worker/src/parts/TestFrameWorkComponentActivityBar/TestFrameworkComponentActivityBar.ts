@@ -8,6 +8,12 @@ export const toggleActivityBarItem = async (id: string): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.toggleActivityBarItem', id)
 }
 
+// export type LoginState = 'logging in' | 'logging out'
+
+export const setUserLoginState = async (loginState: string): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState)
+}
+
 export const focusFirst = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.focusFirst')
 }
