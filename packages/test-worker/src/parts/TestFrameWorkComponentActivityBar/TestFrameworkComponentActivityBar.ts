@@ -52,3 +52,14 @@ export const selectCurrent = async (): Promise<void> => {
 export const handleClickSettings = async (x: number, y: number): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleClickSettings', x, y)
 }
+
+export interface Dimensions {
+  readonly height: number
+  readonly width: number
+  readonly x: number
+  readonly y: number
+}
+
+export const resize = async (dimensions: Dimensions): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.resize', dimensions)
+}
