@@ -42,7 +42,7 @@ export interface UpdateConfig {
 }
 
 export const setUpdateState = async (config: UpdateConfig): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.setUpdateState', config)
+  await RendererWorker.invoke('ActivityBar.handleUpdateStateChange', config)
 }
 
 export const selectCurrent = async (): Promise<void> => {
