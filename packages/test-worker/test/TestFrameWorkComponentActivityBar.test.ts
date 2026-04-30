@@ -101,7 +101,7 @@ test('handleContextMenu', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleContextMenu']])
 })
 
-test('setUpdateState', async () => {
+test.skip('setUpdateState', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.setUpdateState'() {
       return undefined

@@ -24,6 +24,10 @@ export const handleClickTogglePreview = async (): Promise<void> => {
   await RendererWorker.invoke('Main.handleClickTogglePreview')
 }
 
+export const handleClickAction = async (action: string, rawGroupId: string): Promise<void> => {
+  await RendererWorker.invoke('Main.handleClickAction', action, rawGroupId)
+}
+
 export const closeAllEditors = async (): Promise<void> => {
   await RendererWorker.invoke('Main.closeAllEditors')
 }
@@ -70,6 +74,10 @@ export const focusNext = async (): Promise<void> => {
 
 export const focusPrevious = async (): Promise<void> => {
   await RendererWorker.invoke('Main.focusPrevious')
+}
+
+export const handleClickCloseTab = async (rawGroupIndex: string, rawIndex: string): Promise<void> => {
+  await RendererWorker.invoke('Main.handleClickCloseTab', rawGroupIndex, rawIndex)
 }
 
 export const focusLast = async (): Promise<void> => {
