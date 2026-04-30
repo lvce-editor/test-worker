@@ -3,16 +3,14 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { loadFixtureToMemFs } from '../src/parts/LoadFixtureToMemFs/LoadFixtureToMemFs.ts'
 
 test('loadFixtureToMemFs writes files in parallel', async () => {
-  let resolveFirstWrite: () => void = () => {}
+  const { promise: firstWritePromise, resolve: resolveFirstWrite } = Promise.withResolvers<void>()
   let isFirstWrite = true
 
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.writeFile'() {
       if (isFirstWrite) {
         isFirstWrite = false
-        return new Promise<void>((resolve) => {
-          resolveFirstWrite = resolve
-        })
+        return firstWritePromise
       }
       return undefined
     },
@@ -24,8 +22,6 @@ test('loadFixtureToMemFs writes files in parallel', async () => {
   }
 
   const resultPromise = loadFixtureToMemFs(fileMap)
-
-  await Promise.resolve()
 
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.writeFile', 'memfs:///fixture/file-1.txt', 'content-1'],
