@@ -1,13 +1,17 @@
 import type { IElementAction } from '../IElementAction/IElementAction.ts'
 import * as DomEventType from '../DomEventType/DomEventType.ts'
 
-export const mouseEvent = (eventType: string, options: any): IElementAction => {
+const dispatchEvent = (constructor: string, eventType: string, options: any): IElementAction => {
   return {
-    constructor: 'MouseEvent',
+    constructor,
     eventType,
     options,
     type: 'dispatch',
   }
+}
+
+export const mouseEvent = (eventType: string, options: any): IElementAction => {
+  return dispatchEvent('MouseEvent', eventType, options)
 }
 
 export const mouseDown = (options: any): readonly IElementAction[] => {
@@ -46,12 +50,7 @@ export const type = (options: any): readonly IElementAction[] => {
 }
 
 export const keyboardEvent = (eventType: string, options: any): IElementAction => {
-  return {
-    constructor: 'MouseEvent',
-    eventType,
-    options,
-    type: 'dispatch',
-  }
+  return dispatchEvent('MouseEvent', eventType, options)
 }
 
 export const keyDown = (options: any): readonly IElementAction[] => {
