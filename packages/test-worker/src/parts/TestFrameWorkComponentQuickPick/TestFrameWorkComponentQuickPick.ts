@@ -66,7 +66,5 @@ interface SelectItem2Options {
 export const selectItem2 = async ({ callbackCommand, label }: SelectItem2Options): Promise<void> => {
   const { promise } = await registerCallbackCommand(callbackCommand)
 
-  // @ts-ignore
-  const outerPromise = RendererWorker.invoke('QuickPick.selectItem', label)
-  await promise
+  await Promise.all([promise, RendererWorker.invoke('QuickPick.selectItem', label)])
 }
