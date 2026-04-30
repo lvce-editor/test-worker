@@ -24,6 +24,10 @@ export const handleClickTogglePreview = async (): Promise<void> => {
   await RendererWorker.invoke('Main.handleClickTogglePreview')
 }
 
+export const handleClickAction = async (action: string, rawGroupId: string): Promise<void> => {
+  await RendererWorker.invoke('Main.handleClickAction', action, rawGroupId)
+}
+
 export const closeAllEditors = async (): Promise<void> => {
   await RendererWorker.invoke('Main.closeAllEditors')
 }
