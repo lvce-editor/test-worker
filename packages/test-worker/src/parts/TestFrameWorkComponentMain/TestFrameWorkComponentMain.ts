@@ -72,6 +72,10 @@ export const focusPrevious = async (): Promise<void> => {
   await RendererWorker.invoke('Main.focusPrevious')
 }
 
+export const handleClickCloseTab = async (rawGroupIndex: string, rawIndex: string): Promise<void> => {
+  await RendererWorker.invoke('Main.handleClickCloseTab', rawGroupIndex, rawIndex)
+}
+
 export const focusLast = async (): Promise<void> => {
   await RendererWorker.invoke('Main.focusLast')
 }
