@@ -1,6 +1,11 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { SearchInputType } from '../SearchInputType/SearchInputType.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
+import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
+
+export const show = async (): Promise<void> => {
+  await SideBar.open('Search')
+}
 
 export const setValue = async (value: string): Promise<void> => {
   await RendererWorker.invoke('Search.handleInput', value, InputSource.Script)
