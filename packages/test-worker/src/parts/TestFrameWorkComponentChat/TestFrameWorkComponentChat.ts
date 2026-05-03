@@ -75,6 +75,10 @@ export const showComposerAttachmentPreviewOverlay = async (attachmentId: string)
   await Command.execute('Chat.showComposerAttachmentPreviewOverlay', attachmentId)
 }
 
+export const handleErrorComposerAttachmentPreviewOverlay = async (): Promise<void> => {
+  await Command.execute('Chat.handleErrorComposerAttachmentPreviewOverlay')
+}
+
 export const handleClickSessionDebug = async (): Promise<void> => {
   await Command.execute('Chat.handleClickSessionDebug')
 }
@@ -225,6 +229,26 @@ export const mockOpenAiResponse = async (options: MockOpenAiResponseOptions): Pr
 
 export const handleInputFocus = async (): Promise<void> => {
   return Command.execute('Chat.handleInputFocus', 'chat-list')
+}
+
+export const chatListFocusPrevious = async (): Promise<void> => {
+  return Command.execute('Chat.chatListFocusPrevious')
+}
+
+export const chatListFocusFirst = async (): Promise<void> => {
+  return Command.execute('Chat.chatListFocusFirst')
+}
+
+export const chatListFocusLast = async (): Promise<void> => {
+  return Command.execute('Chat.chatListFocusLast')
+}
+
+export const chatListFocusNext = async (): Promise<void> => {
+  return Command.execute('Chat.chatListFocusNext')
+}
+
+export const setNowForTest = async (now: number): Promise<void> => {
+  await Command.execute('Chat.setNowForTest', now)
 }
 
 export const getAuthState = async (): Promise<any> => {
