@@ -220,6 +220,19 @@ test('useMockApi', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.useMockApi', true]])
 })
 
+test('registerMockResponse', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.registerMockResponse'() {
+      return undefined
+    },
+  })
+  const options = {
+    text: 'response text',
+  }
+  await Chat.registerMockResponse(options)
+  expect(mockRpc.invocations).toEqual([['Chat.registerMockResponse', options]])
+})
+
 test('setAuthEnabled', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.setAuthEnabled'() {
@@ -292,6 +305,16 @@ test('handleClickDelete', async () => {
   })
   await Chat.handleClickDelete()
   expect(mockRpc.invocations).toEqual([['Chat.handleClickDelete']])
+})
+
+test('handleContextMenuChatImageAttachment', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleContextMenuChatImageAttachment'() {
+      return undefined
+    },
+  })
+  await Chat.handleContextMenuChatImageAttachment('attachment-1', 10, 20)
+  expect(mockRpc.invocations).toEqual([['Chat.handleContextMenuChatImageAttachment', 'attachment-1', 10, 20]])
 })
 
 test('deleteSessionAtIndex', async () => {
