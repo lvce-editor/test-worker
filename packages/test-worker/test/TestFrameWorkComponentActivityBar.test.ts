@@ -24,6 +24,17 @@ test('toggleActivityBarItem', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.toggleActivityBarItem', 'explorer']])
 })
 
+test('setUserLoginState', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.setUserLoginState'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.setUserLoginState('logging in')
+  expect(mockRpc.invocations).toEqual([['ActivityBar.setUserLoginState', 'logging in']])
+})
+
 test('focusFirst', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusFirst'() {
@@ -90,6 +101,17 @@ test('handleClick', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleClick', 1]])
 })
 
+test('handleSideBarHidden', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleSideBarHidden'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleSideBarHidden()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleSideBarHidden']])
+})
+
 test('handleContextMenu', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.handleContextMenu'() {
@@ -101,9 +123,9 @@ test('handleContextMenu', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleContextMenu']])
 })
 
-test.skip('setUpdateState', async () => {
+test('setUpdateState', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'ActivityBar.setUpdateState'() {
+    'ActivityBar.handleUpdateStateChange'() {
       return undefined
     },
   })
@@ -114,7 +136,7 @@ test.skip('setUpdateState', async () => {
   })
   expect(mockRpc.invocations).toEqual([
     [
-      'ActivityBar.setUpdateState',
+      'ActivityBar.handleUpdateStateChange',
       {
         progress: 1,
         state: 2,
@@ -143,4 +165,30 @@ test('handleClickSettings', async () => {
 
   await ActivityBar.handleClickSettings(100, 200)
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickSettings', 100, 200]])
+})
+
+test('resize', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.resize'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.resize({
+    height: 100,
+    width: 50,
+    x: 10,
+    y: 20,
+  })
+  expect(mockRpc.invocations).toEqual([
+    [
+      'ActivityBar.resize',
+      {
+        height: 100,
+        width: 50,
+        x: 10,
+        y: 20,
+      },
+    ],
+  ])
 })
