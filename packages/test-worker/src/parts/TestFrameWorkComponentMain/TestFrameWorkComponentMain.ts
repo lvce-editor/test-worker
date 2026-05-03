@@ -1,11 +1,127 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { AssertionError } from '../AssertionError/AssertionError.ts'
+
+const defaultMainAreaUid = 2
+
+const directionMap = {
+  horizontal: 1,
+  vertical: 2,
+} as const
+
+type LayoutDirection = keyof typeof directionMap | number
+
+type LayoutExpectationValue = string | number | boolean | RegExp | null | readonly LayoutExpectationValue[] | LayoutExpectationObject
+
+type LayoutExpectationObject = {
+  readonly [key: string]: LayoutExpectationValue | undefined
+}
+
+export interface LayoutExpectation extends LayoutExpectationObject {
+  readonly activeGroupIndex?: number
+  readonly direction?: LayoutDirection
+  readonly groups?: readonly LayoutExpectationObject[]
+}
+
+type LayoutGroupState = {
+  readonly id?: number | string
+  readonly [key: string]: unknown
+}
+
+type LayoutState = {
+  readonly activeGroupId?: number | string
+  readonly groups?: readonly LayoutGroupState[]
+  readonly [key: string]: unknown
+}
+
+type SavedState = {
+  readonly layout?: LayoutState
+}
+
+const isObject = (value: unknown): value is Record<string, unknown> => {
+  return typeof value === 'object' && value !== null && !Array.isArray(value) && !(value instanceof RegExp)
+}
+
+const matchesExpectedArray = (actual: unknown, expected: readonly LayoutExpectationValue[]): boolean => {
+  if (!Array.isArray(actual) || actual.length !== expected.length) {
+    return false
+  }
+  for (let i = 0; i < expected.length; i++) {
+    if (!matchesExpected(actual[i], expected[i])) {
+      return false
+    }
+  }
+  return true
+}
+
+const matchesExpectedObject = (actual: unknown, expected: LayoutExpectationObject): boolean => {
+  if (!isObject(actual)) {
+    return false
+  }
+  for (const [childKey, childExpectedValue] of Object.entries(expected)) {
+    if (childExpectedValue === undefined) {
+      continue
+    }
+    if (!matchesExpected(actual[childKey], childExpectedValue, childKey)) {
+      return false
+    }
+  }
+  return true
+}
+
+const matchesExpected = (actual: unknown, expected: LayoutExpectationValue, key = ''): boolean => {
+  if (key === 'direction' && typeof expected === 'string' && expected in directionMap) {
+    return Object.is(actual, directionMap[expected as keyof typeof directionMap])
+  }
+  if (expected instanceof RegExp) {
+    return typeof actual === 'string' && expected.test(actual)
+  }
+  if (Array.isArray(expected)) {
+    return matchesExpectedArray(actual, expected)
+  }
+  if (isObject(expected)) {
+    return matchesExpectedObject(actual, expected)
+  }
+  return Object.is(actual, expected)
+}
+
+const matchesActiveGroupIndex = (layout: LayoutState, activeGroupIndex: number): boolean => {
+  const groups = layout.groups || []
+  const group = groups[activeGroupIndex]
+  if (!group) {
+    return false
+  }
+  return layout.activeGroupId === group.id
+}
+
+const serializeForError = (value: unknown): string => {
+  return JSON.stringify(value, (_key, currentValue) => {
+    if (currentValue instanceof RegExp) {
+      return currentValue.toString()
+    }
+    return currentValue
+  })
+}
 
 export const openUri = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('Main.openUri', uri)
 }
 
-export const saveState = async (uid: number): Promise<any> => {
+export const saveState = async (uid: number): Promise<SavedState> => {
   return RendererWorker.invoke('Main.saveState', uid)
+}
+
+export const shouldHaveLayout = async (expectedLayout: LayoutExpectation, uid = defaultMainAreaUid): Promise<void> => {
+  const state = await saveState(uid)
+  const actualLayout = state.layout
+  if (!actualLayout) {
+    throw new AssertionError(`expected main layout to exist but state was ${serializeForError(state)}`)
+  }
+  const { activeGroupIndex, ...partialExpectedLayout } = expectedLayout
+  const matchesLayout = matchesExpected(actualLayout, partialExpectedLayout)
+  const matchesActiveGroup = activeGroupIndex === undefined || matchesActiveGroupIndex(actualLayout, activeGroupIndex)
+  if (!matchesLayout || !matchesActiveGroup) {
+    throw new AssertionError(`expected main layout to match ${serializeForError(expectedLayout)} but was ${serializeForError(actualLayout)}`)
+  }
 }
 
 export const splitRight = async (): Promise<void> => {
