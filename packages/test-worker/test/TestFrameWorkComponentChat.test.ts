@@ -656,3 +656,65 @@ test('handleAgentModeChange', async () => {
   expect(result).toBeUndefined()
   expect(mockRpc.invocations).toEqual([['Chat.handleAgentModeChange', 'agent']])
 })
+
+test('setUseOwnBackend', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setUseOwnBackend'() {
+      return undefined
+    },
+  })
+  await Chat.setUseOwnBackend(true)
+  expect(mockRpc.invocations).toEqual([['Chat.setUseOwnBackend', true]])
+})
+
+test('shouldHaveComposerSelection', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.getComposerSelection'() {
+      return {
+        end: 5,
+        start: 2,
+      }
+    },
+  })
+  await Chat.shouldHaveComposerSelection(2, 5)
+  expect(mockRpc.invocations).toEqual([['Chat.getComposerSelection']])
+})
+
+test('shouldHaveComposerSelection throws for mismatched selection', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.getComposerSelection'() {
+      return {
+        end: 4,
+        start: 1,
+      }
+    },
+  })
+  await expect(Chat.shouldHaveComposerSelection(2, 5)).rejects.toThrow('Expected selection to be { start: 2, end: 5 }, but got { start: 1, end: 4 }')
+  expect(mockRpc.invocations).toEqual([['Chat.getComposerSelection']])
+})
+
+test('openDebugView', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.openDebugViw'() {
+      return undefined
+    },
+  })
+  const result = await Chat.openDebugView()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.openDebugViw']])
+})
+
+test('setShowChatListTime', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setShowChatListTime'() {
+      return {
+        changed: true,
+      }
+    },
+  })
+  const result = await Chat.setShowChatListTime(true)
+  expect(result).toEqual({
+    changed: true,
+  })
+  expect(mockRpc.invocations).toEqual([['Chat.setShowChatListTime', true]])
+})
