@@ -50,6 +50,30 @@ test('handleEscape', async () => {
   expect(mockRpc.invocations).toEqual([['Explorer.handleEscape']])
 })
 
+test('handleDropIndex', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handleDropIndex'() {
+      return undefined
+    },
+  })
+
+  const fileHandles: readonly FileSystemHandle[] = [
+    {
+      async isSameEntry(): Promise<boolean> {
+        return true
+      },
+      kind: 'file',
+      name: 'test.txt',
+    },
+  ]
+  const files = [{ name: 'test.txt' }]
+  const paths = ['/tmp/test.txt']
+
+  await Explorer.handleDropIndex(fileHandles, files, paths, 2)
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handleDropIndex', fileHandles, files, paths, 2]])
+})
+
 test('handleInputBlur', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleInputBlur'() {
