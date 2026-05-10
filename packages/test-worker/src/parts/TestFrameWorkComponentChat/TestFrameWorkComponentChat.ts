@@ -18,6 +18,10 @@ export const setBackendUrl = async (url: string): Promise<void> => {
   await RendererWorker.invoke('Chat.setBackendUrl', url)
 }
 
+export const setUseOwnBackend = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setUseOwnBackend', enabled)
+}
+
 export const handleClickBack = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickBack')
 }
