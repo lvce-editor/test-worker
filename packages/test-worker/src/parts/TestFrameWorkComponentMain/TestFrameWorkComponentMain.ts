@@ -8,7 +8,7 @@ const directionMap = {
   vertical: 2,
 } as const
 
-type LayoutDirection = keyof typeof directionMap | number
+type LayoutDirection = 'horizontal' | 'vertical' | number
 
 type LayoutExpectationValue = string | number | boolean | RegExp | null | readonly LayoutExpectationValue[] | LayoutExpectationObject
 

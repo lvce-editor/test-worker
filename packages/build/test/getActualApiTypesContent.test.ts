@@ -24,10 +24,7 @@ declare namespace Main {
 
   const actual = getActualApiTypesContent(contentApi, 'export {}\n', 'export {}\n')
 
-  assert.match(
-    actual,
-    /export type LayoutExpectationObject = \{\n\treadonly \[key: string\]: LayoutExpectationValue \| undefined;\n\};/,
-  )
+  assert.match(actual, /export type LayoutExpectationObject = \{\n\treadonly \[key: string\]: LayoutExpectationValue \| undefined;\n\};/)
   assert.match(actual, /export type SavedState = \{\n\treadonly layout\?: LayoutExpectationObject;\n\};/)
   assert.match(actual, /interface Main \{\n  readonly shouldHaveLayout: \(expectedLayout: LayoutExpectation, uid\?: number\) => Promise<void>;\n\}/)
 })
