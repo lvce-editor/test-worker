@@ -42,6 +42,13 @@ export const handleClickClose = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickClose')
 }
 
+export const shouldHaveComposerSelection = async (start: number, end: number): Promise<void> => {
+  const selection = await RendererWorker.invoke('Chat.getComposerSelection')
+  if (selection.start !== start || selection.end !== end) {
+    throw new Error(`Expected selection to be { start: ${start}, end: ${end} }, but got { start: ${selection.start}, end: ${selection.end} }`)
+  }
+}
+
 export const handleClickNew = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickNew')
 }
