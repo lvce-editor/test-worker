@@ -232,7 +232,7 @@ export const handleInputFocus = async (): Promise<void> => {
 }
 
 export const openDebugView = async (): Promise<void> => {
-  return Command.execute('Chat.openDebugViw',)
+  return Command.execute('Chat.openDebugViw')
 }
 
 export const chatListFocusPrevious = async (): Promise<void> => {
