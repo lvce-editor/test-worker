@@ -1,11 +1,14 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createApi } from '../CreateApi/CreateApi.ts'
 import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
 import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
+import { printTestError } from '../PrintTestError/PrintTestError.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import * as TestState from '../TestState/TestState.ts'
+import * as TestType from '../TestType/TestType.ts'
 import { watchForHotReload } from '../WatchForHotReload/WatchForHotReload.ts'
 
 // TODO move this into three steps:
@@ -25,27 +28,34 @@ export const execute = async (href: string, platform: number, assetDir: string):
   // 1. get script to import from renderer process (url or from html)
   const scriptUrl = href
   TestFrameWorkComponentUrl.setUrl(scriptUrl) // TODO avoid side effect
-  // 2. import that script
-  const module = await ImportTest.importTest(scriptUrl)
-  const { mockRpc, name, skip, test } = module
-  if (mockRpc) {
-    TestState.setMockRpc(mockRpc)
-  }
-  if (test) {
-    if (skip) {
-      await TestFrameWork.skipTest(name)
-    } else {
-      await ExecuteTest.executeTest(name, test, globals)
+  try {
+    // 2. import that script
+    const module = await ImportTest.importTest(scriptUrl)
+    const { mockRpc, name, skip, test } = module
+    if (mockRpc) {
+      TestState.setMockRpc(mockRpc)
     }
+    if (test) {
+      if (skip) {
+        await TestFrameWork.skipTest(name)
+      } else {
+        await ExecuteTest.executeTest(name, test, globals)
+      }
+    }
+    // TODO maybe setup file watcher earlier, to not miss events?
+  } catch (error) {
+    await printTestError(error)
+    await RendererWorker.invoke('TestFrameWork.showOverlay', TestType.Fail, 'red', `test failed: ${error}`)
+    return
+  } finally {
+    TestInfoCache.push({
+      assetDir,
+      inProgress: false,
+      platform,
+      url: href,
+    })
   }
-  // TODO maybe setup file watcher earlier, to not miss events?
 
-  TestInfoCache.push({
-    assetDir,
-    inProgress: false,
-    platform,
-    url: href,
-  })
   // TODO if file watcher was previously added, don't need to add one
   try {
     if (await hotReloadEnabled()) {
