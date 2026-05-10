@@ -5,6 +5,7 @@ import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
 import * as TestState from '../src/parts/TestState/TestState.ts'
 
 const passMessagePattern = /^test passed in /
+const passInfoPattern = /^PASS pass-test in /
 
 const toDataUrl = (text: string): string => {
   return `data:text/javascript;base64,${Buffer.from(text).toString('base64')}`
@@ -23,6 +24,7 @@ export const test = async ({ BaseUrl }) => {
 }
 `)
   const module = await import(scriptUrl)
+  const consoleInfoSpy = jest.spyOn(console, 'info').mockImplementation(() => {})
 
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get'() {
@@ -41,11 +43,15 @@ export const test = async ({ BaseUrl }) => {
     platform: 1,
     url: scriptUrl,
   })
+  expect(consoleInfoSpy).toHaveBeenCalledTimes(1)
+  expect(consoleInfoSpy).toHaveBeenCalledWith(expect.stringMatching(passInfoPattern))
   expect(TestState.getMockRpc('test-pass-rpc')).toBe(module.mockRpc)
   expect(mockRpc.invocations).toEqual([
     ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
     ['Preferences.get', 'E2eTest.hotReload'],
   ])
+
+  consoleInfoSpy.mockRestore()
 })
 
 test('execute skips skipped tests', async () => {
