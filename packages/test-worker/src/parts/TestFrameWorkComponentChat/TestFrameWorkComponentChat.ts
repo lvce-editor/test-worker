@@ -238,6 +238,10 @@ export const handleInputFocus = async (): Promise<void> => {
   return Command.execute('Chat.handleInputFocus', 'chat-list')
 }
 
+export const openDebugView = async (): Promise<void> => {
+  return Command.execute('Chat.openDebugViw')
+}
+
 export const chatListFocusPrevious = async (): Promise<void> => {
   return Command.execute('Chat.chatListFocusPrevious')
 }
