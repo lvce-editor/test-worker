@@ -5,6 +5,18 @@ import { removeInternalApiTypes } from './removeInternalApiTypes.ts'
 // specifically instead of exporting every interface
 // we only export a test api interface for tests
 export const getActualApiTypesContent = (contentApi: string, contentExpect: string, contentLocator: string): string => {
+  const getBraceDelta = (value: string): number => {
+    let delta = 0
+    for (const character of value) {
+      if (character === '{') {
+        delta++
+      } else if (character === '}') {
+        delta--
+      }
+    }
+    return delta
+  }
+
   const newLines: string[] = []
   let state: 'default' | 'export' | 'after-export' | 'internal' | 'skip' = 'default'
 
@@ -84,8 +96,10 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   const exportedTypeAliases: string[] = []
   let inExportedInterface = false
   let currentInterface: string[] = []
+  let interfaceBraceDepth = 0
   let inExportedTypeAlias = false
   let currentTypeAlias: string[] = []
+  let typeAliasBraceDepth = 0
 
   for (let i = 0; i < contentLines.length; i++) {
     const line = contentLines[i]
@@ -93,39 +107,52 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
       continue
     }
 
-    // Collect exported interfaces
-    if (line.startsWith('export interface ')) {
-      // Finish previous interface if any
-      if (inExportedInterface && currentInterface.length > 0) {
+    if (inExportedInterface) {
+      currentInterface.push(line)
+      interfaceBraceDepth += getBraceDelta(line)
+      if (interfaceBraceDepth === 0) {
         exportedInterfaces.push(currentInterface.join('\n'))
         currentInterface = []
+        inExportedInterface = false
       }
-      inExportedInterface = true
-      currentInterface.push(line)
-    } else if (inExportedInterface && line.startsWith('}')) {
-      currentInterface.push(line)
-      exportedInterfaces.push(currentInterface.join('\n'))
-      currentInterface = []
-      inExportedInterface = false
-    } else if (inExportedInterface) {
-      currentInterface.push(line)
+      continue
     }
 
-    // Collect exported type aliases
-    if (line.startsWith('export type ')) {
-      if (line.trim().endsWith(';')) {
-        exportedTypeAliases.push(line)
-      } else {
-        inExportedTypeAlias = true
-        currentTypeAlias = [line]
-      }
-    } else if (inExportedTypeAlias) {
+    if (inExportedTypeAlias) {
       currentTypeAlias.push(line)
-      if (line.trim().endsWith(';')) {
+      typeAliasBraceDepth += getBraceDelta(line)
+      if (typeAliasBraceDepth === 0 && line.trim().endsWith(';')) {
         exportedTypeAliases.push(currentTypeAlias.join('\n'))
         currentTypeAlias = []
         inExportedTypeAlias = false
       }
+      continue
+    }
+
+    // Collect exported interfaces
+    if (line.startsWith('export interface ')) {
+      inExportedInterface = true
+      currentInterface.push(line)
+      interfaceBraceDepth = getBraceDelta(line)
+      if (interfaceBraceDepth === 0) {
+        exportedInterfaces.push(currentInterface.join('\n'))
+        currentInterface = []
+        inExportedInterface = false
+      }
+      continue
+    }
+
+    // Collect exported type aliases
+    if (line.startsWith('export type ')) {
+      typeAliasBraceDepth = getBraceDelta(line)
+      if (typeAliasBraceDepth === 0 && line.trim().endsWith(';')) {
+        exportedTypeAliases.push(line)
+      } else {
+        inExportedTypeAlias = true
+        currentTypeAlias = [line]
+        typeAliasBraceDepth = getBraceDelta(line)
+      }
+      continue
     }
 
     // Collect function signatures (handle multi-line)
