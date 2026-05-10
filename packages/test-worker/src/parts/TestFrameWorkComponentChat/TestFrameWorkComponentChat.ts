@@ -18,6 +18,10 @@ export const setBackendUrl = async (url: string): Promise<void> => {
   await RendererWorker.invoke('Chat.setBackendUrl', url)
 }
 
+export const setUseOwnBackend = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('Chat.setUseOwnBackend', enabled)
+}
+
 export const handleClickBack = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickBack')
 }
@@ -40,6 +44,13 @@ export const selectIndex = async (index: number): Promise<void> => {
 
 export const handleClickClose = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickClose')
+}
+
+export const shouldHaveComposerSelection = async (start: number, end: number): Promise<void> => {
+  const selection = await RendererWorker.invoke('Chat.getComposerSelection')
+  if (selection.start !== start || selection.end !== end) {
+    throw new Error(`Expected selection to be { start: ${start}, end: ${end} }, but got { start: ${selection.start}, end: ${selection.end} }`)
+  }
 }
 
 export const handleClickNew = async (): Promise<void> => {
@@ -104,6 +115,16 @@ export const mockOpenApiStreamPushChunk = async (chunk: string): Promise<void> =
 
 export const openMockSession = async (sessionId: string, messages: readonly any[]): Promise<void> => {
   await RendererWorker.invoke('Chat.openMockSession', sessionId, messages)
+}
+
+interface MockErrorResponse {
+  readonly code: string
+  readonly error: string
+  readonly statusCode: number
+}
+
+export const mockBackendSetHttpErrorResponse = async (response: MockErrorResponse): Promise<void> => {
+  await RendererWorker.invoke('Chat.mockBackendSetHttpErrorResponse', response.statusCode, response)
 }
 
 export interface MockResponseOptions {
@@ -229,6 +250,10 @@ export const mockOpenAiResponse = async (options: MockOpenAiResponseOptions): Pr
 
 export const handleInputFocus = async (): Promise<void> => {
   return Command.execute('Chat.handleInputFocus', 'chat-list')
+}
+
+export const openDebugView = async (): Promise<void> => {
+  return Command.execute('Chat.openDebugViw')
 }
 
 export const chatListFocusPrevious = async (): Promise<void> => {
