@@ -566,6 +566,21 @@ test('openMockSession', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.openMockSession', 'session-1', messages]])
 })
 
+test('mockBackendSetHttpErrorResponse', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.mockBackendSetHttpErrorResponse'() {
+      return undefined
+    },
+  })
+  const response = {
+    code: 'unauthorized',
+    error: 'Unauthorized',
+    statusCode: 401,
+  }
+  await Chat.mockBackendSetHttpErrorResponse(response)
+  expect(mockRpc.invocations).toEqual([['Chat.mockBackendSetHttpErrorResponse', 401, response]])
+})
+
 test('openGitBranchPicker', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.openGitBranchPicker'() {
