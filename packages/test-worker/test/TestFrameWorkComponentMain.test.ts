@@ -254,7 +254,6 @@ test('copyRelativePath', async () => {
   expect(mockRpc.invocations).toEqual([['Main.copyRelativePath']])
 })
 
-<<<<<<< HEAD
 test('shouldHaveLayout', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.saveState'() {
@@ -313,7 +312,8 @@ test('shouldHaveLayout - throws when layout does not match', async () => {
   )
 
   expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
-=======
+})
+
 test('handleClickCloseTab', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.handleClickCloseTab'() {
@@ -324,5 +324,4 @@ test('handleClickCloseTab', async () => {
   await Main.handleClickCloseTab('2', '5')
 
   expect(mockRpc.invocations).toEqual([['Main.handleClickCloseTab', '2', '5']])
->>>>>>> origin/main
 })
