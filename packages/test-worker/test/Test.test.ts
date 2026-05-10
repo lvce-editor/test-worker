@@ -118,7 +118,7 @@ invalid syntax here
       return undefined
     },
   })
-  const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+  const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => { })
 
   await expect(TestModule.execute(scriptUrl, 4, assetDir)).resolves.toBeUndefined()
 
