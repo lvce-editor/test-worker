@@ -117,6 +117,16 @@ export const openMockSession = async (sessionId: string, messages: readonly any[
   await RendererWorker.invoke('Chat.openMockSession', sessionId, messages)
 }
 
+interface MockErrorResponse {
+  readonly code: string
+  readonly error: string
+  readonly statusCode: number
+}
+
+export const mockBackendSetHttpErrorResponse = async (response: MockErrorResponse): Promise<void> => {
+  await RendererWorker.invoke('Chat.mockBackendSetHttpErrorResponse', response.statusCode, response)
+}
+
 export interface MockResponseOptions {
   readonly text: string
 }
