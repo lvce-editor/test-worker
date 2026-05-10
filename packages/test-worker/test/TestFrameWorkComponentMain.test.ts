@@ -2,6 +2,28 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Main from '../src/parts/TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 
+const getMockLayoutState = (): Awaited<ReturnType<typeof Main.saveState>> => {
+  return {
+    layout: {
+      activeGroupId: 2,
+      direction: 1,
+      groups: [
+        {
+          activeTabId: 1,
+          id: 1,
+          tabs: [{ id: 1, title: 'left.txt', uri: 'file:///workspace/left.txt' }],
+        },
+        {
+          activeTabId: 2,
+          focused: true,
+          id: 2,
+          tabs: [{ id: 2, title: 'right.txt', uri: 'file:///workspace/right.txt' }],
+        },
+      ],
+    },
+  }
+}
+
 test('openUri', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {
@@ -230,6 +252,66 @@ test('copyRelativePath', async () => {
   await Main.copyRelativePath()
 
   expect(mockRpc.invocations).toEqual([['Main.copyRelativePath']])
+})
+
+test('shouldHaveLayout', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return getMockLayoutState()
+    },
+  })
+
+  await Main.shouldHaveLayout({
+    activeGroupIndex: 1,
+    direction: 'horizontal',
+    groups: [
+      {
+        tabs: [{ title: 'left.txt' }],
+      },
+      {
+        focused: true,
+        tabs: [{ uri: 'file:///workspace/right.txt' }],
+      },
+    ],
+  })
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - custom uid', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return getMockLayoutState()
+    },
+  })
+
+  await Main.shouldHaveLayout(
+    {
+      direction: 'horizontal',
+    },
+    7,
+  )
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 7]])
+})
+
+test('shouldHaveLayout - throws when layout does not match', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return getMockLayoutState()
+    },
+  })
+
+  await expect(
+    Main.shouldHaveLayout({
+      activeGroupIndex: 0,
+      direction: 'vertical',
+    }),
+  ).rejects.toThrow(
+    'expected main layout to match {"activeGroupIndex":0,"direction":"vertical"} but was {"activeGroupId":2,"direction":1,"groups":[{"activeTabId":1,"id":1,"tabs":[{"id":1,"title":"left.txt","uri":"file:///workspace/left.txt"}]},{"activeTabId":2,"focused":true,"id":2,"tabs":[{"id":2,"title":"right.txt","uri":"file:///workspace/right.txt"}]}]}',
+  )
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
 })
 
 test('handleClickCloseTab', async () => {
