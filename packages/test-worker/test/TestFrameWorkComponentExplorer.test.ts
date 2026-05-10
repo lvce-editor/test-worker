@@ -59,7 +59,7 @@ test('handleDropIndex', async () => {
 
   const fileHandles: readonly FileSystemHandle[] = [
     {
-      async isSameEntry() {
+      async isSameEntry(): Promise<boolean> {
         return true
       },
       kind: 'file',
