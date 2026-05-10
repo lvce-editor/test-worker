@@ -671,8 +671,8 @@ test('shouldHaveComposerSelection', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.getComposerSelection'() {
       return {
-        start: 2,
         end: 5,
+        start: 2,
       }
     },
   })
@@ -684,8 +684,8 @@ test('shouldHaveComposerSelection throws for mismatched selection', async () => 
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.getComposerSelection'() {
       return {
-        start: 1,
         end: 4,
+        start: 1,
       }
     },
   })
