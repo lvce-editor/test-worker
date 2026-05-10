@@ -3,6 +3,18 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as InputSource from '../src/parts/InputSource/InputSource.ts'
 import * as Search from '../src/parts/TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 
+test('show', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'SideBar.openViewlet'() {
+      return undefined
+    },
+  })
+
+  await Search.show()
+
+  expect(mockRpc.invocations).toEqual([['SideBar.openViewlet', 'Search']])
+})
+
 test('setValue', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Search.handleInput'() {
