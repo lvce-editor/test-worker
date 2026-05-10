@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as TestModule from '../src/parts/Test/Test.ts'
 import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
@@ -102,4 +102,39 @@ export const name = 'no-test'
     url: scriptUrl,
   })
   expect(mockRpc.invocations).toEqual([['Preferences.get', 'E2eTest.hotReload']])
+})
+
+test('execute handles import errors as failed tests', async () => {
+  TestInfoCache.clear()
+  const assetDir = 'memfs://assets'
+  const scriptUrl = toDataUrl(`
+export const name = 'broken-test'
+export const test = async () => {}
+invalid syntax here
+`)
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.showOverlay'() {
+      return undefined
+    },
+  })
+  const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+  await expect(TestModule.execute(scriptUrl, 4, assetDir)).resolves.toBeUndefined()
+
+  expect(TestInfoCache.last()).toEqual({
+    assetDir,
+    inProgress: false,
+    platform: 4,
+    url: scriptUrl,
+  })
+  expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
+  expect(consoleErrorSpy).toHaveBeenCalledWith(
+    expect.objectContaining({
+      message: expect.stringContaining('Failed to import test'),
+    }),
+  )
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.showOverlay', 'fail', 'red', expect.stringContaining('Failed to import test')]])
+
+  consoleErrorSpy.mockRestore()
 })
