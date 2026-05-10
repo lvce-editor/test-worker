@@ -36,6 +36,19 @@ test('openUri', async () => {
   expect(mockRpc.invocations).toEqual([['Main.openUri', 'file:///test.txt']])
 })
 
+test('saveState', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return { restored: true }
+    },
+  })
+
+  const result = await Main.saveState(42)
+
+  expect(result).toEqual({ restored: true })
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 42]])
+})
+
 test('splitRight', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.splitRight'() {
@@ -82,6 +95,18 @@ test('openKeyBindings', async () => {
   await Main.openKeyBindings()
 
   expect(mockRpc.invocations).toEqual([['Main.openKeyBindings']])
+})
+
+test('handleClickAction', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.handleClickAction'() {
+      return undefined
+    },
+  })
+
+  await Main.handleClickAction('close-all', 'group-1')
+
+  expect(mockRpc.invocations).toEqual([['Main.handleClickAction', 'close-all', 'group-1']])
 })
 
 test('closeAllEditors', async () => {
@@ -229,6 +254,7 @@ test('copyRelativePath', async () => {
   expect(mockRpc.invocations).toEqual([['Main.copyRelativePath']])
 })
 
+<<<<<<< HEAD
 test('shouldHaveLayout', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.saveState'() {
@@ -287,4 +313,16 @@ test('shouldHaveLayout - throws when layout does not match', async () => {
   )
 
   expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+=======
+test('handleClickCloseTab', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.handleClickCloseTab'() {
+      return undefined
+    },
+  })
+
+  await Main.handleClickCloseTab('2', '5')
+
+  expect(mockRpc.invocations).toEqual([['Main.handleClickCloseTab', '2', '5']])
+>>>>>>> origin/main
 })

@@ -220,6 +220,19 @@ test('useMockApi', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.useMockApi', true]])
 })
 
+test('registerMockResponse', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.registerMockResponse'() {
+      return undefined
+    },
+  })
+  const options = {
+    text: 'response text',
+  }
+  await Chat.registerMockResponse(options)
+  expect(mockRpc.invocations).toEqual([['Chat.registerMockResponse', options]])
+})
+
 test('setAuthEnabled', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.setAuthEnabled'() {
@@ -292,6 +305,16 @@ test('handleClickDelete', async () => {
   })
   await Chat.handleClickDelete()
   expect(mockRpc.invocations).toEqual([['Chat.handleClickDelete']])
+})
+
+test('handleContextMenuChatImageAttachment', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleContextMenuChatImageAttachment'() {
+      return undefined
+    },
+  })
+  await Chat.handleContextMenuChatImageAttachment('attachment-1', 10, 20)
+  expect(mockRpc.invocations).toEqual([['Chat.handleContextMenuChatImageAttachment', 'attachment-1', 10, 20]])
 })
 
 test('deleteSessionAtIndex', async () => {
@@ -391,6 +414,61 @@ test('handleInputFocus', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.handleInputFocus', 'chat-list']])
 })
 
+test('chatListFocusPrevious', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.chatListFocusPrevious'() {
+      return undefined
+    },
+  })
+  const result = await Chat.chatListFocusPrevious()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.chatListFocusPrevious']])
+})
+
+test('chatListFocusFirst', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.chatListFocusFirst'() {
+      return undefined
+    },
+  })
+  const result = await Chat.chatListFocusFirst()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.chatListFocusFirst']])
+})
+
+test('chatListFocusLast', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.chatListFocusLast'() {
+      return undefined
+    },
+  })
+  const result = await Chat.chatListFocusLast()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.chatListFocusLast']])
+})
+
+test('chatListFocusNext', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.chatListFocusNext'() {
+      return undefined
+    },
+  })
+  const result = await Chat.chatListFocusNext()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.chatListFocusNext']])
+})
+
+test('setNowForTest', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.setNowForTest'() {
+      return undefined
+    },
+  })
+  const result = await Chat.setNowForTest(123)
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.setNowForTest', 123]])
+})
+
 test('getAuthState', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.getAuthState'() {
@@ -454,6 +532,17 @@ test('showComposerAttachmentPreviewOverlay', async () => {
   })
   await Chat.showComposerAttachmentPreviewOverlay('attachment-1')
   expect(mockRpc.invocations).toEqual([['Chat.showComposerAttachmentPreviewOverlay', 'attachment-1']])
+})
+
+test('handleErrorComposerAttachmentPreviewOverlay', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleErrorComposerAttachmentPreviewOverlay'() {
+      return undefined
+    },
+  })
+  const result = await Chat.handleErrorComposerAttachmentPreviewOverlay()
+  expect(result).toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['Chat.handleErrorComposerAttachmentPreviewOverlay']])
 })
 
 test('handleMessagesScroll', async () => {
