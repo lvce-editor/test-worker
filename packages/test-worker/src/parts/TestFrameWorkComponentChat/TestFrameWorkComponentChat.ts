@@ -255,6 +255,10 @@ export const getAuthState = async (): Promise<any> => {
   return RendererWorker.invoke('Chat.getAuthState')
 }
 
+export const setShowChatListTime = async (showTime: boolean): Promise<any> => {
+  return RendererWorker.invoke('Chat.setShowChatListTime', showTime)
+}
+
 export const handleAgentModeChange = async (newAgentMode: string): Promise<void> => {
   return RendererWorker.invoke('Chat.handleAgentModeChange', newAgentMode)
 }
