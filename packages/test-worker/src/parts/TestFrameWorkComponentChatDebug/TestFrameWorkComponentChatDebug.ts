@@ -38,6 +38,10 @@ export const setEvents = async (events: readonly ChatDebugEvent[]): Promise<void
   await RendererWorker.invoke('ChatDebug.setEvents', events)
 }
 
+export const toggleHeadersSection = async (sectionId: string): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleInput', 'toggleHeadersSection', sectionId, false)
+}
+
 export const setIndexedDbSupportForTest = async (supported: boolean): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.setIndexedDbSupportForTest', supported)
 }
