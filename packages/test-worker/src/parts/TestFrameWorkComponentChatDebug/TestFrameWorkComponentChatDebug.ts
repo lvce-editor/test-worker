@@ -86,24 +86,32 @@ export const closeDetails = async (): Promise<void> => {
   await handleInput('closeDetails', 'close', false)
 }
 
+export const openTab = async (id: string): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', id, false)
+}
+
 export const openTabPreview = async (): Promise<void> => {
-  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'preview', false)
+  await openTab('preview')
 }
 
 export const openTabPayload = async (): Promise<void> => {
-  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'payload', false)
+  await openTab('payload')
 }
 
 export const openTabResponse = async (): Promise<void> => {
-  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'response', false)
+  await openTab('response')
+}
+
+export const openTabTokens = async (): Promise<void> => {
+  await openTab('tokens')
 }
 
 export const openTabTiming = async (): Promise<void> => {
-  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'timing', false)
+  await openTab('timing')
 }
 
 export const openTabHeaders = async (): Promise<void> => {
-  await RendererWorker.invoke('ChatDebug.handleInput', 'detailTab', 'headers', false)
+  await openTab('headers')
 }
 
 export const setSessionId = async (sessionId: string): Promise<void> => {
