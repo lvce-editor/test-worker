@@ -46,6 +46,10 @@ export const setIndexedDbSupportForTest = async (supported: boolean): Promise<vo
   await RendererWorker.invoke('ChatDebug.setIndexedDbSupportForTest', supported)
 }
 
+export const handleRootContextMenu = async (): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleRootContextMenu')
+}
+
 export const resetIndexedDbSupportForTest = async (): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.setIndexedDbSupportForTest')
 }
