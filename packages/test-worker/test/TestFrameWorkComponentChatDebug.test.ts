@@ -266,3 +266,123 @@ test('handleClickRefresh', async () => {
   await ChatDebug.handleClickRefresh()
   expect(mockRpc.invocations).toEqual([['ChatDebug.handleClickRefresh']])
 })
+
+test('handleTimelineDoubleClick', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleTimelineDoubleClick'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handleTimelineDoubleClick()
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleTimelineDoubleClick']])
+})
+
+test('toggleHeadersSection', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.toggleHeadersSection('request')
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'toggleHeadersSection', 'request', false]])
+})
+
+test('handleRootContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleRootContextMenu'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handleRootContextMenu()
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleRootContextMenu']])
+})
+
+test('handleHeaderContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleHeaderContextMenu'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handleHeaderContextMenu(10, 20)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleHeaderContextMenu', 10, 20]])
+})
+
+test('handlePreviewTextPointerDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handlePreviewTextPointerDown'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handlePreviewTextPointerDown(11, 22)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handlePreviewTextPointerDown', 11, 22]])
+})
+
+test('handleTableFocus', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleTableFocus'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handleTableFocus()
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleTableFocus']])
+})
+
+test('handleTimelinePointerDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleTimelinePointerDown'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handleTimelinePointerDown('request', 101, 202)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleTimelinePointerDown', 'request', 101, 202]])
+})
+
+test('handleTimelinePointerMove', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleTimelinePointerMove'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handleTimelinePointerMove(303)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleTimelinePointerMove', 303]])
+})
+
+test('handleTimelinePointerUp', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleTimelinePointerUp'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handleTimelinePointerUp(404)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleTimelinePointerUp', 404]])
+})
+
+test('openTabTokens', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.openTabTokens()
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'detailTab', 'tokens', false]])
+})
+
+test('openTabHeaders', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+  await ChatDebug.openTabHeaders()
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'detailTab', 'headers', false]])
+})
+
+test('handleTableBodyContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleTableBodyContextMenu'() {
+      return undefined
+    },
+  })
+  await ChatDebug.handleTableBodyContextMenu(55, 66)
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleTableBodyContextMenu', 55, 66]])
+})
