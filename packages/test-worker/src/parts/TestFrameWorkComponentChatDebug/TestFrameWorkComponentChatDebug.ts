@@ -106,6 +106,18 @@ export const openTabResponse = async (): Promise<void> => {
   await openTab('response')
 }
 
+export const handleTimelinePointerDown = async (name: string, x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleTimelinePointerDown', name, x, y)
+}
+
+export const handleTimelinePointerMove = async (x: number): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleTimelinePointerMove', x)
+}
+
+export const handleTimelinePointerUp = async (x: number): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleTimelinePointerUp', x)
+}
+
 export const openTabTokens = async (): Promise<void> => {
   await openTab('tokens')
 }
