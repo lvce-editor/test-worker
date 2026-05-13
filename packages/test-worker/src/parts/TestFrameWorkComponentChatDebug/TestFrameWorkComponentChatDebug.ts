@@ -78,6 +78,10 @@ export const setFilter = async (value: string): Promise<void> => {
   await handleInput('filter', value, false)
 }
 
+export const handlePreviewTextPointerDown = async (x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handlePreviewTextPointerDown', x, y)
+}
+
 export const setEventCategoryFilter = async (value: string): Promise<void> => {
   await handleInput('eventCategoryFilter', value, false)
 }
