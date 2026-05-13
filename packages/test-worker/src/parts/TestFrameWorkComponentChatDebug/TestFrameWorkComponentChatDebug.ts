@@ -34,6 +34,10 @@ export const open2 = async ({ events, sessionId, useDevtoolsLayout }: OpenChatDe
   }
 }
 
+export const handleTimelineDoubleClick = async (): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleTimelineDoubleClick')
+}
+
 export const setEvents = async (events: readonly ChatDebugEvent[]): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.setEvents', events)
 }
