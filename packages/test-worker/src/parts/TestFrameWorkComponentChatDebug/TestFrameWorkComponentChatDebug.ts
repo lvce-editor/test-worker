@@ -78,6 +78,10 @@ export const setShowResponsePartEvents = async (enabled: boolean): Promise<void>
   await handleInput('showResponsePartEvents', '', enabled)
 }
 
+export const handleTableFocus = async (): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleTableFocus')
+}
+
 export const setShowEventStreamFinishedEvents = async (enabled: boolean): Promise<void> => {
   await handleInput('showEventStreamFinishedEvents', '', enabled)
 }
