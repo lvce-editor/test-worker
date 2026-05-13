@@ -62,6 +62,10 @@ export const useDevtoolsLayout = async (): Promise<void> => {
   await handleInput('useDevtoolsLayout', '', true)
 }
 
+export const handleHeaderContextMenu = async (x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleHeaderContextMenu', x, y)
+}
+
 export const setFilter = async (value: string): Promise<void> => {
   await handleInput('filter', value, false)
 }
