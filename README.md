@@ -10,5 +10,3 @@ cd test-worker &&
 npm ci &&
 npm test
 ```
-
-<!--  -->
