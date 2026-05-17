@@ -56,6 +56,56 @@ test('open2 with events and devtools layout', async () => {
   ])
 })
 
+test('open2 with events only', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.setEvents'() {
+      return undefined
+    },
+    'Main.openUri'() {
+      return undefined
+    },
+  })
+  const events = [
+    {
+      sessionId: 'e2e-session',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'response-part',
+    },
+  ]
+
+  await ChatDebug.open2({
+    events,
+    sessionId: 'e2e-session',
+    useDevtoolsLayout: false,
+  })
+
+  expect(mockRpc.invocations).toEqual([
+    ['Main.openUri', 'chat-debug://e2e-session'],
+    ['ChatDebug.setEvents', events],
+  ])
+})
+
+test('open2 with devtools layout only', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+    'Main.openUri'() {
+      return undefined
+    },
+  })
+
+  await ChatDebug.open2({
+    sessionId: 'e2e-session',
+    useDevtoolsLayout: true,
+  })
+
+  expect(mockRpc.invocations).toEqual([
+    ['Main.openUri', 'chat-debug://e2e-session'],
+    ['ChatDebug.handleInput', 'useDevtoolsLayout', '', true],
+  ])
+})
+
 test('setEvents', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.setEvents'() {
@@ -201,6 +251,18 @@ test('openTabResponse', async () => {
   })
   await ChatDebug.openTabResponse()
   expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'detailTab', 'response', false]])
+})
+
+test('openTab', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleInput'() {
+      return undefined
+    },
+  })
+
+  await ChatDebug.openTab('headers')
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleInput', 'detailTab', 'headers', false]])
 })
 
 test('openTabTiming', async () => {
