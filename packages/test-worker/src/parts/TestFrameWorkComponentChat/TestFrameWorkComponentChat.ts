@@ -186,6 +186,9 @@ export const mockOpenApiStreamReset = async (): Promise<void> => {
 export const openModelPicker = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.openModelPicker')
 }
+export const handleModelPickerInput = async (value: string): Promise<void> => {
+  await RendererWorker.invoke('Chat.handleInput', 'model-picker-search', value)
+}
 
 export const handleClickDelete = async (): Promise<void> => {
   await RendererWorker.invoke('Chat.handleClickDelete')
