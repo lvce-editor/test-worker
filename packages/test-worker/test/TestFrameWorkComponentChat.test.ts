@@ -710,13 +710,13 @@ test('shouldHaveComposerSelection throws for mismatched selection', async () => 
 
 test('openDebugView', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Chat.openDebugViw'() {
+    'Chat.openDebugView'() {
       return undefined
     },
   })
   const result = await Chat.openDebugView()
   expect(result).toBeUndefined()
-  expect(mockRpc.invocations).toEqual([['Chat.openDebugViw']])
+  expect(mockRpc.invocations).toEqual([['Chat.openDebugView']])
 })
 
 test('setShowChatListTime', async () => {
