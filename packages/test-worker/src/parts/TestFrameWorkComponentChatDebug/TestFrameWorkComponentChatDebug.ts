@@ -62,6 +62,10 @@ export const selectEventRow = async (index: number): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleEventRowClick', String(index))
 }
 
+export const shouldHavePayload = async (expectedPayload: any): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.shouldHavePayload', expectedPayload)
+}
+
 export const handleInput = async (name: ChatDebugInputName, value: string, checked: boolean): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleInput', name, value, checked)
 }
