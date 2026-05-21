@@ -290,3 +290,21 @@ export const setShowChatListTime = async (showTime: boolean): Promise<any> => {
 export const handleAgentModeChange = async (newAgentMode: string): Promise<void> => {
   return RendererWorker.invoke('Chat.handleAgentModeChange', newAgentMode)
 }
+
+export interface ToolCallItem {
+  readonly toolCall: {
+    readonly arguments: any
+    readonly name: 'list_files',
+  }
+}
+
+export interface TextItem {
+  readonly text: string
+}
+
+
+export type MockRequestInput = ToolCallItem | TextItem
+
+export const mockOpenApiSetResponse = async (items: readonly MockRequestInput[]): Promise<void> => {
+  return RendererWorker.invoke('Chat.mockOpenApiSetResponse', items)
+}
