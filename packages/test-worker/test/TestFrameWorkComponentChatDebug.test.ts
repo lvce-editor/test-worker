@@ -448,3 +448,31 @@ test('handleTableBodyContextMenu', async () => {
   await ChatDebug.handleTableBodyContextMenu(55, 66)
   expect(mockRpc.invocations).toEqual([['ChatDebug.handleTableBodyContextMenu', 55, 66]])
 })
+
+test('shouldHavePayload wraps renderer errors with autofix metadata', async () => {
+  const expectedPayload = {
+    expected: true,
+  }
+  const actualPayload = {
+    actual: true,
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.shouldHavePayload'() {
+      const error = new Error('mismatch') as Error & {
+        readonly actualPayload: object
+      }
+      Object.assign(error, {
+        actualPayload,
+      })
+      throw error
+    },
+  })
+
+  await expect(ChatDebug.shouldHavePayload(expectedPayload)).rejects.toMatchObject({
+    actualPayload,
+    code: 'chat-debug.should-have-payload',
+    expectedPayload,
+  })
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.shouldHavePayload', expectedPayload]])
+})
