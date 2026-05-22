@@ -107,61 +107,91 @@ interface ShouldHavePayloadMatch {
   readonly length: number
 }
 
+interface ScanState {
+  depth: number
+  inBlockComment: boolean
+  inLineComment: boolean
+  stringDelimiter: string
+}
+
+const isStringDelimiter = (character: string): boolean => {
+  return character === '\'' || character === '"' || character === '`'
+}
+
+const consumeComment = (state: ScanState, character: string, nextCharacter: string): number => {
+  if (state.inLineComment) {
+    if (character === '\n') {
+      state.inLineComment = false
+    }
+    return 1
+  }
+  if (state.inBlockComment) {
+    if (character === '*' && nextCharacter === '/') {
+      state.inBlockComment = false
+      return 2
+    }
+    return 1
+  }
+  if (character === '/' && nextCharacter === '/') {
+    state.inLineComment = true
+    return 2
+  }
+  if (character === '/' && nextCharacter === '*') {
+    state.inBlockComment = true
+    return 2
+  }
+  return 0
+}
+
+const consumeString = (state: ScanState, character: string): number => {
+  if (!state.stringDelimiter) {
+    if (isStringDelimiter(character)) {
+      state.stringDelimiter = character
+      return 1
+    }
+    return 0
+  }
+  if (character === '\\') {
+    return 2
+  }
+  if (character === state.stringDelimiter) {
+    state.stringDelimiter = ''
+  }
+  return 1
+}
+
 const findClosingParenthesis = (fileContent: string, startIndex: number): number => {
-  let depth = 1
-  let stringDelimiter = ''
-  let inBlockComment = false
-  let inLineComment = false
-  for (let index = startIndex; index < fileContent.length; index++) {
+  const state: ScanState = {
+    depth: 1,
+    inBlockComment: false,
+    inLineComment: false,
+    stringDelimiter: '',
+  }
+  for (let index = startIndex; index < fileContent.length;) {
     const character = fileContent[index]
     const nextCharacter = fileContent[index + 1]
-    if (inLineComment) {
-      if (character === '\n') {
-        inLineComment = false
-      }
+    const commentLength = consumeComment(state, character, nextCharacter)
+    if (commentLength > 0) {
+      index += commentLength
       continue
     }
-    if (inBlockComment) {
-      if (character === '*' && nextCharacter === '/') {
-        inBlockComment = false
-        index++
-      }
-      continue
-    }
-    if (stringDelimiter) {
-      if (character === '\\') {
-        index++
-        continue
-      }
-      if (character === stringDelimiter) {
-        stringDelimiter = ''
-      }
-      continue
-    }
-    if (character === '/' && nextCharacter === '/') {
-      inLineComment = true
-      index++
-      continue
-    }
-    if (character === '/' && nextCharacter === '*') {
-      inBlockComment = true
-      index++
-      continue
-    }
-    if (character === '\'' || character === '"' || character === '`') {
-      stringDelimiter = character
+    const stringLength = consumeString(state, character)
+    if (stringLength > 0) {
+      index += stringLength
       continue
     }
     if (character === '(') {
-      depth++
+      state.depth++
+      index++
       continue
     }
     if (character === ')') {
-      depth--
-      if (depth === 0) {
+      state.depth--
+      if (state.depth === 0) {
         return index
       }
     }
+    index++
   }
   return -1
 }
