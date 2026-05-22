@@ -476,3 +476,71 @@ test('shouldHavePayload wraps renderer errors with autofix metadata', async () =
 
   expect(mockRpc.invocations).toEqual([['ChatDebug.shouldHavePayload', expectedPayload]])
 })
+
+test('shouldHavePayload2 compares payload locally', async () => {
+  const expectedPayload = {
+    items: [
+      {
+        id: 1,
+      },
+    ],
+    nested: {
+      ok: true,
+    },
+  }
+  const actualPayload = {
+    items: [
+      {
+        extra: 'value',
+        id: 1,
+      },
+      {
+        id: 2,
+      },
+    ],
+    nested: {
+      ignored: 'extra',
+      ok: true,
+    },
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getPayload'() {
+      return actualPayload
+    },
+  })
+
+  await expect(ChatDebug.shouldHavePayload2(expectedPayload)).resolves.toBeUndefined()
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.getPayload']])
+})
+
+test('shouldHavePayload2 wraps local comparison errors with autofix metadata', async () => {
+  const expectedPayload = {
+    items: [
+      {
+        id: 2,
+      },
+    ],
+  }
+  const actualPayload = {
+    items: [
+      {
+        id: 1,
+      },
+    ],
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getPayload'() {
+      return actualPayload
+    },
+  })
+
+  await expect(ChatDebug.shouldHavePayload2(expectedPayload)).rejects.toMatchObject({
+    actualPayload,
+    code: 'chat-debug.should-have-payload',
+    expectedPayload,
+    message: 'Expected payload.items[0].id to equal 2 but got 1',
+  })
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.getPayload']])
+})
