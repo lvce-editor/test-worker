@@ -294,14 +294,13 @@ export const handleAgentModeChange = async (newAgentMode: string): Promise<void>
 export interface ToolCallItem {
   readonly toolCall: {
     readonly arguments: any
-    readonly name: 'list_files',
+    readonly name: 'list_files'
   }
 }
 
 export interface TextItem {
   readonly text: string
 }
-
 
 export type MockRequestInput = ToolCallItem | TextItem
 
