@@ -379,11 +379,7 @@ export const tryAutoFixWith = async (dependencies: TryAutoFixDependencies): Prom
     return
   }
   const fileContent = await dependencies.readFile(fileUrl)
-  const updatedFileContent = replaceShouldHavePayload(
-    fileContent,
-    autoFixError.expectedPayload,
-    autoFixError.actualPayload,
-  )
+  const updatedFileContent = replaceShouldHavePayload(fileContent, autoFixError.expectedPayload, autoFixError.actualPayload)
   if (!updatedFileContent || updatedFileContent === fileContent) {
     return
   }
