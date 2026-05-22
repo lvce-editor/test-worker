@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { ChatDebugShouldHavePayloadError } from '../src/parts/ChatDebugShouldHavePayloadError/ChatDebugShouldHavePayloadError.ts'
 import * as ExecuteTest2 from '../src/parts/ExecuteTest2/ExecuteTest2.ts'
 import * as TestType from '../src/parts/TestType/TestType.ts'
 
@@ -36,6 +37,8 @@ const receivedGlobals: any = {}
 const testFunction7 = async (globals: any): Promise<void> => {
   Object.assign(receivedGlobals, globals)
 }
+
+const timestampGenerator8 = (): number => 6000
 
 test('executeTest2 with successful test function', async () => {
   const globals = {}
@@ -127,4 +130,32 @@ test('executeTest2 with globals passed to test function', async () => {
   expect(result.error).toBeUndefined()
   expect(receivedGlobals).toEqual(globals)
   expect(result.type).toBe(TestType.Pass)
+})
+
+test('executeTest2 adds autofix action for chat debug shouldHavePayload failures', async () => {
+  const globals = {}
+  const error = new ChatDebugShouldHavePayloadError({ expected: true }, { actual: true })
+  const testFunction = async (): Promise<void> => {
+    throw error
+  }
+
+  const result = await ExecuteTest2.executeTest2('autofix-test', testFunction, globals, timestampGenerator8)
+
+  expect(result.type).toBe(TestType.Fail)
+  expect(result.autoFixError).toEqual({
+    actualPayload: {
+      actual: true,
+    },
+    code: 'chat-debug.should-have-payload',
+    expectedPayload: {
+      expected: true,
+    },
+  })
+  expect(result.overlayActions).toEqual([
+    {
+      command: 'Test.tryAutoFix',
+      id: 'chat-debug-should-have-payload-autofix',
+      label: 'Autofix',
+    },
+  ])
 })

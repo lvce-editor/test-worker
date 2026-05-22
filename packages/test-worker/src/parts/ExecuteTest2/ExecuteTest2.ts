@@ -1,5 +1,6 @@
 import type { ExecuteTestResult } from '../ExecuteTestResult/ExecuteTestResult.ts'
 import { callFunction } from '../CallFunction/CallFunction.ts'
+import { ChatDebugShouldHavePayloadError } from '../ChatDebugShouldHavePayloadError/ChatDebugShouldHavePayloadError.ts'
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import * as TestType from '../TestType/TestType.ts'
 
@@ -11,6 +12,23 @@ export const executeTest2 = async (name: string, fn: any, globals: any, timestam
   const duration = end - start
   const formattedDuration = formatDuration(duration)
   if (error) {
+    const isChatDebugPayloadError = error instanceof ChatDebugShouldHavePayloadError && error.actualPayload !== undefined
+    const autoFixProperties = isChatDebugPayloadError
+      ? {
+          autoFixError: {
+            actualPayload: error.actualPayload,
+            code: error.code,
+            expectedPayload: error.expectedPayload,
+          },
+          overlayActions: [
+            {
+              command: 'Test.tryAutoFix',
+              id: 'chat-debug-should-have-payload-autofix',
+              label: 'Autofix',
+            },
+          ],
+        }
+      : {}
     return {
       background: 'red',
       duration,
@@ -18,6 +36,7 @@ export const executeTest2 = async (name: string, fn: any, globals: any, timestam
       error,
       formattedDuration,
       name,
+      ...autoFixProperties,
       start,
       text: `test failed: ${error}`,
       type: TestType.Fail,
