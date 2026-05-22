@@ -96,7 +96,7 @@ test('tryAutoFixWith replaces shouldHavePayload and reruns test', async () => {
 export const name = 'chat-debug-test'
 export const test = async ({ ChatDebug }) => {
   await ChatDebug.shouldHavePayload({
-    expected: true,
+    actual: false,
   })
 }
 `
@@ -112,7 +112,7 @@ export const test = async ({ ChatDebug }) => {
         },
         code: 'chat-debug.should-have-payload',
         expectedPayload: {
-          expected: true,
+          actual: false,
         },
       }
     },
@@ -146,6 +146,145 @@ export const test = async ({ ChatDebug }) => {
   })
 
   expect(writtenUri).toBe('file:///workspace/test.ts')
-  expect(writtenContent).toContain('await ChatDebug.shouldHavePayload({\n  "actual": true\n})')
+  expect(writtenContent).toContain('await ChatDebug.shouldHavePayload({\n  actual: true\n})')
   expect(rerunUrl).toBe('http://localhost:3000/remote/workspace/test.ts?time=999')
+})
+
+test('tryAutoFixWith keeps payload fix minimal', async () => {
+  const fileContent = `
+export const name = 'chat-debug-test'
+export const test = async ({ ChatDebug }) => {
+  await ChatDebug.shouldHavePayload({
+    input: 'abc',
+  })
+}
+`
+  let writtenContent = ''
+
+  await tryAutoFixWith({
+    getAutoFixError() {
+      return {
+        actualPayload: {
+          ignored: true,
+          input: 'def',
+        },
+        code: 'chat-debug.should-have-payload',
+        expectedPayload: {
+          input: 'abc',
+        },
+      }
+    },
+    getLatestTestInfo() {
+      return {
+        assetDir: 'memfs://assets',
+        inProgress: false,
+        platform: PlatformType.Remote,
+        url: '/remote/workspace/test.ts',
+      }
+    },
+    getLocationHref() {
+      return 'http://localhost:3000'
+    },
+    now() {
+      return 999
+    },
+    async readFile() {
+      return fileContent
+    },
+    async rerun() {
+      return undefined
+    },
+    setAutoFixError() {
+      return undefined
+    },
+    async writeFile(_uri, content) {
+      writtenContent = content
+    },
+  })
+
+  expect(writtenContent).toContain("input: 'def'")
+  expect(writtenContent).not.toContain('ignored')
+})
+
+test('tryAutoFixWith handles payload strings containing closing parentheses', async () => {
+  const fileContent = `
+export const name = 'chat-debug-test'
+export const test = async ({ ChatDebug }) => {
+  await ChatDebug.shouldHavePayload({
+    input: [
+      {
+        content: 'Prefer file links like [src/index.ts]({{workspaceUri}}/src/index.ts)',
+        role: 'system',
+      },
+    ],
+  })
+}
+`
+  let writtenContent = ''
+  const expectedContent = `
+export const name = 'chat-debug-test'
+export const test = async ({ ChatDebug }) => {
+  await ChatDebug.shouldHavePayload({
+  input: [
+    {
+      content: 'Updated prompt with [src/index.ts]({{workspaceUri}}/src/index.ts)',
+      role: 'system'
+    }
+  ]
+})
+}
+`
+
+  await tryAutoFixWith({
+    getAutoFixError() {
+      return {
+        actualPayload: {
+          input: [
+            {
+              content: 'Updated prompt with [src/index.ts]({{workspaceUri}}/src/index.ts)',
+              ignored: true,
+              role: 'system',
+            },
+          ],
+        },
+        code: 'chat-debug.should-have-payload',
+        expectedPayload: {
+          input: [
+            {
+              content: 'Prefer file links like [src/index.ts]({{workspaceUri}}/src/index.ts)',
+              role: 'system',
+            },
+          ],
+        },
+      }
+    },
+    getLatestTestInfo() {
+      return {
+        assetDir: 'memfs://assets',
+        inProgress: false,
+        platform: PlatformType.Remote,
+        url: '/remote/workspace/test.ts',
+      }
+    },
+    getLocationHref() {
+      return 'http://localhost:3000'
+    },
+    now() {
+      return 999
+    },
+    async readFile() {
+      return fileContent
+    },
+    async rerun() {
+      return undefined
+    },
+    setAutoFixError() {
+      return undefined
+    },
+    async writeFile(_uri, content) {
+      writtenContent = content
+    },
+  })
+
+  expect(writtenContent).toBe(expectedContent)
 })
