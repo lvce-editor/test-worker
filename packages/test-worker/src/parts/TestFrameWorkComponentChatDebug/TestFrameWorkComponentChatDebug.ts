@@ -76,7 +76,7 @@ const getActualPayload = (error: unknown): unknown => {
   return undefined
 }
 
-export const shouldHavePayload = async (expectedPayload: any): Promise<void> => {
+export const shouldHavePayload = async (expectedPayload: unknown): Promise<void> => {
   try {
     await RendererWorker.invoke('ChatDebug.shouldHavePayload', expectedPayload)
   } catch (error) {
