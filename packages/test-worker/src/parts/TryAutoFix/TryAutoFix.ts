@@ -107,87 +107,133 @@ interface ShouldHavePayloadMatch {
   readonly length: number
 }
 
-interface ScanState {
-  depth: number
-  inBlockComment: boolean
-  inLineComment: boolean
-  stringDelimiter: string
+interface CommentState {
+  readonly consumed: number
+  readonly inBlockComment: boolean
+  readonly inLineComment: boolean
+}
+
+interface StringState {
+  readonly consumed: number
+  readonly stringDelimiter: string
 }
 
 const isStringDelimiter = (character: string): boolean => {
-  return character === '\'' || character === '"' || character === '`'
+  return character === "'" || character === '"' || character === '`'
 }
 
-const consumeComment = (state: ScanState, character: string, nextCharacter: string): number => {
-  if (state.inLineComment) {
+const consumeComment = (inBlockComment: boolean, inLineComment: boolean, character: string, nextCharacter: string): CommentState => {
+  if (inLineComment) {
     if (character === '\n') {
-      state.inLineComment = false
+      return {
+        consumed: 1,
+        inBlockComment,
+        inLineComment: false,
+      }
     }
-    return 1
+    return {
+      consumed: 1,
+      inBlockComment,
+      inLineComment,
+    }
   }
-  if (state.inBlockComment) {
+  if (inBlockComment) {
     if (character === '*' && nextCharacter === '/') {
-      state.inBlockComment = false
-      return 2
+      return {
+        consumed: 2,
+        inBlockComment: false,
+        inLineComment,
+      }
     }
-    return 1
+    return {
+      consumed: 1,
+      inBlockComment,
+      inLineComment,
+    }
   }
   if (character === '/' && nextCharacter === '/') {
-    state.inLineComment = true
-    return 2
+    return {
+      consumed: 2,
+      inBlockComment,
+      inLineComment: true,
+    }
   }
   if (character === '/' && nextCharacter === '*') {
-    state.inBlockComment = true
-    return 2
+    return {
+      consumed: 2,
+      inBlockComment: true,
+      inLineComment,
+    }
   }
-  return 0
+  return {
+    consumed: 0,
+    inBlockComment,
+    inLineComment,
+  }
 }
 
-const consumeString = (state: ScanState, character: string): number => {
-  if (!state.stringDelimiter) {
+const consumeString = (stringDelimiter: string, character: string): StringState => {
+  if (!stringDelimiter) {
     if (isStringDelimiter(character)) {
-      state.stringDelimiter = character
-      return 1
+      return {
+        consumed: 1,
+        stringDelimiter: character,
+      }
     }
-    return 0
+    return {
+      consumed: 0,
+      stringDelimiter,
+    }
   }
   if (character === '\\') {
-    return 2
+    return {
+      consumed: 2,
+      stringDelimiter,
+    }
   }
-  if (character === state.stringDelimiter) {
-    state.stringDelimiter = ''
+  if (character === stringDelimiter) {
+    return {
+      consumed: 1,
+      stringDelimiter: '',
+    }
   }
-  return 1
+  return {
+    consumed: 1,
+    stringDelimiter,
+  }
 }
 
 const findClosingParenthesis = (fileContent: string, startIndex: number): number => {
-  const state: ScanState = {
-    depth: 1,
-    inBlockComment: false,
-    inLineComment: false,
-    stringDelimiter: '',
-  }
-  for (let index = startIndex; index < fileContent.length;) {
+  let depth = 1
+  let inBlockComment = false
+  let inLineComment = false
+  let stringDelimiter = ''
+  for (let index = startIndex; index < fileContent.length; ) {
     const character = fileContent[index]
     const nextCharacter = fileContent[index + 1]
-    const commentLength = consumeComment(state, character, nextCharacter)
-    if (commentLength > 0) {
-      index += commentLength
+    const commentState = consumeComment(inBlockComment, inLineComment, character, nextCharacter)
+    const { consumed: consumedComment, inBlockComment: nextInBlockComment, inLineComment: nextInLineComment } = commentState
+    inBlockComment = nextInBlockComment
+    inLineComment = nextInLineComment
+    if (consumedComment > 0) {
+      index += consumedComment
       continue
     }
-    const stringLength = consumeString(state, character)
-    if (stringLength > 0) {
-      index += stringLength
+    const stringState = consumeString(stringDelimiter, character)
+    const { consumed: consumedString, stringDelimiter: nextStringDelimiter } = stringState
+    stringDelimiter = nextStringDelimiter
+    if (consumedString > 0) {
+      index += consumedString
       continue
     }
     if (character === '(') {
-      state.depth++
+      depth++
       index++
       continue
     }
     if (character === ')') {
-      state.depth--
-      if (state.depth === 0) {
+      depth--
+      if (depth === 0) {
         return index
       }
     }
