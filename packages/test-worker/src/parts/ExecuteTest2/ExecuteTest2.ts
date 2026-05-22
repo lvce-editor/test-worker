@@ -8,19 +8,19 @@ const getAutoFixProperties = (error: any): any => {
   const isChatDebugPayloadError = error instanceof ChatDebugShouldHavePayloadError && error.actualPayload !== undefined
   const autoFixProperties = isChatDebugPayloadError
     ? {
-      autoFixError: {
-        actualPayload: error.actualPayload,
-        code: error.code,
-        expectedPayload: error.expectedPayload,
-      },
-      overlayActions: [
-        {
-          command: 'Test.tryAutoFix',
-          id: 'chat-debug-should-have-payload-autofix',
-          label: 'Autofix',
+        autoFixError: {
+          actualPayload: error.actualPayload,
+          code: error.code,
+          expectedPayload: error.expectedPayload,
         },
-      ],
-    }
+        overlayActions: [
+          {
+            command: 'Test.tryAutoFix',
+            id: 'chat-debug-should-have-payload-autofix',
+            label: 'Autofix',
+          },
+        ],
+      }
     : {}
   return autoFixProperties
 }
