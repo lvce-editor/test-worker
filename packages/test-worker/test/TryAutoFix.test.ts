@@ -288,3 +288,105 @@ export const test = async ({ ChatDebug }) => {
 
   expect(writtenContent).toBe(expectedContent)
 })
+
+test('tryAutoFixWith handles payload strings containing double slashes', async () => {
+  const fileContent = `
+export const name = 'chat-debug-test'
+export const test = async ({ ChatDebug }) => {
+  await ChatDebug.shouldHavePayload({
+    input: [
+      {
+        content: 'Create the generated-file directory in the workspace',
+        role: 'user',
+      },
+      {
+        arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
+        call_id: 'call_expected',
+        name: 'write_file',
+        type: 'function_call',
+      },
+      {
+        call_id: 'call_expected',
+        output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
+        type: 'function_call_output',
+      },
+    ],
+  })
+}
+`
+  let writtenContent = ''
+
+  await tryAutoFixWith({
+    getAutoFixError() {
+      return {
+        actualPayload: {
+          input: [
+            {
+              content: 'Create the generated-file directory in the workspace',
+              role: 'user',
+            },
+            {
+              arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
+              call_id: 'call_actual',
+              name: 'write_file',
+              type: 'function_call',
+            },
+            {
+              call_id: 'call_actual',
+              output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
+              type: 'function_call_output',
+            },
+          ],
+        },
+        code: 'chat-debug.should-have-payload',
+        expectedPayload: {
+          input: [
+            {
+              content: 'Create the generated-file directory in the workspace',
+              role: 'user',
+            },
+            {
+              arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
+              call_id: 'call_expected',
+              name: 'write_file',
+              type: 'function_call',
+            },
+            {
+              call_id: 'call_expected',
+              output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
+              type: 'function_call_output',
+            },
+          ],
+        },
+      }
+    },
+    getLatestTestInfo() {
+      return {
+        assetDir: 'memfs://assets',
+        inProgress: false,
+        platform: PlatformType.Remote,
+        url: '/remote/workspace/test.ts',
+      }
+    },
+    getLocationHref() {
+      return 'http://localhost:3000'
+    },
+    now() {
+      return 999
+    },
+    async readFile() {
+      return fileContent
+    },
+    async rerun() {
+      return undefined
+    },
+    setAutoFixError() {
+      return undefined
+    },
+    async writeFile(_uri, content) {
+      writtenContent = content
+    },
+  })
+
+  expect(writtenContent).toContain("call_id: 'call_actual'")
+})

@@ -211,19 +211,19 @@ const findClosingParenthesis = (fileContent: string, startIndex: number): number
   for (let index = startIndex; index < fileContent.length;) {
     const character = fileContent[index]
     const nextCharacter = fileContent[index + 1]
+    const stringState = consumeString(stringDelimiter, character)
+    const { consumed: consumedString, stringDelimiter: nextStringDelimiter } = stringState
+    stringDelimiter = nextStringDelimiter
+    if (consumedString > 0) {
+      index += consumedString
+      continue
+    }
     const commentState = consumeComment(inBlockComment, inLineComment, character, nextCharacter)
     const { consumed: consumedComment, inBlockComment: nextInBlockComment, inLineComment: nextInLineComment } = commentState
     inBlockComment = nextInBlockComment
     inLineComment = nextInLineComment
     if (consumedComment > 0) {
       index += consumedComment
-      continue
-    }
-    const stringState = consumeString(stringDelimiter, character)
-    const { consumed: consumedString, stringDelimiter: nextStringDelimiter } = stringState
-    stringDelimiter = nextStringDelimiter
-    if (consumedString > 0) {
-      index += consumedString
       continue
     }
     if (character === '(') {
@@ -367,6 +367,7 @@ export const tryAutoFixWith = async (dependencies: TryAutoFixDependencies): Prom
     return
   }
   const autoFixError = dependencies.getAutoFixError()
+  console.log({ autoFixError })
   if (!isAutoFixError(autoFixError)) {
     return
   }
@@ -375,20 +376,28 @@ export const tryAutoFixWith = async (dependencies: TryAutoFixDependencies): Prom
   }
   const locationHref = dependencies.getLocationHref()
   const fileUrl = toFileUrl(latestTestInfo.url, locationHref)
+  console.log({ fileUrl })
   if (!fileUrl) {
     return
   }
   const fileContent = await dependencies.readFile(fileUrl)
   const updatedFileContent = replaceShouldHavePayload(fileContent, autoFixError.expectedPayload, autoFixError.actualPayload)
+  console.log({ updatedFileContent })
   if (!updatedFileContent || updatedFileContent === fileContent) {
     return
   }
+  console.log({
+    fileUrl, updatedFileContent
+  })
   await dependencies.writeFile(fileUrl, updatedFileContent)
+  console.log('did write')
   dependencies.setAutoFixError(undefined)
   const rerunUrl = createUrlWithQueryParameter(latestTestInfo.url, locationHref, dependencies.now())
   await dependencies.rerun(rerunUrl, latestTestInfo.platform, latestTestInfo.assetDir)
 }
 
 export const tryAutoFix = async (): Promise<void> => {
+  console.log('before')
   await tryAutoFixWith(defaultDependencies)
+  console.log('after')
 }
