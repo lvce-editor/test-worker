@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { assertPayloadMatches } from '../AssertPayloadMatches/AssertPayloadMatches.ts'
 import { ChatDebugShouldHavePayloadError } from '../ChatDebugShouldHavePayloadError/ChatDebugShouldHavePayloadError.ts'
 
 export interface ChatDebugEvent {
@@ -81,6 +82,16 @@ export const shouldHavePayload = async (expectedPayload: unknown): Promise<void>
     await RendererWorker.invoke('ChatDebug.shouldHavePayload', expectedPayload)
   } catch (error) {
     const actualPayload = getActualPayload(error)
+    throw new ChatDebugShouldHavePayloadError(expectedPayload, actualPayload, error)
+  }
+}
+
+export const shouldHavePayload2 = async (expectedPayload: unknown): Promise<void> => {
+  const actualPayload = await RendererWorker.invoke('ChatDebug.getPayload')
+
+  try {
+    assertPayloadMatches(actualPayload, expectedPayload, 'payload')
+  } catch (error) {
     throw new ChatDebugShouldHavePayloadError(expectedPayload, actualPayload, error)
   }
 }
