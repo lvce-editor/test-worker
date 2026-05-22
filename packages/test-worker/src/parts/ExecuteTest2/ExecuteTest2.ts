@@ -4,6 +4,27 @@ import { ChatDebugShouldHavePayloadError } from '../ChatDebugShouldHavePayloadEr
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import * as TestType from '../TestType/TestType.ts'
 
+const getAutoFixProperties = (error: any): any => {
+  const isChatDebugPayloadError = error instanceof ChatDebugShouldHavePayloadError && error.actualPayload !== undefined
+  const autoFixProperties = isChatDebugPayloadError
+    ? {
+        autoFixError: {
+          actualPayload: error.actualPayload,
+          code: error.code,
+          expectedPayload: error.expectedPayload,
+        },
+        overlayActions: [
+          {
+            command: 'Test.tryAutoFix',
+            id: 'chat-debug-should-have-payload-autofix',
+            label: 'Autofix',
+          },
+        ],
+      }
+    : {}
+  return autoFixProperties
+}
+
 export const executeTest2 = async (name: string, fn: any, globals: any, timestampGenerator: () => number): Promise<ExecuteTestResult> => {
   const getTimestamp = timestampGenerator
   const start = getTimestamp()
@@ -12,23 +33,7 @@ export const executeTest2 = async (name: string, fn: any, globals: any, timestam
   const duration = end - start
   const formattedDuration = formatDuration(duration)
   if (error) {
-    const isChatDebugPayloadError = error instanceof ChatDebugShouldHavePayloadError && error.actualPayload !== undefined
-    const autoFixProperties = isChatDebugPayloadError
-      ? {
-          autoFixError: {
-            actualPayload: error.actualPayload,
-            code: error.code,
-            expectedPayload: error.expectedPayload,
-          },
-          overlayActions: [
-            {
-              command: 'Test.tryAutoFix',
-              id: 'chat-debug-should-have-payload-autofix',
-              label: 'Autofix',
-            },
-          ],
-        }
-      : {}
+    const autoFixProperties = getAutoFixProperties(error)
     return {
       background: 'red',
       duration,
