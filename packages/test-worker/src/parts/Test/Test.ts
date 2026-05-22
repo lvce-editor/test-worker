@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as AutoFixState from '../AutoFixState/AutoFixState.ts'
 import { createApi } from '../CreateApi/CreateApi.ts'
 import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
 import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
@@ -44,6 +45,7 @@ export const execute = async (href: string, platform: number, assetDir: string):
     }
     // TODO maybe setup file watcher earlier, to not miss events?
   } catch (error) {
+    AutoFixState.clear()
     await printTestError(error)
     await RendererWorker.invoke('TestFrameWork.showOverlay', TestType.Fail, 'red', `test failed: ${error}`)
     return

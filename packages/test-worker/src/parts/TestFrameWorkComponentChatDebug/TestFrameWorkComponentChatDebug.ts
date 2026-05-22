@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { ChatDebugShouldHavePayloadError } from '../ChatDebugShouldHavePayloadError/ChatDebugShouldHavePayloadError.ts'
 
 export interface ChatDebugEvent {
   readonly [key: string]: unknown
@@ -62,8 +63,26 @@ export const selectEventRow = async (index: number): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleEventRowClick', String(index))
 }
 
+const getActualPayload = (error: unknown): unknown => {
+  if (!error || typeof error !== 'object') {
+    return undefined
+  }
+  if ('actualPayload' in error) {
+    return error.actualPayload
+  }
+  if ('actual' in error) {
+    return error.actual
+  }
+  return undefined
+}
+
 export const shouldHavePayload = async (expectedPayload: any): Promise<void> => {
-  await RendererWorker.invoke('ChatDebug.shouldHavePayload', expectedPayload)
+  try {
+    await RendererWorker.invoke('ChatDebug.shouldHavePayload', expectedPayload)
+  } catch (error) {
+    const actualPayload = getActualPayload(error)
+    throw new ChatDebugShouldHavePayloadError(expectedPayload, actualPayload, error)
+  }
 }
 
 export const handleInput = async (name: ChatDebugInputName, value: string, checked: boolean): Promise<void> => {
