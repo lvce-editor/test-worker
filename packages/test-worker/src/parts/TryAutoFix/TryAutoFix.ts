@@ -7,15 +7,89 @@ import * as FileSystem from '../TestFrameWorkComponentFileSystem/TestFrameWorkCo
 import * as TestInfo from '../TestInfoCache/TestInfoCache.ts'
 
 const whitespaceRegex = /\s+/g
-const shouldHavePayloadRegex = /shouldHavePayload\(([^)]*)\)/gs
+const shouldHavePayloadSearch = 'shouldHavePayload('
+const validIdentifierRegex = /^[A-Za-z_$][A-Za-z0-9_$]*$/
 
 const normalizeWhitespace = (value: string): string => {
   return value.replaceAll(whitespaceRegex, '')
 }
 
-const trySerialize = (value: unknown): string | undefined => {
+const isObject = (value: unknown): value is Record<string, unknown> => {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+const projectActualOntoExpected = (actualValue: unknown, expectedValue: unknown): unknown => {
+  if (Array.isArray(expectedValue)) {
+    if (!Array.isArray(actualValue)) {
+      return actualValue
+    }
+    const length = Math.min(expectedValue.length, actualValue.length)
+    return actualValue.slice(0, length).map((item, index) => projectActualOntoExpected(item, expectedValue[index]))
+  }
+  if (isObject(expectedValue)) {
+    if (!isObject(actualValue)) {
+      return actualValue
+    }
+    const result: Record<string, unknown> = {}
+    for (const key of Object.keys(expectedValue)) {
+      if (!Object.hasOwn(actualValue, key)) {
+        continue
+      }
+      result[key] = projectActualOntoExpected(actualValue[key], expectedValue[key])
+    }
+    return result
+  }
+  return actualValue
+}
+
+const quoteString = (value: string): string => {
+  return `'${value.replaceAll('\\', '\\\\').replaceAll("'", "\\'").replaceAll('\n', '\\n').replaceAll('\r', '\\r').replaceAll('\t', '\\t')}'`
+}
+
+const formatObjectKey = (key: string): string => {
+  if (validIdentifierRegex.test(key)) {
+    return key
+  }
+  return quoteString(key)
+}
+
+const trySerialize = (value: unknown, indent = 0): string | undefined => {
   try {
-    return JSON.stringify(value, null, 2)
+    if (value === null) {
+      return 'null'
+    }
+    if (typeof value === 'string') {
+      return quoteString(value)
+    }
+    if (typeof value === 'number' || typeof value === 'boolean') {
+      return JSON.stringify(value)
+    }
+    if (Array.isArray(value)) {
+      if (value.length === 0) {
+        return '[]'
+      }
+      const nextIndent = indent + 2
+      const serializedItems = value.map((item) => `${' '.repeat(nextIndent)}${trySerialize(item, nextIndent)}`)
+      return `[
+${serializedItems.join(',\n')}
+${' '.repeat(indent)}]`
+    }
+    if (isObject(value)) {
+      const entries = Object.entries(value)
+      if (entries.length === 0) {
+        return '{}'
+      }
+      const nextIndent = indent + 2
+      const serializedEntries = []
+      for (const entry of entries) {
+        const [key, item] = entry
+        serializedEntries.push(`${' '.repeat(nextIndent)}${formatObjectKey(key)}: ${trySerialize(item, nextIndent)}`)
+      }
+      return `{
+${serializedEntries.join(',\n')}
+${' '.repeat(indent)}}`
+    }
+    return undefined
   } catch {
     return undefined
   }
@@ -27,21 +101,183 @@ const replaceMatch = (fileContent: string, index: number, length: number, replac
   return `${before}${replacement}${after}`
 }
 
+interface ShouldHavePayloadMatch {
+  readonly argument: string
+  readonly index: number
+  readonly length: number
+}
+
+interface CommentState {
+  readonly consumed: number
+  readonly inBlockComment: boolean
+  readonly inLineComment: boolean
+}
+
+interface StringState {
+  readonly consumed: number
+  readonly stringDelimiter: string
+}
+
+const isStringDelimiter = (character: string): boolean => {
+  return character === "'" || character === '"' || character === '`'
+}
+
+const consumeComment = (inBlockComment: boolean, inLineComment: boolean, character: string, nextCharacter: string): CommentState => {
+  if (inLineComment) {
+    if (character === '\n') {
+      return {
+        consumed: 1,
+        inBlockComment,
+        inLineComment: false,
+      }
+    }
+    return {
+      consumed: 1,
+      inBlockComment,
+      inLineComment,
+    }
+  }
+  if (inBlockComment) {
+    if (character === '*' && nextCharacter === '/') {
+      return {
+        consumed: 2,
+        inBlockComment: false,
+        inLineComment,
+      }
+    }
+    return {
+      consumed: 1,
+      inBlockComment,
+      inLineComment,
+    }
+  }
+  if (character === '/' && nextCharacter === '/') {
+    return {
+      consumed: 2,
+      inBlockComment,
+      inLineComment: true,
+    }
+  }
+  if (character === '/' && nextCharacter === '*') {
+    return {
+      consumed: 2,
+      inBlockComment: true,
+      inLineComment,
+    }
+  }
+  return {
+    consumed: 0,
+    inBlockComment,
+    inLineComment,
+  }
+}
+
+const consumeString = (stringDelimiter: string, character: string): StringState => {
+  if (!stringDelimiter) {
+    if (isStringDelimiter(character)) {
+      return {
+        consumed: 1,
+        stringDelimiter: character,
+      }
+    }
+    return {
+      consumed: 0,
+      stringDelimiter,
+    }
+  }
+  if (character === '\\') {
+    return {
+      consumed: 2,
+      stringDelimiter,
+    }
+  }
+  if (character === stringDelimiter) {
+    return {
+      consumed: 1,
+      stringDelimiter: '',
+    }
+  }
+  return {
+    consumed: 1,
+    stringDelimiter,
+  }
+}
+
+const findClosingParenthesis = (fileContent: string, startIndex: number): number => {
+  let depth = 1
+  let inBlockComment = false
+  let inLineComment = false
+  let stringDelimiter = ''
+  for (let index = startIndex; index < fileContent.length; ) {
+    const character = fileContent[index]
+    const nextCharacter = fileContent[index + 1]
+    const stringState = consumeString(stringDelimiter, character)
+    const { consumed: consumedString, stringDelimiter: nextStringDelimiter } = stringState
+    stringDelimiter = nextStringDelimiter
+    if (consumedString > 0) {
+      index += consumedString
+      continue
+    }
+    const commentState = consumeComment(inBlockComment, inLineComment, character, nextCharacter)
+    const { consumed: consumedComment, inBlockComment: nextInBlockComment, inLineComment: nextInLineComment } = commentState
+    inBlockComment = nextInBlockComment
+    inLineComment = nextInLineComment
+    if (consumedComment > 0) {
+      index += consumedComment
+      continue
+    }
+    if (character === '(') {
+      depth++
+      index++
+      continue
+    }
+    if (character === ')') {
+      depth--
+      if (depth === 0) {
+        return index
+      }
+    }
+    index++
+  }
+  return -1
+}
+
+const findShouldHavePayloadMatches = (fileContent: string): readonly ShouldHavePayloadMatch[] => {
+  const matches: ShouldHavePayloadMatch[] = []
+  let searchIndex = 0
+  while (searchIndex < fileContent.length) {
+    const matchIndex = fileContent.indexOf(shouldHavePayloadSearch, searchIndex)
+    if (matchIndex === -1) {
+      break
+    }
+    const argumentStart = matchIndex + shouldHavePayloadSearch.length
+    const closingParenthesisIndex = findClosingParenthesis(fileContent, argumentStart)
+    if (closingParenthesisIndex === -1) {
+      break
+    }
+    matches.push({
+      argument: fileContent.slice(argumentStart, closingParenthesisIndex),
+      index: matchIndex,
+      length: closingParenthesisIndex - matchIndex + 1,
+    })
+    searchIndex = closingParenthesisIndex + 1
+  }
+  return matches
+}
+
 const replaceShouldHavePayload = (fileContent: string, expectedPayload: unknown, actualPayload: unknown): string | undefined => {
-  const serializedActual = trySerialize(actualPayload)
-  if (!serializedActual) {
+  const minimalPayload = projectActualOntoExpected(actualPayload, expectedPayload)
+  const serializedMinimalPayload = trySerialize(minimalPayload)
+  if (!serializedMinimalPayload) {
     return undefined
   }
-  const matches = [...fileContent.matchAll(shouldHavePayloadRegex)]
+  const matches = findShouldHavePayloadMatches(fileContent)
   if (matches.length === 0) {
     return undefined
   }
   if (matches.length === 1) {
     const [match] = matches
-    if (typeof match.index !== 'number') {
-      return undefined
-    }
-    return replaceMatch(fileContent, match.index, match[0].length, `shouldHavePayload(${serializedActual})`)
+    return replaceMatch(fileContent, match.index, match.length, `shouldHavePayload(${serializedMinimalPayload})`)
   }
   const serializedExpected = trySerialize(expectedPayload)
   if (!serializedExpected) {
@@ -50,8 +286,7 @@ const replaceShouldHavePayload = (fileContent: string, expectedPayload: unknown,
   const normalizedExpected = normalizeWhitespace(serializedExpected)
   const matchingCandidates = []
   for (const match of matches) {
-    const currentArgument = match[1]
-    if (normalizeWhitespace(currentArgument) === normalizedExpected) {
+    if (normalizeWhitespace(match.argument) === normalizedExpected) {
       matchingCandidates.push(match)
     }
   }
@@ -59,10 +294,7 @@ const replaceShouldHavePayload = (fileContent: string, expectedPayload: unknown,
     return undefined
   }
   const [candidate] = matchingCandidates
-  if (typeof candidate.index !== 'number') {
-    return undefined
-  }
-  return replaceMatch(fileContent, candidate.index, candidate[0].length, `shouldHavePayload(${serializedActual})`)
+  return replaceMatch(fileContent, candidate.index, candidate.length, `shouldHavePayload(${serializedMinimalPayload})`)
 }
 
 const getFileUrlFromRemotePath = (rawPathName: string): string | undefined => {
