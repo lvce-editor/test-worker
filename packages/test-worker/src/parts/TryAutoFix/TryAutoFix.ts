@@ -367,7 +367,6 @@ export const tryAutoFixWith = async (dependencies: TryAutoFixDependencies): Prom
     return
   }
   const autoFixError = dependencies.getAutoFixError()
-  console.log({ autoFixError })
   if (!isAutoFixError(autoFixError)) {
     return
   }
@@ -376,28 +375,24 @@ export const tryAutoFixWith = async (dependencies: TryAutoFixDependencies): Prom
   }
   const locationHref = dependencies.getLocationHref()
   const fileUrl = toFileUrl(latestTestInfo.url, locationHref)
-  console.log({ fileUrl })
   if (!fileUrl) {
     return
   }
   const fileContent = await dependencies.readFile(fileUrl)
-  const updatedFileContent = replaceShouldHavePayload(fileContent, autoFixError.expectedPayload, autoFixError.actualPayload)
-  console.log({ updatedFileContent })
+  const updatedFileContent = replaceShouldHavePayload(
+    fileContent,
+    autoFixError.expectedPayload,
+    autoFixError.actualPayload,
+  )
   if (!updatedFileContent || updatedFileContent === fileContent) {
     return
   }
-  console.log({
-    fileUrl, updatedFileContent
-  })
   await dependencies.writeFile(fileUrl, updatedFileContent)
-  console.log('did write')
   dependencies.setAutoFixError(undefined)
   const rerunUrl = createUrlWithQueryParameter(latestTestInfo.url, locationHref, dependencies.now())
   await dependencies.rerun(rerunUrl, latestTestInfo.platform, latestTestInfo.assetDir)
 }
 
 export const tryAutoFix = async (): Promise<void> => {
-  console.log('before')
   await tryAutoFixWith(defaultDependencies)
-  console.log('after')
 }
