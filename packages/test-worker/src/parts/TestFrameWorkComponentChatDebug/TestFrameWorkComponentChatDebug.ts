@@ -95,6 +95,15 @@ export const shouldHavePayload2 = async (expectedPayload: unknown): Promise<void
     throw new ChatDebugShouldHavePayloadError(expectedPayload, actualPayload, error)
   }
 }
+export const shouldHaveResponse = async (expectedPayload: unknown): Promise<void> => {
+  const actualPayload = await RendererWorker.invoke('ChatDebug.getResponse')
+  try {
+    assertPayloadMatches(actualPayload, expectedPayload, 'response')
+  } catch (error) {
+    // TODO maybe rename class
+    throw new ChatDebugShouldHavePayloadError(expectedPayload, actualPayload, error)
+  }
+}
 
 export const handleInput = async (name: ChatDebugInputName, value: string, checked: boolean): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleInput', name, value, checked)
