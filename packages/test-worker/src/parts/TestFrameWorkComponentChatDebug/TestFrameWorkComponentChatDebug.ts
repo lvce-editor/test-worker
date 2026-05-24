@@ -204,6 +204,13 @@ export const appendStoredEventForTest = async (event: any): Promise<void> => {
 export const handleClickRefresh = async (): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleClickRefresh')
 }
+
+type CategoryId = 'tools' | 'network'
+
+export const handleEventCategoryFilter = async (filter: CategoryId): Promise<void> => {
+  await RendererWorker.invoke('ChatDebug.handleEventCategoryFilter', filter)
+}
+
 export const handleTableBodyContextMenu = async (x: number, y: number): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleTableBodyContextMenu', x, y)
 }
