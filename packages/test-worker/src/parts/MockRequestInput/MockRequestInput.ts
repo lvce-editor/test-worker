@@ -9,23 +9,19 @@ interface ToolCallItemBase<TArguments, TName extends string> {
 
 interface ToolCallItemReadFileArgs {
   readonly uri: string
-  readonly [key: string]: unknown
 }
 
 interface ToolCallItemWriteFileArgs {
   readonly content: string
   readonly uri: string
-  readonly [key: string]: unknown
 }
 
 interface ToolCallItemSearchFilesArgs {
   readonly query: string
-  readonly [key: string]: unknown
 }
 
 interface ToolCallItemTextSearchArgs {
   readonly query: string
-  readonly [key: string]: unknown
 }
 
 export type ToolCallItemGetWorkspaceUri = ToolCallItemBase<EmptyObject, 'getWorkspaceUri'>
