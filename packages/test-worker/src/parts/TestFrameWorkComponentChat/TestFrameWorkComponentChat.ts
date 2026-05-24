@@ -291,18 +291,30 @@ export const handleAgentModeChange = async (newAgentMode: string): Promise<void>
   return RendererWorker.invoke('Chat.handleAgentModeChange', newAgentMode)
 }
 
-export interface ToolCallItem {
+interface ToolCallItemBase<T, N> {
   readonly toolCall: {
-    readonly arguments: any
-    readonly name: 'list_files'
+    readonly arguments: T
+    readonly name: N
   }
 }
+
+type ToolWorkspaceUriArgs = object
+
+interface ToolCallItemGetWorkspaceUri extends ToolCallItemBase<ToolWorkspaceUriArgs, 'getWorkspaceUri'> {}
+
+interface ToolCallItemReadFileArgs {
+  readonly uri: string
+}
+
+interface ToolCallItemReadFile extends ToolCallItemBase<ToolCallItemReadFileArgs, 'read_file'> {}
+
+export type ToolCallItem = ToolCallItemGetWorkspaceUri | ToolCallItemReadFile
 
 export interface TextItem {
   readonly text: string
 }
 
-export type MockRequestInput = ToolCallItem | TextItem
+export type MockRequestInput = ToolCallItemGetWorkspaceUri | ToolCallItemReadFile | TextItem
 
 export const mockOpenApiSetResponse = async (items: readonly MockRequestInput[]): Promise<void> => {
   return RendererWorker.invoke('Chat.mockOpenApiSetResponse', items)
