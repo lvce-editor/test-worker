@@ -292,6 +292,7 @@ export const handleAgentModeChange = async (newAgentMode: string): Promise<void>
   return RendererWorker.invoke('Chat.handleAgentModeChange', newAgentMode)
 }
 
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export const mockOpenApiSetResponse = async (items: readonly MockRequestInput[]): Promise<void> => {
   return RendererWorker.invoke('Chat.mockOpenApiSetResponse', items)
 }
