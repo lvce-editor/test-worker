@@ -96,7 +96,7 @@ export const shouldHavePayload2 = async (expectedPayload: unknown): Promise<void
   }
 }
 export const shouldHaveResponse = async (expectedPayload: unknown): Promise<void> => {
-  const actualPayload = await RendererWorker.invoke('ChatDebug.getResonse')
+  const actualPayload = await RendererWorker.invoke('ChatDebug.getResponse')
   try {
     assertPayloadMatches(actualPayload, expectedPayload, 'response')
   } catch (error) {
