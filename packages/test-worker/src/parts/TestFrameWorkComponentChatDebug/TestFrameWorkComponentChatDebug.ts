@@ -77,7 +77,7 @@ const getActualPayload = (error: unknown): unknown => {
   return undefined
 }
 
-const useNewPayload = true
+const useNewPayload = false
 
 export const shouldHavePayload = async (expectedPayload: unknown): Promise<void> => {
   if (useNewPayload) {
