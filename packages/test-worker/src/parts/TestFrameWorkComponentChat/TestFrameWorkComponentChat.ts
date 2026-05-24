@@ -1,5 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
+import type { MockRequestInput } from '../MockRequestInput/MockRequestInput.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 export const setReasoningPickerEnabled = async (enabled: boolean): Promise<void> => {
@@ -290,31 +291,6 @@ export const setShowChatListTime = async (showTime: boolean): Promise<any> => {
 export const handleAgentModeChange = async (newAgentMode: string): Promise<void> => {
   return RendererWorker.invoke('Chat.handleAgentModeChange', newAgentMode)
 }
-
-interface ToolCallItemBase<T, N> {
-  readonly toolCall: {
-    readonly arguments: T
-    readonly name: N
-  }
-}
-
-type ToolWorkspaceUriArgs = object
-
-interface ToolCallItemGetWorkspaceUri extends ToolCallItemBase<ToolWorkspaceUriArgs, 'getWorkspaceUri'> {}
-
-interface ToolCallItemReadFileArgs {
-  readonly uri: string
-}
-
-interface ToolCallItemReadFile extends ToolCallItemBase<ToolCallItemReadFileArgs, 'read_file'> {}
-
-export type ToolCallItem = ToolCallItemGetWorkspaceUri | ToolCallItemReadFile
-
-export interface TextItem {
-  readonly text: string
-}
-
-export type MockRequestInput = ToolCallItemGetWorkspaceUri | ToolCallItemReadFile | TextItem
 
 export const mockOpenApiSetResponse = async (items: readonly MockRequestInput[]): Promise<void> => {
   return RendererWorker.invoke('Chat.mockOpenApiSetResponse', items)
