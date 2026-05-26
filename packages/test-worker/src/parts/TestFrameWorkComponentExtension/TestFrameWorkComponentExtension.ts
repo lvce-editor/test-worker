@@ -1,8 +1,9 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const addWebExtension = async (relativePath: string): Promise<void> => {
   // TODO compute absolutePath
   const absolutePath = relativePath
+  await ExtensionManagementWorker.invoke('Extensions.addWebExtension', absolutePath)
   await RendererWorker.invoke('ExtensionMeta.addWebExtension', absolutePath)
 }
 
