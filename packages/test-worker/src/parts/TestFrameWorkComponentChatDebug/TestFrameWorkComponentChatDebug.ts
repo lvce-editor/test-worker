@@ -205,9 +205,9 @@ export const handleClickRefresh = async (): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleClickRefresh')
 }
 
-type CategoryId = 'tools' | 'network'
+type ChatDebugCategoryId = 'tools' | 'network'
 
-export const handleEventCategoryFilter = async (filter: CategoryId): Promise<void> => {
+export const handleEventCategoryFilter = async (filter: ChatDebugCategoryId): Promise<void> => {
   await RendererWorker.invoke('ChatDebug.handleEventCategoryFilter', filter)
 }
 
