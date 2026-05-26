@@ -279,7 +279,11 @@ export const test = async ({ ChatDebug }) => {
   restoreLocation()
   expect(writtenContent).toBe(expectedContent)
   expect(executeMock).toHaveBeenCalledTimes(1)
-  expect(executeMock.mock.calls[0]).toEqual([expect.stringMatching(new RegExp(`^${fileUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\?time=\\d+$`)), PlatformType.Remote, 'memfs://assets'])
+  expect(executeMock.mock.calls[0]).toEqual([
+    expect.stringMatching(new RegExp(`^${fileUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\?time=\\d+$`)),
+    PlatformType.Remote,
+    'memfs://assets',
+  ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
@@ -393,7 +397,11 @@ export const test = async ({ ChatDebug }) => {
   restoreLocation()
   expect(writtenContent).toContain("call_id: 'call_actual'")
   expect(executeMock).toHaveBeenCalledTimes(1)
-  expect(executeMock.mock.calls[0]).toEqual([expect.stringMatching(new RegExp(`^${fileUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\?time=\\d+$`)), PlatformType.Remote, 'memfs://assets'])
+  expect(executeMock.mock.calls[0]).toEqual([
+    expect.stringMatching(new RegExp(`^${fileUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\?time=\\d+$`)),
+    PlatformType.Remote,
+    'memfs://assets',
+  ])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
