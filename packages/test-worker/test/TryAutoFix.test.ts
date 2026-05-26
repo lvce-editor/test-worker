@@ -1,9 +1,9 @@
-import { rm, writeFile } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { rm, writeFile } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import * as AutoFixState from '../src/parts/AutoFixState/AutoFixState.ts'
 import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
 import { tryAutoFixWith } from '../src/parts/TryAutoFixWith/TryAutoFixWith.ts'
@@ -107,6 +107,11 @@ export const test = async ({ ChatDebug }) => {
   let writtenUri = ''
   let writtenContent = ''
   using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getPayload'() {
+      return {
+        actual: true,
+      }
+    },
     'FileSystem.readFile'() {
       return fileContent
     },
@@ -114,11 +119,6 @@ export const test = async ({ ChatDebug }) => {
       writtenUri = uri
       writtenContent = content
       return writeFile(new URL(uri), content, 'utf8').then(() => undefined)
-    },
-    'ChatDebug.getPayload'() {
-      return {
-        actual: true,
-      }
     },
     'Preferences.get'() {
       return false
@@ -160,18 +160,18 @@ export const test = async ({ ChatDebug }) => {
   const fileUrl = await createTempTestFile(fileContent)
   let writtenContent = ''
   using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getPayload'() {
+      return {
+        ignored: true,
+        input: 'def',
+      }
+    },
     'FileSystem.readFile'() {
       return fileContent
     },
     'FileSystem.writeFile'(_uri: string, content: string) {
       writtenContent = content
       return writeFile(new URL(fileUrl), content, 'utf8').then(() => undefined)
-    },
-    'ChatDebug.getPayload'() {
-      return {
-        ignored: true,
-        input: 'def',
-      }
     },
     'Preferences.get'() {
       return false
@@ -224,13 +224,6 @@ export const test = async ({ ChatDebug }) => {
 }
 `
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readFile'() {
-      return fileContent
-    },
-    'FileSystem.writeFile'(_uri: string, content: string) {
-      writtenContent = content
-      return writeFile(new URL(fileUrl), content, 'utf8').then(() => undefined)
-    },
     'ChatDebug.getPayload'() {
       return {
         input: [
@@ -241,6 +234,13 @@ export const test = async ({ ChatDebug }) => {
           },
         ],
       }
+    },
+    'FileSystem.readFile'() {
+      return fileContent
+    },
+    'FileSystem.writeFile'(_uri: string, content: string) {
+      writtenContent = content
+      return writeFile(new URL(fileUrl), content, 'utf8').then(() => undefined)
     },
     'Preferences.get'() {
       return false
@@ -306,13 +306,6 @@ export const test = async ({ ChatDebug }) => {
   const fileUrl = await createTempTestFile(fileContent)
   let writtenContent = ''
   using mockRpc = RendererWorker.registerMockRpc({
-    'FileSystem.readFile'() {
-      return fileContent
-    },
-    'FileSystem.writeFile'(_uri: string, content: string) {
-      writtenContent = content
-      return writeFile(new URL(fileUrl), content, 'utf8').then(() => undefined)
-    },
     'ChatDebug.getPayload'() {
       return {
         input: [
@@ -333,6 +326,13 @@ export const test = async ({ ChatDebug }) => {
           },
         ],
       }
+    },
+    'FileSystem.readFile'() {
+      return fileContent
+    },
+    'FileSystem.writeFile'(_uri: string, content: string) {
+      writtenContent = content
+      return writeFile(new URL(fileUrl), content, 'utf8').then(() => undefined)
     },
     'Preferences.get'() {
       return false
