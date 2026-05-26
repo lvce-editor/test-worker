@@ -113,6 +113,9 @@ export const test = async ({ ChatDebug }) => {
         actual: true,
       }
     },
+    'ChatDebug.shouldHavePayload'() {
+      return undefined
+    },
     'FileSystem.readFile'() {
       return fileContent
     },
@@ -150,6 +153,7 @@ export const test = async ({ ChatDebug }) => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
+    ['ChatDebug.shouldHavePayload', { actual: true }],
     ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
     ['Preferences.get', 'E2eTest.hotReload'],
   ])
@@ -172,6 +176,9 @@ export const test = async ({ ChatDebug }) => {
         ignored: true,
         input: 'def',
       }
+    },
+    'ChatDebug.shouldHavePayload'() {
+      return undefined
     },
     'FileSystem.readFile'() {
       return fileContent
@@ -202,6 +209,7 @@ export const test = async ({ ChatDebug }) => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
+    ['ChatDebug.shouldHavePayload', { input: 'def' }],
     ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
     ['Preferences.get', 'E2eTest.hotReload'],
   ])
@@ -248,6 +256,9 @@ export const test = async ({ ChatDebug }) => {
         ],
       }
     },
+    'ChatDebug.shouldHavePayload'() {
+      return undefined
+    },
     'FileSystem.readFile'() {
       return fileContent
     },
@@ -292,6 +303,17 @@ export const test = async ({ ChatDebug }) => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
+    [
+      'ChatDebug.shouldHavePayload',
+      {
+        input: [
+          {
+            content: 'Updated prompt with [src/index.ts]({{workspaceUri}}/src/index.ts)',
+            role: 'system',
+          },
+        ],
+      },
+    ],
     ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
     ['Preferences.get', 'E2eTest.hotReload'],
   ])
@@ -345,6 +367,9 @@ export const test = async ({ ChatDebug }) => {
           },
         ],
       }
+    },
+    'ChatDebug.shouldHavePayload'() {
+      return undefined
     },
     'FileSystem.readFile'() {
       return fileContent
@@ -411,6 +436,28 @@ export const test = async ({ ChatDebug }) => {
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
+    [
+      'ChatDebug.shouldHavePayload',
+      {
+        input: [
+          {
+            content: 'Create the generated-file directory in the workspace',
+            role: 'user',
+          },
+          {
+            arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
+            call_id: 'call_actual',
+            name: 'write_file',
+            type: 'function_call',
+          },
+          {
+            call_id: 'call_actual',
+            output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
+            type: 'function_call_output',
+          },
+        ],
+      },
+    ],
     ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
     ['Preferences.get', 'E2eTest.hotReload'],
   ])
