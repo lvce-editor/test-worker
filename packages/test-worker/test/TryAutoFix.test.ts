@@ -2,9 +2,13 @@ import { afterEach, expect, jest, test } from '@jest/globals'
 import { PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as AutoFixState from '../src/parts/AutoFixState/AutoFixState.ts'
-import * as TestModule from '../src/parts/Test/Test.ts'
 import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
-import { tryAutoFixWith } from '../src/parts/TryAutoFixWith/TryAutoFixWith.ts'
+const executeMock = jest.fn(() => Promise.resolve())
+
+jest.unstable_mockModule('../src/parts/Test/Test.ts', () => ({
+  execute: executeMock,
+}))
+const { tryAutoFixWith } = await import('../src/parts/TryAutoFixWith/TryAutoFixWith.ts')
 
 let testFileId = 0
 
@@ -54,6 +58,8 @@ const createMemoryFsTestFile = (content: string): { files: Record<string, string
 afterEach(() => {
   AutoFixState.clear()
   TestInfoCache.clear()
+  executeMock.mockReset()
+  executeMock.mockResolvedValue(undefined)
   jest.restoreAllMocks()
 })
 
@@ -106,7 +112,6 @@ export const test = async ({ ChatDebug }) => {
   const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenUri = ''
   let writtenContent = ''
-  const executeSpy = jest.spyOn(TestModule, 'execute').mockResolvedValue(undefined)
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.getPayload'() {
       return {
@@ -138,11 +143,11 @@ export const test = async ({ ChatDebug }) => {
     assetDir: 'memfs://assets',
     inProgress: false,
     platform: PlatformType.Remote,
-    url: `${fileUrl}?time=999`,
+    url: fileUrl,
   })
   expect(AutoFixState.get()).toBeUndefined()
-  expect(executeSpy).toHaveBeenCalledTimes(1)
-  expect(executeSpy).toHaveBeenCalledWith(`${fileUrl}?time=999`, PlatformType.Remote, 'memfs://assets')
+  expect(executeMock).toHaveBeenCalledTimes(1)
+  expect(executeMock.mock.calls[0]).toEqual([`${fileUrl}?time=999`, PlatformType.Remote, 'memfs://assets'])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
@@ -161,7 +166,6 @@ export const test = async ({ ChatDebug }) => {
 `
   const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenContent = ''
-  const executeSpy = jest.spyOn(TestModule, 'execute').mockResolvedValue(undefined)
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.getPayload'() {
       return {
@@ -189,8 +193,8 @@ export const test = async ({ ChatDebug }) => {
   restoreLocation()
   expect(writtenContent).toContain("input: 'def'")
   expect(writtenContent).not.toContain('ignored')
-  expect(TestInfoCache.last().url).toBe(`${fileUrl}?time=321`)
-  expect(executeSpy).toHaveBeenCalledWith(`${fileUrl}?time=321`, PlatformType.Remote, 'memfs://assets')
+  expect(TestInfoCache.last().url).toBe(fileUrl)
+  expect(executeMock.mock.calls[0]).toEqual([`${fileUrl}?time=321`, PlatformType.Remote, 'memfs://assets'])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
@@ -226,7 +230,6 @@ export const test = async ({ ChatDebug }) => {
 })
 }
 `
-  const executeSpy = jest.spyOn(TestModule, 'execute').mockResolvedValue(undefined)
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.getPayload'() {
       return {
@@ -275,7 +278,8 @@ export const test = async ({ ChatDebug }) => {
 
   restoreLocation()
   expect(writtenContent).toBe(expectedContent)
-  expect(executeSpy).toHaveBeenCalledWith(`${fileUrl}?time=${Date.now()}`, PlatformType.Remote, 'memfs://assets')
+  expect(executeMock).toHaveBeenCalledTimes(1)
+  expect(executeMock.mock.calls[0]).toEqual([expect.stringMatching(new RegExp(`^${fileUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\?time=\\d+$`)), PlatformType.Remote, 'memfs://assets'])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
@@ -309,7 +313,6 @@ export const test = async ({ ChatDebug }) => {
 `
   const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenContent = ''
-  const executeSpy = jest.spyOn(TestModule, 'execute').mockResolvedValue(undefined)
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.getPayload'() {
       return {
@@ -389,7 +392,8 @@ export const test = async ({ ChatDebug }) => {
 
   restoreLocation()
   expect(writtenContent).toContain("call_id: 'call_actual'")
-  expect(executeSpy).toHaveBeenCalledWith(`${fileUrl}?time=${Date.now()}`, PlatformType.Remote, 'memfs://assets')
+  expect(executeMock).toHaveBeenCalledTimes(1)
+  expect(executeMock.mock.calls[0]).toEqual([expect.stringMatching(new RegExp(`^${fileUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\?time=\\d+$`)), PlatformType.Remote, 'memfs://assets'])
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
