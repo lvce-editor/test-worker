@@ -9,6 +9,7 @@ import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
 import { tryAutoFixWith } from '../src/parts/TryAutoFixWith/TryAutoFixWith.ts'
 
 const tempDirs: string[] = []
+const passMessagePattern = /^test passed in /
 
 const setLocation = (href: string): (() => void) => {
   const originalDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'location')
@@ -146,6 +147,12 @@ export const test = async ({ ChatDebug }) => {
   })
   expect(AutoFixState.get()).toBeUndefined()
   expect(consoleInfoSpy).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readFile', fileUrl],
+    ['FileSystem.writeFile', fileUrl, writtenContent],
+    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
+    ['Preferences.get', 'E2eTest.hotReload'],
+  ])
 })
 
 test('tryAutoFixWith keeps payload fix minimal', async () => {
@@ -192,6 +199,12 @@ export const test = async ({ ChatDebug }) => {
   expect(writtenContent).toContain("input: 'def'")
   expect(writtenContent).not.toContain('ignored')
   expect(TestInfoCache.last().url).toBe(`${fileUrl}?time=321`)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readFile', fileUrl],
+    ['FileSystem.writeFile', fileUrl, writtenContent],
+    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
+    ['Preferences.get', 'E2eTest.hotReload'],
+  ])
 })
 
 test('tryAutoFixWith handles payload strings containing closing parentheses', async () => {
@@ -276,6 +289,12 @@ export const test = async ({ ChatDebug }) => {
 
   restoreLocation()
   expect(writtenContent).toBe(expectedContent)
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readFile', fileUrl],
+    ['FileSystem.writeFile', fileUrl, writtenContent],
+    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
+    ['Preferences.get', 'E2eTest.hotReload'],
+  ])
 })
 
 test('tryAutoFixWith handles payload strings containing double slashes', async () => {
@@ -389,4 +408,10 @@ export const test = async ({ ChatDebug }) => {
 
   restoreLocation()
   expect(writtenContent).toContain("call_id: 'call_actual'")
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readFile', fileUrl],
+    ['FileSystem.writeFile', fileUrl, writtenContent],
+    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
+    ['Preferences.get', 'E2eTest.hotReload'],
+  ])
 })
