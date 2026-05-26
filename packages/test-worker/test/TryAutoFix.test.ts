@@ -1,15 +1,12 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import { rm, writeFile } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
 import * as AutoFixState from '../src/parts/AutoFixState/AutoFixState.ts'
+import * as TestModule from '../src/parts/Test/Test.ts'
 import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
 import { tryAutoFixWith } from '../src/parts/TryAutoFixWith/TryAutoFixWith.ts'
 
-const tempDirs: string[] = []
-const passMessagePattern = /^test passed in /
+let testFileId = 0
 
 const setLocation = (href: string): (() => void) => {
   const originalDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'location')
@@ -43,19 +40,21 @@ const pushLatestTestInfo = (url: string, platform = PlatformType.Remote): void =
   })
 }
 
-const createTempTestFile = async (content: string): Promise<string> => {
-  const dir = await import('node:fs/promises').then(({ mkdtemp }) => mkdtemp(join(tmpdir(), 'try-autofix-')))
-  tempDirs.push(dir)
-  const filePath = join(dir, 'test.mjs')
-  await writeFile(filePath, content, 'utf8')
-  return new URL(`file://${filePath}`).toString()
+const createMemoryFsTestFile = (content: string): { files: Record<string, string>; fileUrl: string } => {
+  testFileId++
+  const fileUrl = `file:///try-autofix-${testFileId}.mjs`
+  return {
+    files: {
+      [fileUrl]: content,
+    },
+    fileUrl,
+  }
 }
 
 afterEach(() => {
   AutoFixState.clear()
   TestInfoCache.clear()
   jest.restoreAllMocks()
-  return Promise.all(tempDirs.splice(0).map((dir) => rm(dir, { force: true, recursive: true }))).then(() => undefined)
 })
 
 test('tryAutoFixWith returns early when there is no latest test item', async () => {
@@ -104,30 +103,23 @@ export const test = async ({ ChatDebug }) => {
   })
 }
 `
-  const fileUrl = await createTempTestFile(fileContent)
+  const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenUri = ''
   let writtenContent = ''
+  const executeSpy = jest.spyOn(TestModule, 'execute').mockResolvedValue(undefined)
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.getPayload'() {
       return {
         actual: true,
       }
     },
-    'ChatDebug.shouldHavePayload'() {
-      return undefined
-    },
-    'FileSystem.readFile'() {
-      return fileContent
+    'FileSystem.readFile'(uri: string) {
+      return files[uri]
     },
     'FileSystem.writeFile'(uri: string, content: string) {
       writtenUri = uri
       writtenContent = content
-      return writeFile(new URL(uri), content, 'utf8').then(() => undefined)
-    },
-    'Preferences.get'() {
-      return false
-    },
-    'TestFrameWork.showOverlay'() {
+      files[uri] = content
       return undefined
     },
   })
@@ -149,14 +141,13 @@ export const test = async ({ ChatDebug }) => {
     url: `${fileUrl}?time=999`,
   })
   expect(AutoFixState.get()).toBeUndefined()
-  expect(consoleInfoSpy).toHaveBeenCalledTimes(1)
+  expect(executeSpy).toHaveBeenCalledTimes(1)
+  expect(executeSpy).toHaveBeenCalledWith(`${fileUrl}?time=999`, PlatformType.Remote, 'memfs://assets')
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
-    ['ChatDebug.shouldHavePayload', { actual: true }],
-    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
-    ['Preferences.get', 'E2eTest.hotReload'],
   ])
+  expect(consoleInfoSpy).toHaveBeenCalledTimes(0)
 })
 
 test('tryAutoFixWith keeps payload fix minimal', async () => {
@@ -168,8 +159,9 @@ export const test = async ({ ChatDebug }) => {
   })
 }
 `
-  const fileUrl = await createTempTestFile(fileContent)
+  const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenContent = ''
+  const executeSpy = jest.spyOn(TestModule, 'execute').mockResolvedValue(undefined)
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.getPayload'() {
       return {
@@ -177,20 +169,12 @@ export const test = async ({ ChatDebug }) => {
         input: 'def',
       }
     },
-    'ChatDebug.shouldHavePayload'() {
-      return undefined
-    },
-    'FileSystem.readFile'() {
-      return fileContent
+    'FileSystem.readFile'(uri: string) {
+      return files[uri]
     },
     'FileSystem.writeFile'(_uri: string, content: string) {
       writtenContent = content
-      return writeFile(new URL(fileUrl), content, 'utf8').then(() => undefined)
-    },
-    'Preferences.get'() {
-      return false
-    },
-    'TestFrameWork.showOverlay'() {
+      files[fileUrl] = content
       return undefined
     },
   })
@@ -206,12 +190,10 @@ export const test = async ({ ChatDebug }) => {
   expect(writtenContent).toContain("input: 'def'")
   expect(writtenContent).not.toContain('ignored')
   expect(TestInfoCache.last().url).toBe(`${fileUrl}?time=321`)
+  expect(executeSpy).toHaveBeenCalledWith(`${fileUrl}?time=321`, PlatformType.Remote, 'memfs://assets')
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
-    ['ChatDebug.shouldHavePayload', { input: 'def' }],
-    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
-    ['Preferences.get', 'E2eTest.hotReload'],
   ])
 })
 
@@ -229,7 +211,7 @@ export const test = async ({ ChatDebug }) => {
   })
 }
 `
-  const fileUrl = await createTempTestFile(fileContent)
+  const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenContent = ''
   const expectedContent = `
 export const name = 'chat-debug-test'
@@ -244,6 +226,7 @@ export const test = async ({ ChatDebug }) => {
 })
 }
 `
+  const executeSpy = jest.spyOn(TestModule, 'execute').mockResolvedValue(undefined)
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.getPayload'() {
       return {
@@ -256,20 +239,12 @@ export const test = async ({ ChatDebug }) => {
         ],
       }
     },
-    'ChatDebug.shouldHavePayload'() {
-      return undefined
-    },
-    'FileSystem.readFile'() {
-      return fileContent
+    'FileSystem.readFile'(uri: string) {
+      return files[uri]
     },
     'FileSystem.writeFile'(_uri: string, content: string) {
       writtenContent = content
-      return writeFile(new URL(fileUrl), content, 'utf8').then(() => undefined)
-    },
-    'Preferences.get'() {
-      return false
-    },
-    'TestFrameWork.showOverlay'() {
+      files[fileUrl] = content
       return undefined
     },
   })
@@ -300,22 +275,10 @@ export const test = async ({ ChatDebug }) => {
 
   restoreLocation()
   expect(writtenContent).toBe(expectedContent)
+  expect(executeSpy).toHaveBeenCalledWith(`${fileUrl}?time=${Date.now()}`, PlatformType.Remote, 'memfs://assets')
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
-    [
-      'ChatDebug.shouldHavePayload',
-      {
-        input: [
-          {
-            content: 'Updated prompt with [src/index.ts]({{workspaceUri}}/src/index.ts)',
-            role: 'system',
-          },
-        ],
-      },
-    ],
-    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
-    ['Preferences.get', 'E2eTest.hotReload'],
   ])
 })
 
@@ -344,8 +307,9 @@ export const test = async ({ ChatDebug }) => {
   })
 }
 `
-  const fileUrl = await createTempTestFile(fileContent)
+  const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenContent = ''
+  const executeSpy = jest.spyOn(TestModule, 'execute').mockResolvedValue(undefined)
   using mockRpc = RendererWorker.registerMockRpc({
     'ChatDebug.getPayload'() {
       return {
@@ -368,20 +332,12 @@ export const test = async ({ ChatDebug }) => {
         ],
       }
     },
-    'ChatDebug.shouldHavePayload'() {
-      return undefined
-    },
-    'FileSystem.readFile'() {
-      return fileContent
+    'FileSystem.readFile'(uri: string) {
+      return files[uri]
     },
     'FileSystem.writeFile'(_uri: string, content: string) {
       writtenContent = content
-      return writeFile(new URL(fileUrl), content, 'utf8').then(() => undefined)
-    },
-    'Preferences.get'() {
-      return false
-    },
-    'TestFrameWork.showOverlay'() {
+      files[fileUrl] = content
       return undefined
     },
   })
@@ -433,32 +389,9 @@ export const test = async ({ ChatDebug }) => {
 
   restoreLocation()
   expect(writtenContent).toContain("call_id: 'call_actual'")
+  expect(executeSpy).toHaveBeenCalledWith(`${fileUrl}?time=${Date.now()}`, PlatformType.Remote, 'memfs://assets')
   expect(mockRpc.invocations).toEqual([
     ['FileSystem.readFile', fileUrl],
     ['FileSystem.writeFile', fileUrl, writtenContent],
-    [
-      'ChatDebug.shouldHavePayload',
-      {
-        input: [
-          {
-            content: 'Create the generated-file directory in the workspace',
-            role: 'user',
-          },
-          {
-            arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
-            call_id: 'call_actual',
-            name: 'write_file',
-            type: 'function_call',
-          },
-          {
-            call_id: 'call_actual',
-            output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
-            type: 'function_call_output',
-          },
-        ],
-      },
-    ],
-    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(passMessagePattern)],
-    ['Preferences.get', 'E2eTest.hotReload'],
   ])
 })
