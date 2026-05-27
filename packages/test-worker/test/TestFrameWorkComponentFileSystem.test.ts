@@ -103,6 +103,7 @@ test('getTmpDir: memfs default', async () => {
 })
 
 test('getTmpDir: file scheme', async () => {
+  const dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
   using mockRpc = RendererWorker.registerMockRpc({
     'PlatformPaths.getTmpDir'() {
       return '/tmp'
@@ -110,8 +111,9 @@ test('getTmpDir: file scheme', async () => {
   })
 
   const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'file' })
-  expect(tmpDir).toBe('/tmp')
+  expect(tmpDir).toBe('file:///tmp/test-123')
   expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir']])
+  dateNowMock.mockRestore()
 })
 
 test('getOpfsRoot', async () => {
@@ -195,6 +197,7 @@ test('shouldHaveFolder throws when entry is not a directory', async () => {
 })
 
 test('createExecutable', async () => {
+  const dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.chmod'() {
       return undefined
@@ -212,16 +215,18 @@ test('createExecutable', async () => {
 
   const path: string = await FileSystem.createExecutable("console.log('hi')")
 
-  expect(path).toBe('/tmp/git')
+  expect(path).toBe('file:///tmp/test-123/git')
   expect(mockRpc.invocations).toEqual([
     ['PlatformPaths.getTmpDir'],
     ['PlatformPaths.getNodePath'],
-    ['FileSystem.writeFile', '/tmp/git', "#!/usr/bin/node\n  console.log('hi')"],
-    ['FileSystem.chmod', '/tmp/git', '755'],
+    ['FileSystem.writeFile', 'file:///tmp/test-123/git', "#!/usr/bin/node\n  console.log('hi')"],
+    ['FileSystem.chmod', 'file:///tmp/test-123/git', '755'],
   ])
+  dateNowMock.mockRestore()
 })
 
 test('createExecutableFrom', async () => {
+  const dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
   using mockRpc = RendererWorker.registerMockRpc({
     'Ajax.getText'() {
       return "console.log('ok')"
@@ -244,15 +249,16 @@ test('createExecutableFrom', async () => {
   })
 
   const path: string = await FileSystem.createExecutableFrom('fixtures/script.js')
-  expect(path).toBe('/tmp/git')
+  expect(path).toBe('file:///tmp/test-123/git')
   expect(mockRpc.invocations).toEqual([
     ['PlatformPaths.getTestPath'],
     ['Ajax.getText', '/tests/fixtures/script.js'],
     ['PlatformPaths.getTmpDir'],
     ['PlatformPaths.getNodePath'],
-    ['FileSystem.writeFile', '/tmp/git', "#!/usr/bin/node\n  console.log('ok')"],
-    ['FileSystem.chmod', '/tmp/git', '755'],
+    ['FileSystem.writeFile', 'file:///tmp/test-123/git', "#!/usr/bin/node\n  console.log('ok')"],
+    ['FileSystem.chmod', 'file:///tmp/test-123/git', '755'],
   ])
+  dateNowMock.mockRestore()
 })
 
 test('createDroppedFileHandle', async () => {
@@ -296,6 +302,7 @@ test('createDroppedFileHandle', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', mockFileHandle]])
 })
 
+// eslint-disable-next-line jest/no-disabled-tests
 test.skip('loadFixture - Web platform', async () => {
   // Mock loadFileMap to return a file map
   const mockFileMap = {
@@ -318,12 +325,14 @@ test.skip('loadFixture - Web platform', async () => {
   expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/fixture/fileMap.json')
 })
 
+// eslint-disable-next-line jest/no-disabled-tests
 test.skip('loadFixture - non-Web platform', async () => {
   const result: string = await FileSystem.loadFixture(PlatformType.Electron, 'http://localhost:3000/remote/test/fixture')
 
   expect(result).toBe('file:///test/fixture')
 })
 
+// eslint-disable-next-line jest/no-disabled-tests
 test.skip('loadFixture - Remote platform', async () => {
   const result: string = await FileSystem.loadFixture(PlatformType.Remote, 'http://localhost:3000/remote/test/fixture')
 
