@@ -302,42 +302,10 @@ test('createDroppedFileHandle', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', mockFileHandle]])
 })
 
-// eslint-disable-next-line jest/no-disabled-tests
-test.skip('loadFixture - Web platform', async () => {
-  // Mock loadFileMap to return a file map
-  const mockFileMap = {
-    'src/file1.ts': 'content1',
-    'src/file2.ts': 'content2',
-  }
+test.todo('loadFixture - Web platform')
 
-  // Mock fetch for loadFileMap
-  const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>
-  const mockResponse = Response.json(mockFileMap, {
-    status: 200,
-    statusText: 'OK',
-  })
-  mockFetch.mockResolvedValueOnce(mockResponse)
-  ;(globalThis as any).fetch = mockFetch
-
-  const result: string = await FileSystem.loadFixture(PlatformType.Web, 'http://localhost:3000/fixture')
-
-  expect(result).toBe('')
-  expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/fixture/fileMap.json')
-})
-
-// eslint-disable-next-line jest/no-disabled-tests
-test.skip('loadFixture - non-Web platform', async () => {
-  const result: string = await FileSystem.loadFixture(PlatformType.Electron, 'http://localhost:3000/remote/test/fixture')
-
-  expect(result).toBe('file:///test/fixture')
-})
-
-// eslint-disable-next-line jest/no-disabled-tests
-test.skip('loadFixture - Remote platform', async () => {
-  const result: string = await FileSystem.loadFixture(PlatformType.Remote, 'http://localhost:3000/remote/test/fixture')
-
-  expect(result).toBe('file:///test/fixture')
-})
+test.todo('loadFixture - non-Web platform')
+test.todo('loadFixture - Remote platform')
 
 test('loadFixture - invalid url', async () => {
   const url = undefined
