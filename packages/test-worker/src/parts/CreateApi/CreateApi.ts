@@ -22,6 +22,7 @@ import * as ExtensionDetail from '../TestFrameWorkComponentExtensionDetail/TestF
 import * as ExtensionSearch from '../TestFrameWorkComponentExtensionSearch/TestFrameWorkComponentExtensionSearch.ts'
 import * as FileSystem from '../TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 import * as FindWidget from '../TestFrameWorkComponentFindWidget/TestFrameWorkComponentFindWidget.ts'
+import * as Git from '../TestFrameWorkComponentGit/TestFrameWorkComponentGit.ts'
 import * as IconTheme from '../TestFrameWorkComponentIconTheme/TestFrameWorkComponentIconTheme.ts'
 import * as IframeInspector from '../TestFrameWorkComponentIframeInspector/TestFrameWorkComponentIframeInspector.ts'
 import * as KeyBindingsEditor from '../TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
@@ -86,6 +87,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     },
     FindWidget,
     getTmpDir, // TODO maybe deprecate this or move to file system
+    Git,
     IconTheme,
     IframeInspector,
     KeyBindingsEditor,

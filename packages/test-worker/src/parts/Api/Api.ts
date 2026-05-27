@@ -22,6 +22,7 @@ import type * as ExtensionDetail from '../TestFrameWorkComponentExtensionDetail/
 import type * as ExtensionSearch from '../TestFrameWorkComponentExtensionSearch/TestFrameWorkComponentExtensionSearch.ts'
 import type * as FileSystem from '../TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 import type * as FindWidget from '../TestFrameWorkComponentFindWidget/TestFrameWorkComponentFindWidget.ts'
+import type * as Git from '../TestFrameWorkComponentGit/TestFrameWorkComponentGit.ts'
 import type * as IconTheme from '../TestFrameWorkComponentIconTheme/TestFrameWorkComponentIconTheme.ts'
 import type * as IframeInspector from '../TestFrameWorkComponentIframeInspector/TestFrameWorkComponentIframeInspector.ts'
 import type * as KeyBindingsEditor from '../TestFrameWorkComponentKeyBindingsEditor/TestFrameWorkComponentKeyBindingsEditor.ts'
@@ -84,6 +85,7 @@ export interface Api {
   FileSystem: IFileSystem
   FindWidget: typeof FindWidget
   getTmpDir: typeof getTmpDir
+  Git: typeof Git
   IconTheme: typeof IconTheme
   IframeInspector: typeof IframeInspector
   KeyBindingsEditor: typeof KeyBindingsEditor
