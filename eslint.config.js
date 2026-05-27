@@ -24,6 +24,7 @@ export default [
   {
     rules: {
       'github-actions/permissions': 'off',
+      '@typescript-eslint/prefer-readonly-parameter-types': 'off',
     },
   },
 ]

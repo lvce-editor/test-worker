@@ -1,7 +1,8 @@
-import { PlatformType } from '@lvce-editor/constants'
+import { DirentType, PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
 import type { FileSystemTmpDirOptions } from '../FileSystemTmpDirOptions/FileSystemTmpDirOptions.ts'
+import { AssertionError } from '../AssertionError/AssertionError.ts'
 import * as FileSystemProtocol from '../FileSystemProtocol/FileSystemProtocol.ts'
 import { getFileMapNode } from '../GetFileMapNode/GetFileMapNode.ts'
 import { getFileMapWeb } from '../GetFileMapWeb/GetFileMapWeb.ts'
@@ -51,6 +52,33 @@ export interface Dirent {
 
 export const readDir = async (uri: string): Promise<readonly Dirent[]> => {
   return RendererWorker.invoke('FileSystem.readDirWithFileTypes', uri)
+}
+
+const getParentUri = (uri: string): string => {
+  const url = new URL(uri)
+  const pathSegments = url.pathname.split('/').filter(Boolean)
+  pathSegments.pop()
+  url.pathname = pathSegments.length === 0 ? '/' : `/${pathSegments.join('/')}`
+  return url.toString()
+}
+
+const getBaseName = (uri: string): string => {
+  const url = new URL(uri)
+  const pathSegments = url.pathname.split('/').filter(Boolean)
+  return pathSegments.at(-1) || ''
+}
+
+export const shouldHaveFolder = async (uri: string): Promise<void> => {
+  const parentUri = getParentUri(uri)
+  const folderName = getBaseName(uri)
+  const dirents = await readDir(parentUri)
+  const matchingDirent = dirents.find((dirent) => dirent.name === folderName)
+  if (!matchingDirent) {
+    throw new AssertionError(`expected filesystem to have folder "${uri}" but it was not found`)
+  }
+  if (matchingDirent.type !== DirentType.Directory) {
+    throw new AssertionError(`expected filesystem entry "${uri}" to be a folder but it was type ${matchingDirent.type}`)
+  }
 }
 
 export const remove = async (uri: string): Promise<void> => {

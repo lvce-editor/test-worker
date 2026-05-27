@@ -1,5 +1,5 @@
 import { expect, test, jest } from '@jest/globals'
-import { PlatformType } from '@lvce-editor/constants'
+import { DirentType, PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as FileSystem from '../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 
@@ -157,6 +157,41 @@ test('readDir', async () => {
 
   await FileSystem.readDir('memfs:///dir')
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///dir']])
+})
+
+test('shouldHaveFolder', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [{ name: 'dir', type: DirentType.Directory }]
+    },
+  })
+
+  await FileSystem.shouldHaveFolder('memfs:///dir')
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///']])
+})
+
+test('shouldHaveFolder throws when folder does not exist', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
+  await expect(FileSystem.shouldHaveFolder('memfs:///dir')).rejects.toThrow('expected filesystem to have folder "memfs:///dir" but it was not found')
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///']])
+})
+
+test('shouldHaveFolder throws when entry is not a directory', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [{ name: 'dir', type: DirentType.File }]
+    },
+  })
+
+  await expect(FileSystem.shouldHaveFolder('memfs:///dir')).rejects.toThrow(
+    `expected filesystem entry "memfs:///dir" to be a folder but it was type ${DirentType.File}`,
+  )
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///']])
 })
 
 test('createExecutable', async () => {
