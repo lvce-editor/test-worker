@@ -477,6 +477,53 @@ test('shouldHavePayload wraps renderer errors with autofix metadata', async () =
   expect(mockRpc.invocations).toEqual([['ChatDebug.shouldHavePayload', expectedPayload]])
 })
 
+test('shouldHavePayload uses renderer error actual field when actualPayload is missing', async () => {
+  const expectedPayload = {
+    expected: true,
+  }
+  const actualPayload = {
+    actual: true,
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.shouldHavePayload'() {
+      const error = new Error('mismatch') as Error & {
+        readonly actual: object
+      }
+      Object.assign(error, {
+        actual: actualPayload,
+      })
+      throw error
+    },
+  })
+
+  await expect(ChatDebug.shouldHavePayload(expectedPayload)).rejects.toMatchObject({
+    actualPayload,
+    code: 'chat-debug.should-have-payload',
+    expectedPayload,
+  })
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.shouldHavePayload', expectedPayload]])
+})
+
+test('shouldHavePayload leaves actualPayload undefined for non-object renderer errors', async () => {
+  const expectedPayload = {
+    expected: true,
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.shouldHavePayload'() {
+      throw 'mismatch'
+    },
+  })
+
+  await expect(ChatDebug.shouldHavePayload(expectedPayload)).rejects.toMatchObject({
+    actualPayload: undefined,
+    code: 'chat-debug.should-have-payload',
+    expectedPayload,
+  })
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.shouldHavePayload', expectedPayload]])
+})
+
 test('shouldHavePayload2 compares payload locally', async () => {
   const expectedPayload = {
     items: [
@@ -543,4 +590,66 @@ test('shouldHavePayload2 wraps local comparison errors with autofix metadata', a
   })
 
   expect(mockRpc.invocations).toEqual([['ChatDebug.getPayload']])
+})
+
+test('shouldHaveResponse compares response locally', async () => {
+  const expectedPayload = {
+    response: {
+      text: 'ok',
+    },
+  }
+  const actualPayload = {
+    response: {
+      ignored: true,
+      text: 'ok',
+    },
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getResponse'() {
+      return actualPayload
+    },
+  })
+
+  await expect(ChatDebug.shouldHaveResponse(expectedPayload)).resolves.toBeUndefined()
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.getResponse']])
+})
+
+test('shouldHaveResponse wraps local comparison errors with autofix metadata', async () => {
+  const expectedPayload = {
+    response: {
+      text: 'expected',
+    },
+  }
+  const actualPayload = {
+    response: {
+      text: 'actual',
+    },
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getResponse'() {
+      return actualPayload
+    },
+  })
+
+  await expect(ChatDebug.shouldHaveResponse(expectedPayload)).rejects.toMatchObject({
+    actualPayload,
+    code: 'chat-debug.should-have-payload',
+    expectedPayload,
+    name: 'ChatDebugShouldHavePayloadError',
+  })
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.getResponse']])
+})
+
+test('handleEventCategoryFilter', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.handleEventCategoryFilter'() {
+      return undefined
+    },
+  })
+
+  await ChatDebug.handleEventCategoryFilter('network')
+
+  expect(mockRpc.invocations).toEqual([['ChatDebug.handleEventCategoryFilter', 'network']])
 })

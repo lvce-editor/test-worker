@@ -119,6 +119,35 @@ test('getTmpDir: file scheme', async () => {
   dateNowMock.mockRestore()
 })
 
+test('getTmpDir: file scheme keeps existing file protocol', async () => {
+  const dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.mkdir'() {
+      return undefined
+    },
+    'PlatformPaths.getTmpDir'() {
+      return 'file:///tmp'
+    },
+  })
+
+  const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'file' })
+  expect(tmpDir).toBe('file:///tmp/test-123')
+  expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir'], ['FileSystem.mkdir', 'file:///tmp/test-123']])
+  dateNowMock.mockRestore()
+})
+
+test('getTmpDir: default scheme uses platform tmp dir', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'PlatformPaths.getTmpDir'() {
+      return '/tmp/fallback'
+    },
+  })
+
+  const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'vscode-test' as any })
+  expect(tmpDir).toBe('/tmp/fallback')
+  expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir']])
+})
+
 test('getOpfsRoot', async () => {
   const mockDirectory = {
     async getFileHandle(): Promise<never> {
@@ -313,10 +342,59 @@ test('createDroppedFileHandle', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', mockFileHandle]])
 })
 
-test.todo('loadFixture - Web platform')
+test('loadFixture throws when url is not a string', async () => {
+  await expect(FileSystem.loadFixture(PlatformType.Web, undefined as any)).rejects.toThrow(new TypeError('fixture url must be of type string'))
+})
 
-test.todo('loadFixture - non-Web platform')
-test.todo('loadFixture - Remote platform')
+test('loadFixture uses web file map on web platform', async () => {
+  jest.resetModules()
+  const getFileMapWeb = jest.fn(async () => ({ 'memfs:///file.txt': 'web-content' }))
+  const getFileMapNode = jest.fn(async () => ({ 'memfs:///file.txt': 'node-content' }))
+  const loadFixtureToMemFs = jest.fn(async () => 'memfs:///workspace/web-fixture')
+
+  jest.unstable_mockModule('../src/parts/GetFileMapWeb/GetFileMapWeb.ts', () => ({
+    getFileMapWeb,
+  }))
+  jest.unstable_mockModule('../src/parts/GetFileMapNode/GetFileMapNode.ts', () => ({
+    getFileMapNode,
+  }))
+  jest.unstable_mockModule('../src/parts/LoadFixtureToMemFs/LoadFixtureToMemFs.ts', () => ({
+    loadFixtureToMemFs,
+  }))
+
+  const fileSystemModule = await import('../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts')
+  const result = await fileSystemModule.loadFixture(PlatformType.Web, 'fixtures/sample')
+
+  expect(result).toBe('memfs:///workspace/web-fixture')
+  expect(getFileMapWeb).toHaveBeenCalledWith('fixtures/sample')
+  expect(getFileMapNode).not.toHaveBeenCalled()
+  expect(loadFixtureToMemFs).toHaveBeenCalledWith({ 'memfs:///file.txt': 'web-content' })
+})
+
+test('loadFixture uses node file map on non-web platform', async () => {
+  jest.resetModules()
+  const getFileMapWeb = jest.fn(async () => ({ 'memfs:///file.txt': 'web-content' }))
+  const getFileMapNode = jest.fn(async () => ({ 'memfs:///file.txt': 'node-content' }))
+  const loadFixtureToMemFs = jest.fn(async () => 'memfs:///workspace/node-fixture')
+
+  jest.unstable_mockModule('../src/parts/GetFileMapWeb/GetFileMapWeb.ts', () => ({
+    getFileMapWeb,
+  }))
+  jest.unstable_mockModule('../src/parts/GetFileMapNode/GetFileMapNode.ts', () => ({
+    getFileMapNode,
+  }))
+  jest.unstable_mockModule('../src/parts/LoadFixtureToMemFs/LoadFixtureToMemFs.ts', () => ({
+    loadFixtureToMemFs,
+  }))
+
+  const fileSystemModule = await import('../src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts')
+  const result = await fileSystemModule.loadFixture(PlatformType.Remote, 'fixtures/sample')
+
+  expect(result).toBe('memfs:///workspace/node-fixture')
+  expect(getFileMapNode).toHaveBeenCalledWith('fixtures/sample')
+  expect(getFileMapWeb).not.toHaveBeenCalled()
+  expect(loadFixtureToMemFs).toHaveBeenCalledWith({ 'memfs:///file.txt': 'node-content' })
+})
 
 test('loadFixture - invalid url', async () => {
   const url = undefined

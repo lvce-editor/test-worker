@@ -20,3 +20,22 @@ test('trySerialize serializes nested objects with escaped strings', () => {
 test('trySerialize returns undefined for unsupported values', () => {
   expect(trySerialize(1n)).toBeUndefined()
 })
+
+test('trySerialize serializes null and empty containers', () => {
+  expect(trySerialize(null)).toBe('null')
+  expect(trySerialize([])).toBe('[]')
+  expect(trySerialize({})).toBe('{}')
+})
+
+test('trySerialize returns undefined when serialization throws', () => {
+  const value = new Proxy(
+    {},
+    {
+      ownKeys() {
+        throw new Error('boom')
+      },
+    },
+  )
+
+  expect(trySerialize(value)).toBeUndefined()
+})
