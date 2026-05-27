@@ -1,94 +1,107 @@
-import { expect, test } from '@jest/globals'
+import { afterEach, expect, jest, test } from '@jest/globals'
 import { PlatformType } from '@lvce-editor/constants'
-import { tryAutoFixWith } from '../src/parts/TryAutoFix/TryAutoFix.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as AutoFixState from '../src/parts/AutoFixState/AutoFixState.ts'
+import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
+const executeMock = jest.fn(async () => undefined)
+
+jest.unstable_mockModule('../src/parts/Test/Test.ts', () => ({
+  execute: executeMock,
+}))
+const { tryAutoFixWith } = await import('../src/parts/TryAutoFixWith/TryAutoFixWith.ts')
+
+let testFileId = 0
+const escapeRegex = /[.*+?^${}()|[\]\\]/g
+
+const setLocation = (href: string): (() => void) => {
+  const originalDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'location')
+  Object.defineProperty(globalThis, 'location', {
+    configurable: true,
+    value: new URL(href),
+  })
+  return () => {
+    if (originalDescriptor) {
+      Object.defineProperty(globalThis, 'location', originalDescriptor)
+      return
+    }
+    Object.defineProperty(globalThis, 'location', {
+      configurable: true,
+      value: undefined,
+    })
+  }
+}
+
+const setAutoFixError = (expectedPayload: unknown, actualPayload: unknown): void => {
+  AutoFixState.set({
+    actualPayload,
+    code: 'chat-debug.should-have-payload',
+    expectedPayload,
+  })
+}
+
+const pushLatestTestInfo = (url: string, platform = PlatformType.Remote): void => {
+  TestInfoCache.push({
+    assetDir: 'memfs://assets',
+    inProgress: false,
+    platform,
+    url,
+  })
+}
+
+const createMemoryFsTestFile = (content: string): { files: Record<string, string>; fileUrl: string } => {
+  testFileId++
+  const fileUrl = `file:///try-autofix-${testFileId}.mjs`
+  return {
+    files: {
+      [fileUrl]: content,
+    },
+    fileUrl,
+  }
+}
+
+afterEach(() => {
+  AutoFixState.clear()
+  TestInfoCache.clear()
+  executeMock.mockReset()
+  executeMock.mockResolvedValue(undefined)
+  jest.restoreAllMocks()
+})
 
 test('tryAutoFixWith returns early when there is no latest test item', async () => {
-  const writeCalls: string[] = []
-  const rerunCalls: string[] = []
-
-  await tryAutoFixWith({
-    getAutoFixError() {
-      return {
-        actualPayload: {
-          actual: true,
-        },
-        code: 'chat-debug.should-have-payload',
-        expectedPayload: {
-          expected: true,
-        },
-      }
-    },
-    getLatestTestInfo() {
-      return undefined
-    },
-    getLocationHref() {
-      return 'http://localhost:3000'
-    },
-    now() {
-      return 123
-    },
-    async readFile() {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
       return ''
     },
-    async rerun() {
-      rerunCalls.push('rerun')
-    },
-    setAutoFixError() {
+    'FileSystem.writeFile'() {
       return undefined
     },
-    async writeFile() {
-      writeCalls.push('write')
-    },
   })
+  const restoreLocation = setLocation('http://localhost:3000')
+  setAutoFixError({ expected: true }, { actual: true })
 
-  expect(writeCalls).toEqual([])
-  expect(rerunCalls).toEqual([])
+  await tryAutoFixWith()
+
+  restoreLocation()
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('tryAutoFixWith returns early for unsupported url scheme', async () => {
-  const writeCalls: string[] = []
-
-  await tryAutoFixWith({
-    getAutoFixError() {
-      return {
-        actualPayload: {
-          actual: true,
-        },
-        code: 'chat-debug.should-have-payload',
-        expectedPayload: {
-          expected: true,
-        },
-      }
-    },
-    getLatestTestInfo() {
-      return {
-        assetDir: 'memfs://assets',
-        inProgress: false,
-        platform: PlatformType.Web,
-        url: 'memfs:///file.ts',
-      }
-    },
-    getLocationHref() {
-      return 'http://localhost:3000'
-    },
-    now() {
-      return 123
-    },
-    async readFile() {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readFile'() {
       return ''
     },
-    async rerun() {
+    'FileSystem.writeFile'() {
       return undefined
-    },
-    setAutoFixError() {
-      return undefined
-    },
-    async writeFile() {
-      writeCalls.push('write')
     },
   })
+  const restoreLocation = setLocation('http://localhost:3000')
+  setAutoFixError({ expected: true }, { actual: true })
+  pushLatestTestInfo('memfs:///file.ts', PlatformType.Web)
 
-  expect(writeCalls).toEqual([])
+  await tryAutoFixWith()
+
+  restoreLocation()
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('tryAutoFixWith replaces shouldHavePayload and reruns test', async () => {
@@ -100,54 +113,50 @@ export const test = async ({ ChatDebug }) => {
   })
 }
 `
+  const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenUri = ''
   let writtenContent = ''
-  let rerunUrl = ''
-
-  await tryAutoFixWith({
-    getAutoFixError() {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getPayload'() {
       return {
-        actualPayload: {
-          actual: true,
-        },
-        code: 'chat-debug.should-have-payload',
-        expectedPayload: {
-          actual: false,
-        },
+        actual: true,
       }
     },
-    getLatestTestInfo() {
-      return {
-        assetDir: 'memfs://assets',
-        inProgress: false,
-        platform: PlatformType.Remote,
-        url: '/remote/workspace/test.ts',
-      }
+    'FileSystem.readFile'(uri: string) {
+      return files[uri]
     },
-    getLocationHref() {
-      return 'http://localhost:3000'
-    },
-    now() {
-      return 999
-    },
-    async readFile() {
-      return fileContent
-    },
-    async rerun(url) {
-      rerunUrl = url
-    },
-    setAutoFixError() {
-      return undefined
-    },
-    async writeFile(uri, content) {
+    'FileSystem.writeFile'(uri: string, content: string) {
       writtenUri = uri
       writtenContent = content
+      files[uri] = content
+      return undefined
     },
   })
+  const restoreLocation = setLocation('http://localhost:3000')
+  jest.spyOn(Date, 'now').mockImplementation(() => 999)
+  const consoleInfoSpy = jest.spyOn(console, 'info').mockImplementation(() => {})
+  setAutoFixError({ actual: false }, { actual: true })
+  pushLatestTestInfo(fileUrl)
 
-  expect(writtenUri).toBe('file:///workspace/test.ts')
+  await tryAutoFixWith()
+
+  restoreLocation()
+  expect(writtenUri).toBe(fileUrl)
   expect(writtenContent).toContain('await ChatDebug.shouldHavePayload({\n  actual: true\n})')
-  expect(rerunUrl).toBe('http://localhost:3000/remote/workspace/test.ts?time=999')
+  expect(TestInfoCache.last()).toEqual({
+    assetDir: 'memfs://assets',
+    inProgress: false,
+    platform: PlatformType.Remote,
+    url: fileUrl,
+  })
+  expect(AutoFixState.get()).toBeUndefined()
+  expect(executeMock).toHaveBeenCalledTimes(1)
+  expect(executeMock.mock.calls[0]).toEqual([`${fileUrl}?time=999`, PlatformType.Remote, 'memfs://assets'])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readFile', fileUrl],
+    ['FileSystem.writeFile', fileUrl, writtenContent],
+  ])
+  expect(consoleInfoSpy).toHaveBeenCalledTimes(0)
 })
 
 test('tryAutoFixWith keeps payload fix minimal', async () => {
@@ -159,51 +168,41 @@ export const test = async ({ ChatDebug }) => {
   })
 }
 `
+  const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenContent = ''
-
-  await tryAutoFixWith({
-    getAutoFixError() {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getPayload'() {
       return {
-        actualPayload: {
-          ignored: true,
-          input: 'def',
-        },
-        code: 'chat-debug.should-have-payload',
-        expectedPayload: {
-          input: 'abc',
-        },
+        ignored: true,
+        input: 'def',
       }
     },
-    getLatestTestInfo() {
-      return {
-        assetDir: 'memfs://assets',
-        inProgress: false,
-        platform: PlatformType.Remote,
-        url: '/remote/workspace/test.ts',
-      }
+    'FileSystem.readFile'(uri: string) {
+      return files[uri]
     },
-    getLocationHref() {
-      return 'http://localhost:3000'
-    },
-    now() {
-      return 999
-    },
-    async readFile() {
-      return fileContent
-    },
-    async rerun() {
-      return undefined
-    },
-    setAutoFixError() {
-      return undefined
-    },
-    async writeFile(_uri, content) {
+    'FileSystem.writeFile'(_uri: string, content: string) {
       writtenContent = content
+      files[fileUrl] = content
+      return undefined
     },
   })
+  const restoreLocation = setLocation('http://localhost:3000')
+  jest.spyOn(Date, 'now').mockImplementation(() => 321)
+  jest.spyOn(console, 'info').mockImplementation(() => {})
+  setAutoFixError({ input: 'abc' }, { ignored: true, input: 'def' })
+  pushLatestTestInfo(fileUrl)
 
+  await tryAutoFixWith()
+
+  restoreLocation()
   expect(writtenContent).toContain("input: 'def'")
   expect(writtenContent).not.toContain('ignored')
+  expect(TestInfoCache.last().url).toBe(fileUrl)
+  expect(executeMock.mock.calls[0]).toEqual([`${fileUrl}?time=321`, PlatformType.Remote, 'memfs://assets'])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readFile', fileUrl],
+    ['FileSystem.writeFile', fileUrl, writtenContent],
+  ])
 })
 
 test('tryAutoFixWith handles payload strings containing closing parentheses', async () => {
@@ -220,6 +219,7 @@ export const test = async ({ ChatDebug }) => {
   })
 }
 `
+  const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenContent = ''
   const expectedContent = `
 export const name = 'chat-debug-test'
@@ -234,59 +234,64 @@ export const test = async ({ ChatDebug }) => {
 })
 }
 `
-
-  await tryAutoFixWith({
-    getAutoFixError() {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getPayload'() {
       return {
-        actualPayload: {
-          input: [
-            {
-              content: 'Updated prompt with [src/index.ts]({{workspaceUri}}/src/index.ts)',
-              ignored: true,
-              role: 'system',
-            },
-          ],
-        },
-        code: 'chat-debug.should-have-payload',
-        expectedPayload: {
-          input: [
-            {
-              content: 'Prefer file links like [src/index.ts]({{workspaceUri}}/src/index.ts)',
-              role: 'system',
-            },
-          ],
-        },
+        input: [
+          {
+            content: 'Updated prompt with [src/index.ts]({{workspaceUri}}/src/index.ts)',
+            ignored: true,
+            role: 'system',
+          },
+        ],
       }
     },
-    getLatestTestInfo() {
-      return {
-        assetDir: 'memfs://assets',
-        inProgress: false,
-        platform: PlatformType.Remote,
-        url: '/remote/workspace/test.ts',
-      }
+    'FileSystem.readFile'(uri: string) {
+      return files[uri]
     },
-    getLocationHref() {
-      return 'http://localhost:3000'
-    },
-    now() {
-      return 999
-    },
-    async readFile() {
-      return fileContent
-    },
-    async rerun() {
-      return undefined
-    },
-    setAutoFixError() {
-      return undefined
-    },
-    async writeFile(_uri, content) {
+    'FileSystem.writeFile'(_uri: string, content: string) {
       writtenContent = content
+      files[fileUrl] = content
+      return undefined
     },
   })
+  const restoreLocation = setLocation('http://localhost:3000')
+  jest.spyOn(console, 'info').mockImplementation(() => {})
+  setAutoFixError(
+    {
+      input: [
+        {
+          content: 'Prefer file links like [src/index.ts]({{workspaceUri}}/src/index.ts)',
+          role: 'system',
+        },
+      ],
+    },
+    {
+      input: [
+        {
+          content: 'Updated prompt with [src/index.ts]({{workspaceUri}}/src/index.ts)',
+          ignored: true,
+          role: 'system',
+        },
+      ],
+    },
+  )
+  pushLatestTestInfo(fileUrl)
 
+  await tryAutoFixWith()
+
+  restoreLocation()
   expect(writtenContent).toBe(expectedContent)
+  expect(executeMock).toHaveBeenCalledTimes(1)
+  expect(executeMock.mock.calls[0]).toEqual([
+    expect.stringMatching(new RegExp(`^${fileUrl.replaceAll(escapeRegex, '\\$&')}\\?time=\\d+$`)),
+    PlatformType.Remote,
+    'memfs://assets',
+  ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readFile', fileUrl],
+    ['FileSystem.writeFile', fileUrl, writtenContent],
+  ])
 })
 
 test('tryAutoFixWith handles payload strings containing double slashes', async () => {
@@ -314,79 +319,95 @@ export const test = async ({ ChatDebug }) => {
   })
 }
 `
+  const { files, fileUrl } = createMemoryFsTestFile(fileContent)
   let writtenContent = ''
-
-  await tryAutoFixWith({
-    getAutoFixError() {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ChatDebug.getPayload'() {
       return {
-        actualPayload: {
-          input: [
-            {
-              content: 'Create the generated-file directory in the workspace',
-              role: 'user',
-            },
-            {
-              arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
-              call_id: 'call_actual',
-              name: 'write_file',
-              type: 'function_call',
-            },
-            {
-              call_id: 'call_actual',
-              output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
-              type: 'function_call_output',
-            },
-          ],
-        },
-        code: 'chat-debug.should-have-payload',
-        expectedPayload: {
-          input: [
-            {
-              content: 'Create the generated-file directory in the workspace',
-              role: 'user',
-            },
-            {
-              arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
-              call_id: 'call_expected',
-              name: 'write_file',
-              type: 'function_call',
-            },
-            {
-              call_id: 'call_expected',
-              output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
-              type: 'function_call_output',
-            },
-          ],
-        },
+        input: [
+          {
+            content: 'Create the generated-file directory in the workspace',
+            role: 'user',
+          },
+          {
+            arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
+            call_id: 'call_actual',
+            name: 'write_file',
+            type: 'function_call',
+          },
+          {
+            call_id: 'call_actual',
+            output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
+            type: 'function_call_output',
+          },
+        ],
       }
     },
-    getLatestTestInfo() {
-      return {
-        assetDir: 'memfs://assets',
-        inProgress: false,
-        platform: PlatformType.Remote,
-        url: '/remote/workspace/test.ts',
-      }
+    'FileSystem.readFile'(uri: string) {
+      return files[uri]
     },
-    getLocationHref() {
-      return 'http://localhost:3000'
-    },
-    now() {
-      return 999
-    },
-    async readFile() {
-      return fileContent
-    },
-    async rerun() {
-      return undefined
-    },
-    setAutoFixError() {
-      return undefined
-    },
-    async writeFile(_uri, content) {
+    'FileSystem.writeFile'(_uri: string, content: string) {
       writtenContent = content
+      files[fileUrl] = content
+      return undefined
     },
   })
+  const restoreLocation = setLocation('http://localhost:3000')
+  jest.spyOn(console, 'info').mockImplementation(() => {})
+  setAutoFixError(
+    {
+      input: [
+        {
+          content: 'Create the generated-file directory in the workspace',
+          role: 'user',
+        },
+        {
+          arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
+          call_id: 'call_expected',
+          name: 'write_file',
+          type: 'function_call',
+        },
+        {
+          call_id: 'call_expected',
+          output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
+          type: 'function_call_output',
+        },
+      ],
+    },
+    {
+      input: [
+        {
+          content: 'Create the generated-file directory in the workspace',
+          role: 'user',
+        },
+        {
+          arguments: '{"content":"test","uri":"memfs:///workspace/generated-file"}',
+          call_id: 'call_actual',
+          name: 'write_file',
+          type: 'function_call',
+        },
+        {
+          call_id: 'call_actual',
+          output: '{"addedLines":1,"ok":true,"removedLines":0,"uri":"memfs:///workspace/generated-file"}',
+          type: 'function_call_output',
+        },
+      ],
+    },
+  )
+  pushLatestTestInfo(fileUrl)
 
+  await tryAutoFixWith()
+
+  restoreLocation()
   expect(writtenContent).toContain("call_id: 'call_actual'")
+  expect(executeMock).toHaveBeenCalledTimes(1)
+  expect(executeMock.mock.calls[0]).toEqual([
+    expect.stringMatching(new RegExp(`^${fileUrl.replaceAll(escapeRegex, '\\$&')}\\?time=\\d+$`)),
+    PlatformType.Remote,
+    'memfs://assets',
+  ])
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readFile', fileUrl],
+    ['FileSystem.writeFile', fileUrl, writtenContent],
+  ])
 })
