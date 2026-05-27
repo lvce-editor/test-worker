@@ -48,6 +48,22 @@ export const setConfig = async (key: string, value: string): Promise<void> => {
   await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.setConfig', key, value)
 }
 
+export const shouldHaveCommit = async (message: string): Promise<void> => {
+  const commits = await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.getCommits')
+  if (!Array.isArray(commits)) {
+    throw new TypeError(`Expected commits to be an array, but got ${commits}`)
+  }
+  if (commits.length !== 1) {
+    throw new Error(`Expected 1 commit, but got ${commits.length}`)
+  }
+  if (!commits[0].hash) {
+    throw new Error('Expected commit hash to be defined')
+  }
+  if (commits[0].message !== message) {
+    throw new Error(`Expected commit message to be "${message}", but got "${commits[0].message}"`)
+  }
+}
+
 interface GitInvocation {
   readonly command: readonly string[]
   readonly cwd: string

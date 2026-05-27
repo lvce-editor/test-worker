@@ -135,3 +135,75 @@ test('setConfig', async () => {
   await Git.setConfig('user.name', 'Lvce Editor')
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.setConfig', 'user.name', 'Lvce Editor']])
 })
+
+test('shouldHaveCommit throws when commits is not an array', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await expect(Git.shouldHaveCommit('feat: initial commit')).rejects.toThrow(new TypeError('Expected commits to be an array, but got undefined'))
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.getCommits']])
+})
+
+test('shouldHaveCommit throws when commit count does not match', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return []
+    },
+  })
+
+  await expect(Git.shouldHaveCommit('feat: initial commit')).rejects.toThrow(new Error('Expected 1 commit, but got 0'))
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.getCommits']])
+})
+
+test('shouldHaveCommit throws when commit hash is missing', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return [
+        {
+          hash: '',
+          message: 'feat: initial commit',
+        },
+      ]
+    },
+  })
+
+  await expect(Git.shouldHaveCommit('feat: initial commit')).rejects.toThrow(new Error('Expected commit hash to be defined'))
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.getCommits']])
+})
+
+test('shouldHaveCommit throws when commit message does not match', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return [
+        {
+          hash: 'abc123',
+          message: 'feat: unexpected commit',
+        },
+      ]
+    },
+  })
+
+  await expect(Git.shouldHaveCommit('feat: initial commit')).rejects.toThrow(
+    new Error('Expected commit message to be "feat: initial commit", but got "feat: unexpected commit"'),
+  )
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.getCommits']])
+})
+
+test('shouldHaveCommit succeeds when commit matches', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return [
+        {
+          hash: 'abc123',
+          message: 'feat: initial commit',
+        },
+      ]
+    },
+  })
+
+  await expect(Git.shouldHaveCommit('feat: initial commit')).resolves.toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.getCommits']])
+})
