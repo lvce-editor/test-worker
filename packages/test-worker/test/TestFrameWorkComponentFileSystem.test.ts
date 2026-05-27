@@ -189,7 +189,7 @@ test('shouldHaveFolder throws when entry is not a directory', async () => {
   })
 
   await expect(FileSystem.shouldHaveFolder('memfs:///dir')).rejects.toThrow(
-    'expected filesystem entry "memfs:///dir" to be a folder but it was type 1',
+    `expected filesystem entry "memfs:///dir" to be a folder but it was type ${DirentType.File}`,
   )
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///']])
 })
