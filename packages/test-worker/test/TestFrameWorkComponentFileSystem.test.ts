@@ -115,10 +115,7 @@ test('getTmpDir: file scheme', async () => {
 
   const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'file' })
   expect(tmpDir).toBe('file:///tmp/test-123')
-  expect(mockRpc.invocations).toEqual([
-    ['PlatformPaths.getTmpDir'],
-    ['FileSystem.mkdir', 'file:///tmp/test-123'],
-  ])
+  expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir'], ['FileSystem.mkdir', 'file:///tmp/test-123']])
   dateNowMock.mockRestore()
 })
 
