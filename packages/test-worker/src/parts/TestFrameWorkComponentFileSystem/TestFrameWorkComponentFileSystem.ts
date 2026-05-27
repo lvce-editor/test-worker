@@ -88,7 +88,9 @@ export const remove = async (uri: string): Promise<void> => {
 const getTmpDirFileScheme = async (): Promise<string> => {
   const tmpFolder = await RendererWorker.invoke('PlatformPaths.getTmpDir')
   const tmpUri = tmpFolder.startsWith('file://') ? tmpFolder : `file://${tmpFolder}`
-  return `${tmpUri}/test-${Date.now()}`
+  const uri = `${tmpUri}/test-${Date.now()}`
+  await mkdir(uri)
+  return uri
 }
 
 export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: FileSystemTmpDirOptions = {}): Promise<string> => {

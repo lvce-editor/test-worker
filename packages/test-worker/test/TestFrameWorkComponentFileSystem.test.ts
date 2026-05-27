@@ -105,6 +105,9 @@ test('getTmpDir: memfs default', async () => {
 test('getTmpDir: file scheme', async () => {
   const dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
   using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.mkdir'() {
+      return undefined
+    },
     'PlatformPaths.getTmpDir'() {
       return '/tmp'
     },
@@ -112,7 +115,7 @@ test('getTmpDir: file scheme', async () => {
 
   const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'file' })
   expect(tmpDir).toBe('file:///tmp/test-123')
-  expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir']])
+  expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir'], ['FileSystem.mkdir', 'file:///tmp/test-123']])
   dateNowMock.mockRestore()
 })
 
@@ -202,6 +205,9 @@ test('createExecutable', async () => {
     'FileSystem.chmod'() {
       return undefined
     },
+    'FileSystem.mkdir'() {
+      return undefined
+    },
     'FileSystem.writeFile'() {
       return undefined
     },
@@ -218,6 +224,7 @@ test('createExecutable', async () => {
   expect(path).toBe('file:///tmp/test-123/git')
   expect(mockRpc.invocations).toEqual([
     ['PlatformPaths.getTmpDir'],
+    ['FileSystem.mkdir', 'file:///tmp/test-123'],
     ['PlatformPaths.getNodePath'],
     ['FileSystem.writeFile', 'file:///tmp/test-123/git', "#!/usr/bin/node\n  console.log('hi')"],
     ['FileSystem.chmod', 'file:///tmp/test-123/git', '755'],
@@ -232,6 +239,9 @@ test('createExecutableFrom', async () => {
       return "console.log('ok')"
     },
     'FileSystem.chmod'() {
+      return undefined
+    },
+    'FileSystem.mkdir'() {
       return undefined
     },
     'FileSystem.writeFile'() {
@@ -254,6 +264,7 @@ test('createExecutableFrom', async () => {
     ['PlatformPaths.getTestPath'],
     ['Ajax.getText', '/tests/fixtures/script.js'],
     ['PlatformPaths.getTmpDir'],
+    ['FileSystem.mkdir', 'file:///tmp/test-123'],
     ['PlatformPaths.getNodePath'],
     ['FileSystem.writeFile', 'file:///tmp/test-123/git', "#!/usr/bin/node\n  console.log('ok')"],
     ['FileSystem.chmod', 'file:///tmp/test-123/git', '755'],
