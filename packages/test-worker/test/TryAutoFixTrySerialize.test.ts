@@ -28,14 +28,13 @@ test('trySerialize serializes null and empty containers', () => {
 })
 
 test('trySerialize returns undefined when serialization throws', () => {
-  const value = new Proxy(
-    {},
-    {
-      ownKeys(): ArrayLike<string | symbol> {
-        throw new Error('boom')
-      },
+  const value = {}
+  Object.defineProperty(value, 'broken', {
+    enumerable: true,
+    get() {
+      throw new Error('boom')
     },
-  )
+  })
 
   expect(trySerialize(value)).toBeUndefined()
 })
