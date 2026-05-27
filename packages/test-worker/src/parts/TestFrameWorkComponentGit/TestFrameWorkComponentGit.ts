@@ -47,3 +47,7 @@ export const addRemote = async (name: string, remoteUrl: string): Promise<void> 
 export const setConfig = async (key: string, value: string): Promise<void> => {
   await RendererWorker.invoke('Git.setConfig', key, value)
 }
+
+export const shouldHaveInvocations = async (invocations: readonly unknown[][]): Promise<void> => {
+  // TODO
+}
