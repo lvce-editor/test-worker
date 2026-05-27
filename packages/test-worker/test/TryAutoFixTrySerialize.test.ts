@@ -3,7 +3,7 @@ import { trySerialize } from '../src/parts/TryAutoFixTrySerialize/TryAutoFixTryS
 
 test('trySerialize serializes nested objects with escaped strings', () => {
   const serialized = trySerialize({
-    "data-value": "line 1\nline 2",
+    'data-value': 'line 1\nline 2',
     nested: [{ quote: "it's fine" }],
   })
 
