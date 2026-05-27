@@ -49,6 +49,11 @@ export const setConfig = async (key: string, value: string): Promise<void> => {
   await RendererWorker.invoke('ExtensionHost.executeCommand', 'Git.setConfig', key, value)
 }
 
-export const shouldHaveInvocations = async (invocations: readonly unknown[][]): Promise<void> => {
+interface GitInvocation {
+  readonly command: readonly string[]
+  readonly cwd: string
+}
+
+export const shouldHaveInvocations = async (invocations: readonly GitInvocation[]): Promise<void> => {
   // TODO
 }
