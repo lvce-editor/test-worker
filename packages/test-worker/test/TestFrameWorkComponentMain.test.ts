@@ -24,6 +24,11 @@ const getMockLayoutState = (): Awaited<ReturnType<typeof Main.saveState>> => {
   }
 }
 
+const leftTitleRegex = /^left\./
+const leftUriRegex = /workspace\/left\.txt$/
+const rightTitleRegex = /^right\.txt$/
+const upperRightTitleRegex = /^RIGHT\.TXT$/
+
 test('openUri', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {
@@ -310,6 +315,181 @@ test('shouldHaveLayout - throws when layout does not match', async () => {
   ).rejects.toThrow(
     'expected main layout to match {"activeGroupIndex":0,"direction":"vertical"} but was {"activeGroupId":2,"direction":1,"groups":[{"activeTabId":1,"id":1,"tabs":[{"id":1,"title":"left.txt","uri":"file:///workspace/left.txt"}]},{"activeTabId":2,"focused":true,"id":2,"tabs":[{"id":2,"title":"right.txt","uri":"file:///workspace/right.txt"}]}]}',
   )
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - ignores undefined expected properties', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return getMockLayoutState()
+    },
+  })
+
+  await Main.shouldHaveLayout({
+    direction: 'horizontal',
+    groups: [
+      {
+        focused: undefined,
+        tabs: [{ title: 'left.txt', uri: undefined }],
+      },
+      {
+        focused: true,
+      },
+    ],
+  })
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - supports regular expression expectations', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return getMockLayoutState()
+    },
+  })
+
+  await Main.shouldHaveLayout({
+    groups: [
+      {
+        tabs: [{ title: leftTitleRegex, uri: leftUriRegex }],
+      },
+      {
+        tabs: [{ title: rightTitleRegex }],
+      },
+    ],
+  })
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - throws when layout is missing', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return {}
+    },
+  })
+
+  await expect(Main.shouldHaveLayout({ direction: 'horizontal' })).rejects.toThrow('expected main layout to exist but state was {}')
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - throws when array item does not match regex expectation', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return getMockLayoutState()
+    },
+  })
+
+  await expect(
+    Main.shouldHaveLayout({
+      groups: [
+        {
+          tabs: [{ title: upperRightTitleRegex }],
+        },
+        {
+          tabs: [{ title: 'right.txt' }],
+        },
+      ],
+    }),
+  ).rejects.toThrow(
+    'expected main layout to match {"groups":[{"tabs":[{"title":"/^RIGHT\\\\.TXT$/"}]},{"tabs":[{"title":"right.txt"}]}]} but was {"activeGroupId":2,"direction":1,"groups":[{"activeTabId":1,"id":1,"tabs":[{"id":1,"title":"left.txt","uri":"file:///workspace/left.txt"}]},{"activeTabId":2,"focused":true,"id":2,"tabs":[{"id":2,"title":"right.txt","uri":"file:///workspace/right.txt"}]}]}',
+  )
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - throws when expected nested object is missing', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return {
+        layout: {
+          activeGroupId: 2,
+          direction: 1,
+          groups: [1, 2] as unknown as NonNullable<Awaited<ReturnType<typeof Main.saveState>>['layout']>['groups'],
+        },
+      }
+    },
+  })
+
+  await expect(
+    Main.shouldHaveLayout({
+      groups: [
+        {
+          tabs: [{ title: 'left.txt' }],
+        },
+        {
+          tabs: [{ title: 'right.txt' }],
+        },
+      ],
+    }),
+  ).rejects.toThrow(
+    'expected main layout to match {"groups":[{"tabs":[{"title":"left.txt"}]},{"tabs":[{"title":"right.txt"}]}]} but was {"activeGroupId":2,"direction":1,"groups":[1,2]}',
+  )
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - throws when array length does not match', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return getMockLayoutState()
+    },
+  })
+
+  await expect(
+    Main.shouldHaveLayout({
+      groups: [
+        {
+          tabs: [{ title: 'left.txt' }],
+        },
+      ],
+    }),
+  ).rejects.toThrow(
+    'expected main layout to match {"groups":[{"tabs":[{"title":"left.txt"}]}]} but was {"activeGroupId":2,"direction":1,"groups":[{"activeTabId":1,"id":1,"tabs":[{"id":1,"title":"left.txt","uri":"file:///workspace/left.txt"}]},{"activeTabId":2,"focused":true,"id":2,"tabs":[{"id":2,"title":"right.txt","uri":"file:///workspace/right.txt"}]}]}',
+  )
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - throws when activeGroupIndex is out of range', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return getMockLayoutState()
+    },
+  })
+
+  await expect(
+    Main.shouldHaveLayout({
+      activeGroupIndex: 5,
+      direction: 'horizontal',
+    }),
+  ).rejects.toThrow(
+    'expected main layout to match {"activeGroupIndex":5,"direction":"horizontal"} but was {"activeGroupId":2,"direction":1,"groups":[{"activeTabId":1,"id":1,"tabs":[{"id":1,"title":"left.txt","uri":"file:///workspace/left.txt"}]},{"activeTabId":2,"focused":true,"id":2,"tabs":[{"id":2,"title":"right.txt","uri":"file:///workspace/right.txt"}]}]}',
+  )
+
+  expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
+})
+
+test('shouldHaveLayout - throws when groups are missing for activeGroupIndex', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.saveState'() {
+      return {
+        layout: {
+          activeGroupId: 2,
+          direction: 1,
+        },
+      }
+    },
+  })
+
+  await expect(
+    Main.shouldHaveLayout({
+      activeGroupIndex: 0,
+      direction: 'horizontal',
+    }),
+  ).rejects.toThrow('expected main layout to match {"activeGroupIndex":0,"direction":"horizontal"} but was {"activeGroupId":2,"direction":1}')
 
   expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
 })
