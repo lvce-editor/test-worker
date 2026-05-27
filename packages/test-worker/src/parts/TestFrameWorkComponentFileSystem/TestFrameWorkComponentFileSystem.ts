@@ -85,8 +85,18 @@ export const remove = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.remove', uri)
 }
 
+const getTmpDirFileScheme = async (): Promise<string> => {
+  const tmpFolder = await RendererWorker.invoke('PlatformPaths.getTmpDir')
+  const tmpUri = tmpFolder.startsWith('file://') ? tmpFolder : `file://${tmpFolder}`
+  const uri = `${tmpUri}/test-${Date.now()}`
+  await mkdir(uri)
+  return uri
+}
+
 export const getTmpDir = async ({ scheme = FileSystemProtocol.Memfs }: FileSystemTmpDirOptions = {}): Promise<string> => {
   switch (scheme) {
+    case 'file':
+      return getTmpDirFileScheme()
     case FileSystemProtocol.Memfs:
       return 'memfs:///workspace'
     default:
