@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Extension from '../src/parts/TestFrameWorkComponentExtension/TestFrameWorkComponentExtension.ts'
 
 test('addWebExtension', async () => {
@@ -8,7 +8,7 @@ test('addWebExtension', async () => {
       return undefined
     },
   })
-  using mockExtensionManagementRpc = RendererWorker.registerMockRpc({
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.addWebExtension'() {
       return undefined
     },
