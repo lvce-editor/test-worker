@@ -86,8 +86,8 @@ export const createApi = (platform: number, assetDir: string): Api => {
       },
     },
     FindWidget,
-    Git,
     getTmpDir, // TODO maybe deprecate this or move to file system
+    Git,
     IconTheme,
     IframeInspector,
     KeyBindingsEditor,

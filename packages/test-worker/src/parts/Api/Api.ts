@@ -84,8 +84,8 @@ export interface Api {
   ExtensionSearch: typeof ExtensionSearch
   FileSystem: IFileSystem
   FindWidget: typeof FindWidget
-  Git: typeof Git
   getTmpDir: typeof getTmpDir
+  Git: typeof Git
   IconTheme: typeof IconTheme
   IframeInspector: typeof IframeInspector
   KeyBindingsEditor: typeof KeyBindingsEditor
