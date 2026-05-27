@@ -35,7 +35,7 @@ test('projectActualOntoExpected keeps only overlapping structure from arrays and
   expect(
     projectActualOntoExpected(
       [
-        { id: 'a', keep: true, extra: 'ignore' },
+        { extra: 'ignore', id: 'a', keep: true },
         { id: 'b', keep: false },
       ],
       [{ id: '', keep: true }],

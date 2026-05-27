@@ -143,7 +143,7 @@ test('getTmpDir: default scheme uses platform tmp dir', async () => {
     },
   })
 
-  const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'vscode-test' as any })
+  const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'vscode-test' })
   expect(tmpDir).toBe('/tmp/fallback')
   expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir']])
 })
@@ -348,9 +348,9 @@ test('loadFixture throws when url is not a string', async () => {
 
 test('loadFixture uses web file map on web platform', async () => {
   jest.resetModules()
-  const getFileMapWeb = jest.fn(async () => ({ 'memfs:///file.txt': 'web-content' }))
-  const getFileMapNode = jest.fn(async () => ({ 'memfs:///file.txt': 'node-content' }))
-  const loadFixtureToMemFs = jest.fn(async () => 'memfs:///workspace/web-fixture')
+  const getFileMapWeb = jest.fn(async (_url: string) => ({ 'memfs:///file.txt': 'web-content' }))
+  const getFileMapNode = jest.fn(async (_url: string) => ({ 'memfs:///file.txt': 'node-content' }))
+  const loadFixtureToMemFs = jest.fn(async (_fileMap: Record<string, string>) => 'memfs:///workspace/web-fixture')
 
   jest.unstable_mockModule('../src/parts/GetFileMapWeb/GetFileMapWeb.ts', () => ({
     getFileMapWeb,
@@ -373,9 +373,9 @@ test('loadFixture uses web file map on web platform', async () => {
 
 test('loadFixture uses node file map on non-web platform', async () => {
   jest.resetModules()
-  const getFileMapWeb = jest.fn(async () => ({ 'memfs:///file.txt': 'web-content' }))
-  const getFileMapNode = jest.fn(async () => ({ 'memfs:///file.txt': 'node-content' }))
-  const loadFixtureToMemFs = jest.fn(async () => 'memfs:///workspace/node-fixture')
+  const getFileMapWeb = jest.fn(async (_url: string) => ({ 'memfs:///file.txt': 'web-content' }))
+  const getFileMapNode = jest.fn(async (_url: string) => ({ 'memfs:///file.txt': 'node-content' }))
+  const loadFixtureToMemFs = jest.fn(async (_fileMap: Record<string, string>) => 'memfs:///workspace/node-fixture')
 
   jest.unstable_mockModule('../src/parts/GetFileMapWeb/GetFileMapWeb.ts', () => ({
     getFileMapWeb,

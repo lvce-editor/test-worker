@@ -31,7 +31,7 @@ test('trySerialize returns undefined when serialization throws', () => {
   const value = new Proxy(
     {},
     {
-      ownKeys() {
+      ownKeys(): ArrayLike<string | symbol> {
         throw new Error('boom')
       },
     },

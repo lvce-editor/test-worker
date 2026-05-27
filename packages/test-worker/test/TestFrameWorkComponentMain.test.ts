@@ -24,6 +24,11 @@ const getMockLayoutState = (): Awaited<ReturnType<typeof Main.saveState>> => {
   }
 }
 
+const leftTitleRegex = /^left\./
+const leftUriRegex = /workspace\/left\.txt$/
+const rightTitleRegex = /^right\.txt$/
+const upperRightTitleRegex = /^RIGHT\.TXT$/
+
 test('openUri', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {
@@ -347,10 +352,10 @@ test('shouldHaveLayout - supports regular expression expectations', async () => 
   await Main.shouldHaveLayout({
     groups: [
       {
-        tabs: [{ title: /^left\./, uri: /workspace\/left\.txt$/ }],
+        tabs: [{ title: leftTitleRegex, uri: leftUriRegex }],
       },
       {
-        tabs: [{ title: /^right\.txt$/ }],
+        tabs: [{ title: rightTitleRegex }],
       },
     ],
   })
@@ -381,7 +386,7 @@ test('shouldHaveLayout - throws when array item does not match regex expectation
     Main.shouldHaveLayout({
       groups: [
         {
-          tabs: [{ title: /^RIGHT\.TXT$/ }],
+          tabs: [{ title: upperRightTitleRegex }],
         },
         {
           tabs: [{ title: 'right.txt' }],
