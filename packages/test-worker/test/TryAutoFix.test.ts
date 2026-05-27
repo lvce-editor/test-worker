@@ -3,7 +3,7 @@ import { PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as AutoFixState from '../src/parts/AutoFixState/AutoFixState.ts'
 import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
-const executeMock = jest.fn(() => Promise.resolve())
+const executeMock = jest.fn(async () => undefined)
 
 jest.unstable_mockModule('../src/parts/Test/Test.ts', () => ({
   execute: executeMock,
@@ -11,6 +11,7 @@ jest.unstable_mockModule('../src/parts/Test/Test.ts', () => ({
 const { tryAutoFixWith } = await import('../src/parts/TryAutoFixWith/TryAutoFixWith.ts')
 
 let testFileId = 0
+const escapeRegex = /[.*+?^${}()|[\]\\]/g
 
 const setLocation = (href: string): (() => void) => {
   const originalDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'location')
@@ -23,7 +24,10 @@ const setLocation = (href: string): (() => void) => {
       Object.defineProperty(globalThis, 'location', originalDescriptor)
       return
     }
-    Reflect.deleteProperty(globalThis, 'location')
+    Object.defineProperty(globalThis, 'location', {
+      configurable: true,
+      value: undefined,
+    })
   }
 }
 
@@ -280,7 +284,7 @@ export const test = async ({ ChatDebug }) => {
   expect(writtenContent).toBe(expectedContent)
   expect(executeMock).toHaveBeenCalledTimes(1)
   expect(executeMock.mock.calls[0]).toEqual([
-    expect.stringMatching(new RegExp(`^${fileUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\?time=\\d+$`)),
+    expect.stringMatching(new RegExp(`^${fileUrl.replaceAll(escapeRegex, '\\$&')}\\?time=\\d+$`)),
     PlatformType.Remote,
     'memfs://assets',
   ])
@@ -398,7 +402,7 @@ export const test = async ({ ChatDebug }) => {
   expect(writtenContent).toContain("call_id: 'call_actual'")
   expect(executeMock).toHaveBeenCalledTimes(1)
   expect(executeMock.mock.calls[0]).toEqual([
-    expect.stringMatching(new RegExp(`^${fileUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\?time=\\d+$`)),
+    expect.stringMatching(new RegExp(`^${fileUrl.replaceAll(escapeRegex, '\\$&')}\\?time=\\d+$`)),
     PlatformType.Remote,
     'memfs://assets',
   ])
