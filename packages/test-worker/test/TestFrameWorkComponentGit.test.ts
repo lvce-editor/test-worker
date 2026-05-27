@@ -21,7 +21,7 @@ test('clone', async () => {
   })
 
   await Git.clone('https://github.com/lvce-editor/test-worker.git', '/workspace')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.clone', 'https://github.com/lvce-editor/test-worker.git', '/workspace']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.clone', 'https://github.com/lvce-editor/test-worker.git', '/workspace']])
 })
 
 test('add', async () => {
@@ -32,7 +32,7 @@ test('add', async () => {
   })
 
   await Git.add('.')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.add', '.']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.add', '.']])
 })
 
 test('commit', async () => {
@@ -43,7 +43,7 @@ test('commit', async () => {
   })
 
   await Git.commit('feat: initial commit')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.commit', 'feat: initial commit']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.commit', 'feat: initial commit']])
 })
 
 test('push', async () => {
@@ -54,7 +54,7 @@ test('push', async () => {
   })
 
   await Git.push('origin', 'main')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.push', 'origin', 'main']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.push', 'origin', 'main']])
 })
 
 test('pull', async () => {
@@ -65,7 +65,7 @@ test('pull', async () => {
   })
 
   await Git.pull('origin', 'main')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.pull', 'origin', 'main']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.pull', 'origin', 'main']])
 })
 
 test('fetch', async () => {
@@ -76,7 +76,7 @@ test('fetch', async () => {
   })
 
   await Git.fetch('origin')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.fetch', 'origin']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.fetch', 'origin']])
 })
 
 test('checkout', async () => {
@@ -87,7 +87,7 @@ test('checkout', async () => {
   })
 
   await Git.checkout('feature/test')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.checkout', 'feature/test']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.checkout', 'feature/test']])
 })
 
 test('branch', async () => {
@@ -98,7 +98,7 @@ test('branch', async () => {
   })
 
   await Git.branch('feature/test')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.branch', 'feature/test']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.branch', 'feature/test']])
 })
 
 test('status', async () => {
@@ -111,7 +111,7 @@ test('status', async () => {
 
   const result = await Git.status()
   expect(result).toBe(gitStatus)
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.status']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.status']])
 })
 
 test('addRemote', async () => {
@@ -122,7 +122,7 @@ test('addRemote', async () => {
   })
 
   await Git.addRemote('origin', 'https://github.com/lvce-editor/test-worker.git')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.addRemote', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
 })
 
 test('setConfig', async () => {
@@ -133,5 +133,5 @@ test('setConfig', async () => {
   })
 
   await Git.setConfig('user.name', 'Lvce Editor')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'Git.setConfig', 'user.name', 'Lvce Editor']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.setConfig', 'user.name', 'Lvce Editor']])
 })
