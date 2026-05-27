@@ -38,9 +38,7 @@ test('projectActualOntoExpected keeps only overlapping structure from arrays and
         { id: 'a', keep: true, extra: 'ignore' },
         { id: 'b', keep: false },
       ],
-      [
-        { id: '', keep: true },
-      ],
+      [{ id: '', keep: true }],
     ),
   ).toEqual([{ id: 'a', keep: true }])
 })

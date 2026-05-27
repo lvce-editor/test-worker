@@ -33,9 +33,7 @@ test('assertPayloadMatches requires expected object keys', () => {
 })
 
 test('assertPayloadMatches requires objects for object expectations', () => {
-  expect(() => assertPayloadMatches([], { ok: true }, 'payload')).toThrow(
-    new TypeError('Expected payload to be an object but got []'),
-  )
+  expect(() => assertPayloadMatches([], { ok: true }, 'payload')).toThrow(new TypeError('Expected payload to be an object but got []'))
 })
 
 test('assertPayloadMatches reports primitive mismatches with full path', () => {

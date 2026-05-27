@@ -365,9 +365,7 @@ test('shouldHaveLayout - throws when layout is missing', async () => {
     },
   })
 
-  await expect(Main.shouldHaveLayout({ direction: 'horizontal' })).rejects.toThrow(
-    'expected main layout to exist but state was {}',
-  )
+  await expect(Main.shouldHaveLayout({ direction: 'horizontal' })).rejects.toThrow('expected main layout to exist but state was {}')
 
   expect(mockRpc.invocations).toEqual([['Main.saveState', 2]])
 })
