@@ -122,9 +122,7 @@ test('addRemote', async () => {
   })
 
   await Git.addRemote('file:///workspace', 'origin', 'https://github.com/lvce-editor/test-worker.git')
-  expect(mockRpc.invocations).toEqual([
-    ['Git.addRemote', 'file:///workspace', 'origin', 'https://github.com/lvce-editor/test-worker.git'],
-  ])
+  expect(mockRpc.invocations).toEqual([['Git.addRemote', 'file:///workspace', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
 })
 
 test('setConfig', async () => {
