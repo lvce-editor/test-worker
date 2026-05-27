@@ -9,8 +9,8 @@ test('init', async () => {
     },
   })
 
-  await Git.init('file:///workspace')
-  expect(mockRpc.invocations).toEqual([['Git.init', 'file:///workspace']])
+  await Git.init()
+  expect(mockRpc.invocations).toEqual([['Git.init']])
 })
 
 test('clone', async () => {
@@ -31,8 +31,8 @@ test('add', async () => {
     },
   })
 
-  await Git.add('file:///workspace', '.')
-  expect(mockRpc.invocations).toEqual([['Git.add', 'file:///workspace', '.']])
+  await Git.add('.')
+  expect(mockRpc.invocations).toEqual([['Git.add', '.']])
 })
 
 test('commit', async () => {
@@ -42,8 +42,8 @@ test('commit', async () => {
     },
   })
 
-  await Git.commit('file:///workspace', 'feat: initial commit')
-  expect(mockRpc.invocations).toEqual([['Git.commit', 'file:///workspace', 'feat: initial commit']])
+  await Git.commit('feat: initial commit')
+  expect(mockRpc.invocations).toEqual([['Git.commit', 'feat: initial commit']])
 })
 
 test('push', async () => {
@@ -53,8 +53,8 @@ test('push', async () => {
     },
   })
 
-  await Git.push('file:///workspace', 'origin', 'main')
-  expect(mockRpc.invocations).toEqual([['Git.push', 'file:///workspace', 'origin', 'main']])
+  await Git.push('origin', 'main')
+  expect(mockRpc.invocations).toEqual([['Git.push', 'origin', 'main']])
 })
 
 test('pull', async () => {
@@ -64,8 +64,8 @@ test('pull', async () => {
     },
   })
 
-  await Git.pull('file:///workspace', 'origin', 'main')
-  expect(mockRpc.invocations).toEqual([['Git.pull', 'file:///workspace', 'origin', 'main']])
+  await Git.pull('origin', 'main')
+  expect(mockRpc.invocations).toEqual([['Git.pull', 'origin', 'main']])
 })
 
 test('fetch', async () => {
@@ -75,8 +75,8 @@ test('fetch', async () => {
     },
   })
 
-  await Git.fetch('file:///workspace', 'origin')
-  expect(mockRpc.invocations).toEqual([['Git.fetch', 'file:///workspace', 'origin']])
+  await Git.fetch('origin')
+  expect(mockRpc.invocations).toEqual([['Git.fetch', 'origin']])
 })
 
 test('checkout', async () => {
@@ -86,8 +86,8 @@ test('checkout', async () => {
     },
   })
 
-  await Git.checkout('file:///workspace', 'feature/test')
-  expect(mockRpc.invocations).toEqual([['Git.checkout', 'file:///workspace', 'feature/test']])
+  await Git.checkout('feature/test')
+  expect(mockRpc.invocations).toEqual([['Git.checkout', 'feature/test']])
 })
 
 test('branch', async () => {
@@ -97,8 +97,8 @@ test('branch', async () => {
     },
   })
 
-  await Git.branch('file:///workspace', 'feature/test')
-  expect(mockRpc.invocations).toEqual([['Git.branch', 'file:///workspace', 'feature/test']])
+  await Git.branch('feature/test')
+  expect(mockRpc.invocations).toEqual([['Git.branch', 'feature/test']])
 })
 
 test('status', async () => {
@@ -109,9 +109,9 @@ test('status', async () => {
     },
   })
 
-  const result = await Git.status('file:///workspace')
+  const result = await Git.status()
   expect(result).toBe(gitStatus)
-  expect(mockRpc.invocations).toEqual([['Git.status', 'file:///workspace']])
+  expect(mockRpc.invocations).toEqual([['Git.status']])
 })
 
 test('addRemote', async () => {
@@ -121,8 +121,8 @@ test('addRemote', async () => {
     },
   })
 
-  await Git.addRemote('file:///workspace', 'origin', 'https://github.com/lvce-editor/test-worker.git')
-  expect(mockRpc.invocations).toEqual([['Git.addRemote', 'file:///workspace', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
+  await Git.addRemote('origin', 'https://github.com/lvce-editor/test-worker.git')
+  expect(mockRpc.invocations).toEqual([['Git.addRemote', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
 })
 
 test('setConfig', async () => {
@@ -132,6 +132,6 @@ test('setConfig', async () => {
     },
   })
 
-  await Git.setConfig('file:///workspace', 'user.name', 'Lvce Editor')
-  expect(mockRpc.invocations).toEqual([['Git.setConfig', 'file:///workspace', 'user.name', 'Lvce Editor']])
+  await Git.setConfig('user.name', 'Lvce Editor')
+  expect(mockRpc.invocations).toEqual([['Git.setConfig', 'user.name', 'Lvce Editor']])
 })
