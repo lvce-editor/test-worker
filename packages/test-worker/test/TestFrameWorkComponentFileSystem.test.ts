@@ -103,6 +103,7 @@ test('getTmpDir: memfs default', async () => {
 })
 
 test('getTmpDir: file scheme', async () => {
+  using dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
   using mockRpc = RendererWorker.registerMockRpc({
     'PlatformPaths.getTmpDir'() {
       return '/tmp'
@@ -110,7 +111,7 @@ test('getTmpDir: file scheme', async () => {
   })
 
   const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'file' })
-  expect(tmpDir).toBe('/tmp')
+  expect(tmpDir).toBe('file:///tmp/test-123')
   expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir']])
 })
 
@@ -195,6 +196,7 @@ test('shouldHaveFolder throws when entry is not a directory', async () => {
 })
 
 test('createExecutable', async () => {
+  using dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.chmod'() {
       return undefined
@@ -212,16 +214,17 @@ test('createExecutable', async () => {
 
   const path: string = await FileSystem.createExecutable("console.log('hi')")
 
-  expect(path).toBe('/tmp/git')
+  expect(path).toBe('file:///tmp/test-123/git')
   expect(mockRpc.invocations).toEqual([
     ['PlatformPaths.getTmpDir'],
     ['PlatformPaths.getNodePath'],
-    ['FileSystem.writeFile', '/tmp/git', "#!/usr/bin/node\n  console.log('hi')"],
-    ['FileSystem.chmod', '/tmp/git', '755'],
+    ['FileSystem.writeFile', 'file:///tmp/test-123/git', "#!/usr/bin/node\n  console.log('hi')"],
+    ['FileSystem.chmod', 'file:///tmp/test-123/git', '755'],
   ])
 })
 
 test('createExecutableFrom', async () => {
+  using dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
   using mockRpc = RendererWorker.registerMockRpc({
     'Ajax.getText'() {
       return "console.log('ok')"
@@ -244,14 +247,14 @@ test('createExecutableFrom', async () => {
   })
 
   const path: string = await FileSystem.createExecutableFrom('fixtures/script.js')
-  expect(path).toBe('/tmp/git')
+  expect(path).toBe('file:///tmp/test-123/git')
   expect(mockRpc.invocations).toEqual([
     ['PlatformPaths.getTestPath'],
     ['Ajax.getText', '/tests/fixtures/script.js'],
     ['PlatformPaths.getTmpDir'],
     ['PlatformPaths.getNodePath'],
-    ['FileSystem.writeFile', '/tmp/git', "#!/usr/bin/node\n  console.log('ok')"],
-    ['FileSystem.chmod', '/tmp/git', '755'],
+    ['FileSystem.writeFile', 'file:///tmp/test-123/git', "#!/usr/bin/node\n  console.log('ok')"],
+    ['FileSystem.chmod', 'file:///tmp/test-123/git', '755'],
   ])
 })
 
