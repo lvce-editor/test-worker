@@ -133,9 +133,7 @@ export const setConfig = async (key: string, value: string): Promise<void> => {
 }
 
 export const config = async (values: Record<string, string>): Promise<void> => {
-  for (const [key, value] of Object.entries(values)) {
-    await setConfig(key, value)
-  }
+  await Promise.all(Object.entries(values).map(([key, value]) => setConfig(key, value)))
 }
 
 export const shouldHaveCommit = async (message: string): Promise<void> => {
