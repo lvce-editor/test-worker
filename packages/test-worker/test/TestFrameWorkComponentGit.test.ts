@@ -285,9 +285,6 @@ test('addRemote', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
 })
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 test('setOrigin', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -309,9 +306,6 @@ test('setUpstream', async () => {
   await Git.setUpstream('https://github.com/lvce-editor/lvce-editor.git')
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'upstream', 'https://github.com/lvce-editor/lvce-editor.git']])
 })
-
-=======
->>>>>>> origin/main
 test('removeRemote', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -322,8 +316,6 @@ test('removeRemote', async () => {
   await Git.removeRemote('origin')
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.removeRemote', 'origin']])
 })
-
-<<<<<<< HEAD
 test('removeOrigin', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -345,10 +337,6 @@ test('removeUpstream', async () => {
   await Git.removeUpstream()
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.removeRemote', 'upstream']])
 })
-
->>>>>>> Stashed changes
-=======
->>>>>>> origin/main
 test('setConfig', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
