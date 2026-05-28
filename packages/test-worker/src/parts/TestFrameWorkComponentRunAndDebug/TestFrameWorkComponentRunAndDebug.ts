@@ -1,4 +1,4 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
 export const show = async (): Promise<void> => {
@@ -6,37 +6,37 @@ export const show = async (): Promise<void> => {
 }
 
 export const handleClickSectionBreakPoints = async (): Promise<void> => {
-  await Rpc.invoke('Run And Debug.handleClickSectionBreakPoints')
+  await RendererWorker.invoke('Run And Debug.handleClickSectionBreakPoints')
 }
 
 export const handleClickSectionWatch = async (): Promise<void> => {
-  await Rpc.invoke('Run And Debug.handleClickSectionWatch')
+  await RendererWorker.invoke('Run And Debug.handleClickSectionWatch')
 }
 
 export const addWatchExpression = async (expression: string): Promise<void> => {
-  await Rpc.invoke('Run And Debug.addWatchExpression', expression)
+  await RendererWorker.invoke('Run And Debug.addWatchExpression', expression)
 }
 
 export const handleWatchValueChange = async (): Promise<void> => {
-  await Rpc.invoke('Run And Debug.handleWatchValueChange')
+  await RendererWorker.invoke('Run And Debug.handleWatchValueChange')
 }
 
 export const acceptWatchExpressionEdit = async (): Promise<void> => {
-  await Rpc.invoke('Run And Debug.acceptWatchExpressionEdit')
+  await RendererWorker.invoke('Run And Debug.acceptWatchExpressionEdit')
 }
 
 export const selectIndex = async (index: number): Promise<void> => {
-  await Rpc.invoke('Run And Debug.selectIndex', index)
+  await RendererWorker.invoke('Run And Debug.selectIndex', index)
 }
 
 export const setPauseOnExceptions = async (value: number): Promise<void> => {
-  await Rpc.invoke('Run And Debug.setPauseOnExceptions', value)
+  await RendererWorker.invoke('Run And Debug.setPauseOnExceptions', value)
 }
 
 export const handleRename = async (): Promise<void> => {
-  await Rpc.invoke('Run And Debug.handleRename')
+  await RendererWorker.invoke('Run And Debug.handleRename')
 }
 
 export const handleSpace = async (): Promise<void> => {
-  await Rpc.invoke('Run And Debug.handleSpace')
+  await RendererWorker.invoke('Run And Debug.handleSpace')
 }

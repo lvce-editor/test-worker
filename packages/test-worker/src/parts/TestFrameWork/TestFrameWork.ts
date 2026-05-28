@@ -1,4 +1,4 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Expect from '../Expect/Expect.ts'
 import * as NameAnonymousFunction from '../NameAnonymousFunction/NameAnonymousFunction.ts'
 import * as TestState from '../TestState/TestState.ts'
@@ -19,7 +19,7 @@ export const skipTest = async (id: string): Promise<void> => {
   const background = 'yellow'
   const text = `test skipped ${id}`
 
-  await Rpc.invoke('TestFrameWork.showOverlay', state, background, text)
+  await RendererWorker.invoke('TestFrameWork.showOverlay', state, background, text)
 }
 
 export const { expect } = Expect

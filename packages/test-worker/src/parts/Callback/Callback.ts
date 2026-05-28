@@ -1,4 +1,4 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createId } from '../CreateId/CreateId.ts'
 
 const callbacks = Object.create(null)
@@ -14,7 +14,7 @@ export const registerCallbackCommand = async (commandId: string): Promise<any> =
   const { promise, resolve } = Promise.withResolvers()
   callbacks[id] = resolve
 
-  await Rpc.invoke(`Test.registerTestCommand`, commandId)
+  await RendererWorker.invoke(`Test.registerTestCommand`, commandId)
   return {
     promise,
   }

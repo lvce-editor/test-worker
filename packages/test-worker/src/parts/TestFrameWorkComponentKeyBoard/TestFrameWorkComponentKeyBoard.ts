@@ -1,4 +1,4 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as GetKeyOptions from '../GetKeyOptions/GetKeyOptions.ts'
 
 export const press = async (key: string): Promise<void> => {
@@ -9,5 +9,5 @@ export const press = async (key: string): Promise<void> => {
     ...keyOptions,
   }
 
-  await Rpc.invoke('TestFrameWork.performKeyBoardAction', 'press', options)
+  await RendererWorker.invoke('TestFrameWork.performKeyBoardAction', 'press', options)
 }
