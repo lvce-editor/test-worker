@@ -304,7 +304,9 @@ test('setUpstream', async () => {
   })
 
   await Git.setUpstream('https://github.com/lvce-editor/lvce-editor.git')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'upstream', 'https://github.com/lvce-editor/lvce-editor.git']])
+  expect(mockRpc.invocations).toEqual([
+    ['ExtensionHost.executeCommand', 'git.addRemote', 'upstream', 'https://github.com/lvce-editor/lvce-editor.git'],
+  ])
 })
 test('removeRemote', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
