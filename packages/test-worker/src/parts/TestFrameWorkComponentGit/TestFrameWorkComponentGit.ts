@@ -104,6 +104,14 @@ export const deleteTag = async (name: string): Promise<void> => {
   await executeExtensionCommand('git.deleteTag', name)
 }
 
+export const createWorktree = async (path: string, ref: string): Promise<void> => {
+  await executeExtensionCommand('git.createWorktree', path, ref)
+}
+
+export const deleteWorktree = async (path: string): Promise<void> => {
+  await executeExtensionCommand('git.deleteWorktree', path)
+}
+
 export const status = async (): Promise<unknown> => {
   return executeExtensionCommand('git.status')
 }
