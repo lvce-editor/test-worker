@@ -30,6 +30,10 @@ export const commit = async (message: string): Promise<void> => {
   await executeExtensionCommand('git.commit', message)
 }
 
+export const commitStaged = async (message: string): Promise<void> => {
+  await executeExtensionCommand('git.commitStaged', message)
+}
+
 export const push = async (remoteOrOptions?: string | GitPushOptions, branch?: string): Promise<void> => {
   if (typeof remoteOrOptions === 'string') {
     await executeExtensionCommand('git.push', {
@@ -68,6 +72,10 @@ export const unstash = async (): Promise<void> => {
   await executeExtensionCommand('git.unstash')
 }
 
+export const applyStash = async (): Promise<void> => {
+  await executeExtensionCommand('git.applystash')
+}
+
 export const checkout = async (ref: string): Promise<void> => {
   await executeExtensionCommand('git.checkout', ref)
 }
@@ -102,6 +110,14 @@ export const createTag = async (name: string): Promise<void> => {
 
 export const deleteTag = async (name: string): Promise<void> => {
   await executeExtensionCommand('git.deleteTag', name)
+}
+
+export const undoLastCommit = async (): Promise<void> => {
+  await executeExtensionCommand('git.undoLastCommit')
+}
+
+export const cleanAll = async (): Promise<void> => {
+  await executeExtensionCommand('git.cleanAll')
 }
 
 export const createWorktree = async (path: string, ref: string): Promise<void> => {
