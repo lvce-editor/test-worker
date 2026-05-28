@@ -74,6 +74,17 @@ test('commit', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.commit', 'feat: initial commit']])
 })
 
+test('commitStaged', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.commitStaged('feat: staged only commit')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.commitStaged', 'feat: staged only commit']])
+})
+
 test('push', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -173,6 +184,17 @@ test('unstash', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.unstash']])
 })
 
+test('applyStash', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.applyStash()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.applystash']])
+})
+
 test('checkout', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -270,6 +292,28 @@ test('deleteTag', async () => {
 
   await Git.deleteTag('v1.0.0')
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.deleteTag', 'v1.0.0']])
+})
+
+test('undoLastCommit', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.undoLastCommit()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.undoLastCommit']])
+})
+
+test('cleanAll', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.cleanAll()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.cleanAll']])
 })
 
 test('createWorktree', async () => {
