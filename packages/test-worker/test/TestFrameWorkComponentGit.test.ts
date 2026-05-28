@@ -63,6 +63,28 @@ test('addAll', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.add', '.']])
 })
 
+test('stage', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.stage('file.txt')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.stage', 'file.txt']])
+})
+
+test('unstage', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.unstage('file.txt')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.unstage', 'file.txt']])
+})
+
 test('commit', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
