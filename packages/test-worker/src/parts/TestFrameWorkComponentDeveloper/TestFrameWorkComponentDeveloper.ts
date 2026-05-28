@@ -1,33 +1,33 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const openIframeInspector = async (): Promise<void> => {
-  return Rpc.invoke('Developer.openIframeInspector')
+  return RendererWorker.invoke('Developer.openIframeInspector')
 }
 
 export const openCacheFolder = async (): Promise<void> => {
-  return Rpc.invoke('Developer.openCacheFolder')
+  return RendererWorker.invoke('Developer.openCacheFolder')
 }
 
 export const openConfigFolder = async (): Promise<void> => {
-  return Rpc.invoke('Developer.openConfigFolder')
+  return RendererWorker.invoke('Developer.openConfigFolder')
 }
 
 export const openLogsFolder = async (): Promise<void> => {
-  return Rpc.invoke('Developer.openLogsFolder')
+  return RendererWorker.invoke('Developer.openLogsFolder')
 }
 
 export const openProcessExplorer = async (): Promise<void> => {
-  return Rpc.invoke('Developer.openProcessExplorer')
+  return RendererWorker.invoke('Developer.openProcessExplorer')
 }
 
 export const reloadColorTheme = async (): Promise<void> => {
-  return Rpc.invoke('Developer.reloadColorTheme')
+  return RendererWorker.invoke('Developer.reloadColorTheme')
 }
 
 export const reloadIconTheme = async (): Promise<void> => {
-  return Rpc.invoke('Developer.reloadIconTheme')
+  return RendererWorker.invoke('Developer.reloadIconTheme')
 }
 
 export const toggleDeveloperTools = async (): Promise<void> => {
-  return Rpc.invoke('Developer.toggleDeveloperTools')
+  return RendererWorker.invoke('Developer.toggleDeveloperTools')
 }

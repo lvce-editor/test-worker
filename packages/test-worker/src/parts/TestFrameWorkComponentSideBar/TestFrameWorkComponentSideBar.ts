@@ -1,9 +1,9 @@
-import { RendererWorker as Rpc } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const open = async (id: string): Promise<void> => {
-  await Rpc.invoke('SideBar.openViewlet', id)
+  await RendererWorker.invoke('SideBar.openViewlet', id)
 }
 
 export const hide = async (): Promise<void> => {
-  await Rpc.invoke('Layout.hideSideBar')
+  await RendererWorker.invoke('Layout.hideSideBar')
 }
