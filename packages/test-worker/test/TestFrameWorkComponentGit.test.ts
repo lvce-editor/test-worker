@@ -272,6 +272,28 @@ test('deleteTag', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.deleteTag', 'v1.0.0']])
 })
 
+test('createWorktree', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.createWorktree('/workspace-feature', 'feature/test')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.createWorktree', '/workspace-feature', 'feature/test']])
+})
+
+test('deleteWorktree', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.deleteWorktree('/workspace-feature')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.deleteWorktree', '/workspace-feature']])
+})
+
 test('status', async () => {
   const gitStatus = { branch: 'main', staged: ['a.ts'], unstaged: ['b.ts'] }
   using mockRpc = RendererWorker.registerMockRpc({
