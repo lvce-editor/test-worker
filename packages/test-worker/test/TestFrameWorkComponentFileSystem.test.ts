@@ -228,6 +228,68 @@ test('shouldHaveFolder throws when entry is not a directory', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///']])
 })
 
+test('shouldHaveFile', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [{ name: 'file.txt', type: DirentType.File }]
+    },
+    'FileSystem.readFile'() {
+      return 'content'
+    },
+  })
+
+  await FileSystem.shouldHaveFile('memfs:///file.txt', 'content')
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', 'memfs:///'],
+    ['FileSystem.readFile', 'memfs:///file.txt'],
+  ])
+})
+
+test('shouldHaveFile throws when file does not exist', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return []
+    },
+  })
+
+  await expect(FileSystem.shouldHaveFile('memfs:///file.txt', 'content')).rejects.toThrow(
+    'expected filesystem to have file "memfs:///file.txt" but it was not found',
+  )
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///']])
+})
+
+test('shouldHaveFile throws when file content does not match', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [{ name: 'file.txt', type: DirentType.File }]
+    },
+    'FileSystem.readFile'() {
+      return 'actual'
+    },
+  })
+
+  await expect(FileSystem.shouldHaveFile('memfs:///file.txt', 'expected')).rejects.toThrow(
+    'expected file "memfs:///file.txt" to have content "expected" but got "actual"',
+  )
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.readDirWithFileTypes', 'memfs:///'],
+    ['FileSystem.readFile', 'memfs:///file.txt'],
+  ])
+})
+
+test('shouldHaveFile throws when entry is not a file', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.readDirWithFileTypes'() {
+      return [{ name: 'file.txt', type: DirentType.Directory }]
+    },
+  })
+
+  await expect(FileSystem.shouldHaveFile('memfs:///file.txt', 'content')).rejects.toThrow(
+    `expected filesystem entry "memfs:///file.txt" to be a file but it was type ${DirentType.Directory}`,
+  )
+  expect(mockRpc.invocations).toEqual([['FileSystem.readDirWithFileTypes', 'memfs:///']])
+})
+
 test('createExecutable', async () => {
   const dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
   using mockRpc = RendererWorker.registerMockRpc({

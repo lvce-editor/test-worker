@@ -81,6 +81,23 @@ export const shouldHaveFolder = async (uri: string): Promise<void> => {
   }
 }
 
+export const shouldHaveFile = async (uri: string, expectedContent: string): Promise<void> => {
+  const parentUri = getParentUri(uri)
+  const fileName = getBaseName(uri)
+  const dirents = await readDir(parentUri)
+  const matchingDirent = dirents.find((dirent) => dirent.name === fileName)
+  if (!matchingDirent) {
+    throw new AssertionError(`expected filesystem to have file "${uri}" but it was not found`)
+  }
+  if (matchingDirent.type !== DirentType.File) {
+    throw new AssertionError(`expected filesystem entry "${uri}" to be a file but it was type ${matchingDirent.type}`)
+  }
+  const actualContent = await readFile(uri)
+  if (actualContent !== expectedContent) {
+    throw new AssertionError(`expected file "${uri}" to have content "${expectedContent}" but got "${actualContent}"`)
+  }
+}
+
 export const remove = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.remove', uri)
 }
