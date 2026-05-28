@@ -10,7 +10,24 @@ test('init', async () => {
   })
 
   await Git.init()
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.init']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.init', {}]])
+})
+
+test('init with options', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.init({
+    bare: true,
+    initialBranch: 'main',
+    uri: '/workspace/remote.git',
+  })
+  expect(mockRpc.invocations).toEqual([
+    ['ExtensionHost.executeCommand', 'git.init', { bare: true, initialBranch: 'main', uri: '/workspace/remote.git' }],
+  ])
 })
 
 test('clone', async () => {
@@ -54,7 +71,18 @@ test('push', async () => {
   })
 
   await Git.push('origin', 'main')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.push', 'origin', 'main']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.push', { setUpstream: ['origin', 'main'] }]])
+})
+
+test('push with options', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.push({ setUpstream: ['origin', 'main'] })
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.push', { setUpstream: ['origin', 'main'] }]])
 })
 
 test('pull', async () => {
@@ -134,6 +162,23 @@ test('setConfig', async () => {
 
   await Git.setConfig('user.name', 'Lvce Editor')
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.setConfig', 'user.name', 'Lvce Editor']])
+})
+
+test('config', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.config({
+    'user.email': 'user@example.com',
+    'user.name': 'Lvce Editor',
+  })
+  expect(mockRpc.invocations).toEqual([
+    ['ExtensionHost.executeCommand', 'git.setConfig', 'user.email', 'user@example.com'],
+    ['ExtensionHost.executeCommand', 'git.setConfig', 'user.name', 'Lvce Editor'],
+  ])
 })
 
 test('shouldHaveCommit throws when commits is not an array', async () => {
