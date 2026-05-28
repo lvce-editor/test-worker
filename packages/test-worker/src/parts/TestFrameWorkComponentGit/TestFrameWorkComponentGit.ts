@@ -1,4 +1,4 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { executeExtensionCommand } from '../ExecuteExtensionCommand/ExecuteExtensionCommand.ts'
 
 interface GitInitOptions {
   readonly bare?: boolean
@@ -8,10 +8,6 @@ interface GitInitOptions {
 
 interface GitPushOptions {
   readonly setUpstream?: readonly string[]
-}
-
-const executeExtensionCommand = async (commandId: string, ...args: readonly any[]): Promise<unknown> => {
-  return RendererWorker.invoke('ExtensionHost.executeCommand', commandId, ...args)
 }
 
 export const init = async (options: GitInitOptions = {}): Promise<void> => {
