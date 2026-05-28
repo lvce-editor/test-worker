@@ -22,6 +22,10 @@ export const add = async (pathSpec: string): Promise<void> => {
   await executeExtensionCommand('git.add', pathSpec)
 }
 
+export const addAll = async (): Promise<void> => {
+  await add('.')
+}
+
 export const commit = async (message: string): Promise<void> => {
   await executeExtensionCommand('git.commit', message)
 }
