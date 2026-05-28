@@ -56,14 +56,6 @@ export const fetchPrune = async (): Promise<void> => {
   await executeExtensionCommand('git.fetchPrune')
 }
 
-export const fetchAll = async (): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.fetchAll')
-}
-
-export const fetchPrune = async (): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.fetchPrune')
-}
-
 export const stash = async (message?: string): Promise<void> => {
   if (message === undefined) {
     await executeExtensionCommand('git.stash')
@@ -112,34 +104,6 @@ export const deleteTag = async (name: string): Promise<void> => {
   await executeExtensionCommand('git.deleteTag', name)
 }
 
-export const deleteBranch = async (name: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.deleteBranch', name)
-}
-
-export const renameBranch = async (newName: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.renameBranch', newName)
-}
-
-export const cherryPick = async (commitHash: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.cherryPick', commitHash)
-}
-
-export const merge = async (ref: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.merge', ref)
-}
-
-export const rebase = async (ref: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.rebase', ref)
-}
-
-export const createTag = async (name: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.createTag', name)
-}
-
-export const deleteTag = async (name: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.deleteTag', name)
-}
-
 export const status = async (): Promise<unknown> => {
   return executeExtensionCommand('git.status')
 }
@@ -150,10 +114,6 @@ export const addRemote = async (name: string, remoteUrl: string): Promise<void> 
 
 export const removeRemote = async (name: string): Promise<void> => {
   await executeExtensionCommand('git.removeRemote', name)
-}
-
-export const removeRemote = async (name: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.removeRemote', name)
 }
 
 export const setConfig = async (key: string, value: string): Promise<void> => {
