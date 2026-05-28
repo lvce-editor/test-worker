@@ -108,8 +108,24 @@ export const addRemote = async (name: string, remoteUrl: string): Promise<void> 
   await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.addRemote', name, remoteUrl)
 }
 
+export const setOrigin = async (remoteUrl: string): Promise<void> => {
+  await addRemote('origin', remoteUrl)
+}
+
+export const setUpstream = async (remoteUrl: string): Promise<void> => {
+  await addRemote('upstream', remoteUrl)
+}
+
 export const removeRemote = async (name: string): Promise<void> => {
   await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.removeRemote', name)
+}
+
+export const removeOrigin = async (): Promise<void> => {
+  await removeRemote('origin')
+}
+
+export const removeUpstream = async (): Promise<void> => {
+  await removeRemote('upstream')
 }
 
 export const setConfig = async (key: string, value: string): Promise<void> => {

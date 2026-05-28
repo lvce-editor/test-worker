@@ -186,6 +186,64 @@ test('addRemote', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
 })
 
+<<<<<<< Updated upstream
+=======
+test('setOrigin', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.setOrigin('https://github.com/lvce-editor/test-worker.git')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
+})
+
+test('setUpstream', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.setUpstream('https://github.com/lvce-editor/lvce-editor.git')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'upstream', 'https://github.com/lvce-editor/lvce-editor.git']])
+})
+
+test('removeRemote', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.removeRemote('origin')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.removeRemote', 'origin']])
+})
+
+test('removeOrigin', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.removeOrigin()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.removeRemote', 'origin']])
+})
+
+test('removeUpstream', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.removeUpstream()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.removeRemote', 'upstream']])
+})
+
+>>>>>>> Stashed changes
 test('setConfig', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
