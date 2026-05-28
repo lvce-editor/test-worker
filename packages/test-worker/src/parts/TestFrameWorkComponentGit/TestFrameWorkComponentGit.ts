@@ -26,6 +26,14 @@ export const addAll = async (): Promise<void> => {
   await add('.')
 }
 
+export const stage = async (pathSpec: string): Promise<void> => {
+  await executeExtensionCommand('git.stage', pathSpec)
+}
+
+export const unstage = async (pathSpec: string): Promise<void> => {
+  await executeExtensionCommand('git.unstage', pathSpec)
+}
+
 export const commit = async (message: string): Promise<void> => {
   await executeExtensionCommand('git.commit', message)
 }
