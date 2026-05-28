@@ -107,6 +107,28 @@ test('fetch', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.fetch', 'origin']])
 })
 
+test('fetchAll', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.fetchAll()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.fetchAll']])
+})
+
+test('fetchPrune', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.fetchPrune()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.fetchPrune']])
+})
+
 test('stash', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -162,6 +184,83 @@ test('branch', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.branch', 'feature/test']])
 })
 
+test('deleteBranch', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.deleteBranch('feature/test')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.deleteBranch', 'feature/test']])
+})
+
+test('renameBranch', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.renameBranch('feature/renamed')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.renameBranch', 'feature/renamed']])
+})
+
+test('cherryPick', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.cherryPick('abc123')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.cherryPick', 'abc123']])
+})
+
+test('merge', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.merge('origin/main')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.merge', 'origin/main']])
+})
+
+test('rebase', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.rebase('origin/main')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.rebase', 'origin/main']])
+})
+
+test('createTag', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.createTag('v1.0.0')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.createTag', 'v1.0.0']])
+})
+
+test('deleteTag', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.deleteTag('v1.0.0')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.deleteTag', 'v1.0.0']])
+})
+
 test('status', async () => {
   const gitStatus = { branch: 'main', staged: ['a.ts'], unstaged: ['b.ts'] }
   using mockRpc = RendererWorker.registerMockRpc({
@@ -186,6 +285,7 @@ test('addRemote', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'origin', 'https://github.com/lvce-editor/test-worker.git']])
 })
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 test('setOrigin', async () => {
@@ -210,6 +310,8 @@ test('setUpstream', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.addRemote', 'upstream', 'https://github.com/lvce-editor/lvce-editor.git']])
 })
 
+=======
+>>>>>>> origin/main
 test('removeRemote', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -221,6 +323,7 @@ test('removeRemote', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.removeRemote', 'origin']])
 })
 
+<<<<<<< HEAD
 test('removeOrigin', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -244,6 +347,8 @@ test('removeUpstream', async () => {
 })
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> origin/main
 test('setConfig', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
