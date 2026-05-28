@@ -44,6 +44,18 @@ export const fetch = async (remote: string): Promise<void> => {
   await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.fetch', remote)
 }
 
+export const stash = async (message?: string): Promise<void> => {
+  if (message === undefined) {
+    await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.stash')
+    return
+  }
+  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.stash', message)
+}
+
+export const unstash = async (): Promise<void> => {
+  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.unstash')
+}
+
 export const checkout = async (ref: string): Promise<void> => {
   await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.checkout', ref)
 }

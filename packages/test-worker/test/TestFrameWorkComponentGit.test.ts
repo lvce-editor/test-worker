@@ -107,6 +107,39 @@ test('fetch', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.fetch', 'origin']])
 })
 
+test('stash', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.stash()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.stash']])
+})
+
+test('stash with message', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.stash('wip: save local changes')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.stash', 'wip: save local changes']])
+})
+
+test('unstash', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.unstash()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.unstash']])
+})
+
 test('checkout', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
