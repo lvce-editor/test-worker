@@ -1,7 +1,17 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
-export const init = async (): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.init')
+interface GitInitOptions {
+  readonly bare?: boolean
+  readonly initialBranch?: string
+  readonly uri?: string
+}
+
+interface GitPushOptions {
+  readonly setUpstream?: readonly string[]
+}
+
+export const init = async (options: GitInitOptions = {}): Promise<void> => {
+  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.init', options)
 }
 
 export const clone = async (repositoryUrl: string, cwd: string): Promise<void> => {
@@ -16,8 +26,14 @@ export const commit = async (message: string): Promise<void> => {
   await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.commit', message)
 }
 
-export const push = async (remote: string, branch: string): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.push', remote, branch)
+export const push = async (remoteOrOptions?: string | GitPushOptions, branch?: string): Promise<void> => {
+  if (typeof remoteOrOptions === 'string') {
+    await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.push', {
+      setUpstream: [remoteOrOptions, branch || ''],
+    })
+    return
+  }
+  await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.push', remoteOrOptions || {})
 }
 
 export const pull = async (remote: string, branch: string): Promise<void> => {
@@ -46,6 +62,12 @@ export const addRemote = async (name: string, remoteUrl: string): Promise<void> 
 
 export const setConfig = async (key: string, value: string): Promise<void> => {
   await RendererWorker.invoke('ExtensionHost.executeCommand', 'git.setConfig', key, value)
+}
+
+export const config = async (values: Record<string, string>): Promise<void> => {
+  for (const [key, value] of Object.entries(values)) {
+    await setConfig(key, value)
+  }
 }
 
 export const shouldHaveCommit = async (message: string): Promise<void> => {
