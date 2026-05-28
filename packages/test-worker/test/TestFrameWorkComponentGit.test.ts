@@ -52,6 +52,17 @@ test('add', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.add', '.']])
 })
 
+test('addAll', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return undefined
+    },
+  })
+
+  await Git.addAll()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.add', '.']])
+})
+
 test('commit', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
