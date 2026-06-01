@@ -117,50 +117,26 @@ test('selectItem - waitUntil none', async () => {
     'QuickPick.selectItem'() {
       return undefined
     },
-    'TestFrameWork.checkConditionError'() {
-      return {
-        actual: '>test',
-        wasFound: true,
-      }
-    },
   })
 
   await QuickPick.selectItem('test', { waitUntil: 'none' })
-  expect(mockRpc.invocations).toEqual([
-    [
-      'TestFrameWork.checkConditionError',
-      'toHaveJSProperty',
-      expect.anything(),
-      {
-        key: 'value',
-      },
-    ],
-    ['QuickPick.selectItem', 'test'],
-  ])
+  expect(mockRpc.invocations).toEqual([['QuickPick.selectItem', 'test']])
 })
 
 test('selectItem - waitUntil quickPick', async () => {
-  let value = '>test'
+  const { promise, resolve } = Promise.withResolvers<void>()
   using mockRpc = RendererWorker.registerMockRpc({
     'QuickPick.selectItem'() {
-      value = 'next'
+      resolve()
       return new Promise(() => {})
     },
-    'TestFrameWork.checkConditionError'() {
-      return {
-        actual: value,
-        wasFound: true,
-      }
-    },
-    'TestFrameWork.checkSingleElementCondition'() {
-      return {
-        error: false,
-      }
+    'QuickPick.waitUntilVisible'() {
+      return promise
     },
   })
 
   await QuickPick.selectItem('test', { waitUntil: 'quickPick' })
-  expect(mockRpc.invocations).toContainEqual(['QuickPick.selectItem', 'test'])
+  expect(mockRpc.invocations).toEqual([['QuickPick.waitUntilVisible'], ['QuickPick.selectItem', 'test']])
 })
 
 test('selectIndex', async () => {
