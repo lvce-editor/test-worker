@@ -49,3 +49,21 @@ test('executeFormattingProvider', async () => {
 
   expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.executeFormattingProvider', textDocument]])
 })
+
+test('executeCompletionProvider', async () => {
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCompletionProvider'() {
+      return [{ label: 'console' }]
+    },
+  })
+
+  const textDocument = {
+    languageId: 'javascript',
+    text: 'con',
+    uri: '/test.js',
+  }
+
+  await expect(Extension.executeCompletionProvider(textDocument, 3)).resolves.toEqual([{ label: 'console' }])
+
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.executeCompletionProvider', textDocument, 3]])
+})
