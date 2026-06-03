@@ -4,5 +4,6 @@ export interface Diagnostic {
   readonly endRowIndex: number
   readonly message: string
   readonly rowIndex: number
+  readonly source?: string
   readonly type: 'error' | 'warning'
 }

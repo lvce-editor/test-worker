@@ -1061,6 +1061,86 @@ test('shouldHaveDiagnostics - throws error when diagnostics do not match', async
   expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getDiagnostics', 1]])
 })
 
+test('shouldHaveDiagnosticProviderResult - success case', async () => {
+  const expectedDiagnostics = [
+    {
+      columnIndex: 6,
+      endColumnIndex: 11,
+      endRowIndex: 0,
+      message: 'isolated diagnostic result',
+      rowIndex: 0,
+      source: 'isolated',
+      type: 'error' as const,
+    },
+  ]
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeDiagnosticProvider'() {
+      return expectedDiagnostics
+    },
+  })
+
+  await Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics)
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 1]])
+})
+
+test('shouldHaveDiagnosticProviderResult - custom editor id', async () => {
+  const expectedDiagnostics = [
+    {
+      columnIndex: 6,
+      endColumnIndex: 11,
+      endRowIndex: 0,
+      message: 'isolated diagnostic result',
+      rowIndex: 0,
+      source: 'isolated',
+      type: 'error' as const,
+    },
+  ]
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeDiagnosticProvider'() {
+      return expectedDiagnostics
+    },
+  })
+
+  await Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics, 2)
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 2]])
+})
+
+test('shouldHaveDiagnosticProviderResult - throws error when diagnostics do not match', async () => {
+  const actualDiagnostics = [
+    {
+      columnIndex: 6,
+      endColumnIndex: 11,
+      endRowIndex: 0,
+      message: 'isolated diagnostic result',
+      rowIndex: 0,
+      source: 'actual',
+      type: 'error' as const,
+    },
+  ]
+  const expectedDiagnostics = [
+    {
+      columnIndex: 6,
+      endColumnIndex: 11,
+      endRowIndex: 0,
+      message: 'isolated diagnostic result',
+      rowIndex: 0,
+      source: 'expected',
+      type: 'error' as const,
+    },
+  ]
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeDiagnosticProvider'() {
+      return actualDiagnostics
+    },
+  })
+
+  await expect(Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics)).rejects.toThrow('Expected diagnostic provider result')
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 1]])
+})
+
 test('enableCompletionsOnType', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Preferences.update'() {
