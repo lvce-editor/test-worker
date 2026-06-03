@@ -1,4 +1,4 @@
-import { executeExtensionCommand } from '../ExecuteExtensionCommand/ExecuteExtensionCommand.ts'
+import { executeExtensionCommand } from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 interface GitInitOptions {
   readonly bare?: boolean
