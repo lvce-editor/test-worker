@@ -31,3 +31,21 @@ test('addNodeExtension', async () => {
 
   expect(mockRpc.invocations).toEqual([['ExtensionMeta.addNodeExtension', 'extensions/node']])
 })
+
+test('executeFormattingProvider', async () => {
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeFormattingProvider'() {
+      return [{ endOffset: 13, inserted: 'const value = 1', startOffset: 0 }]
+    },
+  })
+
+  const textDocument = {
+    languageId: 'javascript',
+    text: 'const value=1',
+    uri: '/test.js',
+  }
+
+  await expect(Extension.executeFormattingProvider(textDocument)).resolves.toEqual([{ endOffset: 13, inserted: 'const value = 1', startOffset: 0 }])
+
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.executeFormattingProvider', textDocument]])
+})
