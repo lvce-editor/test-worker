@@ -388,6 +388,15 @@ export const shouldHaveDiagnostics = async (expectedDiagnostics: readonly Diagno
   }
 }
 
+export const shouldHaveDiagnosticProviderResult = async (expectedDiagnostics: readonly Diagnostic[], editorId = 1): Promise<void> => {
+  const diagnostics = await RendererWorker.invoke('ExtensionHost.executeDiagnosticProvider', editorId)
+  if (!areDiagnosticsEqual(diagnostics, expectedDiagnostics)) {
+    const stringifiedActual = JSON.stringify(diagnostics)
+    const stringifiedExpected = JSON.stringify(expectedDiagnostics)
+    throw new Error(`Expected diagnostic provider result ${stringifiedExpected} but was ${stringifiedActual}`)
+  }
+}
+
 export const enableCompletionsOnType = async (): Promise<void> => {
   await Settings.update({
     'editor.completionsOnType': true,

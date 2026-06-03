@@ -60,6 +60,18 @@ test('isDiagnosticEqual: different type', () => {
   expect(isDiagnosticEqual(actual, expected)).toBe(false)
 })
 
+test('isDiagnosticEqual: different source', () => {
+  const actual: Diagnostic = {
+    ...createDiagnostic(0, 0, 0, 5, 'Syntax error', 'error'),
+    source: 'actual',
+  }
+  const expected: Diagnostic = {
+    ...createDiagnostic(0, 0, 0, 5, 'Syntax error', 'error'),
+    source: 'expected',
+  }
+  expect(isDiagnosticEqual(actual, expected)).toBe(false)
+})
+
 test('isDiagnosticEqual: warning type diagnostics', () => {
   const actual = createDiagnostic(2, 3, 2, 10, 'Warning message', 'warning')
   const expected = createDiagnostic(2, 3, 2, 10, 'Warning message', 'warning')

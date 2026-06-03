@@ -7,6 +7,7 @@ export const isDiagnosticEqual = (actual: Diagnostic, expected: Diagnostic): boo
     actual.endRowIndex === expected.endRowIndex &&
     actual.endColumnIndex === expected.endColumnIndex &&
     actual.message === expected.message &&
+    actual.source === expected.source &&
     actual.type === expected.type
   )
 }
