@@ -8,6 +8,10 @@ const directionMap = {
   vertical: 2,
 } as const
 
+const isLayoutDirectionName = (value: string): value is keyof typeof directionMap => {
+  return value === 'horizontal' || value === 'vertical'
+}
+
 type LayoutDirection = 'horizontal' | 'vertical' | number
 
 type LayoutExpectationValue = string | number | boolean | RegExp | null | readonly LayoutExpectationValue[] | LayoutExpectationObject
@@ -69,8 +73,8 @@ const matchesExpectedObject = (actual: unknown, expected: LayoutExpectationObjec
 }
 
 const matchesExpected = (actual: unknown, expected: LayoutExpectationValue, key = ''): boolean => {
-  if (key === 'direction' && typeof expected === 'string' && expected in directionMap) {
-    return Object.is(actual, directionMap[expected as keyof typeof directionMap])
+  if (key === 'direction' && typeof expected === 'string' && isLayoutDirectionName(expected)) {
+    return Object.is(actual, directionMap[expected])
   }
   if (expected instanceof RegExp) {
     return typeof actual === 'string' && expected.test(actual)

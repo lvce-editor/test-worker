@@ -5,7 +5,7 @@ export const toFileUrl = (url: string, locationHref: string): string | undefined
   if (parsedUrl.protocol === 'file:') {
     parsedUrl.hash = ''
     parsedUrl.search = ''
-    return parsedUrl.toString()
+    return parsedUrl.href
   }
   return getFileUrlFromRemotePath(parsedUrl.pathname)
 }

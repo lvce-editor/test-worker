@@ -1,32 +1,37 @@
 import * as Key from '../Key/Key.ts'
 
+const applyKeyPart = (part: string, options: any): void => {
+  switch (part) {
+    case Key.Alt: {
+      options.altKey = true
+      return
+    }
+    case Key.Control: {
+      options.ctrlKey = true
+      return
+    }
+    case Key.Space: {
+      options.key = ' '
+      return
+    }
+    default: {
+      options.key = part
+    }
+  }
+}
+
 export const getKeyOptions = (rawKey: string): any => {
   if (rawKey.includes('+')) {
     const parts = rawKey.split('+')
-    let ctrlKey = false
-    let altKey = false
-    let key = ''
+    const options = {
+      altKey: false,
+      ctrlKey: false,
+      key: '',
+    }
     for (const part of parts) {
-      switch (part) {
-        case Key.Alt:
-          altKey = true
-          break
-        case Key.Control:
-          ctrlKey = true
-          break
-        case Key.Space:
-          key = ' '
-          break
-        default:
-          key = part
-          break
-      }
+      applyKeyPart(part, options)
     }
-    return {
-      altKey,
-      ctrlKey,
-      key,
-    }
+    return options
   }
   return {
     altKey: false,

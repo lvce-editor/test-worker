@@ -52,10 +52,14 @@ export const selectItem = async (label: string, { waitUntil = 'done' }: SelectIt
   const visiblePromise = waitUntil === 'quickPick' ? RendererWorker.invoke('QuickPick.waitUntilVisible') : undefined
   const promise = Promise.resolve(RendererWorker.invoke('QuickPick.selectItem', label))
   if (waitUntil === 'none') {
-    void promise.catch(() => undefined)
+    try {
+      await promise
+    } catch {}
     return
   }
-  void promise.catch(() => undefined)
+  try {
+    await promise
+  } catch {}
   await visiblePromise
 }
 

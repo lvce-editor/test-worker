@@ -10,7 +10,8 @@ test('transferWebViewPort transfers port successfully', async () => {
     uid: 12_345,
   }
 
-  const mockPort = new MessageChannel().port1
+  const messageChannel = new MessageChannel()
+  const mockPort = messageChannel.port1
 
   using mockRpc = RendererWorker.registerMockRpc({
     async 'WebView.getWebViewInfo2'(id: string): Promise<any> {
@@ -47,7 +48,8 @@ test('transferWebViewPort handles different webViewIds', async () => {
       uid: testCase.uid,
     }
 
-    const mockPort = new MessageChannel().port1
+    const messageChannel = new MessageChannel()
+    const mockPort = messageChannel.port1
 
     using mockRpc = RendererWorker.registerMockRpc({
       async 'WebView.getWebViewInfo2'(id: string): Promise<any> {

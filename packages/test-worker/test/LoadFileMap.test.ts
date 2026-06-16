@@ -4,7 +4,10 @@ import { loadFileMap } from '../src/parts/LoadFileMap/LoadFileMap.ts'
 
 // Mock fetch globally
 const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>
-;(globalThis as any).fetch = mockFetch
+Object.defineProperty(globalThis, 'fetch', {
+  configurable: true,
+  value: mockFetch,
+})
 
 test('loadFileMap - successful load', async () => {
   const mockFileMap: FileMap = {

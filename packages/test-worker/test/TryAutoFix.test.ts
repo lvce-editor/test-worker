@@ -283,8 +283,9 @@ export const test = async ({ ChatDebug }) => {
   restoreLocation()
   expect(writtenContent).toBe(expectedContent)
   expect(executeMock).toHaveBeenCalledTimes(1)
+  const expectedUrlPattern = new RegExp(`^${fileUrl.replaceAll(escapeRegex, '\\$&')}\\?time=\\d+$`)
   expect(executeMock.mock.calls[0]).toEqual([
-    expect.stringMatching(new RegExp(`^${fileUrl.replaceAll(escapeRegex, '\\$&')}\\?time=\\d+$`)),
+    expect.stringMatching(expectedUrlPattern),
     PlatformType.Remote,
     'memfs://assets',
   ])
@@ -401,8 +402,9 @@ export const test = async ({ ChatDebug }) => {
   restoreLocation()
   expect(writtenContent).toContain("call_id: 'call_actual'")
   expect(executeMock).toHaveBeenCalledTimes(1)
+  const expectedUrlPattern = new RegExp(`^${fileUrl.replaceAll(escapeRegex, '\\$&')}\\?time=\\d+$`)
   expect(executeMock.mock.calls[0]).toEqual([
-    expect.stringMatching(new RegExp(`^${fileUrl.replaceAll(escapeRegex, '\\$&')}\\?time=\\d+$`)),
+    expect.stringMatching(expectedUrlPattern),
     PlatformType.Remote,
     'memfs://assets',
   ])
