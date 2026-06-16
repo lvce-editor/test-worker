@@ -26,7 +26,7 @@ export const execute = async (href: string, platform: number, assetDir: string):
   const globals = createApi(platform, assetDir)
   // TODO
   // 0. wait for page to be ready
-  // 1. get script to import from renderer process (url or from html)
+  // 1. get script to import from renderer process (URL or from HTML)
   const scriptUrl = href
   TestFrameWorkComponentUrl.setUrl(scriptUrl) // TODO avoid side effect
   try {

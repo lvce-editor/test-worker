@@ -5,5 +5,5 @@ export const setUrl = (newUrl: string): void => {
 }
 
 export const resolve = (relativePath: string): string => {
-  return new URL(relativePath, url).toString()
+  return new URL(relativePath, url).href
 }

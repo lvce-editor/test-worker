@@ -5,11 +5,11 @@ const mockLocationHref = 'http://localhost:3000'
 
 describe('createUrlWithQueryParameter', () => {
   test('adds time query parameter to URL', () => {
-    const url = 'http://example.com'
+    const url = 'https://example.com'
     const time = Date.now()
     const result = createUrlWithQueryParameter(url, mockLocationHref, time)
 
-    expect(result).toContain('http://example.com')
+    expect(result).toContain('https://example.com')
     expect(result).toContain('time=')
     expect(result).toContain(`time=${time}`)
   })
@@ -25,7 +25,7 @@ describe('createUrlWithQueryParameter', () => {
   })
 
   test('handles URLs with existing query parameters', () => {
-    const url = 'http://example.com?existing=param'
+    const url = 'https://example.com?existing=param'
     const time = Date.now()
     const result = createUrlWithQueryParameter(url, mockLocationHref, time)
 
@@ -45,7 +45,7 @@ describe('createUrlWithQueryParameter', () => {
   })
 
   test('time parameter is numeric timestamp', () => {
-    const url = 'http://example.com'
+    const url = 'https://example.com'
     const time = 1_234_567_890
     const result = createUrlWithQueryParameter(url, mockLocationHref, time)
 
@@ -56,7 +56,7 @@ describe('createUrlWithQueryParameter', () => {
   })
 
   test('generates timestamps on subsequent calls', () => {
-    const url = 'http://example.com'
+    const url = 'https://example.com'
     const time1 = 1_234_567_890
     const time2 = 1_234_567_891
     const result1 = createUrlWithQueryParameter(url, mockLocationHref, time1)
@@ -82,7 +82,7 @@ describe('createUrlWithQueryParameter', () => {
   })
 
   test('handles URLs with fragments', () => {
-    const url = 'http://example.com#section'
+    const url = 'https://example.com#section'
     const time = Date.now()
     const result = createUrlWithQueryParameter(url, mockLocationHref, time)
 

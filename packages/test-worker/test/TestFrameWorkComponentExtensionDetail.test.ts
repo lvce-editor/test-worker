@@ -117,8 +117,8 @@ test('handleReadmeContextMenu', async () => {
       return undefined
     },
   })
-  await ExtensionDetail.handleReadmeContextMenu(100, 200, 'nodeName', 'http://example.com')
-  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleReadmeContextMenu', 100, 200, 'nodeName', 'http://example.com']])
+  await ExtensionDetail.handleReadmeContextMenu(100, 200, 'nodeName', 'https://example.com')
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleReadmeContextMenu', 100, 200, 'nodeName', 'https://example.com']])
 })
 
 test('copyReadmeLink', async () => {
@@ -127,8 +127,8 @@ test('copyReadmeLink', async () => {
       return undefined
     },
   })
-  await ExtensionDetail.copyReadmeLink('http://example.com/link')
-  expect(mockRpc.invocations).toEqual([['ExtensionDetail.copyReadmeLink', 'http://example.com/link']])
+  await ExtensionDetail.copyReadmeLink('https://example.com/link')
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.copyReadmeLink', 'https://example.com/link']])
 })
 
 test('focusNextTab and focusPreviousTab', async () => {

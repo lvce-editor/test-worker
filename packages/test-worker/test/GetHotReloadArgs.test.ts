@@ -9,7 +9,7 @@ const createMockTestInfoItem = (overrides?: Partial<TestInfoCache.TestInfoItem>)
   assetDir: '/assets',
   inProgress: false,
   platform: 1,
-  url: 'http://example.com/test.js',
+  url: 'https://example.com/test.js',
   ...overrides,
 })
 
@@ -41,7 +41,7 @@ test('returns shouldHotReload true when latestItem is valid and inProgress is fa
     assetDir: '/my-assets',
     inProgress: false,
     platform: 2,
-    url: 'http://example.com/bundle.js',
+    url: 'https://example.com/bundle.js',
   })
 
   const result = getHotReloadArgs(latestItem, mockLocationHref, mockTime)
@@ -50,13 +50,13 @@ test('returns shouldHotReload true when latestItem is valid and inProgress is fa
     assetDir: '/my-assets',
     platform: 2,
     shouldHotReload: true,
-    url: `http://example.com/bundle.js?time=${mockTime}`,
+    url: `https://example.com/bundle.js?time=${mockTime}`,
   })
 })
 
 test('adds time query parameter to URL', () => {
   const latestItem = createMockTestInfoItem({
-    url: 'http://example.com/test.js',
+    url: 'https://example.com/test.js',
   })
   const time = 9_876_543_210
 
@@ -66,7 +66,7 @@ test('adds time query parameter to URL', () => {
     assetDir: '/assets',
     platform: 1,
     shouldHotReload: true,
-    url: `http://example.com/test.js?time=${time}`,
+    url: `https://example.com/test.js?time=${time}`,
   })
 })
 
@@ -80,7 +80,7 @@ test('preserves assetDir from latestItem', () => {
     assetDir,
     platform: 1,
     shouldHotReload: true,
-    url: `http://example.com/test.js?time=${mockTime}`,
+    url: `https://example.com/test.js?time=${mockTime}`,
   })
 })
 
@@ -94,16 +94,16 @@ test('preserves platform from latestItem', () => {
     assetDir: '/assets',
     platform,
     shouldHotReload: true,
-    url: `http://example.com/test.js?time=${mockTime}`,
+    url: `https://example.com/test.js?time=${mockTime}`,
   })
 })
 
 test('handles different URL formats', () => {
   const testCases = [
-    { expected: `http://example.com/test.js?time=${mockTime}`, url: 'http://example.com/test.js' },
+    { expected: `https://example.com/test.js?time=${mockTime}`, url: 'https://example.com/test.js' },
     { expected: `https://example.com:8080/path/to/file.js?time=${mockTime}`, url: 'https://example.com:8080/path/to/file.js' },
     { expected: `http://localhost:3000/relative/path.js?time=${mockTime}`, url: '/relative/path.js' },
-    { expected: `http://example.com/test.js?existing=param&time=${mockTime}`, url: 'http://example.com/test.js?existing=param' },
+    { expected: `https://example.com/test.js?existing=param&time=${mockTime}`, url: 'https://example.com/test.js?existing=param' },
   ]
 
   for (const testCase of testCases) {
@@ -129,7 +129,7 @@ test('handles empty assetDir', () => {
     assetDir: '',
     platform: 1,
     shouldHotReload: true,
-    url: `http://example.com/test.js?time=${mockTime}`,
+    url: `https://example.com/test.js?time=${mockTime}`,
   })
 })
 
@@ -142,7 +142,7 @@ test('handles platform 0', () => {
     assetDir: '/assets',
     platform: 0,
     shouldHotReload: true,
-    url: `http://example.com/test.js?time=${mockTime}`,
+    url: `https://example.com/test.js?time=${mockTime}`,
   })
 })
 
@@ -156,6 +156,6 @@ test('uses locationHref for query parameter construction', () => {
     assetDir: '/assets',
     platform: 1,
     shouldHotReload: true,
-    url: `http://example.com/test.js?time=${mockTime}`,
+    url: `https://example.com/test.js?time=${mockTime}`,
   })
 })
