@@ -197,6 +197,34 @@ export const format = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.format')
 }
 
+export const indentMore = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.indentMore')
+}
+
+export const indentLess = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.indentLess')
+}
+
+export const moveLineDown = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.moveLineDown')
+}
+
+export const pasteText = async (text: string): Promise<void> => {
+  await RendererWorker.invoke('Editor.pasteText', text)
+}
+
+export const sortLinesAscending = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.sortLinesAscending')
+}
+
+export const typeWithAutoClosing = async (text: string): Promise<void> => {
+  await RendererWorker.invoke('Editor.typeWithAutoClosing', text)
+}
+
+export const handleTab = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.handleTab')
+}
+
 export const unIndent = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.unIndent')
 }
