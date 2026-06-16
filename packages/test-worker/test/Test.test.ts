@@ -8,8 +8,7 @@ const passMessagePattern = /^test passed in /
 const passInfoPattern = /^PASS pass-test in /
 
 const toDataUrl = (text: string): string => {
-  const encoder = new TextEncoder()
-  return `data:text/javascript;base64,${encoder.encode(text).toBase64()}`
+  return `data:text/javascript;base64,${Buffer.from(text).toString('base64')}`
 }
 
 test('execute runs test module and stores mock rpc', async () => {
