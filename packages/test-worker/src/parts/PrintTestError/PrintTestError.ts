@@ -2,6 +2,7 @@ import { ErrorWorker } from '@lvce-editor/rpc-registry'
 import { printError } from '../PrintError/PrintError.ts'
 
 const prepareError = 'Errors.prepare'
+const ignoredCodeFrameStackLines = ['testWorkerMain.js', 'testWorkerMain.ts']
 
 const formatPreparedError = (preparedError: any): string => {
   const codeFrame = preparedError.codeframe || preparedError.codeFrame
@@ -10,7 +11,9 @@ const formatPreparedError = (preparedError: any): string => {
 
 export const printTestError = async (error: any): Promise<void> => {
   try {
-    const preparedError = await ErrorWorker.invoke(prepareError, error)
+    const preparedError = await ErrorWorker.invoke(prepareError, error, {
+      ignoredCodeFrameStackLines,
+    })
     const formatted = formatPreparedError(preparedError)
     console.error(formatted)
   } catch {

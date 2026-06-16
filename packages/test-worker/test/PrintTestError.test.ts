@@ -21,7 +21,15 @@ test('printTestError prints prepared error', async () => {
   const error = new Error('boom')
   await PrintTestError.printTestError(error)
 
-  expect(mockRpc.invocations).toEqual([['Errors.prepare', error]])
+  expect(mockRpc.invocations).toEqual([
+    [
+      'Errors.prepare',
+      error,
+      {
+        ignoredCodeFrameStackLines: ['testWorkerMain.js', 'testWorkerMain.ts'],
+      },
+    ],
+  ])
   expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
   expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('boom\n> 1 | throw new Error("boom")\nError: boom'))
 
@@ -42,7 +50,15 @@ test('printTestError falls back to original error when preparing fails', async (
   const error = new Error('boom')
   await PrintTestError.printTestError(error)
 
-  expect(mockRpc.invocations).toEqual([['Errors.prepare', error]])
+  expect(mockRpc.invocations).toEqual([
+    [
+      'Errors.prepare',
+      error,
+      {
+        ignoredCodeFrameStackLines: ['testWorkerMain.js', 'testWorkerMain.ts'],
+      },
+    ],
+  ])
   expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
   expect(consoleErrorSpy).toHaveBeenCalledWith(error)
 
