@@ -44,6 +44,14 @@ export interface SelectItemOptions {
   readonly waitUntil?: SelectItemWaitUntil
 }
 
+const ignoreSelectionFailure = async (promise: Promise<void>): Promise<void> => {
+  try {
+    await promise
+  } catch {
+    // ignore selection failures for fire-and-forget selection flows
+  }
+}
+
 export const selectItem = async (label: string, { waitUntil = 'done' }: SelectItemOptions = {}): Promise<void> => {
   if (waitUntil === 'done') {
     await RendererWorker.invoke('QuickPick.selectItem', label)
@@ -52,10 +60,10 @@ export const selectItem = async (label: string, { waitUntil = 'done' }: SelectIt
   const visiblePromise = waitUntil === 'quickPick' ? RendererWorker.invoke('QuickPick.waitUntilVisible') : undefined
   const promise = Promise.resolve(RendererWorker.invoke('QuickPick.selectItem', label))
   if (waitUntil === 'none') {
-    void promise.catch(() => undefined)
+    void ignoreSelectionFailure(promise)
     return
   }
-  void promise.catch(() => undefined)
+  void ignoreSelectionFailure(promise)
   await visiblePromise
 }
 

@@ -22,11 +22,11 @@ const assertObjectMatches = (actual: unknown, expected: Readonly<Record<string, 
   if (!isObject(actual)) {
     throw new TypeError(`Expected ${path} to be an object but got ${formatValue(actual)}`)
   }
-  for (const key of Object.keys(expected)) {
+  for (const [key, expectedValue] of Object.entries(expected)) {
     if (!Object.hasOwn(actual, key)) {
       throw new Error(`Expected ${path}.${key} to exist`)
     }
-    assertPayloadMatches(actual[key], expected[key], `${path}.${key}`)
+    assertPayloadMatches(actual[key], expectedValue, `${path}.${key}`)
   }
 }
 

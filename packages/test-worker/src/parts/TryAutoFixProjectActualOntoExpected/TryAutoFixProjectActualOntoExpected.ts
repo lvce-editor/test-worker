@@ -13,11 +13,11 @@ export const projectActualOntoExpected = (actualValue: unknown, expectedValue: u
       return actualValue
     }
     const result: Record<string, unknown> = {}
-    for (const key of Object.keys(expectedValue)) {
+    for (const [key, nestedExpectedValue] of Object.entries(expectedValue)) {
       if (!Object.hasOwn(actualValue, key)) {
         continue
       }
-      result[key] = projectActualOntoExpected(actualValue[key], expectedValue[key])
+      result[key] = projectActualOntoExpected(actualValue[key], nestedExpectedValue)
     }
     return result
   }

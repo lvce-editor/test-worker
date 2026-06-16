@@ -4,7 +4,7 @@ export const importScript = async <T = any>(url: string): Promise<T> => {
   } catch (error) {
     throw error
     // TODO
-    // const actualErrorMessage = await TryToGetactualImportErrorMessage.tryToGetActualImportErrorMessage(url, error)
+    // const actualErrorMessage = await TryToGetactualImportErrorMessage.tryToGetActualImportErrorMessage(URL, error)
     // throw new Error(actualErrorMessage)
   }
 }

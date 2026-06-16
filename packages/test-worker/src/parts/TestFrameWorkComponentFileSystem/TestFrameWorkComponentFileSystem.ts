@@ -59,7 +59,7 @@ const getParentUri = (uri: string): string => {
   const pathSegments = url.pathname.split('/').filter(Boolean)
   pathSegments.pop()
   url.pathname = pathSegments.length === 0 ? '/' : `/${pathSegments.join('/')}`
-  return url.toString()
+  return url.href
 }
 
 const getBaseName = (uri: string): string => {

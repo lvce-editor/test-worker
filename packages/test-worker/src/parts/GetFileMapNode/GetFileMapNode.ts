@@ -26,10 +26,10 @@ export const getFileMapNode = async (url: string): Promise<FileMap> => {
       return RendererWorker.readFile(filePath)
     }),
   )
-  allFiles.map((filePath, index) => {
+  for (const [index, filePath] of allFiles.entries()) {
     const content = contents[index]
     const relativePaths = filePath.slice(fileUrl.length + 1)
     fileMap[relativePaths] = content
-  })
+  }
   return fileMap
 }

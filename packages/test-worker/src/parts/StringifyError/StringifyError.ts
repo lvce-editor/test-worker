@@ -1,9 +1,9 @@
 export const stringifyError = (error: any): string => {
   if (!error) {
-    return `${error}`
+    return String(error)
   }
   if (error && error.message && error.constructor.name && error.constructor.name !== 'Error' && error.constructor.name !== 'VError') {
-    return `${error}`
+    return String(error)
   }
-  return `${error.message}`
+  return String(error.message)
 }
