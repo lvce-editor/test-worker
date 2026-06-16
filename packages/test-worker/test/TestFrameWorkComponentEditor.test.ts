@@ -223,6 +223,28 @@ test('cursorWordLeft', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.cursorWordLeft']])
 })
 
+test('selectWordLeft', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectWordLeft'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectWordLeft()
+  expect(mockRpc.invocations).toEqual([['Editor.selectWordLeft']])
+})
+
+test('selectWordRight', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectWordRight'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectWordRight()
+  expect(mockRpc.invocations).toEqual([['Editor.selectWordRight']])
+})
+
 test('setText', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.setText'() {

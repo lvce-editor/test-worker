@@ -2,9 +2,12 @@ import { EditorWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { Diagnostic } from '../Diagnostic/Diagnostic.ts'
 import { areDiagnosticsEqual } from '../AreDiagnosticsEqual/AreDiagnosticsEqual.ts'
 import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
+import { areTokensEqual, type TokenRow } from '../AreTokensEqual/AreTokensEqual.ts'
 import { getEditorKey } from '../GetEditorKey/GetEditorKey.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
+
+export type { TokenRow } from '../AreTokensEqual/AreTokensEqual.ts'
 
 export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
   await RendererWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)
@@ -88,6 +91,14 @@ export const cursorUp = async (): Promise<void> => {
 
 export const cursorWordLeft = async (): Promise<void> => {
   await RendererWorker.invoke('Editor.cursorWordLeft')
+}
+
+export const selectWordLeft = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectWordLeft')
+}
+
+export const selectWordRight = async (): Promise<void> => {
+  await RendererWorker.invoke('Editor.selectWordRight')
 }
 
 export const setText = async (text: string): Promise<void> => {
@@ -329,27 +340,6 @@ export const shouldHaveText = async (expectedText: string): Promise<void> => {
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
   }
-}
-
-export type TokenRow = readonly string[]
-
-const areTokensEqual = (actual: readonly TokenRow[], expected: readonly TokenRow[]): boolean => {
-  if (actual.length !== expected.length) {
-    return false
-  }
-  for (let i = 0; i < actual.length; i++) {
-    const actualRow = actual[i]
-    const expectedRow = expected[i]
-    if (actualRow.length !== expectedRow.length) {
-      return false
-    }
-    for (let j = 0; j < actualRow.length; j++) {
-      if (actualRow[j] !== expectedRow[j]) {
-        return false
-      }
-    }
-  }
-  return true
 }
 
 export const shouldHaveTokens = async (expectedTokens: readonly TokenRow[]): Promise<void> => {
