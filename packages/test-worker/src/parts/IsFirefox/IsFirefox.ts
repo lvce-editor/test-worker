@@ -3,9 +3,8 @@ export const getIsFirefox = (): boolean => {
     return false
   }
   // @ts-expect-error
-  const userAgentData = navigator.userAgentData
+  const { userAgentData } = navigator
   if (userAgentData?.brands) {
-    // @ts-expect-error
     return userAgentData.brands.includes('Firefox')
   }
   return navigator.userAgent.toLowerCase().includes('firefox')

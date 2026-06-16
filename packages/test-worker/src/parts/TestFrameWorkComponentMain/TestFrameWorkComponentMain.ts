@@ -74,7 +74,10 @@ const matchesExpectedObject = (actual: unknown, expected: LayoutExpectationObjec
 
 const matchesExpected = (actual: unknown, expected: LayoutExpectationValue, key = ''): boolean => {
   if (key === 'direction' && typeof expected === 'string' && isLayoutDirectionName(expected)) {
-    return Object.is(actual, directionMap[expected])
+    if (expected === 'horizontal') {
+      return Object.is(actual, directionMap.horizontal)
+    }
+    return Object.is(actual, directionMap.vertical)
   }
   if (expected instanceof RegExp) {
     return typeof actual === 'string' && expected.test(actual)

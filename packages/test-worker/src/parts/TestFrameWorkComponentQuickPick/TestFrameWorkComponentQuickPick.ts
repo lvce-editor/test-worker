@@ -54,12 +54,16 @@ export const selectItem = async (label: string, { waitUntil = 'done' }: SelectIt
   if (waitUntil === 'none') {
     try {
       await promise
-    } catch {}
+    } catch {
+      // ignore selection failures when the caller explicitly does not wait
+    }
     return
   }
   try {
     await promise
-  } catch {}
+  } catch {
+    // ignore selection failures while waiting for the quick pick to remain visible
+  }
   await visiblePromise
 }
 
