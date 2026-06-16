@@ -14,7 +14,8 @@ export const printTestError = async (error: any): Promise<void> => {
     const preparedError = await ErrorWorker.invoke(prepareError, error, {
       ignoredCodeFrameStackLines,
     })
-    console.error(formatPreparedError(preparedError))
+    const formatted = formatPreparedError(preparedError)
+    console.error(formatted)
   } catch {
     printError(error)
   }
