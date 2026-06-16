@@ -10,3 +10,7 @@ export const openTmpDir = async (): Promise<string> => {
   await setPath(tmpDir)
   return tmpDir
 }
+
+export const close = async (): Promise<void> => {
+  await RendererWorker.invoke('Workspace.close')
+}
