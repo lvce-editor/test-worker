@@ -5,5 +5,6 @@ export const execute = async (id: string, ...args: readonly any[]): Promise<any>
 }
 
 export const executeExtensionCommand = async (commandId: string, ...args: readonly any[]): Promise<unknown> => {
+  // TODO maybe ask extension-management-worker instead
   return RendererWorker.invoke('ExtensionHost.executeCommand', commandId, ...args)
 }
