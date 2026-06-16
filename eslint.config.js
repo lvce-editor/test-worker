@@ -19,6 +19,7 @@ export default [
       'no-useless-catch': 'off',
       'no-ex-assign': 'off',
       'jest/no-restricted-jest-methods': 'off',
+      'unicorn/prefer-short-arrow-method': 'off',
     },
   },
   {
