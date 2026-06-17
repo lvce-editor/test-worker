@@ -2,6 +2,8 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Git from '../src/parts/TestFrameWorkComponentGit/TestFrameWorkComponentGit.ts'
 
+const gitPush = Git.push
+
 test('init', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionHost.executeCommand'() {
@@ -114,7 +116,7 @@ test('push', async () => {
     },
   })
 
-  await Git.push('origin', 'main')
+  await gitPush('origin', 'main')
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.push', { setUpstream: ['origin', 'main'] }]])
 })
 
@@ -125,7 +127,7 @@ test('push with options', async () => {
     },
   })
 
-  await Git.push({ setUpstream: ['origin', 'main'] })
+  await gitPush({ setUpstream: ['origin', 'main'] })
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.push', { setUpstream: ['origin', 'main'] }]])
 })
 

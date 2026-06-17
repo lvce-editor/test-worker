@@ -1,15 +1,17 @@
 import type { AutoFixError } from '../AutoFixError/AutoFixError.ts'
 
-let autoFixError: AutoFixError | undefined
+const state: { autoFixError: AutoFixError | undefined } = {
+  autoFixError: undefined,
+}
 
 export const get = (): AutoFixError | undefined => {
-  return autoFixError
+  return state.autoFixError
 }
 
 export const set = (value: AutoFixError | undefined): void => {
-  autoFixError = value
+  state.autoFixError = value
 }
 
 export const clear = (): void => {
-  autoFixError = undefined
+  state.autoFixError = undefined
 }

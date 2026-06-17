@@ -9,18 +9,20 @@ export interface ITestInfoCache {
   readonly push: (item: TestInfoItem) => void
 }
 
-let items: readonly TestInfoItem[] = []
+const state: { items: readonly TestInfoItem[] } = {
+  items: [],
+}
 
 export const hasItems = (): boolean => {
-  return items.length > 0
+  return state.items.length > 0
 }
 
 export const push = (item: TestInfoItem): void => {
-  items = [...items, item]
+  state.items = [...state.items, item]
 }
 
 export const last = (): TestInfoItem => {
-  const item = items.at(-1)
+  const item = state.items.at(-1)
   if (!item) {
     throw new Error(`no item found`)
   }
@@ -28,9 +30,9 @@ export const last = (): TestInfoItem => {
 }
 
 export const maybeLast = (): TestInfoItem | undefined => {
-  return items.at(-1)
+  return state.items.at(-1)
 }
 
 export const clear = (): void => {
-  items = []
+  state.items = []
 }

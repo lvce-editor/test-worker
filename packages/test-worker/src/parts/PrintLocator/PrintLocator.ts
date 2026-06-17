@@ -8,7 +8,7 @@ export const printLocator = (locator: ILocatorInternal): string => {
         result = part.selector
         continue
       }
-      result = `${result} >> ${part.selector}`
+      result += ` >> ${part.selector}`
       continue
     }
     if (part.type === 'text') {
@@ -16,14 +16,14 @@ export const printLocator = (locator: ILocatorInternal): string => {
         result = `text=${part.text}`
         continue
       }
-      result = `${result} text=${part.text}`
+      result += ` text=${part.text}`
       continue
     }
     if (part.type === 'has-text') {
-      result = `${result} "${part.text}"`
+      result += ` "${part.text}"`
       continue
     }
-    result = `${result}:nth(${part.index})`
+    result += `:nth(${part.index})`
   }
   return result
 }
