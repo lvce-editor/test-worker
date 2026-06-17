@@ -1,10 +1,12 @@
-let url = ''
+const state = {
+  url: '',
+}
 
 export const setUrl = (newUrl: string): void => {
-  url = newUrl
+  state.url = newUrl
 }
 
 export const resolve = (relativePath: string): string => {
-  const resolvedUrl = new URL(relativePath, url)
+  const resolvedUrl = new URL(relativePath, state.url)
   return resolvedUrl.href
 }

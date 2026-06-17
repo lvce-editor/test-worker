@@ -13,10 +13,12 @@ const testFunction2 = async (): Promise<void> => {
   throw new Error('Test failed')
 }
 
-let callCount = 0
+const callCountState = {
+  value: 0,
+}
 const timestampGenerator3 = (): number => {
-  callCount++
-  return callCount * 1000
+  callCountState.value += 1
+  return callCountState.value * 1000
 }
 const testFunction3 = async (): Promise<void> => {
   // Simulate some work

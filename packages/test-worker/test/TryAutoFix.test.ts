@@ -10,7 +10,9 @@ jest.unstable_mockModule('../src/parts/Test/Test.ts', () => ({
 }))
 const { tryAutoFixWith } = await import('../src/parts/TryAutoFixWith/TryAutoFixWith.ts')
 
-let testFileId = 0
+const testFileState = {
+  id: 0,
+}
 const escapeRegex = /[.*+?^${}()|[\]\\]/g
 
 const setLocation = (href: string): (() => void) => {
@@ -49,8 +51,8 @@ const pushLatestTestInfo = (url: string, platform = PlatformType.Remote): void =
 }
 
 const createMemoryFsTestFile = (content: string): { files: Record<string, string>; fileUrl: string } => {
-  testFileId++
-  const fileUrl = `file:///try-autofix-${testFileId}.mjs`
+  testFileState.id += 1
+  const fileUrl = `file:///try-autofix-${testFileState.id}.mjs`
   return {
     files: {
       [fileUrl]: content,
