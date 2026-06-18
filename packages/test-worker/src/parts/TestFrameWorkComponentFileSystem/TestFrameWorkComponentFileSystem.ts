@@ -31,12 +31,12 @@ export const mkdir = async (uri: string): Promise<void> => {
   return RendererWorker.invoke('FileSystem.mkdir', uri)
 }
 
-interface FileItem {
+export interface FileItem {
   readonly content: string
   readonly uri: string
 }
 
-export const setFiles = async (files: readonly FileItem[]): Promise<void> => {
+export const writeFiles = async (files: readonly FileItem[]): Promise<void> => {
   // TODO maybe have a method to send all the files to file system worker directly
   await Promise.all(
     files.map((file) => {
@@ -44,6 +44,8 @@ export const setFiles = async (files: readonly FileItem[]): Promise<void> => {
     }),
   )
 }
+
+export const setFiles = writeFiles
 
 export interface Dirent {
   readonly name: string

@@ -94,6 +94,37 @@ test('setFiles', async () => {
   ])
 })
 
+test('writeFiles writes files in parallel', async () => {
+  const { promise: firstWritePromise, resolve: resolveFirstWrite } = Promise.withResolvers<void>()
+  let isFirstWrite = true
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.writeFile'() {
+      if (isFirstWrite) {
+        isFirstWrite = false
+        return firstWritePromise
+      }
+      return undefined
+    },
+  })
+
+  const files = [
+    { content: 'content1', uri: 'memfs:///file1.txt' },
+    { content: 'content2', uri: 'memfs:///file2.txt' },
+  ]
+
+  const resultPromise = FileSystem.writeFiles(files)
+
+  expect(mockRpc.invocations).toEqual([
+    ['FileSystem.writeFile', 'memfs:///file1.txt', 'content1'],
+    ['FileSystem.writeFile', 'memfs:///file2.txt', 'content2'],
+  ])
+
+  resolveFirstWrite()
+
+  await expect(resultPromise).resolves.toBeUndefined()
+})
+
 test('getTmpDir: memfs default', async () => {
   using mockRpc = RendererWorker.registerMockRpc({})
 
