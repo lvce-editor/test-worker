@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
 const helloNumberRegex = /Hello\D+\d+/
-const emailRegex = /\w+@\w+\.\w+/
+const emailRegex = /test@example\.com/
 
 test('readNativeFiles', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
