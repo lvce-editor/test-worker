@@ -42,3 +42,159 @@ test('shouldHaveContentRight', async () => {
     ['TestFrameWork.checkSingleElementCondition', createLocator('.DiffEditorContentRight'), 'toHaveText', { text: 'right content' }],
   ])
 })
+
+test('setDiffMode', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.setDiffMode'() {
+      return undefined
+    },
+  })
+
+  await DiffView.setDiffMode('inline')
+
+  expect(mockRpc.invocations).toEqual([['DiffView.setDiffMode', 'inline']])
+})
+
+test('toggleDiffMode', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.toggleDiffMode'() {
+      return undefined
+    },
+  })
+
+  await DiffView.toggleDiffMode()
+
+  expect(mockRpc.invocations).toEqual([['DiffView.toggleDiffMode']])
+})
+
+test('setLayout', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.setLayout'() {
+      return undefined
+    },
+  })
+
+  await DiffView.setLayout('vertical')
+
+  expect(mockRpc.invocations).toEqual([['DiffView.setLayout', 'vertical']])
+})
+
+test('handleWheel', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleWheel'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleWheel(0, 100_000)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleWheel', 0, 100_000]])
+})
+
+test('handleResize', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleResize'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleResize(420, 180)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleResize', 420, 180]])
+})
+
+test('handleWorkspaceChange', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleWorkspaceChange'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleWorkspaceChange()
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleWorkspaceChange']])
+})
+
+test('handleClickAt', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleClickAt'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleClickAt(5, 6, 'target')
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleClickAt', 5, 6, 'target']])
+})
+
+test('handleSashPointerDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleSashPointerDown'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleSashPointerDown(170, 0)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleSashPointerDown', 170, 0]])
+})
+
+test('handleSashPointerMove', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleSashPointerMove'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleSashPointerMove(230, 0)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleSashPointerMove', 230, 0]])
+})
+
+test('handleSashPointerUp', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleSashPointerUp'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleSashPointerUp(230, 0)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleSashPointerUp', 230, 0]])
+})
+
+test('handleScrollBarPointerDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleScrollBarPointerDown'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleScrollBarPointerDown(20)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleScrollBarPointerDown', 20]])
+})
+
+test('handleScrollBarPointerMove', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleScrollBarPointerMove'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleScrollBarPointerMove(400)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleScrollBarPointerMove', 400]])
+})
+
+test('handleScrollBarPointerUp', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleScrollBarPointerUp'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleScrollBarPointerUp(400)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleScrollBarPointerUp', 400]])
+})
