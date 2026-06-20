@@ -28,7 +28,7 @@ test('watchForHotReload calls RendererWorker.invoke when conditions are met', as
   const expectedFileUrl = 'file:///some/file'
 
   using mockRpc = RendererWorker.registerMockRpc({
-    async 'FileWatcher.watchFile'(rpcId: string, callbackCommand: string, fileUrl: string): Promise<void> {
+    async 'FileWatcher.watchFile'(rpcId: number, callbackCommand: string, fileUrl: string): Promise<void> {
       expect(rpcId).toBe(RpcId.TestWorker)
       expect(callbackCommand).toBe('FileWatcher.handleEvent')
       expect(fileUrl).toBe(expectedFileUrl)
@@ -48,7 +48,7 @@ test('watchForHotReload handles different remote hrefs', async () => {
     const expectedFileUrl = `file://${rest}`
 
     using mockRpc = RendererWorker.registerMockRpc({
-      async 'FileWatcher.watchFile'(rpcId: string, callbackCommand: string, fileUrl: string): Promise<void> {
+      async 'FileWatcher.watchFile'(rpcId: number, callbackCommand: string, fileUrl: string): Promise<void> {
         expect(rpcId).toBe(RpcId.TestWorker)
         expect(callbackCommand).toBe('FileWatcher.handleEvent')
         expect(fileUrl).toBe(expectedFileUrl)

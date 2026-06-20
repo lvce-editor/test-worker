@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
-const helloNumberRegex = /Hello.*\d+/
+const helloNumberRegex = /Hello\D+\d+/
 const emailRegex = /\w+@\w+\.\w+/
 
 test('readNativeFiles', async () => {
@@ -118,7 +118,7 @@ test('shouldHaveText - regex error', async () => {
       return 'Hello World'
     },
   })
-  await expect(ClipBoard.shouldHaveText(helloNumberRegex)).rejects.toThrow('expected clipboard to have text "/Hello.*\\d+/" but was "Hello World"')
+  await expect(ClipBoard.shouldHaveText(helloNumberRegex)).rejects.toThrow('expected clipboard to have text "/Hello\\D+\\d+/" but was "Hello World"')
   expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })
 
