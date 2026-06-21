@@ -1,6 +1,7 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as AutoFixState from '../AutoFixState/AutoFixState.ts'
 import { createApi } from '../CreateApi/CreateApi.ts'
+import * as ExecuteTest2 from '../ExecuteTest2/ExecuteTest2.ts'
 import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
 import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
@@ -10,7 +11,91 @@ import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFra
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import * as TestState from '../TestState/TestState.ts'
 import * as TestType from '../TestType/TestType.ts'
+import * as Timestamp from '../Timestamp/Timestamp.ts'
 import { watchForHotReload } from '../WatchForHotReload/WatchForHotReload.ts'
+
+export interface ExecuteAllTest {
+  readonly name: string
+  readonly url: string
+}
+
+interface ExecuteAllTestResult {
+  readonly end: number
+  readonly error: string
+  readonly name: string
+  readonly start: number
+  readonly status: string
+}
+
+const toErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) {
+    return error.message
+  }
+  return String(error)
+}
+
+const getSkippedResult = (name: string): ExecuteAllTestResult => {
+  const now = Timestamp.now()
+  return {
+    end: now,
+    error: '',
+    name,
+    start: now,
+    status: 'skip',
+  }
+}
+
+const getMissingTestResult = (name: string): ExecuteAllTestResult => {
+  const now = Timestamp.now()
+  return {
+    end: now,
+    error: 'test function not found',
+    name,
+    start: now,
+    status: TestType.Fail,
+  }
+}
+
+const getImportErrorResult = (name: string, error: unknown): ExecuteAllTestResult => {
+  const now = Timestamp.now()
+  return {
+    end: now,
+    error: toErrorMessage(error),
+    name,
+    start: now,
+    status: TestType.Fail,
+  }
+}
+
+const getExecutedResult = async (name: string, test: any, globals: any): Promise<ExecuteAllTestResult> => {
+  const result = await ExecuteTest2.executeTest2(name, test, globals, Timestamp.now)
+  return {
+    end: result.end,
+    error: result.error ? toErrorMessage(result.error) : '',
+    name,
+    start: result.start,
+    status: result.type,
+  }
+}
+
+const executeAllTest = async (item: ExecuteAllTest, globals: any): Promise<ExecuteAllTestResult> => {
+  try {
+    const module = await ImportTest.importTest(item.url)
+    const { mockRpc, skip, test } = module
+    if (mockRpc) {
+      TestState.setMockRpc(mockRpc)
+    }
+    if (skip) {
+      return getSkippedResult(item.name)
+    }
+    if (!test) {
+      return getMissingTestResult(item.name)
+    }
+    return getExecutedResult(item.name, test, globals)
+  } catch (error) {
+    return getImportErrorResult(item.name, error)
+  }
+}
 
 // TODO move this into three steps:
 // 1. import test module
@@ -66,4 +151,26 @@ export const execute = async (href: string, platform: number, assetDir: string):
   } catch {
     // ignore
   }
+}
+
+export const executeAll = async (tests: readonly ExecuteAllTest[], href: string, platform: number, assetDir: string): Promise<void> => {
+  TestInfoCache.push({
+    assetDir,
+    inProgress: true,
+    platform,
+    url: href,
+  })
+  const globals = createApi(platform, assetDir)
+  const results: ExecuteAllTestResult[] = []
+  for (const test of tests) {
+    const result = await executeAllTest(test, globals)
+    results.push(result)
+  }
+  await RendererWorker.invoke('TestFrameWork.showTestResults', JSON.stringify(results))
+  TestInfoCache.push({
+    assetDir,
+    inProgress: false,
+    platform,
+    url: href,
+  })
 }

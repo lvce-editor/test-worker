@@ -145,3 +145,95 @@ invalid syntax here
 
   consoleErrorSpy.mockRestore()
 })
+
+test('executeAll runs tests and renders TestResults json', async () => {
+  TestInfoCache.clear()
+  const assetDir = 'memfs://assets'
+  const passUrl = toDataUrl(`
+export const test = async ({ BaseUrl }) => {
+  if (BaseUrl.getBaseUrl() !== 'memfs://assets') {
+    throw new Error('unexpected base url')
+  }
+}
+`)
+  const failUrl = toDataUrl(`
+export const test = async () => {
+  throw new Error('boom')
+}
+`)
+  const skipUrl = toDataUrl(`
+export const skip = true
+export const test = async () => {}
+`)
+  const href = 'http://localhost:3000/tests/_all.html'
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.showTestResults'() {
+      return undefined
+    },
+  })
+
+  await TestModule.executeAll(
+    [
+      { name: 'pass-test.js', url: passUrl },
+      { name: 'fail-test.js', url: failUrl },
+      { name: 'skip-test.js', url: skipUrl },
+    ],
+    href,
+    1,
+    assetDir,
+  )
+
+  expect(TestInfoCache.last()).toEqual({
+    assetDir,
+    inProgress: false,
+    platform: 1,
+    url: href,
+  })
+  expect(mockRpc.invocations).toHaveLength(1)
+  expect(mockRpc.invocations[0]?.[0]).toBe('TestFrameWork.showTestResults')
+  const results = JSON.parse(mockRpc.invocations[0]?.[1])
+  expect(results).toMatchObject([
+    {
+      error: '',
+      name: 'pass-test.js',
+      status: 'pass',
+    },
+    {
+      error: 'boom',
+      name: 'fail-test.js',
+      status: 'fail',
+    },
+    {
+      error: '',
+      name: 'skip-test.js',
+      status: 'skip',
+    },
+  ])
+})
+
+test('executeAll reports import errors in TestResults json', async () => {
+  TestInfoCache.clear()
+  const assetDir = 'memfs://assets'
+  const href = 'http://localhost:3000/tests/_all.html'
+  const brokenUrl = toDataUrl(`
+export const test = async () => {}
+invalid syntax here
+`)
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.showTestResults'() {
+      return undefined
+    },
+  })
+
+  await TestModule.executeAll([{ name: 'broken-test.js', url: brokenUrl }], href, 1, assetDir)
+
+  const results = JSON.parse(mockRpc.invocations[0]?.[1])
+  expect(results).toHaveLength(1)
+  expect(results[0]).toMatchObject({
+    name: 'broken-test.js',
+    status: 'fail',
+  })
+  expect(results[0].error).toContain('Failed to import test')
+})
