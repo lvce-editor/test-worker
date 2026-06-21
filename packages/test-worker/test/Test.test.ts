@@ -7,6 +7,9 @@ import * as TestState from '../src/parts/TestState/TestState.ts'
 
 const passMessagePattern = /^test passed in /
 const passInfoPattern = /^PASS pass-test in /
+const allTestsMixedSummaryPattern = /^1 test passed, 1 test failed, 1 test skipped in /
+const allTestsFailedSummaryPattern = /^1 test failed in /
+const allTestsPassedSummaryPattern = /^2 tests passed in /
 
 const toDataUrl = (text: string): string => {
   return `data:text/javascript;base64,${Buffer.from(text).toString('base64')}`
@@ -168,6 +171,9 @@ export const test = async () => {}
   const href = 'http://localhost:3000/tests/_all.html'
 
   using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.showOverlay'() {
+      return undefined
+    },
     'TestFrameWork.showTestResults'() {
       return undefined
     },
@@ -190,9 +196,10 @@ export const test = async () => {}
     platform: 1,
     url: href,
   })
-  expect(mockRpc.invocations).toHaveLength(1)
-  expect(mockRpc.invocations[0]?.[0]).toBe('TestFrameWork.showTestResults')
-  const results = JSON.parse(mockRpc.invocations[0]?.[1])
+  expect(mockRpc.invocations).toHaveLength(2)
+  expect(mockRpc.invocations[0]).toEqual(['TestFrameWork.showOverlay', 'fail', 'red', expect.stringMatching(allTestsMixedSummaryPattern)])
+  expect(mockRpc.invocations[1]?.[0]).toBe('TestFrameWork.showTestResults')
+  const results = JSON.parse(mockRpc.invocations[1]?.[1])
   expect(results).toMatchObject([
     {
       error: '',
@@ -222,6 +229,9 @@ invalid syntax here
 `)
 
   using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.showOverlay'() {
+      return undefined
+    },
     'TestFrameWork.showTestResults'() {
       return undefined
     },
@@ -229,11 +239,42 @@ invalid syntax here
 
   await TestModule.executeAll([{ name: 'broken-test.js', url: brokenUrl }], href, 1, assetDir)
 
-  const results = JSON.parse(mockRpc.invocations[0]?.[1])
+  expect(mockRpc.invocations[0]).toEqual(['TestFrameWork.showOverlay', 'fail', 'red', expect.stringMatching(allTestsFailedSummaryPattern)])
+  const results = JSON.parse(mockRpc.invocations[1]?.[1])
   expect(results).toHaveLength(1)
   expect(results[0]).toMatchObject({
     name: 'broken-test.js',
     status: 'fail',
   })
   expect(results[0].error).toContain('Failed to import test')
+})
+
+test('executeAll shows passed summary overlay', async () => {
+  TestInfoCache.clear()
+  const assetDir = 'memfs://assets'
+  const href = 'http://localhost:3000/tests/_all.html'
+  const passUrl = toDataUrl(`
+export const test = async () => {}
+`)
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.showOverlay'() {
+      return undefined
+    },
+    'TestFrameWork.showTestResults'() {
+      return undefined
+    },
+  })
+
+  await TestModule.executeAll(
+    [
+      { name: 'pass-1.js', url: passUrl },
+      { name: 'pass-2.js', url: passUrl },
+    ],
+    href,
+    1,
+    assetDir,
+  )
+
+  expect(mockRpc.invocations[0]).toEqual(['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(allTestsPassedSummaryPattern)])
 })

@@ -3,6 +3,7 @@ import * as AutoFixState from '../AutoFixState/AutoFixState.ts'
 import { createApi } from '../CreateApi/CreateApi.ts'
 import * as ExecuteTest2 from '../ExecuteTest2/ExecuteTest2.ts'
 import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
+import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
@@ -97,6 +98,50 @@ const executeAllTest = async (item: ExecuteAllTest, globals: any): Promise<Execu
   }
 }
 
+const getCountText = (count: number, label: string): string => {
+  if (count === 1) {
+    return `1 ${label}`
+  }
+  return `${count} ${label}s`
+}
+
+const getSummaryParts = (results: readonly ExecuteAllTestResult[]): readonly string[] => {
+  const passed = results.filter((result) => result.status === TestType.Pass).length
+  const failed = results.filter((result) => result.status === TestType.Fail).length
+  const skipped = results.filter((result) => result.status === 'skip').length
+  const parts = []
+  if (passed > 0) {
+    parts.push(`${getCountText(passed, 'test')} passed`)
+  }
+  if (failed > 0) {
+    parts.push(`${getCountText(failed, 'test')} failed`)
+  }
+  if (skipped > 0) {
+    parts.push(`${getCountText(skipped, 'test')} skipped`)
+  }
+  if (parts.length === 0) {
+    return ['0 tests passed']
+  }
+  return parts
+}
+
+const showAllTestsOverlay = async (results: readonly ExecuteAllTestResult[], duration: number): Promise<void> => {
+  const hasFailures = results.some((result) => result.status === TestType.Fail)
+  const hasPassed = results.some((result) => result.status === TestType.Pass)
+  let type = 'skip'
+  let background = 'yellow'
+  if (hasPassed) {
+    type = TestType.Pass
+    background = 'green'
+  }
+  if (hasFailures) {
+    type = TestType.Fail
+    background = 'red'
+  }
+  const text = `${getSummaryParts(results).join(', ')} in ${formatDuration(duration)}`
+  await RendererWorker.invoke('TestFrameWork.showOverlay', type, background, text)
+}
+
 // TODO move this into three steps:
 // 1. import test module
 // 2. execute test
@@ -162,10 +207,13 @@ export const executeAll = async (tests: readonly ExecuteAllTest[], href: string,
   })
   const globals = createApi(platform, assetDir)
   const results: ExecuteAllTestResult[] = []
+  const start = Timestamp.now()
   for (const test of tests) {
     const result = await executeAllTest(test, globals)
     results.push(result)
   }
+  const end = Timestamp.now()
+  await showAllTestsOverlay(results, end - start)
   await RendererWorker.invoke('TestFrameWork.showTestResults', JSON.stringify(results))
   TestInfoCache.push({
     assetDir,
