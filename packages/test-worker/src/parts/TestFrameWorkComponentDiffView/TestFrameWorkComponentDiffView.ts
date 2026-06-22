@@ -33,6 +33,18 @@ export const setLayout = async (layout: DiffLayout): Promise<void> => {
   await Command.execute('DiffView.setLayout', layout)
 }
 
+export const setFontFamily = async (fontFamily: string): Promise<void> => {
+  await Command.execute('DiffView.setFontFamily', fontFamily)
+}
+
+export const setWordWrap = async (enabled: boolean): Promise<void> => {
+  await Command.execute('DiffView.setWordWrap', enabled)
+}
+
+export const toggleWhitespace = async (): Promise<void> => {
+  await Command.execute('DiffView.toggleWhitespace')
+}
+
 export const handleWheel = async (deltaMode: number, deltaY: number): Promise<void> => {
   await Command.execute('DiffView.handleWheel', deltaMode, deltaY)
 }
