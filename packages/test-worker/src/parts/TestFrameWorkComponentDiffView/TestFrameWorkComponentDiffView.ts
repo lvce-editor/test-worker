@@ -76,3 +76,7 @@ export const handleScrollBarPointerUp = async (clientY: number): Promise<void> =
 export const setCursorPosition = async (rowIndex: number, columnIndex: number): Promise<void> => {
   await Command.execute('DiffView.setCursorPosition', rowIndex, columnIndex)
 }
+
+export const handleInput = async (text: string): Promise<void> => {
+  await Command.execute('DiffView.handleInput', text)
+}
