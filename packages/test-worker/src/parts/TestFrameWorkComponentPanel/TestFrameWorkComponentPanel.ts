@@ -9,3 +9,11 @@ export const openProblems = async (): Promise<void> => {
 
   await RendererWorker.invoke('Panel.selectIndex', 0)
 }
+
+export const maximize = async (): Promise<void> => {
+  await RendererWorker.invoke('Panel.maximize')
+}
+
+export const unmaximize = async (): Promise<void> => {
+  await RendererWorker.invoke('Panel.unmaximize')
+}

@@ -29,3 +29,25 @@ test('openProblems', async () => {
     ['Panel.selectIndex', 0],
   ])
 })
+
+test('maximize', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Panel.maximize'() {
+      return undefined
+    },
+  })
+
+  await Panel.maximize()
+  expect(mockRpc.invocations).toEqual([['Panel.maximize']])
+})
+
+test('unmaximize', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Panel.unmaximize'() {
+      return undefined
+    },
+  })
+
+  await Panel.unmaximize()
+  expect(mockRpc.invocations).toEqual([['Panel.unmaximize']])
+})
