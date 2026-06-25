@@ -79,6 +79,42 @@ test('setLayout', async () => {
   expect(mockRpc.invocations).toEqual([['DiffView.setLayout', 'vertical']])
 })
 
+test('setFontFamily', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.setFontFamily'() {
+      return undefined
+    },
+  })
+
+  await DiffView.setFontFamily('monospace')
+
+  expect(mockRpc.invocations).toEqual([['DiffView.setFontFamily', 'monospace']])
+})
+
+test('setWordWrap', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.setWordWrap'() {
+      return undefined
+    },
+  })
+
+  await DiffView.setWordWrap(true)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.setWordWrap', true]])
+})
+
+test('toggleWhitespace', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.toggleWhitespace'() {
+      return undefined
+    },
+  })
+
+  await DiffView.toggleWhitespace()
+
+  expect(mockRpc.invocations).toEqual([['DiffView.toggleWhitespace']])
+})
+
 test('handleWheel', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'DiffView.handleWheel'() {
@@ -197,4 +233,28 @@ test('handleScrollBarPointerUp', async () => {
   await DiffView.handleScrollBarPointerUp(400)
 
   expect(mockRpc.invocations).toEqual([['DiffView.handleScrollBarPointerUp', 400]])
+})
+
+test('setCursorPosition', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.setCursorPosition'() {
+      return undefined
+    },
+  })
+
+  await DiffView.setCursorPosition(12, 4)
+
+  expect(mockRpc.invocations).toEqual([['DiffView.setCursorPosition', 12, 4]])
+})
+
+test('handleInput', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'DiffView.handleInput'() {
+      return undefined
+    },
+  })
+
+  await DiffView.handleInput('hello')
+
+  expect(mockRpc.invocations).toEqual([['DiffView.handleInput', 'hello']])
 })
