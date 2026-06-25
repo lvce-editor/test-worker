@@ -1,0 +1,47 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreIssues": {
+    "packages/test-worker/src/parts/CreateErrorWorkerRpc/CreateErrorWorkerRpc.ts": ["files"],
+    "packages/test-worker/src/parts/ElementActions/ElementActions.ts": ["exports"],
+    "packages/test-worker/src/parts/HotReloadTest/DoHotReload.ts": ["files"],
+    "packages/test-worker/src/parts/ILocatorExternal/ILocatorExternal.ts": ["types"],
+    "packages/test-worker/src/parts/InputSource/InputSource.ts": ["exports"],
+    "packages/test-worker/src/parts/MockRequestInput/MockRequestInput.ts": ["types"],
+    "packages/test-worker/src/parts/ParseCssSelector/ParsedCssSelector.ts": ["types"],
+    "packages/test-worker/src/parts/SendMessagePortToErrorWorker/SendMessagePortToErrorWorker.ts": ["files"],
+    "packages/test-worker/src/parts/TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts": ["duplicates"],
+    "packages/test-worker/src/parts/TestInfoCache/TestInfoCache.ts": ["types"],
+    "packages/test-worker/src/parts/TryAutoFix/TryAutoFix.ts": ["exports"]
+  },
+  "workspaces": {
+    ".": {
+      "project": ["*.js"],
+      "ignoreDependencies": ["@lerna/legacy-package-management"]
+    },
+    "packages/build": {
+      "project": ["src/**/*.js", "src/**/*.ts"],
+      "ignoreDependencies": ["@lvce-editor/verror", "dts-bundle-generator", "esbuild"]
+    },
+    "packages/e2e": {
+      "entry": ["src/**/*.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "packages/memory": {
+      "project": ["src/**/*.ts"],
+      "ignoreDependencies": ["playwright"]
+    },
+    "packages/test-worker": {
+      "entry": [
+        "src/testWorkerMain.ts",
+        "src/parts/Locator/Locator.ts",
+        "src/parts/LocatorExpect/LocatorExpect.ts",
+        "src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts",
+        "test/**/*.test.ts"
+      ],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
+    },
+    "packages/server": {
+      "project": ["src/**/*.js"]
+    }
+  }
+}
