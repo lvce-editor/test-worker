@@ -24,24 +24,24 @@ interface ToolCallItemTextSearchArgs {
   readonly query: string
 }
 
-export type ToolCallItemGetWorkspaceUri = ToolCallItemBase<EmptyObject, 'getWorkspaceUri'>
+type ToolCallItemGetWorkspaceUri = ToolCallItemBase<EmptyObject, 'getWorkspaceUri'>
 
-export type ToolCallItemReadFile = ToolCallItemBase<ToolCallItemReadFileArgs, 'read_file'>
+type ToolCallItemReadFile = ToolCallItemBase<ToolCallItemReadFileArgs, 'read_file'>
 
-export type ToolCallItemWriteFile = ToolCallItemBase<ToolCallItemWriteFileArgs, 'write_file'>
+type ToolCallItemWriteFile = ToolCallItemBase<ToolCallItemWriteFileArgs, 'write_file'>
 
-export type ToolCallItemSearchFiles = ToolCallItemBase<ToolCallItemSearchFilesArgs, 'search_files'>
+type ToolCallItemSearchFiles = ToolCallItemBase<ToolCallItemSearchFilesArgs, 'search_files'>
 
-export type ToolCallItemTextSearch = ToolCallItemBase<ToolCallItemTextSearchArgs, 'text_search'>
+type ToolCallItemTextSearch = ToolCallItemBase<ToolCallItemTextSearchArgs, 'text_search'>
 
-export type ToolCallItem =
+type ToolCallItem =
   | ToolCallItemGetWorkspaceUri
   | ToolCallItemReadFile
   | ToolCallItemWriteFile
   | ToolCallItemSearchFiles
   | ToolCallItemTextSearch
 
-export interface TextItem {
+interface TextItem {
   readonly text: string
 }
 
