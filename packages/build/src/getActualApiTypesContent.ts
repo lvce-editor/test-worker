@@ -35,7 +35,8 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   }
 
   const locatorLines = contentLocator.split('\n')
-  state = 'default'
+  state = 'skip'
+  const publicLocatorInterfaces = new Set(['LocatorClickOptions', 'ILocatorExternal'])
   for (const line of locatorLines) {
     if (line.startsWith('// Generated')) {
       continue
@@ -43,42 +44,21 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
     if (line.startsWith('export {}')) {
       continue
     }
-    if (line.startsWith('export interface ILocatorInternal ')) {
-      state = 'skip'
-      continue
+    const interfaceMatch = line.match(/^export interface (\w+)/)
+    if (interfaceMatch) {
+      state = publicLocatorInterfaces.has(interfaceMatch[1]) ? 'default' : 'skip'
     }
-    if (line.startsWith('export interface ILocator ')) {
-      state = 'skip'
-      continue
-    }
-    if (line.startsWith(`declare class Locator `)) {
-      state = 'skip'
-      continue
-    }
-    if (state === 'skip' && line === '}') {
-      state = 'default'
-      continue
-    }
-    if (state === 'skip') {
-      continue
-    }
-    if (line.startsWith('export declare const create')) {
-      newLines.push(`interface LocatorConstructor {
-  (selector: string, option?: any): ILocatorExternal
-}`)
-      continue
-    }
-    if (line.startsWith('export interface')) {
+    if (state === 'default' && line.startsWith('export interface')) {
       newLines.push(line.replace('export interface', 'interface'))
       continue
     }
-
-    if (line.startsWith('export declare class Locator implements ILocator ')) {
-      newLines.push(line.replace('ILocator', 'ILocatorExternal'))
+    if (state === 'default') {
+      newLines.push(line)
+      if (line === '}') {
+        state = 'skip'
+      }
       continue
     }
-
-    newLines.push(line)
   }
 
   // Parse the API content to extract namespace information and convert to interfaces
@@ -271,13 +251,19 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
     newLines.push('')
   }
 
+  newLines.push('interface LocatorOptions {')
+  newLines.push('  readonly hasText?: string')
+  newLines.push('  readonly nth?: number')
+  newLines.push('}')
+  newLines.push('')
+
   // Generate TestApi interface
   newLines.push('export interface TestApi {')
   for (const namespaceName of Object.keys(namespaces)) {
     newLines.push(`  readonly ${namespaceName}: ${namespaceName}`)
   }
   newLines.push('  readonly expect: (locator: ILocatorExternal) => LocatorExpect')
-  newLines.push('  readonly Locator: (selector: string, option?: any) => ILocatorExternal')
+  newLines.push('  readonly Locator: (selector: string, options?: LocatorOptions) => ILocatorExternal')
   newLines.push('}')
   newLines.push('')
   newLines.push('export interface Test {')
