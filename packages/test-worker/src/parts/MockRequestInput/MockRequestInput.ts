@@ -34,12 +34,7 @@ type ToolCallItemSearchFiles = ToolCallItemBase<ToolCallItemSearchFilesArgs, 'se
 
 type ToolCallItemTextSearch = ToolCallItemBase<ToolCallItemTextSearchArgs, 'text_search'>
 
-type ToolCallItem =
-  | ToolCallItemGetWorkspaceUri
-  | ToolCallItemReadFile
-  | ToolCallItemWriteFile
-  | ToolCallItemSearchFiles
-  | ToolCallItemTextSearch
+type ToolCallItem = ToolCallItemGetWorkspaceUri | ToolCallItemReadFile | ToolCallItemWriteFile | ToolCallItemSearchFiles | ToolCallItemTextSearch
 
 interface TextItem {
   readonly text: string
