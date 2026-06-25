@@ -22,7 +22,7 @@ export const mouseUp = (options: any): readonly IElementAction[] => {
   return [mouseEvent(DomEventType.MouseUp, options)]
 }
 
-export const contextMenu = (options: any): readonly IElementAction[] => {
+const contextMenu = (options: any): readonly IElementAction[] => {
   return [mouseEvent(DomEventType.ContextMenu, options)]
 }
 

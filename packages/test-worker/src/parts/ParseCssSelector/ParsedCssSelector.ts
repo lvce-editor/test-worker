@@ -1,23 +1,23 @@
-export interface ParsedCssSelectorPart {
+interface ParsedCssSelectorPart {
   readonly selector: string
   readonly type: 'css'
 }
 
-export interface ParsedTextSelectorPart {
+interface ParsedTextSelectorPart {
   readonly text: string
   readonly type: 'text'
 }
 
-export interface ParsedHasTextSelectorPart {
+interface ParsedHasTextSelectorPart {
   readonly text: string
   readonly type: 'has-text'
 }
 
-export interface ParsedNthSelectorPart {
+interface ParsedNthSelectorPart {
   readonly index: number
   readonly type: 'nth'
 }
 
-export type ParsedSelectorPart = ParsedCssSelectorPart | ParsedTextSelectorPart | ParsedHasTextSelectorPart | ParsedNthSelectorPart
+type ParsedSelectorPart = ParsedCssSelectorPart | ParsedTextSelectorPart | ParsedHasTextSelectorPart | ParsedNthSelectorPart
 
 export type ParsedCssSelector = readonly ParsedSelectorPart[]
