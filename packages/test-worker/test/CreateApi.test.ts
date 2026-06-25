@@ -77,6 +77,15 @@ test('createApi includes FileSystem with loadFixture method', () => {
   expect(typeof api.FileSystem.loadFixture).toBe('function')
 })
 
+test('createApi FileSystem.loadFixture uses the configured platform', async () => {
+  const platform = 1
+  const assetDir = '/test/assets'
+
+  const api = CreateApi.createApi(platform, assetDir)
+
+  await expect(api.FileSystem.loadFixture(undefined as any)).rejects.toThrow(new TypeError('fixture url must be of type string'))
+})
+
 test('createApi includes getTmpDir function', () => {
   const platform = 1
   const assetDir = '/test/assets'

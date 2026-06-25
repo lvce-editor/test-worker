@@ -39,3 +39,13 @@ test('isFirefox delegates to platform detection', () => {
 
   clearNavigator()
 })
+
+test('isFirefox returns false for non-firefox user agent', () => {
+  mockNavigator('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36')
+
+  const result = Platform.isFirefox()
+
+  expect(result).toBe(false)
+
+  clearNavigator()
+})
