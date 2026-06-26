@@ -22,3 +22,13 @@ test('openTmpDir sets workspace path and returns it', async () => {
   expect(result).toBe('memfs:///workspace')
   expect(mockRpc.invocations).toEqual([['Workspace.setPath', 'memfs:///workspace']])
 })
+
+test('close forwards to rpc', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.close'() {
+      return undefined
+    },
+  })
+  await Workspace.close()
+  expect(mockRpc.invocations).toEqual([['Workspace.close']])
+})

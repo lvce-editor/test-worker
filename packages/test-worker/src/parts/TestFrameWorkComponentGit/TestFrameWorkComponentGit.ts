@@ -187,12 +187,3 @@ export const shouldHaveCommit = async (message: string): Promise<void> => {
     throw new Error(`Expected commit message to be "${message}", but got "${commits[0].message}"`)
   }
 }
-
-interface GitInvocation {
-  readonly command: readonly string[]
-  readonly cwd: string
-}
-
-export const shouldHaveInvocations = async (invocations: readonly GitInvocation[]): Promise<void> => {
-  // TODO
-}

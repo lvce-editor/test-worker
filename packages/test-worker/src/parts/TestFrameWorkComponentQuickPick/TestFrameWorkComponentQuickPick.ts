@@ -38,10 +38,8 @@ export const focusPrevious = async (): Promise<void> => {
   await RendererWorker.invoke('QuickPick.focusPrevious')
 }
 
-export type SelectItemWaitUntil = 'done' | 'quickPick' | 'none'
-
 export interface SelectItemOptions {
-  readonly waitUntil?: SelectItemWaitUntil
+  readonly waitUntil?: 'done' | 'quickPick' | 'none'
 }
 
 const ignoreSelectionFailure = async (promise: Promise<void>): Promise<void> => {

@@ -509,6 +509,83 @@ test('format', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.format']])
 })
 
+test('indentMore', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.indentMore'() {
+      return undefined
+    },
+  })
+
+  await Editor.indentMore()
+  expect(mockRpc.invocations).toEqual([['Editor.indentMore']])
+})
+
+test('indentLess', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.indentLess'() {
+      return undefined
+    },
+  })
+
+  await Editor.indentLess()
+  expect(mockRpc.invocations).toEqual([['Editor.indentLess']])
+})
+
+test('moveLineDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.moveLineDown'() {
+      return undefined
+    },
+  })
+
+  await Editor.moveLineDown()
+  expect(mockRpc.invocations).toEqual([['Editor.moveLineDown']])
+})
+
+test('pasteText', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.pasteText'() {
+      return undefined
+    },
+  })
+
+  await Editor.pasteText('hello')
+  expect(mockRpc.invocations).toEqual([['Editor.pasteText', 'hello']])
+})
+
+test('sortLinesAscending', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.sortLinesAscending'() {
+      return undefined
+    },
+  })
+
+  await Editor.sortLinesAscending()
+  expect(mockRpc.invocations).toEqual([['Editor.sortLinesAscending']])
+})
+
+test('typeWithAutoClosing', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.typeWithAutoClosing'() {
+      return undefined
+    },
+  })
+
+  await Editor.typeWithAutoClosing('(')
+  expect(mockRpc.invocations).toEqual([['Editor.typeWithAutoClosing', '(']])
+})
+
+test('handleTab', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleTab'() {
+      return undefined
+    },
+  })
+
+  await Editor.handleTab()
+  expect(mockRpc.invocations).toEqual([['Editor.handleTab']])
+})
+
 test('unIndent', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.unIndent'() {
