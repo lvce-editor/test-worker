@@ -621,6 +621,31 @@ test('openModelPicker', async () => {
   expect(mockRpc.invocations).toEqual([['Chat.openModelPicker']])
 })
 
+test('handleModelPickerInput', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.handleInput'() {
+      return undefined
+    },
+  })
+  await Chat.handleModelPickerInput('gpt')
+  expect(mockRpc.invocations).toEqual([['Chat.handleInput', 'model-picker-search', 'gpt']])
+})
+
+test('mockOpenApiSetResponse', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Chat.mockOpenApiSetResponse'() {
+      return undefined
+    },
+  })
+  const items = [
+    {
+      text: 'hello',
+    },
+  ]
+  await Chat.mockOpenApiSetResponse(items)
+  expect(mockRpc.invocations).toEqual([['Chat.mockOpenApiSetResponse', items]])
+})
+
 test('setAddContextButtonEnabled', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Chat.setAddContextButtonEnabled'() {
