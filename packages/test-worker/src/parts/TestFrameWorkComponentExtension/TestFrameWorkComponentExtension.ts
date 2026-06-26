@@ -46,6 +46,14 @@ export const executeCompletionProvider = async (
   return ExtensionManagementWorker.invoke('Extensions.executeCompletionProvider', textDocument, ...args)
 }
 
+export const enableWorkspace = async (id: string): Promise<void> => {
+  await ExtensionManagementWorker.invoke('Extensions.enableWorkspace', id)
+}
+
+export const disableWorkspace = async (id: string): Promise<void> => {
+  await ExtensionManagementWorker.invoke('Extensions.disableWorkspace', id)
+}
+
 export const addNodeExtension = async (relativePath: string): Promise<void> => {
   // TODO compute absolutePath
   const absolutePath = relativePath

@@ -67,3 +67,27 @@ test('executeCompletionProvider', async () => {
 
   expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.executeCompletionProvider', textDocument, 3]])
 })
+
+test('enableWorkspace', async () => {
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.enableWorkspace'() {
+      return undefined
+    },
+  })
+
+  await Extension.enableWorkspace('test.extension')
+
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.enableWorkspace', 'test.extension']])
+})
+
+test('disableWorkspace', async () => {
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.disableWorkspace'() {
+      return undefined
+    },
+  })
+
+  await Extension.disableWorkspace('test.extension')
+
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.disableWorkspace', 'test.extension']])
+})
