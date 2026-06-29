@@ -270,6 +270,9 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   newLines.push('  (api: TestApi): Promise<void>')
   newLines.push('}')
   newLines.push('')
+  newLines.push("export type BrowserName = 'chromium' | 'firefox' | 'unknown' | 'webkit'")
+  newLines.push('export type Skip = boolean | number | readonly BrowserName[]')
+  newLines.push('')
 
   const formatted = formatApiTypes(newLines)
 

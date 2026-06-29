@@ -7,6 +7,7 @@ import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
+import * as ShouldSkipTest from '../ShouldSkipTest/ShouldSkipTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
@@ -86,7 +87,7 @@ const executeAllTest = async (item: ExecuteAllTest, globals: any): Promise<Execu
     if (mockRpc) {
       TestState.setMockRpc(mockRpc)
     }
-    if (skip) {
+    if (ShouldSkipTest.shouldSkipTest(skip)) {
       return getSkippedResult(item.name)
     }
     if (!test) {
@@ -167,7 +168,7 @@ export const execute = async (href: string, platform: number, assetDir: string):
       TestState.setMockRpc(mockRpc)
     }
     if (test) {
-      if (skip) {
+      if (ShouldSkipTest.shouldSkipTest(skip)) {
         await TestFrameWork.skipTest(name)
       } else {
         await ExecuteTest.executeTest(name, test, globals)
