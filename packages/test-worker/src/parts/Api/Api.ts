@@ -36,6 +36,7 @@ import type * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkCompone
 import type * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
 import type * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponentPreview.ts'
 import type * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
+import type * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 import type * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 import type * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 import type * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
@@ -100,6 +101,7 @@ export interface Api {
   Platform: typeof Platform
   Preview: typeof Preview
   Problems: typeof Problems
+  ProcessExplorer: typeof ProcessExplorer
   QuickPick: typeof QuickPick
   References: typeof References
   RunAndDebug: typeof RunAndDebug
