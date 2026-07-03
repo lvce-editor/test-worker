@@ -24,6 +24,18 @@ test('hideSideBar', async () => {
   expect(mockRpc.invocations).toEqual([['Layout.hideSideBar']])
 })
 
+test('getSideBarPosition', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarPosition'() {
+      return 2
+    },
+  })
+
+  const sideBarPosition = await Layout.getSideBarPosition()
+  expect(sideBarPosition).toBe(2)
+  expect(mockRpc.invocations).toEqual([['Layout.getSideBarPosition']])
+})
+
 test('showSecondarySideBar', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.showSecondarySideBar'() {

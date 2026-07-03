@@ -9,6 +9,10 @@ export const hideSideBar = async (): Promise<void> => {
   await Command.execute('Layout.hideSideBar')
 }
 
+export const getSideBarPosition = async (): Promise<number> => {
+  return Command.execute('Layout.getSideBarPosition')
+}
+
 export const showSecondarySideBar = async (): Promise<void> => {
   await Command.execute('Layout.showSecondarySideBar')
 }
