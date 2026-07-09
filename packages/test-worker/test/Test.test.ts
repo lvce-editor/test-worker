@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-uint8array-base64 */
 import { expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as TestModule from '../src/parts/Test/Test.ts'
