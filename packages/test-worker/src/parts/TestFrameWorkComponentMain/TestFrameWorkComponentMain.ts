@@ -41,6 +41,35 @@ type SavedState = {
   readonly layout?: LayoutState
 }
 
+type EditorInput =
+  | {
+      readonly type: 'editor'
+      readonly uri: string
+    }
+  | {
+      readonly type: 'image'
+      readonly uri: string
+    }
+  | {
+      readonly type: 'video'
+      readonly uri: string
+    }
+  | {
+      readonly type: 'diff-editor'
+      readonly uriLeft: string
+      readonly uriRight: string
+    }
+  | {
+      readonly extensionId: string
+      readonly type: 'extension-detail-view'
+    }
+
+export interface OpenInputOptions {
+  readonly editorInput: EditorInput
+  readonly focu: boolean
+  readonly preview?: boolean
+}
+
 const isObject = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null && !Array.isArray(value) && !(value instanceof RegExp)
 }
@@ -111,6 +140,10 @@ const serializeForError = (value: unknown): string => {
 
 export const openUri = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('Main.openUri', uri)
+}
+
+export const openInput = async (options: OpenInputOptions): Promise<void> => {
+  await RendererWorker.invoke('Main.openInput', options)
 }
 
 export const saveState = async (uid: number): Promise<SavedState> => {
