@@ -137,6 +137,18 @@ test('clearSearchResults', async () => {
   expect(mockRpc.invocations).toEqual([['Extensions.clearSearchResults']])
 })
 
+test('setExtensionStatus', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Extensions.setExtensionStatus'() {
+      return undefined
+    },
+  })
+
+  await ExtensionSearch.setExtensionStatus('test.extension', 'installing')
+
+  expect(mockRpc.invocations).toEqual([['Extensions.setExtensionStatus', 'test.extension', 'installing']])
+})
+
 test('multiple operations in sequence', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Extensions.clearSearchResults'() {
