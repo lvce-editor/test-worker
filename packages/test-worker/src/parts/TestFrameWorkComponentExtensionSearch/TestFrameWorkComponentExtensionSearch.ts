@@ -2,6 +2,8 @@ import { InputSource } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
+export type ExtensionStatus = 'disabled' | 'enabled' | 'installing' | 'not-installed' | 'uninstalling'
+
 export const open = async (): Promise<void> => {
   await SideBar.open('Extensions')
 }
@@ -32,4 +34,8 @@ export const copyExtensionId = async (): Promise<void> => {
 
 export const clearSearchResults = async (): Promise<void> => {
   await RendererWorker.invoke('Extensions.clearSearchResults')
+}
+
+export const setExtensionStatus = async (id: string, status: ExtensionStatus): Promise<void> => {
+  await RendererWorker.invoke('Extensions.setExtensionStatus', id, status)
 }
