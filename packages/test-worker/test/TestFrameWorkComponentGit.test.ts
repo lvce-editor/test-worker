@@ -216,7 +216,7 @@ test('applyStash', async () => {
   })
 
   await Git.applyStash()
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.applystash']])
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.applyStash']])
 })
 
 test('checkout', async () => {
@@ -538,4 +538,29 @@ test('shouldHaveCommit succeeds when commit matches', async () => {
 
   await expect(Git.shouldHaveCommit('feat: initial commit')).resolves.toBeUndefined()
   expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.getCommits']])
+})
+
+test('shouldHaveInvocations succeeds when invocations match', async () => {
+  const invocations = [{ command: ['git', 'status'], cwd: 'file:///workspace' }]
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return invocations
+    },
+  })
+
+  await expect(Git.shouldHaveInvocations(invocations)).resolves.toBeUndefined()
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.getInvocations']])
+})
+
+test('shouldHaveInvocations rejects when invocations do not match', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHost.executeCommand'() {
+      return []
+    },
+  })
+
+  await expect(Git.shouldHaveInvocations([{ command: ['git', 'status'], cwd: 'file:///workspace' }])).rejects.toThrow(
+    new Error('expected git invocation {"command":["git","status"],"cwd":"file:///workspace"} in []'),
+  )
+  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeCommand', 'git.getInvocations']])
 })

@@ -1,3 +1,4 @@
+import { AssertionError } from '../AssertionError/AssertionError.ts'
 import { executeExtensionCommand } from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 interface GitInitOptions {
@@ -81,7 +82,7 @@ export const unstash = async (): Promise<void> => {
 }
 
 export const applyStash = async (): Promise<void> => {
-  await executeExtensionCommand('git.applystash')
+  await executeExtensionCommand('git.applyStash')
 }
 
 export const checkout = async (ref: string): Promise<void> => {
@@ -185,5 +186,29 @@ export const shouldHaveCommit = async (message: string): Promise<void> => {
   }
   if (commits[0].message !== message) {
     throw new Error(`Expected commit message to be "${message}", but got "${commits[0].message}"`)
+  }
+}
+
+export interface GitInvocation {
+  readonly command: readonly string[]
+  readonly cwd: string
+}
+
+export const shouldHaveInvocations = async (expectedInvocations: readonly GitInvocation[]): Promise<void> => {
+  const response = await executeExtensionCommand('git.getInvocations')
+  const actualInvocations = response && typeof response === 'object' && 'result' in response ? response.result : response
+  if (!Array.isArray(actualInvocations)) {
+    throw new AssertionError(`expected git invocations to be an array but got ${JSON.stringify(actualInvocations)}`)
+  }
+  let actualIndex = 0
+  for (const expectedInvocation of expectedInvocations) {
+    const expected = JSON.stringify(expectedInvocation)
+    while (actualIndex < actualInvocations.length && JSON.stringify(actualInvocations[actualIndex]) !== expected) {
+      actualIndex++
+    }
+    if (actualIndex === actualInvocations.length) {
+      throw new AssertionError(`expected git invocation ${expected} in ${JSON.stringify(actualInvocations)}`)
+    }
+    actualIndex++
   }
 }
