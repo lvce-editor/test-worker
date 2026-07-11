@@ -106,9 +106,22 @@ export const remove = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.remove', uri)
 }
 
+const windowsPathRegex = /^[A-Za-z]:\//
+
+const toFileUri = (path: string): string => {
+  if (path.startsWith('file://')) {
+    return path
+  }
+  const normalizedPath = path.replaceAll('\\', '/')
+  if (windowsPathRegex.test(normalizedPath)) {
+    return `file:///${normalizedPath}`
+  }
+  return `file://${normalizedPath}`
+}
+
 const getTmpDirFileScheme = async (): Promise<string> => {
   const tmpFolder = await RendererWorker.invoke('PlatformPaths.getTmpDir')
-  const tmpUri = tmpFolder.startsWith('file://') ? tmpFolder : `file://${tmpFolder}`
+  const tmpUri = toFileUri(tmpFolder)
   const uri = `${tmpUri}/test-${Date.now()}`
   await mkdir(uri)
   return uri

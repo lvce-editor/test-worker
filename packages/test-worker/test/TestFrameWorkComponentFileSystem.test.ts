@@ -167,6 +167,23 @@ test('getTmpDir: file scheme keeps existing file protocol', async () => {
   dateNowMock.mockRestore()
 })
 
+test('getTmpDir: file scheme normalizes a windows path', async () => {
+  const dateNowMock = jest.spyOn(Date, 'now').mockReturnValue(123)
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.mkdir'() {
+      return undefined
+    },
+    'PlatformPaths.getTmpDir'() {
+      return String.raw`C:\Users\test\AppData\Local\Temp`
+    },
+  })
+
+  const tmpDir: string = await FileSystem.getTmpDir({ scheme: 'file' })
+  expect(tmpDir).toBe('file:///C:/Users/test/AppData/Local/Temp/test-123')
+  expect(mockRpc.invocations).toEqual([['PlatformPaths.getTmpDir'], ['FileSystem.mkdir', 'file:///C:/Users/test/AppData/Local/Temp/test-123']])
+  dateNowMock.mockRestore()
+})
+
 test('getTmpDir: default scheme uses platform tmp dir', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'PlatformPaths.getTmpDir'() {
