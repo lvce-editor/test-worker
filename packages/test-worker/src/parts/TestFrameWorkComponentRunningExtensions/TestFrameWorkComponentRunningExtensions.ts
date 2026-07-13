@@ -20,6 +20,10 @@ export const disableWorkspace = async (index: number): Promise<void> => {
   await RendererWorker.invoke('RunningExtensions.disableWorkspace', index)
 }
 
+export const reportIssue = async (index: number): Promise<void> => {
+  await RendererWorker.invoke('RunningExtensions.reportIssue', index)
+}
+
 export const startProfile = async (): Promise<void> => {
   await RendererWorker.invoke('RunningExtensions.startProfile')
 }

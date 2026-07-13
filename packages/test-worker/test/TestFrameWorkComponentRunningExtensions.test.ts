@@ -9,6 +9,7 @@ test('commands', async () => {
     'RunningExtensions.disable'() {},
     'RunningExtensions.disableWorkspace'() {},
     'RunningExtensions.handleContextMenu'() {},
+    'RunningExtensions.reportIssue'() {},
     'RunningExtensions.startProfile'() {},
   })
 
@@ -18,6 +19,7 @@ test('commands', async () => {
   await RunningExtensions.copyId(3)
   await RunningExtensions.disable(4)
   await RunningExtensions.disableWorkspace(5)
+  await RunningExtensions.reportIssue(6)
   await RunningExtensions.startProfile()
 
   expect(mockRpc.invocations).toEqual([
@@ -27,6 +29,7 @@ test('commands', async () => {
     ['RunningExtensions.copyId', 3],
     ['RunningExtensions.disable', 4],
     ['RunningExtensions.disableWorkspace', 5],
+    ['RunningExtensions.reportIssue', 6],
     ['RunningExtensions.startProfile'],
   ])
 })
