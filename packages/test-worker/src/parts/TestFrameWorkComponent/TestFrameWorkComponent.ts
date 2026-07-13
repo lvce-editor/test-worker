@@ -39,6 +39,7 @@ export * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkCompon
 export * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 export * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 export * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
+export * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
 export * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 export * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 export * as SettingsView from '../TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'

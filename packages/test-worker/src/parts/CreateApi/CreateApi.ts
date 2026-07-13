@@ -40,6 +40,7 @@ import * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestF
 import * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 import * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 import * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
+import * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
 import * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 import * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 import * as SettingsView from '../TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
@@ -107,6 +108,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     QuickPick,
     References,
     RunAndDebug,
+    RunningExtensions,
     Search,
     Settings,
     SettingsView,

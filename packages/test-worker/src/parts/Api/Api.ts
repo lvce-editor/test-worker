@@ -40,6 +40,7 @@ import type * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/
 import type * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 import type * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 import type * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
+import type * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
 import type * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
 import type * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 import type * as SettingsView from '../TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
@@ -105,6 +106,7 @@ export interface Api {
   QuickPick: typeof QuickPick
   References: typeof References
   RunAndDebug: typeof RunAndDebug
+  RunningExtensions: typeof RunningExtensions
   Search: typeof Search
   Settings: typeof Settings
   SettingsView: typeof SettingsView
