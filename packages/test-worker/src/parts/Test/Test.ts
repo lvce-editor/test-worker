@@ -93,6 +93,7 @@ const executeAllTest = async (item: ExecuteAllTest, globals: any): Promise<Execu
     if (!test) {
       return getMissingTestResult(item.name)
     }
+    await RendererWorker.invoke('Layout.reset')
     return getExecutedResult(item.name, test, globals)
   } catch (error) {
     return getImportErrorResult(item.name, error)
