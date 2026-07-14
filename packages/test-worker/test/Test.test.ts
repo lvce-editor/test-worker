@@ -170,6 +170,9 @@ export const test = async () => {}
   const href = 'http://localhost:3000/tests/_all.html'
 
   using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.reset'() {
+      return undefined
+    },
     'TestFrameWork.showOverlay'() {
       return undefined
     },
@@ -195,10 +198,12 @@ export const test = async () => {}
     platform: 1,
     url: href,
   })
-  expect(mockRpc.invocations).toHaveLength(2)
-  expect(mockRpc.invocations[0]).toEqual(['TestFrameWork.showOverlay', 'fail', 'red', expect.stringMatching(allTestsMixedSummaryPattern)])
-  expect(mockRpc.invocations[1]?.[0]).toBe('TestFrameWork.showTestResults')
-  const results = JSON.parse(mockRpc.invocations[1]?.[1])
+  expect(mockRpc.invocations).toHaveLength(4)
+  expect(mockRpc.invocations[0]).toEqual(['Layout.reset'])
+  expect(mockRpc.invocations[1]).toEqual(['Layout.reset'])
+  expect(mockRpc.invocations[2]).toEqual(['TestFrameWork.showOverlay', 'fail', 'red', expect.stringMatching(allTestsMixedSummaryPattern)])
+  expect(mockRpc.invocations[3]?.[0]).toBe('TestFrameWork.showTestResults')
+  const results = JSON.parse(mockRpc.invocations[3]?.[1])
   expect(results).toMatchObject([
     {
       error: '',
@@ -257,6 +262,9 @@ export const test = async () => {}
 `)
 
   using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.reset'() {
+      return undefined
+    },
     'TestFrameWork.showOverlay'() {
       return undefined
     },
@@ -275,5 +283,10 @@ export const test = async () => {}
     assetDir,
   )
 
-  expect(mockRpc.invocations[0]).toEqual(['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(allTestsPassedSummaryPattern)])
+  expect(mockRpc.invocations).toEqual([
+    ['Layout.reset'],
+    ['Layout.reset'],
+    ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(allTestsPassedSummaryPattern)],
+    ['TestFrameWork.showTestResults', expect.any(String)],
+  ])
 })
