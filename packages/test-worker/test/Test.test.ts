@@ -170,6 +170,9 @@ export const test = async () => {}
   const href = 'http://localhost:3000/tests/_all.html'
 
   using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.resize'() {
+      return undefined
+    },
     'Layout.reset'() {
       return undefined
     },
@@ -198,12 +201,14 @@ export const test = async () => {}
     platform: 1,
     url: href,
   })
-  expect(mockRpc.invocations).toHaveLength(4)
+  expect(mockRpc.invocations).toHaveLength(6)
   expect(mockRpc.invocations[0]).toEqual(['Layout.reset'])
-  expect(mockRpc.invocations[1]).toEqual(['Layout.reset'])
-  expect(mockRpc.invocations[2]).toEqual(['TestFrameWork.showOverlay', 'fail', 'red', expect.stringMatching(allTestsMixedSummaryPattern)])
-  expect(mockRpc.invocations[3]?.[0]).toBe('TestFrameWork.showTestResults')
-  const results = JSON.parse(mockRpc.invocations[3]?.[1])
+  expect(mockRpc.invocations[1]).toEqual(['ActivityBar.resize', { height: 144, width: 48, x: 0, y: 0 }])
+  expect(mockRpc.invocations[2]).toEqual(['Layout.reset'])
+  expect(mockRpc.invocations[3]).toEqual(['ActivityBar.resize', { height: 144, width: 48, x: 0, y: 0 }])
+  expect(mockRpc.invocations[4]).toEqual(['TestFrameWork.showOverlay', 'fail', 'red', expect.stringMatching(allTestsMixedSummaryPattern)])
+  expect(mockRpc.invocations[5]?.[0]).toBe('TestFrameWork.showTestResults')
+  const results = JSON.parse(mockRpc.invocations[5]?.[1])
   expect(results).toMatchObject([
     {
       error: '',
@@ -262,6 +267,9 @@ export const test = async () => {}
 `)
 
   using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.resize'() {
+      return undefined
+    },
     'Layout.reset'() {
       return undefined
     },
@@ -285,7 +293,9 @@ export const test = async () => {}
 
   expect(mockRpc.invocations).toEqual([
     ['Layout.reset'],
+    ['ActivityBar.resize', { height: 144, width: 48, x: 0, y: 0 }],
     ['Layout.reset'],
+    ['ActivityBar.resize', { height: 144, width: 48, x: 0, y: 0 }],
     ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(allTestsPassedSummaryPattern)],
     ['TestFrameWork.showTestResults', expect.any(String)],
   ])

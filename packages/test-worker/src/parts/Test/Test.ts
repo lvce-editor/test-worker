@@ -9,6 +9,7 @@ import * as ImportTest from '../ImportTest/ImportTest.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
 import * as ShouldSkipTest from '../ShouldSkipTest/ShouldSkipTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
+import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import * as TestState from '../TestState/TestState.ts'
@@ -94,6 +95,12 @@ const executeAllTest = async (item: ExecuteAllTest, globals: any): Promise<Execu
       return getMissingTestResult(item.name)
     }
     await RendererWorker.invoke('Layout.reset')
+    await Command.execute('ActivityBar.resize', {
+      height: 144,
+      width: 48,
+      x: 0,
+      y: 0,
+    })
     return getExecutedResult(item.name, test, globals)
   } catch (error) {
     return getImportErrorResult(item.name, error)
