@@ -1,4 +1,4 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Layout from '../src/parts/TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 
@@ -48,23 +48,16 @@ test('waitForSideBarVisible', async () => {
 })
 
 test('waitForSideBarVisible retries', async () => {
-  jest.useFakeTimers()
-  try {
-    let invocationCount = 0
-    using mockRpc = RendererWorker.registerMockRpc({
-      'Layout.getSideBarVisible'() {
-        invocationCount++
-        return invocationCount === 2
-      },
-    })
+  let invocationCount = 0
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarVisible'() {
+      invocationCount++
+      return invocationCount === 2
+    },
+  })
 
-    const promise = Layout.waitForSideBarVisible(true)
-    await jest.runAllTimersAsync()
-    await promise
-    expect(mockRpc.invocations).toEqual([['Layout.getSideBarVisible'], ['Layout.getSideBarVisible']])
-  } finally {
-    jest.useRealTimers()
-  }
+  await Layout.waitForSideBarVisible(true)
+  expect(mockRpc.invocations).toEqual([['Layout.getSideBarVisible'], ['Layout.getSideBarVisible']])
 })
 
 test('waitForSideBarVisible throws when the expected visibility is not reached', async () => {
