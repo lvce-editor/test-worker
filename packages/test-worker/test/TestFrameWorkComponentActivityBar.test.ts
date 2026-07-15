@@ -167,6 +167,17 @@ test('handleBadgeCountChange', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleBadgeCountChange', {}]])
 })
 
+test('handleSettingsChanged', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleSettingsChanged'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleSettingsChanged()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleSettingsChanged']])
+})
+
 test('setUpdateState', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.handleUpdateStateChange'() {
