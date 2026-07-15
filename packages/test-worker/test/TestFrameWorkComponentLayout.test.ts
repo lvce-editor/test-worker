@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Layout from '../src/parts/TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 
@@ -22,6 +22,60 @@ test('hideSideBar', async () => {
 
   await Layout.hideSideBar()
   expect(mockRpc.invocations).toEqual([['Layout.hideSideBar']])
+})
+
+test('getSideBarVisible', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarVisible'() {
+      return true
+    },
+  })
+
+  const sideBarVisible = await Layout.getSideBarVisible()
+  expect(sideBarVisible).toBe(true)
+  expect(mockRpc.invocations).toEqual([['Layout.getSideBarVisible']])
+})
+
+test('waitForSideBarVisible', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarVisible'() {
+      return true
+    },
+  })
+
+  await Layout.waitForSideBarVisible(true)
+  expect(mockRpc.invocations).toEqual([['Layout.getSideBarVisible']])
+})
+
+test('waitForSideBarVisible retries', async () => {
+  jest.useFakeTimers()
+  try {
+    let invocationCount = 0
+    using mockRpc = RendererWorker.registerMockRpc({
+      'Layout.getSideBarVisible'() {
+        invocationCount++
+        return invocationCount === 2
+      },
+    })
+
+    const promise = Layout.waitForSideBarVisible(true)
+    await jest.runAllTimersAsync()
+    await promise
+    expect(mockRpc.invocations).toEqual([['Layout.getSideBarVisible'], ['Layout.getSideBarVisible']])
+  } finally {
+    jest.useRealTimers()
+  }
+})
+
+test('waitForSideBarVisible throws when the expected visibility is not reached', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarVisible'() {
+      return false
+    },
+  })
+
+  await expect(Layout.waitForSideBarVisible(true)).rejects.toThrow('expected sidebar visibility to be true but was false')
+  expect(mockRpc.invocations).toHaveLength(21)
 })
 
 test('getSideBarPosition', async () => {
