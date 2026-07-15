@@ -101,6 +101,17 @@ test('handleClick', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleClick', 1]])
 })
 
+test('handleClickIndex', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleClickIndex'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleClickIndex()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickIndex', 0, 1, 0, 0]])
+})
+
 test('handleSideBarHidden', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.handleSideBarHidden'() {
