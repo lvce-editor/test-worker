@@ -42,8 +42,8 @@ export const handleSideBarHidden = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleSideBarHidden')
 }
 
-export const handleContextMenu = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleContextMenu')
+export const handleContextMenu = async (uid: number, button: number, x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.handleContextMenu', uid, button, x, y)
 }
 
 export const handleExtensionsChanged = async (): Promise<void> => {
