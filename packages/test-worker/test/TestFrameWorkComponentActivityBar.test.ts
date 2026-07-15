@@ -233,6 +233,17 @@ test('handleClickAccount', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickAccount', 100, 200]])
 })
 
+test('handleClickAdditionalViews', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleClickAdditionalViews'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleClickAdditionalViews(300, 300)
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickAdditionalViews', 300, 300]])
+})
+
 test('resize', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.resize'() {

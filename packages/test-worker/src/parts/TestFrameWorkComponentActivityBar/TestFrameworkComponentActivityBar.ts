@@ -86,6 +86,10 @@ export const handleClickAccount = async (x: number, y: number): Promise<void> =>
   await RendererWorker.invoke('ActivityBar.handleClickAccount', x, y)
 }
 
+export const handleClickAdditionalViews = async (x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.handleClickAdditionalViews', x, y)
+}
+
 export interface Dimensions {
   readonly height: number
   readonly width: number
