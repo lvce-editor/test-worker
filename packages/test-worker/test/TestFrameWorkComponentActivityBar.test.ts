@@ -119,8 +119,8 @@ test('handleContextMenu', async () => {
     },
   })
 
-  await ActivityBar.handleContextMenu()
-  expect(mockRpc.invocations).toEqual([['ActivityBar.handleContextMenu']])
+  await ActivityBar.handleContextMenu(300, 0, 100, 200)
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleContextMenu', 300, 0, 100, 200]])
 })
 
 test('handleExtensionsChanged', async () => {
