@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 export const focus = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.focus')
@@ -48,6 +49,10 @@ export const handleContextMenu = async (uid: number, button: number, x: number, 
 
 export const handleExtensionsChanged = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleExtensionsChanged')
+}
+
+export const handleBadgeCountChange = async (): Promise<void> => {
+  await Command.execute('ActivityBar.handleBadgeCountChange', {})
 }
 
 export interface UpdateConfig {

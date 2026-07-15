@@ -134,6 +134,17 @@ test('handleExtensionsChanged', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleExtensionsChanged']])
 })
 
+test('handleBadgeCountChange', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleBadgeCountChange'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleBadgeCountChange()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleBadgeCountChange', {}]])
+})
+
 test('setUpdateState', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.handleUpdateStateChange'() {
