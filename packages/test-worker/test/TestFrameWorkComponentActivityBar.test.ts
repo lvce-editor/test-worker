@@ -97,8 +97,8 @@ test('handleClick', async () => {
     },
   })
 
-  await ActivityBar.handleClick(1)
-  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClick', 1]])
+  await ActivityBar.handleClick()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClick', 0, -1000, -1000, '']])
 })
 
 test('handleSideBarHidden', async () => {
