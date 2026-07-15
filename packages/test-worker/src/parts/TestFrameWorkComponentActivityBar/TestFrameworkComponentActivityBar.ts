@@ -57,6 +57,10 @@ export const handleExtensionsChanged = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleExtensionsChanged')
 }
 
+export const handleBadgeCountChange = async (): Promise<void> => {
+  await Command.execute('ActivityBar.handleBadgeCountChange', {})
+}
+
 export interface UpdateConfig {
   readonly progress: number
   readonly state: number
