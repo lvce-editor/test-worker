@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 export const focus = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.focus')
@@ -38,6 +39,10 @@ export const focusPrevious = async (): Promise<void> => {
 
 export const handleClick = async (index: number): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleClick', index)
+}
+
+export const handleClickIndex = async (): Promise<void> => {
+  await Command.execute('ActivityBar.handleClickIndex', 0, 1, 0, 0)
 }
 
 export const handleSideBarHidden = async (): Promise<void> => {
