@@ -9,6 +9,22 @@ export const hideSideBar = async (): Promise<void> => {
   await Command.execute('Layout.hideSideBar')
 }
 
+export const getSideBarVisible = async (): Promise<boolean> => {
+  return Command.execute('Layout.getSideBarVisible')
+}
+
+export const waitForSideBarVisible = async (expected: boolean): Promise<void> => {
+  for (let i = 0; i < 20; i++) {
+    const sideBarVisible = await getSideBarVisible()
+    if (sideBarVisible === expected) {
+      return
+    }
+    await new Promise((resolve) => setTimeout(resolve, 50))
+  }
+  const sideBarVisible = await getSideBarVisible()
+  throw new Error(`expected sidebar visibility to be ${expected} but was ${sideBarVisible}`)
+}
+
 export const getSideBarPosition = async (): Promise<number> => {
   return Command.execute('Layout.getSideBarPosition')
 }

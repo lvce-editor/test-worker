@@ -24,6 +24,53 @@ test('hideSideBar', async () => {
   expect(mockRpc.invocations).toEqual([['Layout.hideSideBar']])
 })
 
+test('getSideBarVisible', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarVisible'() {
+      return true
+    },
+  })
+
+  const sideBarVisible = await Layout.getSideBarVisible()
+  expect(sideBarVisible).toBe(true)
+  expect(mockRpc.invocations).toEqual([['Layout.getSideBarVisible']])
+})
+
+test('waitForSideBarVisible', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarVisible'() {
+      return true
+    },
+  })
+
+  await Layout.waitForSideBarVisible(true)
+  expect(mockRpc.invocations).toEqual([['Layout.getSideBarVisible']])
+})
+
+test('waitForSideBarVisible retries', async () => {
+  let invocationCount = 0
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarVisible'() {
+      invocationCount++
+      return invocationCount === 2
+    },
+  })
+
+  await Layout.waitForSideBarVisible(true)
+  expect(mockRpc.invocations).toEqual([['Layout.getSideBarVisible'], ['Layout.getSideBarVisible']])
+})
+
+test('waitForSideBarVisible throws when the expected visibility is not reached', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.getSideBarVisible'() {
+      return false
+    },
+  })
+
+  await expect(Layout.waitForSideBarVisible(true)).rejects.toThrow('expected sidebar visibility to be true but was false')
+  expect(mockRpc.invocations).toHaveLength(21)
+})
+
 test('getSideBarPosition', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.getSideBarPosition'() {
