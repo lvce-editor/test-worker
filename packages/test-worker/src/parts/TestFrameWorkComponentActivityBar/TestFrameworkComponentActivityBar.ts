@@ -46,6 +46,10 @@ export const handleContextMenu = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleContextMenu')
 }
 
+export const handleExtensionsChanged = async (): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.handleExtensionsChanged')
+}
+
 export interface UpdateConfig {
   readonly progress: number
   readonly state: number

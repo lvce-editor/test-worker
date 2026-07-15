@@ -123,6 +123,17 @@ test('handleContextMenu', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleContextMenu']])
 })
 
+test('handleExtensionsChanged', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleExtensionsChanged'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleExtensionsChanged()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleExtensionsChanged']])
+})
+
 test('setUpdateState', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.handleUpdateStateChange'() {
