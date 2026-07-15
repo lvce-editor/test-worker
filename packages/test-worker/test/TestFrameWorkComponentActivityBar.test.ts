@@ -35,6 +35,17 @@ test('setUserLoginState', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.setUserLoginState', 'logging in']])
 })
 
+test('setUserLoginState with user info', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.setUserLoginState'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.setUserLoginState('logged in', { provider: 'GitHub', userName: 'SimonSiefke' })
+  expect(mockRpc.invocations).toEqual([['ActivityBar.setUserLoginState', 'logged in', { provider: 'GitHub', userName: 'SimonSiefke' }]])
+})
+
 test('focusFirst', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusFirst'() {
@@ -176,6 +187,17 @@ test('handleClickSettings', async () => {
 
   await ActivityBar.handleClickSettings(100, 200)
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickSettings', 100, 200]])
+})
+
+test('handleClickAccount', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleClickAccount'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleClickAccount(100, 200)
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickAccount', 100, 200]])
 })
 
 test('resize', async () => {

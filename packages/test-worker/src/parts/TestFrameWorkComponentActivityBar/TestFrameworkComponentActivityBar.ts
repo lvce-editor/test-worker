@@ -8,10 +8,12 @@ export const toggleActivityBarItem = async (id: string): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.toggleActivityBarItem', id)
 }
 
-// export type LoginState = 'logging in' | 'logging out'
-
-export const setUserLoginState = async (loginState: string): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState)
+export const setUserLoginState = async (loginState: string, userInfo?: unknown): Promise<void> => {
+  if (userInfo === undefined) {
+    await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState)
+    return
+  }
+  await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState, userInfo)
 }
 
 export const focusFirst = async (): Promise<void> => {
@@ -65,6 +67,10 @@ export const selectCurrent = async (): Promise<void> => {
 
 export const handleClickSettings = async (x: number, y: number): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleClickSettings', x, y)
+}
+
+export const handleClickAccount = async (x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.handleClickAccount', x, y)
 }
 
 export interface Dimensions {
