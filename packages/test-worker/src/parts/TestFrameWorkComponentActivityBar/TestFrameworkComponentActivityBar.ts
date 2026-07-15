@@ -61,6 +61,10 @@ export const handleBadgeCountChange = async (): Promise<void> => {
   await Command.execute('ActivityBar.handleBadgeCountChange', {})
 }
 
+export const handleSettingsChanged = async (): Promise<void> => {
+  await Command.execute('ActivityBar.handleSettingsChanged')
+}
+
 export interface UpdateConfig {
   readonly progress: number
   readonly state: number
