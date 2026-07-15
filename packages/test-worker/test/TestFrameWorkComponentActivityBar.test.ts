@@ -42,8 +42,8 @@ test('setUserLoginState with user info', async () => {
     },
   })
 
-  await ActivityBar.setUserLoginState('logged in', { provider: 'GitHub', userName: 'SimonSiefke' })
-  expect(mockRpc.invocations).toEqual([['ActivityBar.setUserLoginState', 'logged in', { provider: 'GitHub', userName: 'SimonSiefke' }]])
+  await ActivityBar.setUserLoginState('logged in', { provider: 'GitHub', userName: 'Test User' })
+  expect(mockRpc.invocations).toEqual([['ActivityBar.setUserLoginState', 'logged in', { provider: 'GitHub', userName: 'Test User' }]])
 })
 
 test('focusFirst', async () => {
