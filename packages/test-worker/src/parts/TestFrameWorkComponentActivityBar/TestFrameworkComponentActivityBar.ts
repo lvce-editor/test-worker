@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 
 export const focus = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.focus')
@@ -8,10 +9,12 @@ export const toggleActivityBarItem = async (id: string): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.toggleActivityBarItem', id)
 }
 
-// export type LoginState = 'logging in' | 'logging out'
-
-export const setUserLoginState = async (loginState: string): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState)
+export const setUserLoginState = async (loginState: string, userInfo?: unknown): Promise<void> => {
+  if (userInfo === undefined) {
+    await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState)
+    return
+  }
+  await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState, userInfo)
 }
 
 export const focusFirst = async (): Promise<void> => {
@@ -34,8 +37,12 @@ export const focusPrevious = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.focusPrevious')
 }
 
-export const handleClick = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleClick', index)
+export const handleClick = async (): Promise<void> => {
+  await Command.execute('ActivityBar.handleClick', 0, -1000, -1000, '')
+}
+
+export const handleClickIndex = async (): Promise<void> => {
+  await Command.execute('ActivityBar.handleClickIndex', 0, 1, 0, 0)
 }
 
 export const handleSideBarHidden = async (): Promise<void> => {
@@ -48,6 +55,10 @@ export const handleContextMenu = async (uid: number, button: number, x: number, 
 
 export const handleExtensionsChanged = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleExtensionsChanged')
+}
+
+export const handleBadgeCountChange = async (): Promise<void> => {
+  await Command.execute('ActivityBar.handleBadgeCountChange', {})
 }
 
 export interface UpdateConfig {
@@ -65,6 +76,10 @@ export const selectCurrent = async (): Promise<void> => {
 
 export const handleClickSettings = async (x: number, y: number): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.handleClickSettings', x, y)
+}
+
+export const handleClickAccount = async (x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ActivityBar.handleClickAccount', x, y)
 }
 
 export interface Dimensions {
