@@ -37,8 +37,8 @@ export const focusPrevious = async (): Promise<void> => {
   await RendererWorker.invoke('ActivityBar.focusPrevious')
 }
 
-export const handleClick = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleClick', index)
+export const handleClick = async (): Promise<void> => {
+  await Command.execute('ActivityBar.handleClick', 0, -1000, -1000, '')
 }
 
 export const handleClickIndex = async (): Promise<void> => {
