@@ -21,6 +21,7 @@ test('press: simple key', async () => {
         cancelable: true,
         ctrlKey: false,
         key: 'a',
+        shiftKey: false,
       },
     ],
   ])
@@ -45,6 +46,30 @@ test('press: with modifiers Control+Alt+Space', async () => {
         cancelable: true,
         ctrlKey: true,
         key: ' ',
+        shiftKey: false,
+      },
+    ],
+  ])
+})
+
+test('press: with shift modifier', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.performKeyBoardAction'() {
+      return undefined
+    },
+  })
+  await KeyBoard.press('Shift+Enter')
+  expect(mockRpc.invocations).toEqual([
+    [
+      'TestFrameWork.performKeyBoardAction',
+      'press',
+      {
+        altKey: false,
+        bubbles: true,
+        cancelable: true,
+        ctrlKey: false,
+        key: 'Enter',
+        shiftKey: true,
       },
     ],
   ])
