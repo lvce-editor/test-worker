@@ -7,6 +7,7 @@ import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
+import { roundTestResults } from '../RoundTestResults/RoundTestResults.ts'
 import * as ShouldSkipTest from '../ShouldSkipTest/ShouldSkipTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
@@ -223,7 +224,7 @@ export const executeAll = async (tests: readonly ExecuteAllTest[], href: string,
   }
   const end = Timestamp.now()
   await showAllTestsOverlay(results, end - start)
-  await RendererWorker.invoke('TestFrameWork.showTestResults', JSON.stringify(results))
+  await RendererWorker.invoke('TestFrameWork.showTestResults', JSON.stringify(roundTestResults(results)))
   TestInfoCache.push({
     assetDir,
     inProgress: false,
