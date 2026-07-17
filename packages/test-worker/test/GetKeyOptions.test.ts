@@ -6,6 +6,7 @@ test('key with control', () => {
     altKey: false,
     ctrlKey: true,
     key: 'a',
+    shiftKey: false,
   })
 })
 
@@ -14,6 +15,7 @@ test('key with alt', () => {
     altKey: true,
     ctrlKey: false,
     key: 'a',
+    shiftKey: false,
   })
 })
 
@@ -22,6 +24,16 @@ test('key with space', () => {
     altKey: false,
     ctrlKey: true,
     key: ' ',
+    shiftKey: false,
+  })
+})
+
+test('key with shift', () => {
+  expect(GetKeyOptions.getKeyOptions('Shift+Enter')).toEqual({
+    altKey: false,
+    ctrlKey: false,
+    key: 'Enter',
+    shiftKey: true,
   })
 })
 
@@ -30,5 +42,6 @@ test('normal key', () => {
     altKey: false,
     ctrlKey: false,
     key: 'a',
+    shiftKey: false,
   })
 })
