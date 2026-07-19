@@ -7,6 +7,7 @@ import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
+import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import { roundTestResults } from '../RoundTestResults/RoundTestResults.ts'
 import * as ShouldSkipTest from '../ShouldSkipTest/ShouldSkipTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
@@ -149,7 +150,7 @@ const showAllTestsOverlay = async (results: readonly ExecuteAllTestResult[], dur
     background = 'red'
   }
   const text = `${getSummaryParts(results).join(', ')} in ${formatDuration(duration)}`
-  await RendererWorker.invoke('TestFrameWork.showOverlay', type, background, text)
+  await RendererProcess.invoke('TestFrameWork.showOverlay', type, background, text)
 }
 
 // TODO move this into three steps:
@@ -187,7 +188,7 @@ export const execute = async (href: string, platform: number, assetDir: string):
   } catch (error) {
     AutoFixState.clear()
     await printTestError(error)
-    await RendererWorker.invoke('TestFrameWork.showOverlay', TestType.Fail, 'red', `test failed: ${error}`)
+    await RendererProcess.invoke('TestFrameWork.showOverlay', TestType.Fail, 'red', `test failed: ${error}`)
     return
   } finally {
     TestInfoCache.push({
@@ -224,7 +225,7 @@ export const executeAll = async (tests: readonly ExecuteAllTest[], href: string,
   }
   const end = Timestamp.now()
   await showAllTestsOverlay(results, end - start)
-  await RendererWorker.invoke('TestFrameWork.showTestResults', JSON.stringify(roundTestResults(results)))
+  await RendererProcess.invoke('TestFrameWork.showTestResults', JSON.stringify(roundTestResults(results)))
   TestInfoCache.push({
     assetDir,
     inProgress: false,
