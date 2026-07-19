@@ -3,6 +3,12 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ProcessExplorer from '../src/parts/TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 
 const getSelector = (locator: any): string => {
+  if (Array.isArray(locator)) {
+    return locator
+      .filter((part) => part.type === 'css')
+      .map((part) => part.selector)
+      .join(' ')
+  }
   return locator._selector
 }
 
