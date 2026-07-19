@@ -1,7 +1,7 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as AutoFixState from '../AutoFixState/AutoFixState.ts'
 import { executeTest2 } from '../ExecuteTest2/ExecuteTest2.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
+import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import * as Timestamp from '../Timestamp/Timestamp.ts'
 
 export const executeTest = async (name: string, fn: any, globals = {}): Promise<void> => {
@@ -15,8 +15,8 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
   }
 
   if (overlayActions && overlayActions.length > 0) {
-    await RendererWorker.invoke('TestFrameWork.showOverlay', type, background, text, overlayActions)
+    await RendererProcess.invoke('TestFrameWork.showOverlay', type, background, text, overlayActions)
     return
   }
-  await RendererWorker.invoke('TestFrameWork.showOverlay', type, background, text)
+  await RendererProcess.invoke('TestFrameWork.showOverlay', type, background, text)
 }
