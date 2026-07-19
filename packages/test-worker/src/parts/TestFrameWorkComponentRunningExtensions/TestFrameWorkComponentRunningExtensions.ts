@@ -1,6 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import { createLocator } from '../CreateLocator/CreateLocator.ts'
 import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
+import { createLocator } from '../CreateLocator/CreateLocator.ts'
 
 export interface RunningExtension {
   readonly activationEvent: string
