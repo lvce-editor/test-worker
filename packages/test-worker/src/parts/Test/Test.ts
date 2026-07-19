@@ -97,7 +97,7 @@ const executeAllTest = async (item: ExecuteAllTest, globals: any): Promise<Execu
     }
     await RendererWorker.invoke('Layout.reset')
     await Command.execute('ActivityBar.resize', {
-      height: 144,
+      height: 336,
       width: 48,
       x: 0,
       y: 0,
