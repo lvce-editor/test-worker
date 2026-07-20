@@ -53,6 +53,52 @@ test('addFileHandle', async () => {
   expect(mockRpc.invocations).toEqual([['FileSystem.addFileHandle', file]])
 })
 
+test('registerFileHandle', async () => {
+  const fileHandle = {
+    kind: 'file',
+    name: 'test.txt',
+  } as FileSystemFileHandle
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystemHandle.addFileHandle'() {
+      return 42
+    },
+  })
+
+  const id = await FileSystem.registerFileHandle(fileHandle)
+
+  expect(id).toBe(42)
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.addFileHandle', fileHandle]])
+})
+
+test('getDirectoryHandle', async () => {
+  const directoryHandle = {
+    kind: 'directory',
+    name: 'folder',
+  } as FileSystemDirectoryHandle
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystemHandle.getDirectoryHandle'() {
+      return directoryHandle
+    },
+  })
+
+  const result = await FileSystem.getDirectoryHandle('/tmp/folder')
+
+  expect(result).toBe(directoryHandle)
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.getDirectoryHandle', '/tmp/folder']])
+})
+
+test('removeFileHandle', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystemHandle.removeFileHandle'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.removeFileHandle(42)
+
+  expect(mockRpc.invocations).toEqual([['FileSystemHandle.removeFileHandle', 42]])
+})
+
 test('mkdir', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'FileSystem.mkdir'() {
@@ -73,6 +119,78 @@ test('remove', async () => {
 
   await FileSystem.remove('memfs:///file.txt')
   expect(mockRpc.invocations).toEqual([['FileSystem.remove', 'memfs:///file.txt']])
+})
+
+test('deleteFile', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.deleteFile'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.deleteFile('memfs:///test.txt')
+
+  expect(mockRpc.invocations).toEqual([['FileSystem.deleteFile', 'memfs:///test.txt']])
+})
+
+test('rename', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.rename'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.rename('memfs:///before.txt', 'memfs:///after.txt')
+
+  expect(mockRpc.invocations).toEqual([['FileSystem.rename', 'memfs:///before.txt', 'memfs:///after.txt']])
+})
+
+test('setProviderError', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystemProvider.setError'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.setProviderError(true)
+
+  expect(mockRpc.invocations).toEqual([['FileSystemProvider.setError', true]])
+})
+
+test('setProviderInvalidData', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystemProvider.setInvalidData'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.setProviderInvalidData(true)
+
+  expect(mockRpc.invocations).toEqual([['FileSystemProvider.setInvalidData', true]])
+})
+
+test('setReadOnly', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.setReadOnly'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.setReadOnly('memfs:///test', true)
+
+  expect(mockRpc.invocations).toEqual([['FileSystem.setReadOnly', 'memfs:///test', true]])
+})
+
+test('symlink', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'FileSystem.symlink'() {
+      return undefined
+    },
+  })
+
+  await FileSystem.symlink('memfs:///target', 'memfs:///link')
+
+  expect(mockRpc.invocations).toEqual([['FileSystem.symlink', 'memfs:///target', 'memfs:///link']])
 })
 
 test('setFiles', async () => {

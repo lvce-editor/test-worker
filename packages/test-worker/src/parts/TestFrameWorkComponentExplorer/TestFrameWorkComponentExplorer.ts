@@ -1,5 +1,13 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
+export interface ExplorerSavedState {
+  readonly deltaY: number
+  readonly expandedPaths: readonly string[]
+  readonly maxLineY: number
+  readonly minLineY: number
+  readonly root: string
+}
+
 export const openContextMenu = async (index: number): Promise<void> => {
   await RendererWorker.invoke('Explorer.handleContextMenuKeyboard', index)
 }
@@ -41,6 +49,14 @@ export const focusNext = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.focusNext')
 }
 
+export const focusNone = async (): Promise<void> => {
+  await RendererWorker.invoke('Explorer.focusNone')
+}
+
+export const focusPrevious = async (): Promise<void> => {
+  await RendererWorker.invoke('Explorer.focusPrevious')
+}
+
 export const selectUp = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.selectUp')
 }
@@ -71,6 +87,10 @@ export const clickCurrent = async (): Promise<void> => {
 
 export const handleArrowLeft = async (): Promise<void> => {
   await RendererWorker.invoke('Explorer.handleArrowLeft')
+}
+
+export const handleArrowRight = async (): Promise<void> => {
+  await RendererWorker.invoke('Explorer.handleArrowRight')
 }
 
 export const focusLast = async (): Promise<void> => {
@@ -120,8 +140,20 @@ export const handleClickAt = async (
   await RendererWorker.invoke('Explorer.handleClickAt', preventDefault, button, ctrlKey, shiftKey, x, y)
 }
 
+export const handleClickOpenFolder = async (): Promise<void> => {
+  await RendererWorker.invoke('Explorer.handleClickOpenFolder')
+}
+
+export const handleDoubleClick = async (eventX: number, eventY: number): Promise<void> => {
+  await RendererWorker.invoke('Explorer.handleDoubleClick', eventX, eventY)
+}
+
 export const handleDrop = async (x: number, y: number, fileIds: readonly number[], fileList: FileList | readonly File[]): Promise<void> => {
-  await RendererWorker.invoke('Explorer.handleDrop', x, y, fileIds, fileIds)
+  await RendererWorker.invoke('Explorer.handleDrop', x, y, fileIds, fileList)
+}
+
+export const handleKeyDown = async (defaultPrevented: boolean, key: string): Promise<void> => {
+  await RendererWorker.invoke('Explorer.handleKeyDown', defaultPrevented, key)
 }
 
 export const rename = async (): Promise<void> => {
@@ -174,4 +206,20 @@ export const selectIndices = async (indices: readonly number[]): Promise<void> =
 
 export const toggleIndividualSelection = async (index: number): Promise<void> => {
   await RendererWorker.invoke('Explorer.toggleIndividualSelection', index)
+}
+
+export const restoreState = async (savedState?: ExplorerSavedState): Promise<void> => {
+  if (savedState === undefined) {
+    await RendererWorker.invoke('Explorer.restoreState')
+    return
+  }
+  await RendererWorker.invoke('Explorer.restoreState', savedState)
+}
+
+export const reveal = async (uri: string): Promise<void> => {
+  await RendererWorker.invoke('Explorer.reveal', uri)
+}
+
+export const saveState = async (): Promise<ExplorerSavedState> => {
+  return RendererWorker.invoke('Explorer.saveState')
 }
