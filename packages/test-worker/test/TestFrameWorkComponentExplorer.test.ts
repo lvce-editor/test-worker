@@ -122,6 +122,30 @@ test('focusNext', async () => {
   expect(mockRpc.invocations).toEqual([['Explorer.focusNext']])
 })
 
+test('focusNone', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.focusNone'() {
+      return undefined
+    },
+  })
+
+  await Explorer.focusNone()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.focusNone']])
+})
+
+test('focusPrevious', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.focusPrevious'() {
+      return undefined
+    },
+  })
+
+  await Explorer.focusPrevious()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.focusPrevious']])
+})
+
 test('selectUp', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.selectUp'() {
@@ -204,6 +228,18 @@ test('handleArrowLeft', async () => {
   await Explorer.handleArrowLeft()
 
   expect(mockRpc.invocations).toEqual([['Explorer.handleArrowLeft']])
+})
+
+test('handleArrowRight', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handleArrowRight'() {
+      return undefined
+    },
+  })
+
+  await Explorer.handleArrowRight()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handleArrowRight']])
 })
 
 test('focusLast', async () => {
@@ -326,6 +362,30 @@ test('handleClickAt', async () => {
   expect(mockRpc.invocations).toEqual([['Explorer.handleClickAt', true, 1, false, true, 100, 200]])
 })
 
+test('handleClickOpenFolder', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handleClickOpenFolder'() {
+      return undefined
+    },
+  })
+
+  await Explorer.handleClickOpenFolder()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handleClickOpenFolder']])
+})
+
+test('handleDoubleClick', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handleDoubleClick'() {
+      return undefined
+    },
+  })
+
+  await Explorer.handleDoubleClick(100, 200)
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handleDoubleClick', 100, 200]])
+})
+
 test('handleDrop', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleDrop'() {
@@ -338,7 +398,19 @@ test('handleDrop', async () => {
 
   await Explorer.handleDrop(150, 250, fileIds, fileList)
 
-  expect(mockRpc.invocations).toEqual([['Explorer.handleDrop', 150, 250, fileIds, fileIds]])
+  expect(mockRpc.invocations).toEqual([['Explorer.handleDrop', 150, 250, fileIds, fileList]])
+})
+
+test('handleKeyDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handleKeyDown'() {
+      return undefined
+    },
+  })
+
+  await Explorer.handleKeyDown(false, 'a')
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handleKeyDown', false, 'a']])
 })
 
 test('rename', async () => {
@@ -508,4 +580,67 @@ test('toggleIndividualSelection', async () => {
   await Explorer.toggleIndividualSelection(8)
 
   expect(mockRpc.invocations).toEqual([['Explorer.toggleIndividualSelection', 8]])
+})
+
+test('restoreState', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.restoreState'() {
+      return undefined
+    },
+  })
+  const savedState: Explorer.ExplorerSavedState = {
+    deltaY: 0,
+    expandedPaths: ['/tmp/folder'],
+    maxLineY: 10,
+    minLineY: 0,
+    root: '/tmp',
+  }
+
+  await Explorer.restoreState(savedState)
+
+  expect(mockRpc.invocations).toEqual([['Explorer.restoreState', savedState]])
+})
+
+test('restoreState without saved state', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.restoreState'() {
+      return undefined
+    },
+  })
+
+  await Explorer.restoreState()
+
+  expect(mockRpc.invocations).toEqual([['Explorer.restoreState']])
+})
+
+test('reveal', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.reveal'() {
+      return undefined
+    },
+  })
+
+  await Explorer.reveal('/tmp/file.txt')
+
+  expect(mockRpc.invocations).toEqual([['Explorer.reveal', '/tmp/file.txt']])
+})
+
+test('saveState', async () => {
+  const savedState: Explorer.ExplorerSavedState = {
+    deltaY: 0,
+    expandedPaths: ['/tmp/folder'],
+    maxLineY: 10,
+    minLineY: 0,
+    root: '/tmp',
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.saveState'() {
+      return savedState
+    },
+  })
+
+  const result = await Explorer.saveState()
+
+  expect(result).toBe(savedState)
+  expect(mockRpc.invocations).toEqual([['Explorer.saveState']])
 })
