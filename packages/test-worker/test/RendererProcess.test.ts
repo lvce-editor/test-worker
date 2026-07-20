@@ -1,38 +1,46 @@
 import type { Rpc } from '@lvce-editor/rpc'
 import { afterEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { RendererWorker, RpcId } from '@lvce-editor/rpc-registry'
+import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 
 const directInvoke = jest.fn<(...params: readonly any[]) => Promise<any>>()
 const directRpc = {
+  dispose: async (): Promise<void> => {},
   invoke: directInvoke,
 } as unknown as Rpc
-const create = jest.fn<(_options: any) => Promise<Rpc>>(async () => directRpc)
 
-jest.unstable_mockModule('@lvce-editor/rpc', () => ({
-  PlainMessagePortRpcParent: {
-    create,
-  },
-}))
-
-const RendererProcess = await import('../src/parts/RendererProcess/RendererProcess.ts')
-
-afterEach(() => {
+afterEach(async () => {
+  await RendererProcess.state.rpc?.dispose()
   RendererProcess.state.rpc = undefined
-  create.mockClear()
   directInvoke.mockReset()
 })
 
-test('initialize creates a direct message port rpc', async () => {
-  const port = {} as MessagePort
-
-  await RendererProcess.initialize(port)
-
-  expect(create).toHaveBeenCalledTimes(1)
-  expect(create).toHaveBeenCalledWith({
-    commandMap: {},
-    messagePort: port,
+test('initialize creates a lazy direct rpc and sends its message port to the renderer process', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToRendererProcess'(port: MessagePort): undefined {
+      port.onmessage = (event: MessageEvent): void => {
+        const { data } = event
+        port.postMessage({
+          id: data.id,
+          jsonrpc: '2.0',
+          result: 123,
+        })
+      }
+      return undefined
+    },
   })
-  expect(RendererProcess.state.rpc).toBe(directRpc)
+
+  await RendererProcess.initialize()
+
+  await expect(RendererProcess.invoke('TestFrameWork.checkSingleElementCondition', { selector: '.Editor' })).resolves.toBe(123)
+  expect(mockRpc.invocations).toEqual([
+    [
+      'SendMessagePortToExtensionHostWorker.sendMessagePortToRendererProcess',
+      expect.anything(),
+      'HandleMessagePort.handleMessagePort',
+      RpcId.DebugWorker,
+    ],
+  ])
 })
 
 test('invoke uses the direct renderer process rpc when initialized', async () => {

@@ -1,14 +1,18 @@
-import { PlainMessagePortRpcParent, type Rpc } from '@lvce-editor/rpc'
+import { LazyTransferMessagePortRpcParent, type Rpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export const state: { rpc: Rpc | undefined } = {
   rpc: undefined,
 }
 
-export const initialize = async (port: MessagePort): Promise<void> => {
-  state.rpc = await PlainMessagePortRpcParent.create({
+const send = async (port: MessagePort): Promise<void> => {
+  await RendererWorker.sendMessagePortToRendererProcess(port)
+}
+
+export const initialize = async (): Promise<void> => {
+  state.rpc = await LazyTransferMessagePortRpcParent.create({
     commandMap: {},
-    messagePort: port,
+    send,
   })
 }
 
