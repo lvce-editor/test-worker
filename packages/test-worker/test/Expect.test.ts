@@ -3,6 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ILocator } from '../src/parts/ILocator/ILocator.ts'
 import { createLocator as createRealLocator } from '../src/parts/CreateLocator/CreateLocator.ts'
 import * as ExpectMod from '../src/parts/Expect/Expect.ts'
+import { getConditionLocator } from '../src/parts/GetConditionLocator/GetConditionLocator.ts'
 import { parseCssSelector } from '../src/parts/ParseCssSelector/ParseCssSelector.ts'
 import * as WebViewState from '../src/parts/WebViewState/WebViewState.ts'
 
@@ -24,7 +25,7 @@ test('toHaveText: ok path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toHaveText('Hello')
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveText', { text: 'Hello' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveText', { text: 'Hello' }]])
 })
 
 test('sends chained, has-text, and nth locator data without duplicate selector text', async () => {
@@ -38,7 +39,7 @@ test('sends chained, has-text, and nth locator data without duplicate selector t
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toBeVisible()
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toBeVisible', {}]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toBeVisible', {}]])
 })
 
 test('keeps legacy locator payload for webview conditions', async () => {
@@ -77,8 +78,8 @@ test('toHaveText: error path builds ConditionErrors', async () => {
 
   // Verify the RPC was called
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveText', { text: 'World' }],
-    ['TestFrameWork.checkConditionError', 'toHaveText', locator._parsed, { text: 'World' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveText', { text: 'World' }],
+    ['TestFrameWork.checkConditionError', 'toHaveText', getConditionLocator(locator), { text: 'World' }],
   ])
 })
 
@@ -91,7 +92,7 @@ test('toHaveCount: validates number', async () => {
   const locator = createLocator('.item')
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toHaveCount(2)
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkMultiElementCondition', locator._parsed, 'toHaveCount', { count: 2 }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkMultiElementCondition', getConditionLocator(locator), 'toHaveCount', { count: 2 }]])
 })
 
 test('toBeVisible: negated throws guidance', async () => {
@@ -117,8 +118,8 @@ test('checkMultiElementCondition: error path builds ConditionErrors', async () =
   })
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkMultiElementCondition', locator._parsed, 'toHaveCount', { count: 2 }],
-    ['TestFrameWork.checkConditionError', 'toHaveCount', locator._parsed],
+    ['TestFrameWork.checkMultiElementCondition', getConditionLocator(locator), 'toHaveCount', { count: 2 }],
+    ['TestFrameWork.checkConditionError', 'toHaveCount', getConditionLocator(locator)],
   ])
 })
 
@@ -133,7 +134,7 @@ test('toBeVisible: success path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toBeVisible()
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toBeVisible', {}]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toBeVisible', {}]])
 })
 
 test('toContainText: success path', async () => {
@@ -147,7 +148,9 @@ test('toContainText: success path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toContainText('Hello World')
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toContainText', { text: 'Hello World' }]])
+  expect(mockRpc.invocations).toEqual([
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toContainText', { text: 'Hello World' }],
+  ])
 })
 
 test('toContainText: error path', async () => {
@@ -167,8 +170,8 @@ test('toContainText: error path', async () => {
   })
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toContainText', { text: 'World' }],
-    ['TestFrameWork.checkConditionError', 'toContainText', locator._parsed, { text: 'World' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toContainText', { text: 'World' }],
+    ['TestFrameWork.checkConditionError', 'toContainText', getConditionLocator(locator), { text: 'World' }],
   ])
 })
 
@@ -183,7 +186,9 @@ test('toHaveValue: success path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toHaveValue('test value')
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveValue', { value: 'test value' }]])
+  expect(mockRpc.invocations).toEqual([
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveValue', { value: 'test value' }],
+  ])
 })
 
 test('toHaveValue: error path', async () => {
@@ -202,7 +207,9 @@ test('toHaveValue: error path', async () => {
     message: expect.stringContaining('expected selector input to have value expected value'),
   })
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveValue', { value: 'expected value' }]])
+  expect(mockRpc.invocations).toEqual([
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveValue', { value: 'expected value' }],
+  ])
 })
 
 test('toBeFocused: success path', async () => {
@@ -216,7 +223,7 @@ test('toBeFocused: success path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toBeFocused()
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toBeFocused', undefined]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toBeFocused', undefined]])
 })
 
 test('toBeFocused: error path', async () => {
@@ -236,8 +243,8 @@ test('toBeFocused: error path', async () => {
   })
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toBeFocused', undefined],
-    ['TestFrameWork.checkConditionError', 'toBeFocused', locator._parsed, undefined],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toBeFocused', undefined],
+    ['TestFrameWork.checkConditionError', 'toBeFocused', getConditionLocator(locator), undefined],
   ])
 })
 
@@ -252,7 +259,9 @@ test('toHaveCSS: success path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toHaveCSS('color', 'red')
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveCss', { key: 'color', value: 'red' }]])
+  expect(mockRpc.invocations).toEqual([
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveCss', { key: 'color', value: 'red' }],
+  ])
 })
 
 test('toHaveCSS: error path', async () => {
@@ -272,8 +281,8 @@ test('toHaveCSS: error path', async () => {
   })
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveCss', { key: 'color', value: 'red' }],
-    ['TestFrameWork.checkConditionError', 'toHaveCss', locator._parsed, { key: 'color', value: 'red' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveCss', { key: 'color', value: 'red' }],
+    ['TestFrameWork.checkConditionError', 'toHaveCss', getConditionLocator(locator), { key: 'color', value: 'red' }],
   ])
 })
 
@@ -289,7 +298,7 @@ test('toHaveAttribute: success path', async () => {
   await expectLocator.toHaveAttribute('type', 'text')
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveAttribute', { key: 'type', value: 'text' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveAttribute', { key: 'type', value: 'text' }],
   ])
 })
 
@@ -310,8 +319,8 @@ test('toHaveAttribute: error path', async () => {
   })
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveAttribute', { key: 'type', value: 'text' }],
-    ['TestFrameWork.checkConditionError', 'toHaveAttribute', locator._parsed, { key: 'type', value: 'text' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveAttribute', { key: 'type', value: 'text' }],
+    ['TestFrameWork.checkConditionError', 'toHaveAttribute', getConditionLocator(locator), { key: 'type', value: 'text' }],
   ])
 })
 
@@ -327,7 +336,7 @@ test('toHaveJSProperty: success path', async () => {
   await expectLocator.toHaveJSProperty('innerHTML', '<span>test</span>')
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveJSProperty', { key: 'innerHTML', value: '<span>test</span>' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveJSProperty', { key: 'innerHTML', value: '<span>test</span>' }],
   ])
 })
 
@@ -348,8 +357,8 @@ test('toHaveJSProperty: error path', async () => {
   })
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveJSProperty', { key: 'innerHTML', value: '<span>test</span>' }],
-    ['TestFrameWork.checkConditionError', 'toHaveJSProperty', locator._parsed, { key: 'innerHTML', value: '<span>test</span>' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveJSProperty', { key: 'innerHTML', value: '<span>test</span>' }],
+    ['TestFrameWork.checkConditionError', 'toHaveJSProperty', getConditionLocator(locator), { key: 'innerHTML', value: '<span>test</span>' }],
   ])
 })
 
@@ -364,7 +373,9 @@ test('toHaveClass: success path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toHaveClass('active')
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveClass', { className: 'active' }]])
+  expect(mockRpc.invocations).toEqual([
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveClass', { className: 'active' }],
+  ])
 })
 
 test('toHaveClass: error path', async () => {
@@ -384,8 +395,8 @@ test('toHaveClass: error path', async () => {
   })
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveClass', { className: 'active' }],
-    ['TestFrameWork.checkConditionError', 'toHaveClass', locator._parsed, { className: 'active' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveClass', { className: 'active' }],
+    ['TestFrameWork.checkConditionError', 'toHaveClass', getConditionLocator(locator), { className: 'active' }],
   ])
 })
 
@@ -400,7 +411,7 @@ test('toHaveId: success path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toHaveId('my-element')
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveId', { id: 'my-element' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveId', { id: 'my-element' }]])
 })
 
 test('toHaveId: error path', async () => {
@@ -420,8 +431,8 @@ test('toHaveId: error path', async () => {
   })
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', locator._parsed, 'toHaveId', { id: 'my-element' }],
-    ['TestFrameWork.checkConditionError', 'toHaveId', locator._parsed, { id: 'my-element' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveId', { id: 'my-element' }],
+    ['TestFrameWork.checkConditionError', 'toHaveId', getConditionLocator(locator), { id: 'my-element' }],
   ])
 })
 
@@ -436,7 +447,7 @@ test('toBeHidden: success path', async () => {
   const expectLocator = ExpectMod.expect(locator)
   await expectLocator.toBeHidden()
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkMultiElementCondition', locator._parsed, 'toBeHidden', {}]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkMultiElementCondition', getConditionLocator(locator), 'toBeHidden', {}]])
 })
 
 test('toBeHidden: error path', async () => {
@@ -455,5 +466,5 @@ test('toBeHidden: error path', async () => {
     message: expect.stringContaining('expected div to be hidden'),
   })
 
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkMultiElementCondition', locator._parsed, 'toBeHidden', {}]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkMultiElementCondition', getConditionLocator(locator), 'toBeHidden', {}]])
 })

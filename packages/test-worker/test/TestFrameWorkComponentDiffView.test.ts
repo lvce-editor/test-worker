@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createLocator } from '../src/parts/CreateLocator/CreateLocator.ts'
+import { getConditionLocator } from '../src/parts/GetConditionLocator/GetConditionLocator.ts'
 import * as DiffView from '../src/parts/TestFrameWorkComponentDiffView/TestFrameWorkComponentDiffView.ts'
 
 test('open', async () => {
@@ -24,8 +25,9 @@ test('shouldHaveContentLeft', async () => {
 
   await DiffView.shouldHaveContentLeft('left content')
 
+  const locator = createLocator('.DiffEditorContentLeft')
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', createLocator('.DiffEditorContentLeft')._parsed, 'toHaveText', { text: 'left content' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveText', { text: 'left content' }],
   ])
 })
 
@@ -38,8 +40,9 @@ test('shouldHaveContentRight', async () => {
 
   await DiffView.shouldHaveContentRight('right content')
 
+  const locator = createLocator('.DiffEditorContentRight')
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', createLocator('.DiffEditorContentRight')._parsed, 'toHaveText', { text: 'right content' }],
+    ['TestFrameWork.checkSingleElementCondition', getConditionLocator(locator), 'toHaveText', { text: 'right content' }],
   ])
 })
 

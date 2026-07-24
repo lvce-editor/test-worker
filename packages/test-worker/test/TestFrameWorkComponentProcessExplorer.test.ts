@@ -5,7 +5,7 @@ import * as ProcessExplorer from '../src/parts/TestFrameWorkComponentProcessExpl
 const getSelector = (locator: any): string => {
   if (Array.isArray(locator)) {
     return locator
-      .filter((part) => part.type === 'css')
+      .filter((part) => part.type === 1 || part.type === 'css')
       .map((part) => part.selector)
       .join(' ')
   }
