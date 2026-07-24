@@ -1,5 +1,15 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 
+export interface GithubApiMock {
+  readonly body?: unknown
+  readonly headers?: Readonly<Record<string, string>>
+  readonly message?: string
+  readonly releaseCount?: number
+  readonly status?: number
+  readonly statusText?: string
+  readonly type: 'generated' | 'invalid-json' | 'network-error' | 'response' | 'success'
+}
+
 export const handleClickCategory = async (categoryId: string): Promise<void> => {
   await RendererWorker.invoke('ExtensionDetail.handleClickCategory', categoryId)
 }
@@ -103,4 +113,12 @@ export const hideSizeLink = async (): Promise<void> => {
 
 export const handleTabFocus = async (tabName: string): Promise<void> => {
   return RendererWorker.invoke('ExtensionDetail.handleTabFocus', tabName)
+}
+
+export const handleClickSettings = async (x: number, y: number): Promise<void> => {
+  await RendererWorker.invoke('ExtensionDetail.handleClickSettings', x, y)
+}
+
+export const mockGithubApi = async (options: GithubApiMock): Promise<void> => {
+  await RendererWorker.invoke('ExtensionDetail.mockGithubApi', options)
 }

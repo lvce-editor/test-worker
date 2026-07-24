@@ -184,3 +184,27 @@ test('handleTabFocus', async () => {
   await ExtensionDetail.handleTabFocus('Details')
   expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleTabFocus', 'Details']])
 })
+
+test('handleClickSettings', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.handleClickSettings'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.handleClickSettings(100, 200)
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleClickSettings', 100, 200]])
+})
+
+test('mockGithubApi', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.mockGithubApi'() {
+      return undefined
+    },
+  })
+  const options = {
+    body: [{ name: 'Version 1.0.0' }],
+    type: 'success',
+  } as const
+  await ExtensionDetail.mockGithubApi(options)
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.mockGithubApi', options]])
+})

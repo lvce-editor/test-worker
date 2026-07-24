@@ -5,6 +5,7 @@ export * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.
 export * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
 export * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 export * as ColorPicker from '../TestFrameWorkComponentColorPicker/TestFrameWorkComponentColorPicker.ts'
+export * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkComponentColorTheme.ts'
 export * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 export * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 export * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
