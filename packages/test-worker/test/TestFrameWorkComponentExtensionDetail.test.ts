@@ -165,6 +165,16 @@ test('handleImageContextMenu', async () => {
   expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleImageContextMenu', 100, 200]])
 })
 
+test('handleMarkdownImageError', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.handleMarkdownImageError'() {
+      return undefined
+    },
+  })
+  await ExtensionDetail.handleMarkdownImageError('./not-found.png')
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleMarkdownImageError', './not-found.png']])
+})
+
 test('hideSizeLink', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ExtensionDetail.hideSizeLink'() {

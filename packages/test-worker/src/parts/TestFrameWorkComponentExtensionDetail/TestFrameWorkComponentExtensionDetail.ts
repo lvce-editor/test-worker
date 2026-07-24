@@ -75,6 +75,10 @@ export const handleImageContextMenu = (x: number, y: number): Promise<void> => {
   return RendererWorker.invoke('ExtensionDetail.handleImageContextMenu', x, y)
 }
 
+export const handleMarkdownImageError = (src: string): Promise<void> => {
+  return RendererWorker.invoke('ExtensionDetail.handleMarkdownImageError', src)
+}
+
 export const openFeature = (featureName: string): Promise<void> => {
   return RendererWorker.invoke('ExtensionDetail.handleFeaturesClick', featureName)
 }
