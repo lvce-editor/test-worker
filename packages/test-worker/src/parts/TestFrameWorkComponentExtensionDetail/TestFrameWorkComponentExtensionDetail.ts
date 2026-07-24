@@ -1,4 +1,5 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { addWebExtension } from '../TestFrameWorkComponentExtension/TestFrameWorkComponentExtension.ts'
 
 export interface GithubApiMock {
   readonly body?: unknown
@@ -8,6 +9,17 @@ export interface GithubApiMock {
   readonly status?: number
   readonly statusText?: string
   readonly type: 'generated' | 'invalid-json' | 'network-error' | 'response' | 'success'
+}
+
+export const createGithubRelease = (overrides: Readonly<Record<string, unknown>> = {}): Readonly<Record<string, unknown>> => {
+  return {
+    body: 'Fixed an important bug.',
+    html_url: 'https://github.com/test-owner/test-repository/releases/tag/v1.0.0',
+    name: 'Version 1.0.0',
+    published_at: '2026-01-02T03:04:05Z',
+    tag_name: 'v1.0.0',
+    ...overrides,
+  }
 }
 
 export const handleClickCategory = async (categoryId: string): Promise<void> => {
@@ -125,4 +137,11 @@ export const handleClickSettings = async (x: number, y: number): Promise<void> =
 
 export const mockGithubApi = async (options: GithubApiMock): Promise<void> => {
   await RendererWorker.invoke('ExtensionDetail.mockGithubApi', options)
+}
+
+export const openGithubChangelog = async (extensionUri: string, extensionId: string, options: GithubApiMock): Promise<void> => {
+  await addWebExtension(extensionUri)
+  await open(extensionId)
+  await mockGithubApi(options)
+  await selectChangelog()
 }

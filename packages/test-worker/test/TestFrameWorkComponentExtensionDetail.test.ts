@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ExtensionDetail from '../src/parts/TestFrameWorkComponentExtensionDetail/TestFrameWorkComponentExtensionDetail.ts'
 
 test('handleClickCategory', async () => {
@@ -217,4 +217,50 @@ test('mockGithubApi', async () => {
   } as const
   await ExtensionDetail.mockGithubApi(options)
   expect(mockRpc.invocations).toEqual([['ExtensionDetail.mockGithubApi', options]])
+})
+
+test('createGithubRelease', () => {
+  expect(ExtensionDetail.createGithubRelease({ name: 'Version 2.0.0' })).toEqual({
+    body: 'Fixed an important bug.',
+    html_url: 'https://github.com/test-owner/test-repository/releases/tag/v1.0.0',
+    name: 'Version 2.0.0',
+    published_at: '2026-01-02T03:04:05Z',
+    tag_name: 'v1.0.0',
+  })
+})
+
+test('openGithubChangelog', async () => {
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.addWebExtension'() {
+      return undefined
+    },
+  })
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionDetail.mockGithubApi'() {
+      return undefined
+    },
+    'ExtensionDetail.selectTab'() {
+      return undefined
+    },
+    'ExtensionMeta.addWebExtension'() {
+      return undefined
+    },
+    'Main.openUri'() {
+      return undefined
+    },
+  })
+  const options = {
+    body: [],
+    type: 'success',
+  } as const
+
+  await ExtensionDetail.openGithubChangelog('file:///extension', 'test.extension', options)
+
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.addWebExtension', 'file:///extension']])
+  expect(mockRpc.invocations).toEqual([
+    ['ExtensionMeta.addWebExtension', 'file:///extension'],
+    ['Main.openUri', 'extension-detail://test.extension'],
+    ['ExtensionDetail.mockGithubApi', options],
+    ['ExtensionDetail.selectTab', 'Changelog'],
+  ])
 })
