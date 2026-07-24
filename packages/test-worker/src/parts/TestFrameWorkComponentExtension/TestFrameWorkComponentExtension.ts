@@ -59,3 +59,7 @@ export const addNodeExtension = async (relativePath: string): Promise<void> => {
   const absolutePath = relativePath
   await RendererWorker.invoke('ExtensionMeta.addNodeExtension', absolutePath)
 }
+
+export const activateByEvent = async (event: string, assetDir: string, platform: number): Promise<void> => {
+  await RendererWorker.invoke('ExtensionHostManagement.activateByEvent', event, assetDir, platform)
+}

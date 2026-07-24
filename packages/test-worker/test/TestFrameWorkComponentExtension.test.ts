@@ -91,3 +91,15 @@ test('disableWorkspace', async () => {
 
   expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.disableWorkspace', 'test.extension']])
 })
+
+test('activateByEvent', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ExtensionHostManagement.activateByEvent'() {
+      return undefined
+    },
+  })
+
+  await Extension.activateByEvent('onCommand:test.run', '/asset', 2)
+
+  expect(mockRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'onCommand:test.run', '/asset', 2]])
+})

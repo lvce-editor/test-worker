@@ -7,6 +7,7 @@ import * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAud
 import * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 import * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
 import * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
+import * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkComponentColorTheme.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 import * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
@@ -66,6 +67,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     ChatDebug,
     ClipBoard,
     ColorPicker,
+    ColorTheme,
     Command,
     ContextMenu,
     Developer,
