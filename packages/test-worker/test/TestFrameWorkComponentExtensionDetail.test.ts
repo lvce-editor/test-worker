@@ -161,8 +161,8 @@ test('handleImageContextMenu', async () => {
       return undefined
     },
   })
-  await ExtensionDetail.handleImageContextMenu()
-  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleImageContextMenu']])
+  await ExtensionDetail.handleImageContextMenu(100, 200)
+  expect(mockRpc.invocations).toEqual([['ExtensionDetail.handleImageContextMenu', 100, 200]])
 })
 
 test('hideSizeLink', async () => {

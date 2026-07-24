@@ -71,8 +71,8 @@ export const handleClickUninstall = (): Promise<void> => {
   return RendererWorker.invoke('ExtensionDetail.handleClickUninstall')
 }
 
-export const handleImageContextMenu = (): Promise<void> => {
-  return RendererWorker.invoke('ExtensionDetail.handleImageContextMenu')
+export const handleImageContextMenu = (x: number, y: number): Promise<void> => {
+  return RendererWorker.invoke('ExtensionDetail.handleImageContextMenu', x, y)
 }
 
 export const openFeature = (featureName: string): Promise<void> => {
