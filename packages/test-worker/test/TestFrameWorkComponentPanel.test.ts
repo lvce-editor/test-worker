@@ -2,6 +2,28 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Panel from '../src/parts/TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 
+test('close', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Panel.handleClickClose'() {
+      return undefined
+    },
+  })
+
+  await Panel.close()
+  expect(mockRpc.invocations).toEqual([['Panel.handleClickClose']])
+})
+
+test('hide', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.hidePanel'() {
+      return undefined
+    },
+  })
+
+  await Panel.hide()
+  expect(mockRpc.invocations).toEqual([['Layout.hidePanel']])
+})
+
 test('open', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.showPanel'() {
@@ -30,24 +52,35 @@ test('openProblems', async () => {
   ])
 })
 
+test('select', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Panel.selectName'() {
+      return undefined
+    },
+  })
+
+  await Panel.select('Output')
+  expect(mockRpc.invocations).toEqual([['Panel.selectName', 'Output']])
+})
+
 test('maximize', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Panel.maximize'() {
+    'Layout.maximizePanel'() {
       return undefined
     },
   })
 
   await Panel.maximize()
-  expect(mockRpc.invocations).toEqual([['Panel.maximize']])
+  expect(mockRpc.invocations).toEqual([['Layout.maximizePanel']])
 })
 
 test('unmaximize', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Panel.unmaximize'() {
+    'Layout.unmaximizePanel'() {
       return undefined
     },
   })
 
   await Panel.unmaximize()
-  expect(mockRpc.invocations).toEqual([['Panel.unmaximize']])
+  expect(mockRpc.invocations).toEqual([['Layout.unmaximizePanel']])
 })
