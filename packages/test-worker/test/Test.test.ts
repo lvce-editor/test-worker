@@ -228,6 +228,82 @@ export const test = async () => {}
   ])
 })
 
+test('executeAll imports test modules in parallel before executing them serially', async () => {
+  TestInfoCache.clear()
+  const assetDir = 'memfs://assets'
+  const events: string[] = []
+  const { promise: secondImportStarted, resolve: resolveSecondImportStarted } = Promise.withResolvers<void>()
+  Object.assign(globalThis, {
+    __parallelImportEvents: events,
+    __resolveSecondImportStarted: resolveSecondImportStarted,
+    __secondImportStarted: secondImportStarted,
+  })
+  const firstUrl = toDataUrl(`
+globalThis.__parallelImportEvents.push('import-first-start')
+await Promise.race([
+  globalThis.__secondImportStarted,
+  new Promise((_, reject) => setTimeout(() => reject(new Error('second module was not imported in parallel')), 100)),
+])
+globalThis.__parallelImportEvents.push('import-first-end')
+export const test = async () => {
+  globalThis.__parallelImportEvents.push('test-first-start')
+  await Promise.resolve()
+  globalThis.__parallelImportEvents.push('test-first-end')
+}
+`)
+  const secondUrl = toDataUrl(`
+globalThis.__parallelImportEvents.push('import-second-start')
+globalThis.__resolveSecondImportStarted()
+globalThis.__parallelImportEvents.push('import-second-end')
+export const test = async () => {
+  globalThis.__parallelImportEvents.push('test-second')
+}
+`)
+  const href = 'http://localhost:3000/tests/_all.html'
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.resize'() {
+      return undefined
+    },
+    'Layout.reset'() {
+      return undefined
+    },
+    'TestFrameWork.showOverlay'() {
+      return undefined
+    },
+    'TestFrameWork.showTestResults'() {
+      return undefined
+    },
+  })
+
+  try {
+    await TestModule.executeAll(
+      [
+        { name: 'first-test.js', url: firstUrl },
+        { name: 'second-test.js', url: secondUrl },
+      ],
+      href,
+      1,
+      assetDir,
+    )
+  } finally {
+    delete (globalThis as any).__parallelImportEvents
+    delete (globalThis as any).__resolveSecondImportStarted
+    delete (globalThis as any).__secondImportStarted
+  }
+
+  expect(events).toEqual([
+    'import-first-start',
+    'import-second-start',
+    'import-second-end',
+    'import-first-end',
+    'test-first-start',
+    'test-first-end',
+    'test-second',
+  ])
+  expect(mockRpc.invocations).toHaveLength(6)
+})
+
 test('executeAll reports import errors in TestResults json', async () => {
   TestInfoCache.clear()
   const assetDir = 'memfs://assets'

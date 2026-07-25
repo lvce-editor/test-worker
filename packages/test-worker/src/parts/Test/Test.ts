@@ -32,6 +32,18 @@ interface ExecuteAllTestResult {
   readonly status: string
 }
 
+type ImportedExecuteAllTest =
+  | {
+      readonly item: ExecuteAllTest
+      readonly module: any
+      readonly type: 'success'
+    }
+  | {
+      readonly error: unknown
+      readonly item: ExecuteAllTest
+      readonly type: 'error'
+    }
+
 const toErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {
     return error.message
@@ -83,9 +95,30 @@ const getExecutedResult = async (name: string, test: any, globals: any): Promise
   }
 }
 
-const executeAllTest = async (item: ExecuteAllTest, globals: any): Promise<ExecuteAllTestResult> => {
+const importExecuteAllTest = async (item: ExecuteAllTest): Promise<ImportedExecuteAllTest> => {
   try {
     const module = await ImportTest.importTest(item.url)
+    return {
+      item,
+      module,
+      type: 'success',
+    }
+  } catch (error) {
+    return {
+      error,
+      item,
+      type: 'error',
+    }
+  }
+}
+
+const executeAllTest = async (importedTest: ImportedExecuteAllTest, globals: any): Promise<ExecuteAllTestResult> => {
+  const { item } = importedTest
+  if (importedTest.type === 'error') {
+    return getImportErrorResult(item.name, importedTest.error)
+  }
+  try {
+    const { module } = importedTest
     const { mockRpc, skip, test } = module
     if (mockRpc) {
       TestState.setMockRpc(mockRpc)
@@ -219,8 +252,9 @@ export const executeAll = async (tests: readonly ExecuteAllTest[], href: string,
   const globals = createApi(platform, assetDir)
   const results: ExecuteAllTestResult[] = []
   const start = Timestamp.now()
-  for (const test of tests) {
-    const result = await executeAllTest(test, globals)
+  const importedTests = await Promise.all(tests.map(importExecuteAllTest))
+  for (const importedTest of importedTests) {
+    const result = await executeAllTest(importedTest, globals)
     results.push(result)
   }
   const end = Timestamp.now()
