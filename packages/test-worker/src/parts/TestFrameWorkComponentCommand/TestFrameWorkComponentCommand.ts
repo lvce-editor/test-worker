@@ -5,11 +5,21 @@ export const execute = async (id: string, ...args: readonly any[]): Promise<any>
 }
 
 export const executeExtensionCommand = async (commandId: string, ...args: readonly any[]): Promise<unknown> => {
+  let shouldRetry = true
   try {
-    return await ExtensionManagementWorker.invoke('Extensions.executeExtensionCommand', commandId, ...args)
-  } catch {
-    // legacy
-    // TODO maybe ask extension-management-worker instead
-    return RendererWorker.invoke('ExtensionHost.executeCommand', commandId, ...args)
+    const result = await ExtensionManagementWorker.invoke('Extensions.executeExtensionCommand', commandId, ...args)
+    shouldRetry = false
+    if (result && !result.wasFound) {
+      throw new Error(`command ${commandId} was not found`)
+    }
+    return result.result
+  } catch (error) {
+    if (shouldRetry) {
+      // legacy
+      // TODO maybe ask extension-management-worker instead
+      return await RendererWorker.invoke('ExtensionHost.executeCommand', commandId, ...args)
+    } else {
+      throw error
+    }
   }
 }
