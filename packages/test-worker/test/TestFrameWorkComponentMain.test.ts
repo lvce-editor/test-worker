@@ -41,6 +41,18 @@ test('openUri', async () => {
   expect(mockRpc.invocations).toEqual([['Main.openUri', 'file:///test.txt']])
 })
 
+test('openUris', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.openUris'() {
+      return undefined
+    },
+  })
+
+  await Main.openUris(['file:///test-1.txt', 'file:///test-2.txt'])
+
+  expect(mockRpc.invocations).toEqual([['Main.openUris', ['file:///test-1.txt', 'file:///test-2.txt']]])
+})
+
 test('openInput', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.openInput'() {

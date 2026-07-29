@@ -142,6 +142,10 @@ export const openUri = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('Main.openUri', uri)
 }
 
+export const openUris = async (uris: readonly string[]): Promise<void> => {
+  await RendererWorker.invoke('Main.openUris', uris)
+}
+
 export const openInput = async (options: OpenInputOptions): Promise<void> => {
   await RendererWorker.invoke('Main.openInput', options)
 }
