@@ -115,3 +115,14 @@ test('handleWorkspaceRefresh', async () => {
   await Layout.handleWorkspaceRefresh()
   expect(mockRpc.invocations).toEqual([['Layout.handleWorkspaceRefresh']])
 })
+
+test('handleExtensionsChanged', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.handleExtensionsChanged'() {
+      return undefined
+    },
+  })
+
+  await Layout.handleExtensionsChanged()
+  expect(mockRpc.invocations).toEqual([['Layout.handleExtensionsChanged']])
+})
