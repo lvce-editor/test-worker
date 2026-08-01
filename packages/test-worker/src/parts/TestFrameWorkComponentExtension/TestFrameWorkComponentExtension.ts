@@ -61,5 +61,5 @@ export const addNodeExtension = async (relativePath: string): Promise<void> => {
 }
 
 export const activateByEvent = async (event: string, assetDir: string, platform: number): Promise<void> => {
-  await RendererWorker.invoke('ExtensionHostManagement.activateByEvent', event, assetDir, platform)
+  await ExtensionManagementWorker.invoke('Extensions.activateByEvent', event, assetDir, platform)
 }

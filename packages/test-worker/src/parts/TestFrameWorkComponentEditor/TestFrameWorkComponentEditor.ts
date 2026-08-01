@@ -1,4 +1,4 @@
-import { EditorWorker, RendererWorker } from '@lvce-editor/rpc-registry'
+import { EditorWorker, ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { Diagnostic } from '../Diagnostic/Diagnostic.ts'
 import { areDiagnosticsEqual } from '../AreDiagnosticsEqual/AreDiagnosticsEqual.ts'
 import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
@@ -407,7 +407,18 @@ export const shouldHaveDiagnostics = async (expectedDiagnostics: readonly Diagno
 }
 
 export const shouldHaveDiagnosticProviderResult = async (expectedDiagnostics: readonly Diagnostic[], editorId = 1): Promise<void> => {
-  const diagnostics = await RendererWorker.invoke('ExtensionHost.executeDiagnosticProvider', editorId)
+  const [languageId, text, uri] = await Promise.all([
+    EditorWorker.invoke('Editor.getLanguageId', editorId),
+    EditorWorker.invoke('Editor.getText', editorId),
+    EditorWorker.invoke('Editor.getUri', editorId),
+  ])
+  const textDocument = {
+    documentId: editorId,
+    languageId,
+    text,
+    uri,
+  }
+  const diagnostics = await ExtensionManagementWorker.invoke('Extensions.executeDiagnosticProvider', textDocument)
   if (!areDiagnosticsEqual(diagnostics, expectedDiagnostics)) {
     const stringifiedActual = JSON.stringify(diagnostics)
     const stringifiedExpected = JSON.stringify(expectedDiagnostics)
