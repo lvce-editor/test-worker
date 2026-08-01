@@ -20,7 +20,7 @@ test('handleInput with search value', async () => {
     },
   })
   await ExtensionSearch.handleInput('test extension')
-  expect(mockRpc.invocations).toEqual([['Extensions.handleInput', 'test extension', InputSource.Script]])
+  expect(mockRpc.invocations).toEqual([['Extensions.handleInput', 'test extension', InputSource.Script, 14]])
 })
 
 test('handleInput with empty value', async () => {
@@ -30,7 +30,17 @@ test('handleInput with empty value', async () => {
     },
   })
   await ExtensionSearch.handleInput('')
-  expect(mockRpc.invocations).toEqual([['Extensions.handleInput', '', InputSource.Script]])
+  expect(mockRpc.invocations).toEqual([['Extensions.handleInput', '', InputSource.Script, 0]])
+})
+
+test('handleInput with input source and cursor offset', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Extensions.handleInput'() {
+      return undefined
+    },
+  })
+  await ExtensionSearch.handleInput('theme @en', 1, 5)
+  expect(mockRpc.invocations).toEqual([['Extensions.handleInput', 'theme @en', 1, 5]])
 })
 
 test('handleClick with extension index', async () => {
@@ -145,8 +155,94 @@ test('setExtensionStatus', async () => {
   })
 
   await ExtensionSearch.setExtensionStatus('test.extension', 'installing')
+  await ExtensionSearch.setExtensionStatus('test.extension', 'enabled', false)
 
-  expect(mockRpc.invocations).toEqual([['Extensions.setExtensionStatus', 'test.extension', 'installing']])
+  expect(mockRpc.invocations).toEqual([
+    ['Extensions.setExtensionStatus', 'test.extension', 'installing'],
+    ['Extensions.setExtensionStatus', 'test.extension', 'enabled', false],
+  ])
+})
+
+test('completion commands', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Extensions.acceptCompletion'() {
+      return undefined
+    },
+    'Extensions.closeSuggest'() {
+      return undefined
+    },
+    'Extensions.handleBlur'() {
+      return undefined
+    },
+    'Extensions.handleClickAt'() {
+      return undefined
+    },
+    'Extensions.selectNextCompletion'() {
+      return undefined
+    },
+    'Extensions.selectPreviousCompletion'() {
+      return undefined
+    },
+  })
+
+  await ExtensionSearch.acceptCompletion()
+  await ExtensionSearch.closeSuggest()
+  await ExtensionSearch.handleBlur()
+  await ExtensionSearch.handleClickAt(0, 10, 20, '@builtin')
+  await ExtensionSearch.selectNextCompletion()
+  await ExtensionSearch.selectPreviousCompletion()
+
+  expect(mockRpc.invocations).toEqual([
+    ['Extensions.acceptCompletion'],
+    ['Extensions.closeSuggest'],
+    ['Extensions.handleBlur'],
+    ['Extensions.handleClickAt', 0, 10, 20, '@builtin'],
+    ['Extensions.selectNextCompletion'],
+    ['Extensions.selectPreviousCompletion'],
+  ])
+})
+
+test('focus commands', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Extensions.focusFirst'() {
+      return undefined
+    },
+    'Extensions.focusLast'() {
+      return undefined
+    },
+    'Extensions.focusNext'() {
+      return undefined
+    },
+    'Extensions.focusPrevious'() {
+      return undefined
+    },
+  })
+
+  await ExtensionSearch.focusFirst()
+  await ExtensionSearch.focusLast()
+  await ExtensionSearch.focusNext()
+  await ExtensionSearch.focusPrevious()
+
+  expect(mockRpc.invocations).toEqual([['Extensions.focusFirst'], ['Extensions.focusLast'], ['Extensions.focusNext'], ['Extensions.focusPrevious']])
+})
+
+test('extension action commands', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Extensions.handleSettingsButtonClick'() {
+      return undefined
+    },
+    'Extensions.handleUninstall'() {
+      return undefined
+    },
+  })
+
+  await ExtensionSearch.handleSettingsButtonClick(2)
+  await ExtensionSearch.handleUninstall('test.extension')
+
+  expect(mockRpc.invocations).toEqual([
+    ['Extensions.handleSettingsButtonClick', 2],
+    ['Extensions.handleUninstall', 'test.extension'],
+  ])
 })
 
 test('multiple operations in sequence', async () => {
@@ -180,7 +276,7 @@ test('multiple operations in sequence', async () => {
 
   expect(mockRpc.invocations).toEqual([
     ['SideBar.openViewlet', 'Extensions'],
-    ['Extensions.handleInput', 'search term', InputSource.Script],
+    ['Extensions.handleInput', 'search term', InputSource.Script, 11],
     ['Extensions.handleClickFilter'],
     ['Extensions.handleClick', 2],
     ['Extensions.copyExtensionInfo'],
