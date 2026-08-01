@@ -40,3 +40,7 @@ export const hideSecondarySideBar = async (): Promise<void> => {
 export const handleWorkspaceRefresh = async (): Promise<void> => {
   await RendererWorker.invoke('Layout.handleWorkspaceRefresh')
 }
+
+export const handleExtensionsChanged = async (): Promise<void> => {
+  await RendererWorker.invoke('Layout.handleExtensionsChanged')
+}
