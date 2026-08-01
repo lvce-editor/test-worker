@@ -1,11 +1,11 @@
-import config from '@lvce-editor/eslint-config'
-import actions from '@lvce-editor/eslint-plugin-github-actions'
+import { defineConfig } from 'eslint/config'
+import config, { recommendedActions } from '@lvce-editor/eslint-config'
 import regex from '@lvce-editor/eslint-plugin-regex'
 import tsconfig from '@lvce-editor/eslint-plugin-tsconfig'
 
-export default [
+export default defineConfig([
   ...config,
-  ...actions,
+  ...recommendedActions,
   ...regex,
   ...tsconfig,
   {
@@ -29,4 +29,4 @@ export default [
       'unicorn/consistent-compound-words': 'off',
     },
   },
-]
+])
