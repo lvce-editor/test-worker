@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
 export type ExtensionStatus = 'disabled' | 'enabled' | 'installing' | 'not-installed' | 'uninstalling'
-export type ExtensionSearchInputSource = typeof InputSource.Script | typeof InputSource.User
+export type ExtensionSearchInputSource = 1 | 2
 
 export const acceptCompletion = async (): Promise<void> => {
   await RendererWorker.invoke('Extensions.acceptCompletion')
