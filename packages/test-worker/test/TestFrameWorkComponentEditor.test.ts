@@ -1,6 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { EditorWorker } from '@lvce-editor/rpc-registry'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { EditorWorker, ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
 test('setCursor', async () => {
@@ -1173,14 +1172,32 @@ test('shouldHaveDiagnosticProviderResult - success case', async () => {
     },
   ]
 
-  using mockRpc = RendererWorker.registerMockRpc({
-    'ExtensionHost.executeDiagnosticProvider'() {
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.getLanguageId'() {
+      return 'javascript'
+    },
+    'Editor.getText'() {
+      return 'const value = 1'
+    },
+    'Editor.getUri'() {
+      return 'file:///test.js'
+    },
+  })
+  using extensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeDiagnosticProvider'() {
       return expectedDiagnostics
     },
   })
 
   await Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics)
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 1]])
+  expect(editorRpc.invocations).toEqual([
+    ['Editor.getLanguageId', 1],
+    ['Editor.getText', 1],
+    ['Editor.getUri', 1],
+  ])
+  expect(extensionManagementRpc.invocations).toEqual([
+    ['Extensions.executeDiagnosticProvider', { documentId: 1, languageId: 'javascript', text: 'const value = 1', uri: 'file:///test.js' }],
+  ])
 })
 
 test('shouldHaveDiagnosticProviderResult - custom editor id', async () => {
@@ -1196,14 +1213,32 @@ test('shouldHaveDiagnosticProviderResult - custom editor id', async () => {
     },
   ]
 
-  using mockRpc = RendererWorker.registerMockRpc({
-    'ExtensionHost.executeDiagnosticProvider'() {
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.getLanguageId'() {
+      return 'javascript'
+    },
+    'Editor.getText'() {
+      return 'const value = 1'
+    },
+    'Editor.getUri'() {
+      return 'file:///test.js'
+    },
+  })
+  using extensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeDiagnosticProvider'() {
       return expectedDiagnostics
     },
   })
 
   await Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics, 2)
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 2]])
+  expect(editorRpc.invocations).toEqual([
+    ['Editor.getLanguageId', 2],
+    ['Editor.getText', 2],
+    ['Editor.getUri', 2],
+  ])
+  expect(extensionManagementRpc.invocations).toEqual([
+    ['Extensions.executeDiagnosticProvider', { documentId: 2, languageId: 'javascript', text: 'const value = 1', uri: 'file:///test.js' }],
+  ])
 })
 
 test('shouldHaveDiagnosticProviderResult - throws error when diagnostics do not match', async () => {
@@ -1230,14 +1265,32 @@ test('shouldHaveDiagnosticProviderResult - throws error when diagnostics do not 
     },
   ]
 
-  using mockRpc = RendererWorker.registerMockRpc({
-    'ExtensionHost.executeDiagnosticProvider'() {
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.getLanguageId'() {
+      return 'javascript'
+    },
+    'Editor.getText'() {
+      return 'const value = 1'
+    },
+    'Editor.getUri'() {
+      return 'file:///test.js'
+    },
+  })
+  using extensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeDiagnosticProvider'() {
       return actualDiagnostics
     },
   })
 
   await expect(Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics)).rejects.toThrow('Expected diagnostic provider result')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 1]])
+  expect(editorRpc.invocations).toEqual([
+    ['Editor.getLanguageId', 1],
+    ['Editor.getText', 1],
+    ['Editor.getUri', 1],
+  ])
+  expect(extensionManagementRpc.invocations).toEqual([
+    ['Extensions.executeDiagnosticProvider', { documentId: 1, languageId: 'javascript', text: 'const value = 1', uri: 'file:///test.js' }],
+  ])
 })
 
 test('enableCompletionsOnType', async () => {
