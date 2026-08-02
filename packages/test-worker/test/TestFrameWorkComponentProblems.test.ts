@@ -14,6 +14,54 @@ test('show', async () => {
   expect(mockRpc.invocations).toEqual([['Panel.selectIndex', 0]])
 })
 
+test('handleActiveEditorChange', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleActiveEditorChange'() {
+      return undefined
+    },
+  })
+
+  await Problems.handleActiveEditorChange('file:///test.txt')
+
+  expect(mockRpc.invocations).toEqual([['Problems.handleActiveEditorChange', 'file:///test.txt']])
+})
+
+test('handleBlur', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleBlur'() {
+      return undefined
+    },
+  })
+
+  await Problems.handleBlur()
+
+  expect(mockRpc.invocations).toEqual([['Problems.handleBlur']])
+})
+
+test('handleClickMoreFilters', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleClickMoreFilters'() {
+      return undefined
+    },
+  })
+
+  await Problems.handleClickMoreFilters(100, 200)
+
+  expect(mockRpc.invocations).toEqual([['Problems.handleClickMoreFilters', 100, 200]])
+})
+
+test('handleContextMenu', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Problems.handleContextMenu'() {
+      return undefined
+    },
+  })
+
+  await Problems.handleContextMenu(100, 200)
+
+  expect(mockRpc.invocations).toEqual([['Problems.handleContextMenu', 100, 200]])
+})
+
 test('handleFilterInput', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Problems.handleFilterInput'() {

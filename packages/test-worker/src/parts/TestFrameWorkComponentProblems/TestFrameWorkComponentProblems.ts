@@ -5,6 +5,22 @@ export const show = async (): Promise<void> => {
   await RendererWorker.invoke('Panel.selectIndex', 0)
 }
 
+export const handleActiveEditorChange = async (activeUri: string): Promise<void> => {
+  await RendererWorker.invoke('Problems.handleActiveEditorChange', activeUri)
+}
+
+export const handleBlur = async (): Promise<void> => {
+  await RendererWorker.invoke('Problems.handleBlur')
+}
+
+export const handleClickMoreFilters = async (eventX: number, eventY: number): Promise<void> => {
+  await RendererWorker.invoke('Problems.handleClickMoreFilters', eventX, eventY)
+}
+
+export const handleContextMenu = async (eventX: number, eventY: number): Promise<void> => {
+  await RendererWorker.invoke('Problems.handleContextMenu', eventX, eventY)
+}
+
 export const handleFilterInput = async (text: string): Promise<void> => {
   await RendererWorker.invoke('Problems.handleFilterInput', text, InputSource.Script)
 }
