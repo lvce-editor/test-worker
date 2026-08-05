@@ -102,6 +102,69 @@ test('shouldHaveText - wrong', async () => {
   expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryText']])
 })
 
+test('shouldHaveImage - correct', async () => {
+  const expectedUri = 'file:///expected.png'
+  const image = new Blob([new Uint8Array([1, 2, 3])], { type: 'image/png' })
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryImage'() {
+      return image
+    },
+    'FileSystem.getBlob'() {
+      return image
+    },
+  })
+
+  await ClipBoard.shouldHaveImage(expectedUri)
+
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryImage'], ['FileSystem.getBlob', expectedUri]])
+})
+
+test('shouldHaveImage - no image', async () => {
+  const expectedUri = 'file:///expected.png'
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryImage'() {
+      return undefined
+    },
+  })
+
+  await expect(ClipBoard.shouldHaveImage(expectedUri)).rejects.toThrow(`expected clipboard to have image "${expectedUri}" but it had no image`)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryImage']])
+})
+
+test('shouldHaveImage - different contents', async () => {
+  const expectedUri = 'file:///expected.png'
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryImage'() {
+      return new Blob([new Uint8Array([1, 4, 3])], { type: 'image/png' })
+    },
+    'FileSystem.getBlob'() {
+      return new Blob([new Uint8Array([1, 2, 3])], { type: 'image/png' })
+    },
+  })
+
+  await expect(ClipBoard.shouldHaveImage(expectedUri)).rejects.toThrow(
+    `expected clipboard image to match "${expectedUri}" but contents differed at byte 1 (expected 3 bytes, got 3)`,
+  )
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryImage'], ['FileSystem.getBlob', expectedUri]])
+})
+
+test('shouldHaveImage - different sizes', async () => {
+  const expectedUri = 'file:///expected.png'
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryImage'() {
+      return new Blob([new Uint8Array([1, 2])], { type: 'image/png' })
+    },
+    'FileSystem.getBlob'() {
+      return new Blob([new Uint8Array([1, 2, 3])], { type: 'image/png' })
+    },
+  })
+
+  await expect(ClipBoard.shouldHaveImage(expectedUri)).rejects.toThrow(
+    `expected clipboard image to match "${expectedUri}" but contents differed at byte 2 (expected 3 bytes, got 2)`,
+  )
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryImage'], ['FileSystem.getBlob', expectedUri]])
+})
+
 test('shouldHaveText - regex success', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ClipBoard.readMemoryText'() {

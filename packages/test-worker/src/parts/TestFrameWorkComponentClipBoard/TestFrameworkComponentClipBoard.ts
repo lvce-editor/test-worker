@@ -31,6 +31,36 @@ export const shouldHaveText = async (expectedText: string | RegExp): Promise<voi
   }
 }
 
+const findFirstDifferentByte = (actual: Uint8Array, expected: Uint8Array): number => {
+  const length = Math.min(actual.length, expected.length)
+  for (let index = 0; index < length; index++) {
+    if (actual[index] !== expected[index]) {
+      return index
+    }
+  }
+  return actual.length === expected.length ? -1 : length
+}
+
+export const shouldHaveImage = async (expectedUri: string): Promise<void> => {
+  const actualImage = await RendererWorker.invoke('ClipBoard.readMemoryImage')
+  if (!(actualImage instanceof Blob)) {
+    throw new AssertionError(`expected clipboard to have image "${expectedUri}" but it had no image`)
+  }
+  const expectedImage = await RendererWorker.invoke('FileSystem.getBlob', expectedUri)
+  if (!(expectedImage instanceof Blob)) {
+    throw new AssertionError(`expected image "${expectedUri}" could not be read`)
+  }
+  const [actualBuffer, expectedBuffer] = await Promise.all([actualImage.arrayBuffer(), expectedImage.arrayBuffer()])
+  const actualBytes = new Uint8Array(actualBuffer)
+  const expectedBytes = new Uint8Array(expectedBuffer)
+  const firstDifferentByte = findFirstDifferentByte(actualBytes, expectedBytes)
+  if (firstDifferentByte !== -1) {
+    throw new AssertionError(
+      `expected clipboard image to match "${expectedUri}" but contents differed at byte ${firstDifferentByte} (expected ${expectedBytes.length} bytes, got ${actualBytes.length})`,
+    )
+  }
+}
+
 export const writeText = async (text: string): Promise<void> => {
   await RendererWorker.invoke('ClipBoard.writeText', text)
 }
