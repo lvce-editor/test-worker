@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
@@ -127,8 +127,68 @@ test('shouldHaveImage - no image', async () => {
     },
   })
 
-  await expect(ClipBoard.shouldHaveImage(expectedUri)).rejects.toThrow(`expected clipboard to have image "${expectedUri}" but it had no image`)
-  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryImage']])
+  jest.useFakeTimers()
+  try {
+    const getResult = async (): Promise<unknown> => {
+      try {
+        await ClipBoard.shouldHaveImage(expectedUri)
+        return undefined
+      } catch (error) {
+        return error
+      }
+    }
+    const resultPromise = getResult()
+    await jest.runAllTimersAsync()
+    const result = await resultPromise
+    expect(result).toBeInstanceOf(Error)
+    expect((result as Error).message).toBe(`expected clipboard to have image "${expectedUri}" but it had no image`)
+  } finally {
+    jest.useRealTimers()
+  }
+  expect(mockRpc.invocations).toHaveLength(100)
+  expect(mockRpc.invocations).toEqual(Array.from({ length: 100 }, () => ['ClipBoard.readMemoryImage']))
+})
+
+test('shouldHaveImage - waits for image', async () => {
+  const expectedUri = 'file:///expected.png'
+  const image = new Blob([new Uint8Array([1, 2, 3])], { type: 'image/png' })
+  let reads = 0
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryImage'() {
+      reads++
+      return reads === 1 ? undefined : image
+    },
+    'FileSystem.getBlob'() {
+      return image
+    },
+  })
+
+  jest.useFakeTimers()
+  try {
+    const assertion = ClipBoard.shouldHaveImage(expectedUri)
+    await jest.runAllTimersAsync()
+    await assertion
+  } finally {
+    jest.useRealTimers()
+  }
+
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryImage'], ['ClipBoard.readMemoryImage'], ['FileSystem.getBlob', expectedUri]])
+})
+
+test('shouldHaveImage - expected image cannot be read', async () => {
+  const expectedUri = 'file:///expected.png'
+  const image = new Blob([new Uint8Array([1, 2, 3])], { type: 'image/png' })
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.readMemoryImage'() {
+      return image
+    },
+    'FileSystem.getBlob'() {
+      return undefined
+    },
+  })
+
+  await expect(ClipBoard.shouldHaveImage(expectedUri)).rejects.toThrow(`expected image "${expectedUri}" could not be read`)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.readMemoryImage'], ['FileSystem.getBlob', expectedUri]])
 })
 
 test('shouldHaveImage - different contents', async () => {

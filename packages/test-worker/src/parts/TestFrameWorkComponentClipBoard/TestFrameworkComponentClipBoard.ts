@@ -41,8 +41,24 @@ const findFirstDifferentByte = (actual: Uint8Array, expected: Uint8Array): numbe
   return actual.length === expected.length ? -1 : length
 }
 
+const imageReadAttempts = 100
+const imageReadDelay = 50
+
+const waitForMemoryImage = async (): Promise<Blob | undefined> => {
+  for (let attempt = 0; attempt < imageReadAttempts; attempt++) {
+    const actualImage = await RendererWorker.invoke('ClipBoard.readMemoryImage')
+    if (actualImage instanceof Blob) {
+      return actualImage
+    }
+    if (attempt + 1 < imageReadAttempts) {
+      await new Promise((resolve) => globalThis.setTimeout(resolve, imageReadDelay))
+    }
+  }
+  return undefined
+}
+
 export const shouldHaveImage = async (expectedUri: string): Promise<void> => {
-  const actualImage = await RendererWorker.invoke('ClipBoard.readMemoryImage')
+  const actualImage = await waitForMemoryImage()
   if (!(actualImage instanceof Blob)) {
     throw new AssertionError(`expected clipboard to have image "${expectedUri}" but it had no image`)
   }
