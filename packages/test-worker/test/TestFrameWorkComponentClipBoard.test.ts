@@ -1,9 +1,14 @@
-import { expect, jest, test } from '@jest/globals'
+import { afterEach, expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as MemoryClipBoardState from '../src/parts/MemoryClipBoardState/MemoryClipBoardState.ts'
 import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 
 const helloNumberRegex = /Hello\D+\d+/
 const emailRegex = /test@example\.com/
+
+afterEach(() => {
+  MemoryClipBoardState.setEnabled(false)
+})
 
 test('readNativeFiles', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
@@ -61,6 +66,7 @@ test('enableMemoryClipBoard', async () => {
   })
   await ClipBoard.enableMemoryClipBoard()
   expect(mockRpc.invocations).toEqual([['ClipBoard.enableMemoryClipBoard']])
+  expect(MemoryClipBoardState.isEnabled()).toBe(true)
 })
 
 test('disableMemoryClipBoard', async () => {
@@ -78,8 +84,10 @@ test('disableMemoryClipBoard', async () => {
       return undefined
     },
   })
+  MemoryClipBoardState.setEnabled(true)
   await ClipBoard.disableMemoryClipBoard()
   expect(mockRpc.invocations).toEqual([['ClipBoard.disableMemoryClipBoard']])
+  expect(MemoryClipBoardState.isEnabled()).toBe(false)
 })
 
 test('shouldHaveText - correct', async () => {
