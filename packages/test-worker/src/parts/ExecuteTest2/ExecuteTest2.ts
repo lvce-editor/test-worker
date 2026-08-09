@@ -2,6 +2,8 @@ import type { ExecuteTestResult } from '../ExecuteTestResult/ExecuteTestResult.t
 import { callFunction } from '../CallFunction/CallFunction.ts'
 import { ChatDebugShouldHavePayloadError } from '../ChatDebugShouldHavePayloadError/ChatDebugShouldHavePayloadError.ts'
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
+import * as MemoryClipBoardState from '../MemoryClipBoardState/MemoryClipBoardState.ts'
+import * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import * as TestType from '../TestType/TestType.ts'
 
 const getAutoFixProperties = (error: any): any => {
@@ -28,7 +30,11 @@ const getAutoFixProperties = (error: any): any => {
 export const executeTest2 = async (name: string, fn: any, globals: any, timestampGenerator: () => number): Promise<ExecuteTestResult> => {
   const getTimestamp = timestampGenerator
   const start = getTimestamp()
-  const error = await callFunction(fn, globals)
+  let error = await callFunction(fn, globals)
+  if (MemoryClipBoardState.isEnabled()) {
+    const cleanupError = await callFunction(ClipBoard.disableMemoryClipBoard, undefined)
+    error ||= cleanupError
+  }
   const end = getTimestamp()
   const duration = end - start
   const formattedDuration = formatDuration(duration)

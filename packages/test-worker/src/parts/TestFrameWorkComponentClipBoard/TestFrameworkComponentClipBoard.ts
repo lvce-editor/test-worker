@@ -1,5 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { AssertionError } from '../AssertionError/AssertionError.ts'
+import * as MemoryClipBoardState from '../MemoryClipBoardState/MemoryClipBoardState.ts'
 
 export const readNativeFiles = async (): Promise<void> => {
   await RendererWorker.invoke('ClipBoard.readNativeFiles')
@@ -11,10 +12,12 @@ export const writeNativeFiles = async (uris: readonly string[]): Promise<void> =
 
 export const enableMemoryClipBoard = async (): Promise<void> => {
   await RendererWorker.invoke('ClipBoard.enableMemoryClipBoard')
+  MemoryClipBoardState.setEnabled(true)
 }
 
 export const disableMemoryClipBoard = async (): Promise<void> => {
   await RendererWorker.invoke('ClipBoard.disableMemoryClipBoard')
+  MemoryClipBoardState.setEnabled(false)
 }
 
 const matchesExpectedText = (actualText: string, expectedText: string | RegExp): boolean => {
