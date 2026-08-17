@@ -1,6 +1,7 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as AutoFixState from '../AutoFixState/AutoFixState.ts'
 import { createApi } from '../CreateApi/CreateApi.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import * as ExecuteTest2 from '../ExecuteTest2/ExecuteTest2.ts'
 import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
@@ -11,7 +12,6 @@ import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import { roundTestResults } from '../RoundTestResults/RoundTestResults.ts'
 import * as ShouldSkipTest from '../ShouldSkipTest/ShouldSkipTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
-import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import * as TestState from '../TestState/TestState.ts'
@@ -130,7 +130,7 @@ const executeAllTest = async (importedTest: ImportedExecuteAllTest, globals: any
       return getMissingTestResult(item.name)
     }
     await RendererWorker.invoke('Layout.reset')
-    await Command.execute('ActivityBar.resize', {
+    await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.resize', {
       height: 336,
       width: 48,
       x: 0,

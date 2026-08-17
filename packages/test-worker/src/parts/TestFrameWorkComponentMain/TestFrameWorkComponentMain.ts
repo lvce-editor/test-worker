@@ -1,5 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { AssertionError } from '../AssertionError/AssertionError.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 const defaultMainAreaUid = 2
 
@@ -139,15 +140,15 @@ const serializeForError = (value: unknown): string => {
 }
 
 export const openUri = async (uri: string): Promise<void> => {
-  await RendererWorker.invoke('Main.openUri', uri)
+  await DirectViewWorker.invoke('MainArea', 'Main.openUri', uri)
 }
 
 export const openUris = async (uris: readonly string[]): Promise<void> => {
-  await RendererWorker.invoke('Main.openUris', uris)
+  await DirectViewWorker.invoke('MainArea', 'Main.openUris', uris)
 }
 
 export const openInput = async (options: OpenInputOptions): Promise<void> => {
-  await RendererWorker.invoke('Main.openInput', options)
+  await DirectViewWorker.invoke('MainArea', 'Main.openInput', options)
 }
 
 export const saveState = async (uid: number): Promise<SavedState> => {
@@ -169,89 +170,89 @@ export const shouldHaveLayout = async (expectedLayout: LayoutExpectation, uid = 
 }
 
 export const splitRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.splitRight')
+  await DirectViewWorker.invoke('MainArea', 'Main.splitRight')
 }
 
 export const splitDown = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.splitDown')
+  await DirectViewWorker.invoke('MainArea', 'Main.splitDown')
 }
 
 export const openKeyBindings = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.openKeyBindings')
+  await DirectViewWorker.invoke('MainArea', 'Main.openKeyBindings')
 }
 
 export const handleClickTogglePreview = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.handleClickTogglePreview')
+  await DirectViewWorker.invoke('MainArea', 'Main.handleClickTogglePreview')
 }
 
 export const handleClickAction = async (action: string, rawGroupId: string): Promise<void> => {
-  await RendererWorker.invoke('Main.handleClickAction', action, rawGroupId)
+  await DirectViewWorker.invoke('MainArea', 'Main.handleClickAction', action, rawGroupId)
 }
 
 export const closeAllEditors = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.closeAllEditors')
+  await DirectViewWorker.invoke('MainArea', 'Main.closeAllEditors')
 }
 
 export const closeTabsLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.closeTabsLeft')
+  await DirectViewWorker.invoke('MainArea', 'Main.closeTabsLeft')
 }
 
 export const handleModifiedStatusChange = async (uri: string, newStatus: boolean): Promise<void> => {
-  await RendererWorker.invoke('Main.handleModifiedStatusChange', uri, newStatus)
+  await DirectViewWorker.invoke('MainArea', 'Main.handleModifiedStatusChange', uri, newStatus)
 }
 
 export const closeTabsRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.closeTabsRight')
+  await DirectViewWorker.invoke('MainArea', 'Main.closeTabsRight')
 }
 
 export const selectTab = async (groupIndex: number, tabIndex: number): Promise<void> => {
-  await RendererWorker.invoke('Main.selectTab', groupIndex, tabIndex)
+  await DirectViewWorker.invoke('MainArea', 'Main.selectTab', groupIndex, tabIndex)
 }
 
 export const closeOthers = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.closeOthers')
+  await DirectViewWorker.invoke('MainArea', 'Main.closeOthers')
 }
 
 export const closeActiveEditor = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.closeActiveEditor')
+  await DirectViewWorker.invoke('MainArea', 'Main.closeActiveEditor')
 }
 
 export const save = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.save')
+  await DirectViewWorker.invoke('MainArea', 'Main.save')
 }
 
 export const saveAll = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.saveAll')
+  await DirectViewWorker.invoke('MainArea', 'Main.saveAll')
 }
 
 export const focusFirst = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.focusFirst')
+  await DirectViewWorker.invoke('MainArea', 'Main.focusFirst')
 }
 
 export const focusNext = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.focusNext')
+  await DirectViewWorker.invoke('MainArea', 'Main.focusNext')
 }
 
 export const focusPrevious = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.focusPrevious')
+  await DirectViewWorker.invoke('MainArea', 'Main.focusPrevious')
 }
 
 export const handleClickCloseTab = async (rawGroupIndex: string, rawIndex: string): Promise<void> => {
-  await RendererWorker.invoke('Main.handleClickCloseTab', rawGroupIndex, rawIndex)
+  await DirectViewWorker.invoke('MainArea', 'Main.handleClickCloseTab', rawGroupIndex, rawIndex)
 }
 
 export const focusLast = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.focusLast')
+  await DirectViewWorker.invoke('MainArea', 'Main.focusLast')
 }
 
 export const handleTabContextMenu = async (button: number, x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('Main.handleTabContextMenu', button, x, y)
+  await DirectViewWorker.invoke('MainArea', 'Main.handleTabContextMenu', button, x, y)
 }
 
 export const copyPath = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.copyPath')
+  await DirectViewWorker.invoke('MainArea', 'Main.copyPath')
 }
 
 export const copyRelativePath = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.copyRelativePath')
+  await DirectViewWorker.invoke('MainArea', 'Main.copyRelativePath')
 }

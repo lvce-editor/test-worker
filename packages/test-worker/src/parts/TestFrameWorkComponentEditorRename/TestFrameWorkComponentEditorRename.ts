@@ -1,14 +1,14 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ActiveEditorWorker from '../ActiveEditorWorker/ActiveEditorWorker.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const handleInput = async (value: string): Promise<void> => {
-  await RendererWorker.invoke('EditorRename.handleInput', value, InputSource.Script)
+  await ActiveEditorWorker.invoke('EditorRename.handleInput', value, InputSource.Script)
 }
 
 export const accept = async (): Promise<void> => {
-  await RendererWorker.invoke('EditorRename.accept')
+  await ActiveEditorWorker.invoke('EditorRename.accept')
 }
 
 export const cancel = async (): Promise<void> => {
-  await RendererWorker.invoke('EditorRename.cancel')
+  await ActiveEditorWorker.invoke('EditorRename.cancel')
 }

@@ -1,68 +1,67 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 export const focus = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.focus')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.focus')
 }
 
 export const toggleActivityBarItem = async (id: string): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.toggleActivityBarItem', id)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.toggleActivityBarItem', id)
 }
 
 export const setUserLoginState = async (loginState: string, userInfo?: unknown): Promise<void> => {
   if (userInfo === undefined) {
-    await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState)
+    await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.setUserLoginState', loginState)
     return
   }
-  await RendererWorker.invoke('ActivityBar.setUserLoginState', loginState, userInfo)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.setUserLoginState', loginState, userInfo)
 }
 
 export const focusFirst = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.focusFirst')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.focusFirst')
 }
 
 export const setAccountEnabled = async (enabled: boolean): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.setAccountEnabled', enabled)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.setAccountEnabled', enabled)
 }
 
 export const focusLast = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.focusLast')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.focusLast')
 }
 
 export const focusNext = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.focusNext')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.focusNext')
 }
 
 export const focusPrevious = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.focusPrevious')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.focusPrevious')
 }
 
 export const handleClick = async (): Promise<void> => {
-  await Command.execute('ActivityBar.handleClick', 0, -1000, -1000, '')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleClick', 0, -1000, -1000, '')
 }
 
 export const handleClickIndex = async (): Promise<void> => {
-  await Command.execute('ActivityBar.handleClickIndex', 0, 1, 0, 0)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleClickIndex', 0, 1, 0, 0)
 }
 
 export const handleSideBarHidden = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleSideBarHidden')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleSideBarHidden')
 }
 
 export const handleContextMenu = async (uid: number, button: number, x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleContextMenu', uid, button, x, y)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleContextMenu', uid, button, x, y)
 }
 
 export const handleExtensionsChanged = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleExtensionsChanged')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleExtensionsChanged')
 }
 
 export const handleBadgeCountChange = async (): Promise<void> => {
-  await Command.execute('ActivityBar.handleBadgeCountChange', {})
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleBadgeCountChange', {})
 }
 
 export const handleSettingsChanged = async (): Promise<void> => {
-  await Command.execute('ActivityBar.handleSettingsChanged')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleSettingsChanged')
 }
 
 export interface UpdateConfig {
@@ -71,23 +70,23 @@ export interface UpdateConfig {
 }
 
 export const setUpdateState = async (config: UpdateConfig): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleUpdateStateChange', config)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleUpdateStateChange', config)
 }
 
 export const selectCurrent = async (): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.selectCurrent')
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.selectCurrent')
 }
 
 export const handleClickSettings = async (x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleClickSettings', x, y)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleClickSettings', x, y)
 }
 
 export const handleClickAccount = async (x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleClickAccount', x, y)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleClickAccount', x, y)
 }
 
 export const handleClickAdditionalViews = async (x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.handleClickAdditionalViews', x, y)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.handleClickAdditionalViews', x, y)
 }
 
 export interface Dimensions {
@@ -98,5 +97,5 @@ export interface Dimensions {
 }
 
 export const resize = async (dimensions: Dimensions): Promise<void> => {
-  await RendererWorker.invoke('ActivityBar.resize', dimensions)
+  await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.resize', dimensions)
 }
