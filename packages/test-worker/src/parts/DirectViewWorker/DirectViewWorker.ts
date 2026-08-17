@@ -55,7 +55,12 @@ export const invoke = async (rpcId: string, commandId: string, ...args: readonly
   if (!RendererProcess.isInitialized() || rendererWorkerCommands.has(commandId)) {
     return RendererWorker.invoke(commandId, ...args)
   }
-  const uid = await RendererProcess.invoke('DirectView.getUid', rpcId)
+  let uid: number
+  try {
+    uid = await RendererProcess.invoke('DirectView.getUid', rpcId)
+  } catch {
+    return RendererWorker.invoke(commandId, ...args)
+  }
   const rpc = await getRpc(rpcId)
   const separatorIndex = commandId.indexOf('.')
   const command = commandId.slice(separatorIndex + 1)

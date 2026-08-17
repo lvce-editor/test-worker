@@ -20,7 +20,12 @@ export const invoke = async (commandId: string, ...args: readonly any[]): Promis
   if (!RendererProcess.isInitialized() || rendererWorkerCommands.has(commandId)) {
     return RendererWorker.invoke(commandId, ...args)
   }
-  const mainAreaUid = await RendererProcess.invoke('DirectView.getUid', 'MainArea')
-  const editorUid = await MainAreaWorker.invoke('MainArea.getActiveEditorUid', mainAreaUid)
+  let editorUid: number
+  try {
+    const mainAreaUid = await RendererProcess.invoke('DirectView.getUid', 'MainArea')
+    editorUid = await MainAreaWorker.invoke('MainArea.getActiveEditorUid', mainAreaUid)
+  } catch {
+    return RendererWorker.invoke(commandId, ...args)
+  }
   return EditorWorker.invoke('Editor.executeViewletCommand', editorUid, commandId, ...args)
 }

@@ -48,6 +48,23 @@ test('uses renderer worker before direct connections are initialized', async () 
   expect(mockRpc.invocations).toEqual([['Editor.type', 'abc']])
 })
 
+test('uses renderer worker when active editor lookup is unavailable', async () => {
+  RendererProcess.state.rpc = createMockRpc({
+    commandMap: {
+      'DirectView.getUid'() {
+        throw new Error('Command not found DirectView.getUid')
+      },
+    },
+  })
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.type'() {},
+  })
+
+  await ActiveEditorWorker.invoke('Editor.type', 'abc')
+
+  expect(mockRpc.invocations).toEqual([['Editor.type', 'abc']])
+})
+
 test('keeps renderer-worker-only editor commands on renderer worker', async () => {
   RendererProcess.state.rpc = {} as Rpc
   using mockRpc = RendererWorker.registerMockRpc({

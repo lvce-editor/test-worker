@@ -1,5 +1,5 @@
-import type { Rpc } from '@lvce-editor/rpc'
 import { afterEach, expect, test } from '@jest/globals'
+import { createMockRpc, type Rpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as DirectViewWorker from '../src/parts/DirectViewWorker/DirectViewWorker.ts'
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
@@ -44,6 +44,23 @@ test('invokes a view command through a lazy direct worker rpc', async () => {
 })
 
 test('uses renderer worker before direct connections are initialized', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.focusIndex'() {},
+  })
+
+  await DirectViewWorker.invoke('Explorer', 'Explorer.focusIndex', 3)
+
+  expect(mockRpc.invocations).toEqual([['Explorer.focusIndex', 3]])
+})
+
+test('uses renderer worker when direct view lookup is unavailable', async () => {
+  RendererProcess.state.rpc = createMockRpc({
+    commandMap: {
+      'DirectView.getUid'() {
+        throw new Error('Command not found DirectView.getUid')
+      },
+    },
+  })
   using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.focusIndex'() {},
   })
