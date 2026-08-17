@@ -11,6 +11,28 @@ afterEach(() => {
 test('invokes a command for the active editor directly', async () => {
   const rendererProcessRpc = createMockRpc({
     commandMap: {
+      'DirectView.getFocusedUid'() {
+        return 42
+      },
+    },
+  })
+  RendererProcess.state.rpc = rendererProcessRpc
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.executeViewletCommand'() {},
+  })
+
+  await ActiveEditorWorker.invoke('Editor.type', 'abc')
+
+  expect(rendererProcessRpc.invocations).toEqual([['DirectView.getFocusedUid', 'Editor']])
+  expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.type', 'abc']])
+})
+
+test('uses the main area editor when no editor owns focus', async () => {
+  const rendererProcessRpc = createMockRpc({
+    commandMap: {
+      'DirectView.getFocusedUid'() {
+        throw new Error('focused direct view not found: Editor')
+      },
       'DirectView.getUid'() {
         return 7
       },
@@ -32,7 +54,10 @@ test('invokes a command for the active editor directly', async () => {
 
   await ActiveEditorWorker.invoke('Editor.type', 'abc')
 
-  expect(rendererProcessRpc.invocations).toEqual([['DirectView.getUid', 'MainArea']])
+  expect(rendererProcessRpc.invocations).toEqual([
+    ['DirectView.getFocusedUid', 'Editor'],
+    ['DirectView.getUid', 'MainArea'],
+  ])
   expect(mainAreaRpc.invocations).toEqual([['MainArea.getActiveEditorUid', 7]])
   expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.type', 'abc']])
   await MainAreaWorker.dispose()
