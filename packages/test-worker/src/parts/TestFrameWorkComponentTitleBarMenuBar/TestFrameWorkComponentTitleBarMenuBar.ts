@@ -1,77 +1,77 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 export const closeMenu = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.closeMenu')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.closeMenu')
 }
 
 export const focus = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.focus')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focus')
 }
 
 export const focusFirst = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.focusFirst')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusFirst')
 }
 
 export const setTitleTemplate = async (template: string): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.setTitleTemplate', template)
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.setTitleTemplate', template)
 }
 
 export const focusIndex = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.focusIndex', index)
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusIndex', index)
 }
 
 export const focusLast = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.focusLast')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusLast')
 }
 
 export const focusNext = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.focusNext')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusNext')
 }
 
 export const focusPrevious = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.focusPrevious')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusPrevious')
 }
 
 export const handleKeyArrowDown = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleKeyArrowDown')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowDown')
 }
 
 export const handleKeyArrowLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleKeyArrowLeft')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowLeft')
 }
 
 export const handleKeyArrowRight = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleKeyArrowRight')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowRight')
 }
 
 export const handleKeyArrowUp = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleKeyArrowUp')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowUp')
 }
 
 export const handleKeyEnd = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleKeyEnd')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyEnd')
 }
 
 export const handleKeyHome = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleKeyHome')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyHome')
 }
 
 export const handleKeySpace = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleKeySpace')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeySpace')
 }
 
 export const handleKeyEscape = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleKeyEscape')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyEscape')
 }
 
 export const toggleIndex = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.toggleIndex', index)
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.toggleIndex', index)
 }
 
 export const toggleMenu = async (): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.toggleMenu')
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.toggleMenu')
 }
 
 export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('TitleBar.handleContextMenu', button, x, y)
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleContextMenu', button, x, y)
 }

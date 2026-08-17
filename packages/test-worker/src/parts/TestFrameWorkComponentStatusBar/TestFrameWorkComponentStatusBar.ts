@@ -1,5 +1,5 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 export const update = async (): Promise<void> => {
-  await RendererWorker.invoke('StatusBar.updateStatusBarItems')
+  await DirectViewWorker.invoke('StatusBar', 'StatusBar.updateStatusBarItems')
 }

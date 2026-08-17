@@ -1,21 +1,21 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 export const open = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.openUri', 'language-models:///1')
+  await DirectViewWorker.invoke('MainArea', 'Main.openUri', 'language-models:///1')
 }
 
 export const handleFilterInput = async (value: string): Promise<void> => {
-  await RendererWorker.invoke('LanguageModels.handleFilterInput', value)
+  await DirectViewWorker.invoke('LanguageModels', 'LanguageModels.handleFilterInput', value)
 }
 
 export const clearFilterInput = async (): Promise<void> => {
-  await RendererWorker.invoke('LanguageModels.clearFilterInput')
+  await DirectViewWorker.invoke('LanguageModels', 'LanguageModels.clearFilterInput')
 }
 
 export const addModel = async (): Promise<void> => {
-  await RendererWorker.invoke('LanguageModels.addModel')
+  await DirectViewWorker.invoke('LanguageModels', 'LanguageModels.addModel')
 }
 
 export const removeModel = async (id: string): Promise<void> => {
-  await RendererWorker.invoke('LanguageModels.removeModel', id)
+  await DirectViewWorker.invoke('LanguageModels', 'LanguageModels.removeModel', id)
 }

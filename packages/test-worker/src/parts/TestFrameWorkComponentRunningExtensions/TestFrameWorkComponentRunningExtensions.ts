@@ -1,4 +1,4 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
 import { createLocator } from '../CreateLocator/CreateLocator.ts'
 
@@ -15,35 +15,35 @@ export interface RunningExtension {
 }
 
 export const show = async (): Promise<void> => {
-  await RendererWorker.invoke('Main.openUri', 'running-extensions:///1')
+  await DirectViewWorker.invoke('MainArea', 'Main.openUri', 'running-extensions:///1')
 }
 
 export const setExtensions = async (extensions: readonly RunningExtension[]): Promise<void> => {
-  await RendererWorker.invoke('RunningExtensions.setExtensions', extensions)
+  await DirectViewWorker.invoke('RunningExtensions', 'RunningExtensions.setExtensions', extensions)
 }
 
 export const handleContextMenu = async (index: number, x: number = 0, y: number = 0): Promise<void> => {
-  await RendererWorker.invoke('RunningExtensions.handleContextMenu', index, x, y)
+  await DirectViewWorker.invoke('RunningExtensions', 'RunningExtensions.handleContextMenu', index, x, y)
 }
 
 export const copyId = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('RunningExtensions.copyId', index)
+  await DirectViewWorker.invoke('RunningExtensions', 'RunningExtensions.copyId', index)
 }
 
 export const disable = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('RunningExtensions.disable', index)
+  await DirectViewWorker.invoke('RunningExtensions', 'RunningExtensions.disable', index)
 }
 
 export const disableWorkspace = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('RunningExtensions.disableWorkspace', index)
+  await DirectViewWorker.invoke('RunningExtensions', 'RunningExtensions.disableWorkspace', index)
 }
 
 export const reportIssue = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('RunningExtensions.reportIssue', index)
+  await DirectViewWorker.invoke('RunningExtensions', 'RunningExtensions.reportIssue', index)
 }
 
 export const startProfile = async (): Promise<void> => {
-  await RendererWorker.invoke('RunningExtensions.startProfile')
+  await DirectViewWorker.invoke('RunningExtensions', 'RunningExtensions.startProfile')
 }
 
 export const root = (): ILocatorExternal => {

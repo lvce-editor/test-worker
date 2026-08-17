@@ -1,9 +1,9 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ActiveEditorWorker from '../ActiveEditorWorker/ActiveEditorWorker.ts'
 
 export const selectIndex = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('EditorSourceAction.selectIndex', index)
+  await ActiveEditorWorker.invoke('EditorSourceAction.selectIndex', index)
 }
 
 export const selectCurrentIndex = async (): Promise<void> => {
-  await RendererWorker.invoke('EditorSourceAction.selectCurrentIndex')
+  await ActiveEditorWorker.invoke('EditorSourceAction.selectCurrentIndex')
 }

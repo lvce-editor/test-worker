@@ -1,3 +1,4 @@
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as InputSource from '../InputSource/InputSource.ts'
 
@@ -6,27 +7,27 @@ export const show = async (): Promise<void> => {
 }
 
 export const handleInput = async (searchValue: string): Promise<void> => {
-  return RendererWorker.invoke('Settings.handleInput', searchValue, InputSource.Script)
+  return DirectViewWorker.invoke('Settings', 'Settings.handleInput', searchValue, InputSource.Script)
 }
 
 export const usePreviousSearchValue = async (): Promise<void> => {
-  return RendererWorker.invoke('Settings.usePreviousSearchValue')
+  return DirectViewWorker.invoke('Settings', 'Settings.usePreviousSearchValue')
 }
 
 export const useNextSearchValue = async (): Promise<void> => {
-  return RendererWorker.invoke('Settings.useNextSearchValue')
+  return DirectViewWorker.invoke('Settings', 'Settings.useNextSearchValue')
 }
 
 export const clear = async (searchValue: string): Promise<void> => {
-  return RendererWorker.invoke('Settings.clear', searchValue, InputSource.Script)
+  return DirectViewWorker.invoke('Settings', 'Settings.clear', searchValue, InputSource.Script)
 }
 
 export const clearHistory = async (): Promise<void> => {
-  return RendererWorker.invoke('Settings.clearHistory')
+  return DirectViewWorker.invoke('Settings', 'Settings.clearHistory')
 }
 
 export const selectTab = async (tabId: string): Promise<void> => {
-  return RendererWorker.invoke('Settings.handleClickTab', tabId)
+  return DirectViewWorker.invoke('Settings', 'Settings.handleClickTab', tabId)
 }
 
 export const selectWorkspace = async (): Promise<void> => {
@@ -46,9 +47,9 @@ export const selectWindow = async (): Promise<void> => {
 }
 
 export const handleScroll = async (scrollTop: number): Promise<void> => {
-  await RendererWorker.invoke('Settings.handleScroll', scrollTop, InputSource.Script)
+  await DirectViewWorker.invoke('Settings', 'Settings.handleScroll', scrollTop, InputSource.Script)
 }
 
 export const handleClickFilterButton = async (x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('Settings.handleClickFilterButton', x, y)
+  await DirectViewWorker.invoke('Settings', 'Settings.handleClickFilterButton', x, y)
 }

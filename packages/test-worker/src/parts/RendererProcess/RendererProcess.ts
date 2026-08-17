@@ -16,6 +16,10 @@ export const initialize = async (): Promise<void> => {
   })
 }
 
+export const isInitialized = (): boolean => {
+  return state.rpc !== undefined
+}
+
 export const invoke = (method: string, ...params: readonly any[]): Promise<any> => {
   if (state.rpc) {
     return state.rpc.invoke(method, ...params)

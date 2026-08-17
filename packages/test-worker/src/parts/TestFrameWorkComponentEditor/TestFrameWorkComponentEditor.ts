@@ -1,3 +1,4 @@
+import * as ActiveEditorWorker from '../ActiveEditorWorker/ActiveEditorWorker.ts'
 import { EditorWorker, ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { Diagnostic } from '../Diagnostic/Diagnostic.ts'
 import { areDiagnosticsEqual } from '../AreDiagnosticsEqual/AreDiagnosticsEqual.ts'
@@ -10,159 +11,159 @@ import * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkCompon
 export type { TokenRow } from '../AreTokensEqual/AreTokensEqual.ts'
 
 export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)
+  await ActiveEditorWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)
 }
 
 export const cancelSelection = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cancelSelection')
+  await ActiveEditorWorker.invoke('Editor.cancelSelection')
 }
 
 export const openCompletion = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.openCompletion')
+  await ActiveEditorWorker.invoke('Editor.openCompletion')
 }
 
 export const closeCompletion = async (): Promise<void> => {
-  await RendererWorker.invoke('EditorCompletion.close')
+  await ActiveEditorWorker.invoke('EditorCompletion.close')
 }
 
 export const openEditorContextMenu = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.handleContextMenu', 0, 0)
+  await ActiveEditorWorker.invoke('Editor.handleContextMenu', 0, 0)
 }
 
 export const invokeTabCompletion = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.tabCompletion')
+  await ActiveEditorWorker.invoke('Editor.tabCompletion')
 }
 
 export const executeTabCompletion = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.tabCompletion')
+  await ActiveEditorWorker.invoke('Editor.tabCompletion')
 }
 
 export const invokeBraceCompletion = async (text: string): Promise<void> => {
-  await RendererWorker.invoke('Editor.braceCompletion', text)
+  await ActiveEditorWorker.invoke('Editor.braceCompletion', text)
 }
 
 export const cursorCharacterRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorCharacterRight')
+  await ActiveEditorWorker.invoke('Editor.cursorCharacterRight')
 }
 
 export const cursorCharacterLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorCharacterLeft')
+  await ActiveEditorWorker.invoke('Editor.cursorCharacterLeft')
 }
 
 export const copyLineDown = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.copyLineDown')
+  await ActiveEditorWorker.invoke('Editor.copyLineDown')
 }
 
 export const cursorDown = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorDown')
+  await ActiveEditorWorker.invoke('Editor.cursorDown')
 }
 
 export const selectDown = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectDown')
+  await ActiveEditorWorker.invoke('Editor.selectDown')
 }
 
 export const selectLine = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectLine')
+  await ActiveEditorWorker.invoke('Editor.selectLine')
 }
 
 export const selectAllLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectAllLeft')
+  await ActiveEditorWorker.invoke('Editor.selectAllLeft')
 }
 
 export const selectionGrow = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectionGrow')
+  await ActiveEditorWorker.invoke('Editor.selectionGrow')
 }
 
 export const selectAllRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectAllRight')
+  await ActiveEditorWorker.invoke('Editor.selectAllRight')
 }
 
 export const selectAllOccurrences = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectAllOccurrences')
+  await ActiveEditorWorker.invoke('Editor.selectAllOccurrences')
 }
 
 export const selectUp = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectUp')
+  await ActiveEditorWorker.invoke('Editor.selectUp')
 }
 
 export const cursorUp = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorUp')
+  await ActiveEditorWorker.invoke('Editor.cursorUp')
 }
 
 export const cursorWordLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorWordLeft')
+  await ActiveEditorWorker.invoke('Editor.cursorWordLeft')
 }
 
 export const selectWordLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectWordLeft')
+  await ActiveEditorWorker.invoke('Editor.selectWordLeft')
 }
 
 export const selectWordRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectWordRight')
+  await ActiveEditorWorker.invoke('Editor.selectWordRight')
 }
 
 export const setText = async (text: string): Promise<void> => {
-  await RendererWorker.invoke('Editor.setText', text)
+  await ActiveEditorWorker.invoke('Editor.setText', text)
 }
 
 export const deleteAll = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteAll')
+  await ActiveEditorWorker.invoke('Editor.deleteAll')
 }
 
 export const selectCharacterLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectCharacterLeft')
+  await ActiveEditorWorker.invoke('Editor.selectCharacterLeft')
 }
 
 export const selectCharacterRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectCharacterRight')
+  await ActiveEditorWorker.invoke('Editor.selectCharacterRight')
 }
 
 export const deleteCharacterLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteCharacterLeft')
+  await ActiveEditorWorker.invoke('Editor.deleteCharacterLeft')
 }
 
 export const deleteWordPartRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteWordPartRight')
+  await ActiveEditorWorker.invoke('Editor.deleteWordPartRight')
 }
 
 export const deleteWordRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteWordRight')
+  await ActiveEditorWorker.invoke('Editor.deleteWordRight')
 }
 
 export const deleteWordPartLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteWordPartLeft')
+  await ActiveEditorWorker.invoke('Editor.deleteWordPartLeft')
 }
 
 export const deleteWordLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteWordLeft')
+  await ActiveEditorWorker.invoke('Editor.deleteWordLeft')
 }
 
 export const deleteHorizontalRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteHorizontalRight')
+  await ActiveEditorWorker.invoke('Editor.deleteHorizontalRight')
 }
 
 export const deleteCharacterRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteCharacterRight')
+  await ActiveEditorWorker.invoke('Editor.deleteCharacterRight')
 }
 
 export const cursorWordRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorWordRight')
+  await ActiveEditorWorker.invoke('Editor.cursorWordRight')
 }
 
 export const goToDefinition = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.goToDefinition')
+  await ActiveEditorWorker.invoke('Editor.goToDefinition')
 }
 
 export const openHover = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.showHover2')
+  await ActiveEditorWorker.invoke('Editor.showHover2')
 }
 
 export const goToTypeDefinition = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.goToTypeDefinition')
+  await ActiveEditorWorker.invoke('Editor.goToTypeDefinition')
 }
 
 export const type = async (text: string): Promise<void> => {
-  await RendererWorker.invoke('Editor.type', text)
+  await ActiveEditorWorker.invoke('Editor.type', text)
 }
 
 export const findAllReferences = async (): Promise<void> => {
@@ -174,158 +175,158 @@ export const findAllImplementations = async (): Promise<void> => {
 }
 
 export const setSelections = async (selections: any): Promise<void> => {
-  await RendererWorker.invoke('Editor.setSelections', selections)
+  await ActiveEditorWorker.invoke('Editor.setSelections', selections)
 }
 
 export const selectNextOccurrence = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectNextOccurrence')
+  await ActiveEditorWorker.invoke('Editor.selectNextOccurrence')
 }
 
 export const selectPreviousOccurrence = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectPreviousOccurrence')
+  await ActiveEditorWorker.invoke('Editor.selectPreviousOccurrence')
 }
 
 export const openFindWidget = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.openFind')
+  await ActiveEditorWorker.invoke('Editor.openFind')
 }
 
 export const setDeltaY = async (deltaY: number): Promise<void> => {
-  await RendererWorker.invoke('Editor.setDeltaY', deltaY)
+  await ActiveEditorWorker.invoke('Editor.setDeltaY', deltaY)
 }
 
 export const format = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.format')
+  await ActiveEditorWorker.invoke('Editor.format')
 }
 
 export const indentMore = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.indentMore')
+  await ActiveEditorWorker.invoke('Editor.indentMore')
 }
 
 export const indentLess = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.indentLess')
+  await ActiveEditorWorker.invoke('Editor.indentLess')
 }
 
 export const moveLineDown = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.moveLineDown')
+  await ActiveEditorWorker.invoke('Editor.moveLineDown')
 }
 
 export const pasteText = async (text: string): Promise<void> => {
-  await RendererWorker.invoke('Editor.pasteText', text)
+  await ActiveEditorWorker.invoke('Editor.pasteText', text)
 }
 
 export const sortLinesAscending = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.sortLinesAscending')
+  await ActiveEditorWorker.invoke('Editor.sortLinesAscending')
 }
 
 export const typeWithAutoClosing = async (text: string): Promise<void> => {
-  await RendererWorker.invoke('Editor.typeWithAutoClosing', text)
+  await ActiveEditorWorker.invoke('Editor.typeWithAutoClosing', text)
 }
 
 export const handleTab = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.handleTab')
+  await ActiveEditorWorker.invoke('Editor.handleTab')
 }
 
 export const unIndent = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.unIndent')
+  await ActiveEditorWorker.invoke('Editor.unIndent')
 }
 
 export const insertLineBreak = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.insertLineBreak')
+  await ActiveEditorWorker.invoke('Editor.insertLineBreak')
 }
 
 export const openSourceActions = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.showSourceActions2')
+  await ActiveEditorWorker.invoke('Editor.showSourceActions2')
 }
 
 export const sourceActionsSelectCurrent = async (): Promise<void> => {
-  await RendererWorker.invoke('EditorSourceActions.selectCurrent')
+  await ActiveEditorWorker.invoke('EditorSourceActions.selectCurrent')
 }
 
 export const openCompletionDetails = async (): Promise<void> => {
-  await RendererWorker.invoke('EditorCompletion.openDetails')
+  await ActiveEditorWorker.invoke('EditorCompletion.openDetails')
 }
 
 export const closeCompletionDetails = async (): Promise<void> => {
-  await RendererWorker.invoke('EditorCompletion.closeDetails')
+  await ActiveEditorWorker.invoke('EditorCompletion.closeDetails')
 }
 
 export const toggleCompletionDetails = async (): Promise<void> => {
-  await RendererWorker.invoke('EditorCompletion.toggleDetails')
+  await ActiveEditorWorker.invoke('EditorCompletion.toggleDetails')
 }
 
 export const organizeImports = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.organizeImports')
+  await ActiveEditorWorker.invoke('Editor.organizeImports')
 }
 
 export const addAllMissingImports = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.addAllMissingImports')
+  await ActiveEditorWorker.invoke('Editor.addAllMissingImports')
 }
 
 export const sortImports = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.sortImports')
+  await ActiveEditorWorker.invoke('Editor.sortImports')
 }
 
 export const toggleLineComment = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.toggleLineComment')
+  await ActiveEditorWorker.invoke('Editor.toggleLineComment')
 }
 
 export const toggleBlockComment = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.toggleBlockComment')
+  await ActiveEditorWorker.invoke('Editor.toggleBlockComment')
 }
 
 export const selectAll = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.toggleBlockComment')
+  await ActiveEditorWorker.invoke('Editor.toggleBlockComment')
 }
 
 export const openColorPicker = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.openColorPicker')
+  await ActiveEditorWorker.invoke('Editor.openColorPicker')
 }
 
 export const openFind = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.openFind2')
+  await ActiveEditorWorker.invoke('Editor.openFind2')
 }
 
 export const deleteAllLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteAllLeft')
+  await ActiveEditorWorker.invoke('Editor.deleteAllLeft')
 }
 
 export const deleteAllRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.deleteAllRight')
+  await ActiveEditorWorker.invoke('Editor.deleteAllRight')
 }
 
 export const cursorWordPartLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorWordPartLeft')
+  await ActiveEditorWorker.invoke('Editor.cursorWordPartLeft')
 }
 
 export const cursorWordPartRight = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorWordPartRight')
+  await ActiveEditorWorker.invoke('Editor.cursorWordPartRight')
 }
 
 export const cursorEnd = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorEnd')
+  await ActiveEditorWorker.invoke('Editor.cursorEnd')
 }
 
 export const cursorHome = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.cursorHome')
+  await ActiveEditorWorker.invoke('Editor.cursorHome')
 }
 
 export const copyLineUp = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.copyLineUp')
+  await ActiveEditorWorker.invoke('Editor.copyLineUp')
 }
 
 export const copy = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.copy')
+  await ActiveEditorWorker.invoke('Editor.copy')
 }
 
 export const closeColorPicker = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.closeColorPicker')
+  await ActiveEditorWorker.invoke('Editor.closeColorPicker')
 }
 
 export const openContextMenu = async (): Promise<void> => {
   const button = 0
   const x = 0
   const y = 0
-  await RendererWorker.invoke('Editor.contextMenu', button, x, y)
+  await ActiveEditorWorker.invoke('Editor.contextMenu', button, x, y)
 }
 
 export const getText = async (): Promise<string> => {
@@ -333,27 +334,27 @@ export const getText = async (): Promise<string> => {
 }
 
 export const rename = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.rename')
+  await ActiveEditorWorker.invoke('Editor.rename')
 }
 
 export const showHover = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.showHover2')
+  await ActiveEditorWorker.invoke('Editor.showHover2')
 }
 
 export const openRename = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.openRename')
+  await ActiveEditorWorker.invoke('Editor.openRename')
 }
 
 export const rename2 = async (newName: string): Promise<void> => {
   await openRename()
 
-  await RendererWorker.invoke('EditorRename.handleInput', newName, InputSource.Script)
+  await ActiveEditorWorker.invoke('EditorRename.handleInput', newName, InputSource.Script)
 
-  await RendererWorker.invoke('EditorRename.accept')
+  await ActiveEditorWorker.invoke('EditorRename.accept')
 }
 
 export const growSelection = async (): Promise<void> => {
-  await RendererWorker.invoke('Editor.selectionGrow')
+  await ActiveEditorWorker.invoke('Editor.selectionGrow')
 }
 
 export const getSelections = async (): Promise<Uint32Array> => {

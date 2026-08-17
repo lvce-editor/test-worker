@@ -1,62 +1,62 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ActiveEditorWorker from '../ActiveEditorWorker/ActiveEditorWorker.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 
 export const focusNext = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.focusNext')
+  await ActiveEditorWorker.invoke('FindWidget.focusNext')
 }
 
 export const focusPrevious = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.focusPrevious')
+  await ActiveEditorWorker.invoke('FindWidget.focusPrevious')
 }
 
 export const close = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.close')
+  await ActiveEditorWorker.invoke('FindWidget.close')
 }
 
 export const setReplaceValue = async (value: string): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.handleReplaceInput', value, InputSource.Script)
+  await ActiveEditorWorker.invoke('FindWidget.handleReplaceInput', value, InputSource.Script)
 }
 
 export const setValue = async (value: string): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.handleInput', value, InputSource.Script)
+  await ActiveEditorWorker.invoke('FindWidget.handleInput', value, InputSource.Script)
 }
 
 export const toggleReplace = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.toggleReplace')
+  await ActiveEditorWorker.invoke('FindWidget.toggleReplace')
 }
 
 export const toggleMatchCase = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.toggleMatchCase')
+  await ActiveEditorWorker.invoke('FindWidget.toggleMatchCase')
 }
 
 export const toggleMatchWholeWord = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.toggleMatchWholeWord')
+  await ActiveEditorWorker.invoke('FindWidget.toggleMatchWholeWord')
 }
 
 export const togglePreserveCase = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.togglePreserveCase')
+  await ActiveEditorWorker.invoke('FindWidget.togglePreserveCase')
 }
 
 export const toggleUseRegularExpression = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.toggleUseRegularExpression')
+  await ActiveEditorWorker.invoke('FindWidget.toggleUseRegularExpression')
 }
 
 export const replace = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.replace')
+  await ActiveEditorWorker.invoke('FindWidget.replace')
 }
 
 export const replaceAll = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.replaceAll')
+  await ActiveEditorWorker.invoke('FindWidget.replaceAll')
 }
 
 export const focusElement = async (whenExpression: number): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.focusElement', whenExpression)
+  await ActiveEditorWorker.invoke('FindWidget.focusElement', whenExpression)
 }
 
 export const focusNextElement = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.focusNextElement')
+  await ActiveEditorWorker.invoke('FindWidget.focusNextElement')
 }
 
 export const focusPreviousElement = async (): Promise<void> => {
-  await RendererWorker.invoke('FindWidget.focusPreviousElement')
+  await ActiveEditorWorker.invoke('FindWidget.focusPreviousElement')
 }

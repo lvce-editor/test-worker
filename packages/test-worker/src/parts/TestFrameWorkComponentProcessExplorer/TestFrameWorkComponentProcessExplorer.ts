@@ -1,3 +1,4 @@
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
 import { createLocator } from '../CreateLocator/CreateLocator.ts'
@@ -16,43 +17,43 @@ export const open = async (): Promise<void> => {
 }
 
 export const refresh = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.refresh')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.refresh')
 }
 
 export const collapseAll = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.collapseAll')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.collapseAll')
 }
 
 export const expandAll = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.expandAll')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.expandAll')
 }
 
 export const focusFirst = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.focusFirst')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.focusFirst')
 }
 
 export const focusLast = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.focusLast')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.focusLast')
 }
 
 export const focusNext = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.focusNext')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.focusNext')
 }
 
 export const focusPrevious = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.focusPrevious')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.focusPrevious')
 }
 
 export const handleArrowLeft = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.handleArrowLeft')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.handleArrowLeft')
 }
 
 export const handleArrowRight = async (): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.handleArrowRight')
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.handleArrowRight')
 }
 
 export const clickRow = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('ProcessExplorer.handleClickAt', index)
+  await DirectViewWorker.invoke('ProcessExplorer', 'ProcessExplorer.handleClickAt', index)
 }
 
 export const doubleClickRow = async (index?: number): Promise<void> => {

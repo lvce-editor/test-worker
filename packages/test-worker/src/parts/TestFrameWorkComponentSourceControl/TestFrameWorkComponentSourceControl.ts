@@ -1,25 +1,25 @@
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { InputSource } from '@lvce-editor/constants'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
 export const selectIndex = async (index: number): Promise<void> => {
-  await RendererWorker.invoke('Source Control.selectIndex', index)
+  await DirectViewWorker.invoke('SourceControl', 'Source Control.selectIndex', index)
 }
 
 export const acceptInput = async (): Promise<void> => {
-  await RendererWorker.invoke('Source Control.acceptInput')
+  await DirectViewWorker.invoke('SourceControl', 'Source Control.acceptInput')
 }
 
 export const handleInput = async (text: string): Promise<void> => {
-  await RendererWorker.invoke('Source Control.handleInput', text, InputSource.Script)
+  await DirectViewWorker.invoke('SourceControl', 'Source Control.handleInput', text, InputSource.Script)
 }
 
 export const handleClickSourceControlButtons = async (index: number, name: string): Promise<void> => {
-  await RendererWorker.invoke('Source Control.handleClickSourceControlButtons', index, name)
+  await DirectViewWorker.invoke('SourceControl', 'Source Control.handleClickSourceControlButtons', index, name)
 }
 
 export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
-  await RendererWorker.invoke('Source Control.handleContextMenu', button, x, y)
+  await DirectViewWorker.invoke('SourceControl', 'Source Control.handleContextMenu', button, x, y)
 }
 
 export const show = async (): Promise<void> => {
