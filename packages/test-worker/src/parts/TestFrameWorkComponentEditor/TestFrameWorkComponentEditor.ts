@@ -1,6 +1,6 @@
-import * as ActiveEditorWorker from '../ActiveEditorWorker/ActiveEditorWorker.ts'
 import { EditorWorker, ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { Diagnostic } from '../Diagnostic/Diagnostic.ts'
+import * as ActiveEditorWorker from '../ActiveEditorWorker/ActiveEditorWorker.ts'
 import { areDiagnosticsEqual } from '../AreDiagnosticsEqual/AreDiagnosticsEqual.ts'
 import { areSelectionsEqual } from '../AreSelectionsEqual/AreSelectionsEqual.ts'
 import { areTokensEqual, type TokenRow } from '../AreTokensEqual/AreTokensEqual.ts'

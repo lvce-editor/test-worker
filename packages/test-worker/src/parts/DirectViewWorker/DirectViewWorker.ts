@@ -63,7 +63,7 @@ export const invoke = async (rpcId: string, commandId: string, ...args: readonly
 }
 
 export const dispose = async (): Promise<void> => {
-  const pendingRpcs = [...rpcs.values()]
+  const pendingRpcs = rpcs.values().toArray()
   rpcs.clear()
   const resolvedRpcs = await Promise.all(pendingRpcs)
   await Promise.all(resolvedRpcs.map((rpc) => rpc.dispose()))

@@ -1,5 +1,5 @@
-import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { InputSource } from '@lvce-editor/constants'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
 export type ExtensionStatus = 'disabled' | 'enabled' | 'installing' | 'not-installed' | 'uninstalling'

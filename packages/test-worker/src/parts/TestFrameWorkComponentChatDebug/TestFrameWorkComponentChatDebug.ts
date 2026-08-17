@@ -1,6 +1,6 @@
-import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { assertPayloadMatches } from '../AssertPayloadMatches/AssertPayloadMatches.ts'
 import { ChatDebugShouldHavePayloadError } from '../ChatDebugShouldHavePayloadError/ChatDebugShouldHavePayloadError.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 export interface ChatDebugEvent {
   readonly [key: string]: unknown

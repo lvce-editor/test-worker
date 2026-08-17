@@ -1,7 +1,7 @@
-import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { DroppedFileHandle } from '../DroppedFileHandle/DroppedFileHandle.ts'
 import type { MockRequestInput } from '../MockRequestInput/MockRequestInput.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 export const setReasoningPickerEnabled = async (enabled: boolean): Promise<void> => {
   await DirectViewWorker.invoke('Chat', 'Chat.setReasoningPickerEnabled', enabled)

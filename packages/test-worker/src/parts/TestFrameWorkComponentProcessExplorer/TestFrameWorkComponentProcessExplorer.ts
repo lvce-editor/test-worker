@@ -1,7 +1,7 @@
-import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
 import { createLocator } from '../CreateLocator/CreateLocator.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { expect } from '../Expect/Expect.ts'
 
 const invokeOptionalIndex = async (command: string, index: number | undefined): Promise<void> => {

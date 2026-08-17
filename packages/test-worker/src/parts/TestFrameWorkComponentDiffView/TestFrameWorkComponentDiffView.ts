@@ -1,6 +1,6 @@
 import { createLocator } from '../CreateLocator/CreateLocator.ts'
-import { expect } from '../Expect/Expect.ts'
 import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
+import { expect } from '../Expect/Expect.ts'
 import * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 
 export type DiffMode = 'inline' | 'side-by-side'

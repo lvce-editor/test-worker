@@ -1,5 +1,5 @@
-import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 export interface ExplorerSavedState {
   readonly deltaY: number

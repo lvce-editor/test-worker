@@ -1,6 +1,6 @@
-import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { registerCallbackCommand } from '../Callback/Callback.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.ts'
 
 export const open = async (): Promise<void> => {

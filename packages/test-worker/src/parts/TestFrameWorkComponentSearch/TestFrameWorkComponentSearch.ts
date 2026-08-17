@@ -1,6 +1,6 @@
-import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { SearchInputType } from '../SearchInputType/SearchInputType.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import * as InputSource from '../InputSource/InputSource.ts'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
 
