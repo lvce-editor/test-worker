@@ -43,6 +43,7 @@ import type * as References from '../TestFrameWorkComponentReferences/TestFrameW
 import type * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 import type * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
 import type * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
+import type * as SecretsView from '../TestFrameWorkComponentSecretsView/TestFrameWorkComponentSecretsView.ts'
 import type * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 import type * as SettingsView from '../TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
 import type * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
@@ -110,6 +111,7 @@ export interface Api {
   RunAndDebug: typeof RunAndDebug
   RunningExtensions: typeof RunningExtensions
   Search: typeof Search
+  SecretsView: typeof SecretsView
   Settings: typeof Settings
   SettingsView: typeof SettingsView
   SideBar: typeof SideBar
