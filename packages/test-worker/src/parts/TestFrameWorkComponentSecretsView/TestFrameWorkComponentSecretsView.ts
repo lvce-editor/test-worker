@@ -1,5 +1,5 @@
-import { createLocator } from '../CreateLocator/CreateLocator.ts'
 import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
+import { createLocator } from '../CreateLocator/CreateLocator.ts'
 import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
 export interface SecretData {
