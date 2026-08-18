@@ -43,6 +43,7 @@ import * as References from '../TestFrameWorkComponentReferences/TestFrameWorkCo
 import * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 import * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
 import * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
+import * as SecretsView from '../TestFrameWorkComponentSecretsView/TestFrameWorkComponentSecretsView.ts'
 import * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 import * as SettingsView from '../TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
@@ -112,6 +113,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     RunAndDebug,
     RunningExtensions,
     Search,
+    SecretsView,
     Settings,
     SettingsView,
     SideBar,
