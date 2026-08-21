@@ -167,6 +167,17 @@ test('selectionGrow', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.selectionGrow']])
 })
 
+test('selectionShrink', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectionShrink'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectionShrink()
+  expect(mockRpc.invocations).toEqual([['Editor.selectionShrink']])
+})
+
 test('selectAllRight', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.selectAllRight'() {
@@ -914,6 +925,17 @@ test('growSelection', async () => {
 
   await Editor.growSelection()
   expect(mockRpc.invocations).toEqual([['Editor.selectionGrow']])
+})
+
+test('shrinkSelection', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectionShrink'() {
+      return undefined
+    },
+  })
+
+  await Editor.shrinkSelection()
+  expect(mockRpc.invocations).toEqual([['Editor.selectionShrink']])
 })
 
 test('executeTabCompletion', async () => {
