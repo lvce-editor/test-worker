@@ -74,6 +74,10 @@ export const selectionGrow = async (): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.selectionGrow')
 }
 
+export const selectionShrink = async (): Promise<void> => {
+  await ActiveEditorWorker.invoke('Editor.selectionShrink')
+}
+
 export const selectAllRight = async (): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.selectAllRight')
 }
@@ -355,6 +359,10 @@ export const rename2 = async (newName: string): Promise<void> => {
 
 export const growSelection = async (): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.selectionGrow')
+}
+
+export const shrinkSelection = async (): Promise<void> => {
+  await ActiveEditorWorker.invoke('Editor.selectionShrink')
 }
 
 export const getSelections = async (): Promise<Uint32Array> => {
