@@ -49,6 +49,7 @@ test('createApi includes all expected components', () => {
   expect(api.References).toBeDefined()
   expect(api.RunAndDebug).toBeDefined()
   expect(api.RunningExtensions).toBeDefined()
+  expect(api.SecretsView).toBeDefined()
   expect(api.Search).toBeDefined()
   expect(api.Settings).toBeDefined()
   expect(api.StatusBar).toBeDefined()

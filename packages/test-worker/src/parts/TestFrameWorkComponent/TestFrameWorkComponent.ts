@@ -42,6 +42,7 @@ export * as References from '../TestFrameWorkComponentReferences/TestFrameWorkCo
 export * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 export * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
 export * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
+export * as SecretsView from '../TestFrameWorkComponentSecretsView/TestFrameWorkComponentSecretsView.ts'
 export * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 export * as SettingsView from '../TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
 export * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'

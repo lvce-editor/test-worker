@@ -22,10 +22,14 @@ export const invoke = async (commandId: string, ...args: readonly any[]): Promis
   }
   let editorUid: number
   try {
-    const mainAreaUid = await RendererProcess.invoke('DirectView.getUid', 'MainArea')
-    editorUid = await MainAreaWorker.invoke('MainArea.getActiveEditorUid', mainAreaUid)
+    editorUid = await RendererProcess.invoke('DirectView.getFocusedUid', 'Editor')
   } catch {
-    return RendererWorker.invoke(commandId, ...args)
+    try {
+      const mainAreaUid = await RendererProcess.invoke('DirectView.getUid', 'MainArea')
+      editorUid = await MainAreaWorker.invoke('MainArea.getActiveEditorUid', mainAreaUid)
+    } catch {
+      return RendererWorker.invoke(commandId, ...args)
+    }
   }
   return EditorWorker.invoke('Editor.executeViewletCommand', editorUid, commandId, ...args)
 }
