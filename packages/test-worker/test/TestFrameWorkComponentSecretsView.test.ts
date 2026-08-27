@@ -26,7 +26,7 @@ test('locators', () => {
   expect(getSelector(SecretsView.value(2))).toBe('.SecretsViewRow .SecretsViewValue')
 })
 
-test('actions click their row buttons', async () => {
+test('actions click the view and selected row buttons', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.performAction'() {},
   })
@@ -34,9 +34,15 @@ test('actions click their row buttons', async () => {
   await SecretsView.edit(1)
   await SecretsView.save(2)
   await SecretsView.cancel(3)
+  await SecretsView.toggleReveal(1)
+  await SecretsView.copy(2)
+  await SecretsView.deleteSecret(3)
 
-  expect(mockRpc.invocations).toHaveLength(3)
+  expect(mockRpc.invocations).toHaveLength(6)
   expect(mockRpc.invocations.map((invocation) => invocation[0])).toEqual([
+    'TestFrameWork.performAction',
+    'TestFrameWork.performAction',
+    'TestFrameWork.performAction',
     'TestFrameWork.performAction',
     'TestFrameWork.performAction',
     'TestFrameWork.performAction',
