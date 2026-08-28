@@ -885,6 +885,35 @@ test('getText', async () => {
   expect(text).toBe('test text')
 })
 
+test('getText - falls back to the editor registry when the direct editor is unavailable', async () => {
+  RendererProcess.state.rpc = createMockRpc({
+    commandMap: {
+      'DirectView.getFocusedUid'() {
+        return 42
+      },
+    },
+  })
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.executeViewletCommand'() {
+      return null
+    },
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getText'() {
+      return 'fallback text'
+    },
+  })
+
+  try {
+    const text = await Editor.getText()
+    expect(text).toBe('fallback text')
+    expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.getText'], ['Editor.getKeys'], ['Editor.getText', 1]])
+  } finally {
+    RendererProcess.state.rpc = undefined
+  }
+})
+
 test('rename', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.rename'() {
