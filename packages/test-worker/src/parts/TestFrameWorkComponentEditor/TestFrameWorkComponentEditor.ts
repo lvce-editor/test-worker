@@ -334,7 +334,12 @@ export const openContextMenu = async (): Promise<void> => {
 }
 
 export const getText = async (): Promise<string> => {
-  return RendererWorker.invoke('Editor.getText')
+  const text = await ActiveEditorWorker.invoke('Editor.getText')
+  if (typeof text === 'string') {
+    return text
+  }
+  const key = await getEditorKey()
+  return EditorWorker.invoke('Editor.getText', key)
 }
 
 export const rename = async (): Promise<void> => {
@@ -372,8 +377,7 @@ export const getSelections = async (): Promise<Uint32Array> => {
 }
 
 export const shouldHaveText = async (expectedText: string): Promise<void> => {
-  const key = await getEditorKey()
-  const text = await EditorWorker.invoke('Editor.getText', key)
+  const text = await getText()
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
   }
