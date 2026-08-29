@@ -16,6 +16,19 @@ const rendererWorkerCommands = new Set([
   'FindWidget.focusElement',
 ])
 
+export const invokeMainArea = async (commandId: string, ...args: readonly any[]): Promise<any> => {
+  if (!RendererProcess.isInitialized() || rendererWorkerCommands.has(commandId)) {
+    return RendererWorker.invoke(commandId, ...args)
+  }
+  try {
+    const mainAreaUid = await RendererProcess.invoke('DirectView.getUid', 'MainArea')
+    const editorUid = await MainAreaWorker.invoke('MainArea.getActiveEditorUid', mainAreaUid)
+    return EditorWorker.invoke('Editor.executeViewletCommand', editorUid, commandId, ...args)
+  } catch {
+    return RendererWorker.invoke(commandId, ...args)
+  }
+}
+
 export const invoke = async (commandId: string, ...args: readonly any[]): Promise<any> => {
   if (!RendererProcess.isInitialized() || rendererWorkerCommands.has(commandId)) {
     return RendererWorker.invoke(commandId, ...args)
@@ -24,12 +37,7 @@ export const invoke = async (commandId: string, ...args: readonly any[]): Promis
   try {
     editorUid = await RendererProcess.invoke('DirectView.getFocusedUid', 'Editor')
   } catch {
-    try {
-      const mainAreaUid = await RendererProcess.invoke('DirectView.getUid', 'MainArea')
-      editorUid = await MainAreaWorker.invoke('MainArea.getActiveEditorUid', mainAreaUid)
-    } catch {
-      return RendererWorker.invoke(commandId, ...args)
-    }
+    return invokeMainArea(commandId, ...args)
   }
   return EditorWorker.invoke('Editor.executeViewletCommand', editorUid, commandId, ...args)
 }
