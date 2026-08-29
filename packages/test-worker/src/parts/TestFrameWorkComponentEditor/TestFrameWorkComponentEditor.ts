@@ -10,6 +10,9 @@ import * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkCompon
 
 export type { TokenRow } from '../AreTokensEqual/AreTokensEqual.ts'
 
+const editorTextReadAttempts = 20
+const editorTextReadDelay = 50
+
 export const setCursor = async (rowIndex: number, columnIndex: number): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)
 }
@@ -377,7 +380,11 @@ export const getSelections = async (): Promise<Uint32Array> => {
 }
 
 export const shouldHaveText = async (expectedText: string): Promise<void> => {
-  const text = await getText()
+  let text = await getText()
+  for (let attempt = 1; attempt < editorTextReadAttempts && text !== expectedText; attempt++) {
+    await new Promise((resolve) => globalThis.setTimeout(resolve, editorTextReadDelay))
+    text = await getText()
+  }
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
   }
