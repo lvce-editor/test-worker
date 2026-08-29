@@ -888,15 +888,12 @@ test('getText', async () => {
 test('getText - falls back to the editor registry when the direct editor is unavailable', async () => {
   RendererProcess.state.rpc = createMockRpc({
     commandMap: {
-      'DirectView.getFocusedUid'() {
-        return 42
+      'DirectView.getUid'() {
+        throw new Error('main area direct view not found')
       },
     },
   })
   using editorRpc = EditorWorker.registerMockRpc({
-    'Editor.executeViewletCommand'() {
-      return null
-    },
     'Editor.getKeys'() {
       return ['1']
     },
@@ -904,11 +901,17 @@ test('getText - falls back to the editor registry when the direct editor is unav
       return 'fallback text'
     },
   })
+  using rendererRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return undefined
+    },
+  })
 
   try {
     const text = await Editor.getText()
     expect(text).toBe('fallback text')
-    expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.getText'], ['Editor.getKeys'], ['Editor.getText', 1]])
+    expect(rendererRpc.invocations).toEqual([['Editor.getText']])
+    expect(editorRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
   } finally {
     RendererProcess.state.rpc = undefined
   }
@@ -1063,10 +1066,7 @@ test('shouldHaveText - reads from the active main area editor', async () => {
 
   try {
     await Editor.shouldHaveText('expected text')
-    expect(rendererProcessRpc.invocations).toEqual([
-      ['DirectView.getFocusedUid', 'Editor'],
-      ['DirectView.getUid', 'MainArea'],
-    ])
+    expect(rendererProcessRpc.invocations).toEqual([['DirectView.getUid', 'MainArea']])
     expect(mainAreaRpc.invocations).toEqual([['MainArea.getActiveEditorUid', 7]])
     expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.getText']])
   } finally {

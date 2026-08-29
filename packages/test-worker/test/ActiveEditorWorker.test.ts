@@ -63,6 +63,44 @@ test('uses the main area editor when no editor owns focus', async () => {
   await MainAreaWorker.dispose()
 })
 
+test('invokes the main area editor even when another editor owns focus', async () => {
+  const rendererProcessRpc = createMockRpc({
+    commandMap: {
+      'DirectView.getFocusedUid'() {
+        return 99
+      },
+      'DirectView.getUid'() {
+        return 7
+      },
+    },
+  })
+  RendererProcess.state.rpc = rendererProcessRpc
+  const mainAreaRpc = createMockRpc({
+    commandMap: {
+      'MainArea.getActiveEditorUid'() {
+        return 42
+      },
+    },
+  })
+  Object.assign(mainAreaRpc, { dispose: async () => {} })
+  MainAreaWorker.set(mainAreaRpc)
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.executeViewletCommand'() {
+      return 'main area text'
+    },
+  })
+
+  try {
+    const text = await ActiveEditorWorker.invokeMainArea('Editor.getText')
+    expect(text).toBe('main area text')
+    expect(rendererProcessRpc.invocations).toEqual([['DirectView.getUid', 'MainArea']])
+    expect(mainAreaRpc.invocations).toEqual([['MainArea.getActiveEditorUid', 7]])
+    expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.getText']])
+  } finally {
+    await MainAreaWorker.dispose()
+  }
+})
+
 test('uses renderer worker before direct connections are initialized', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.type'() {},

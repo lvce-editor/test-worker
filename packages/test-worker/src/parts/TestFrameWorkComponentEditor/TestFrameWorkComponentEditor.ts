@@ -334,7 +334,7 @@ export const openContextMenu = async (): Promise<void> => {
 }
 
 export const getText = async (): Promise<string> => {
-  const text = await ActiveEditorWorker.invoke('Editor.getText')
+  const text = await ActiveEditorWorker.invokeMainArea('Editor.getText')
   if (typeof text === 'string') {
     return text
   }
