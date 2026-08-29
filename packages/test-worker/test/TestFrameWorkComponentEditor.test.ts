@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, jest, test } from '@jest/globals'
 import { createMockRpc } from '@lvce-editor/rpc'
 import { EditorWorker, ExtensionManagementWorker, MainAreaWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
@@ -1026,15 +1026,43 @@ test('shouldHaveText - success case', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.getText']])
 })
 
+test('shouldHaveText - retries while the active editor is changing', async () => {
+  jest.useFakeTimers()
+  let invocationCount = 0
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      invocationCount++
+      return invocationCount === 1 ? 'previous text' : 'expected text'
+    },
+  })
+
+  try {
+    const assertion = Editor.shouldHaveText('expected text')
+    await jest.advanceTimersByTimeAsync(50)
+    await assertion
+    expect(mockRpc.invocations).toEqual([['Editor.getText'], ['Editor.getText']])
+  } finally {
+    jest.useRealTimers()
+  }
+})
+
 test('shouldHaveText - throws error when text does not match', async () => {
+  jest.useFakeTimers()
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.getText'() {
       return 'wrong text'
     },
   })
 
-  await expect(Editor.shouldHaveText('expected text')).rejects.toThrow('Expected editor to have text expected text but was wrong text')
-  expect(mockRpc.invocations).toEqual([['Editor.getText']])
+  try {
+    const assertion = Editor.shouldHaveText('expected text')
+    void assertion.catch(() => {})
+    await jest.runAllTimersAsync()
+    await expect(assertion).rejects.toThrow('Expected editor to have text expected text but was wrong text')
+    expect(mockRpc.invocations).toHaveLength(20)
+  } finally {
+    jest.useRealTimers()
+  }
 })
 
 test('shouldHaveText - reads from the active main area editor', async () => {
