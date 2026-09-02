@@ -1,12 +1,12 @@
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
-export interface DropSessionStringItem {
+interface DropSessionStringItem {
   readonly kind: 'string'
   readonly type: string
   readonly value: string
 }
 
-export interface DropSessionFileItem {
+interface DropSessionFileItem {
   readonly file?: File
   readonly fileSystemHandle?: FileSystemHandle
   readonly kind: 'file'
