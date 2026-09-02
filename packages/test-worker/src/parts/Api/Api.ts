@@ -77,8 +77,8 @@ export interface Api {
   ContextMenu: typeof ContextMenu
   Developer: typeof Developer
   Dialog: typeof Dialog
-  DragAndDrop: typeof DragAndDrop
   DiffView: typeof DiffView
+  DragAndDrop: typeof DragAndDrop
   Editor: typeof Editor
   EditorCompletion: typeof EditorCompletion
   EditorHover: typeof EditorHover
