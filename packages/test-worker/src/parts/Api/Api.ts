@@ -12,6 +12,7 @@ import type * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkCom
 import type * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 import type * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 import type * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
+import type * as DragAndDrop from '../TestFrameWorkComponentDragAndDrop/TestFrameWorkComponentDragAndDrop.ts'
 import type * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 import type * as EditorCompletion from '../TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
 import type * as EditorHover from '../TestFrameWorkComponentEditorHover/TestFrameWorkComponentEditorHover.ts'
@@ -77,6 +78,7 @@ export interface Api {
   Developer: typeof Developer
   Dialog: typeof Dialog
   DiffView: typeof DiffView
+  DragAndDrop: typeof DragAndDrop
   Editor: typeof Editor
   EditorCompletion: typeof EditorCompletion
   EditorHover: typeof EditorHover
