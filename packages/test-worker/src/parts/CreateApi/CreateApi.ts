@@ -12,6 +12,7 @@ import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponen
 import * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 import * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 import * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
+import * as DragAndDrop from '../TestFrameWorkComponentDragAndDrop/TestFrameWorkComponentDragAndDrop.ts'
 import * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 import * as EditorCompletion from '../TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
 import * as EditorHover from '../TestFrameWorkComponentEditorHover/TestFrameWorkComponentEditorHover.ts'
@@ -73,6 +74,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     ContextMenu,
     Developer,
     Dialog,
+    DragAndDrop,
     DiffView,
     Editor,
     EditorCompletion,
