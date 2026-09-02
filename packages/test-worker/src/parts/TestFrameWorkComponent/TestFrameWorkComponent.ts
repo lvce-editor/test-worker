@@ -11,6 +11,7 @@ export * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWork
 export * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 export * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 export * as DiffView from '../TestFrameWorkComponentDiffView/TestFrameWorkComponentDiffView.ts'
+export * as DragAndDrop from '../TestFrameWorkComponentDragAndDrop/TestFrameWorkComponentDragAndDrop.ts'
 export * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 export * as EditorCompletion from '../TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
 export * as EditorHover from '../TestFrameWorkComponentEditorHover/TestFrameWorkComponentEditorHover.ts'
