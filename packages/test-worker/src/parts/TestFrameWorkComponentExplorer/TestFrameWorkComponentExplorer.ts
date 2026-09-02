@@ -25,13 +25,8 @@ export const handleEscape = async (): Promise<void> => {
   await DirectViewWorker.invoke('Explorer', 'Explorer.handleEscape')
 }
 
-export const handleDropIndex = async (
-  fileHandles: readonly FileSystemHandle[],
-  files: readonly any[],
-  paths: readonly string[],
-  index: number,
-): Promise<void> => {
-  await DirectViewWorker.invoke('Explorer', 'Explorer.handleDropIndex', fileHandles, files, paths, index)
+export const handleDropIndex = async (fileHandles: readonly FileSystemHandle[], paths: readonly string[], index: number): Promise<void> => {
+  await DirectViewWorker.invoke('Explorer', 'Explorer.handleDropIndex', fileHandles, paths, index)
 }
 
 export const handleInputBlur = async (): Promise<void> => {
@@ -149,8 +144,8 @@ export const handleDoubleClick = async (eventX: number, eventY: number): Promise
   await DirectViewWorker.invoke('Explorer', 'Explorer.handleDoubleClick', eventX, eventY)
 }
 
-export const handleDrop = async (x: number, y: number, fileIds: readonly number[], fileList: FileList | readonly File[]): Promise<void> => {
-  await DirectViewWorker.invoke('Explorer', 'Explorer.handleDrop', x, y, fileIds, fileList)
+export const handleDrop = async (x: number, y: number, dropId: number): Promise<void> => {
+  await DirectViewWorker.invoke('Explorer', 'Explorer.handleDrop', x, y, dropId)
 }
 
 export const handleKeyDown = async (defaultPrevented: boolean, key: string): Promise<void> => {

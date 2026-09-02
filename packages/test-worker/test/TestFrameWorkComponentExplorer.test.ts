@@ -66,12 +66,11 @@ test('handleDropIndex', async () => {
       name: 'test.txt',
     },
   ]
-  const files = [{ name: 'test.txt' }]
   const paths = ['/tmp/test.txt']
 
-  await Explorer.handleDropIndex(fileHandles, files, paths, 2)
+  await Explorer.handleDropIndex(fileHandles, paths, 2)
 
-  expect(mockRpc.invocations).toEqual([['Explorer.handleDropIndex', fileHandles, files, paths, 2]])
+  expect(mockRpc.invocations).toEqual([['Explorer.handleDropIndex', fileHandles, paths, 2]])
 })
 
 test('handleInputBlur', async () => {
@@ -393,12 +392,9 @@ test('handleDrop', async () => {
     },
   })
 
-  const fileIds = [1, 2, 3]
-  const fileList = [] as readonly File[]
+  await Explorer.handleDrop(150, 250, 42)
 
-  await Explorer.handleDrop(150, 250, fileIds, fileList)
-
-  expect(mockRpc.invocations).toEqual([['Explorer.handleDrop', 150, 250, fileIds, fileList]])
+  expect(mockRpc.invocations).toEqual([['Explorer.handleDrop', 150, 250, 42]])
 })
 
 test('handleKeyDown', async () => {
