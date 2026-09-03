@@ -15,7 +15,8 @@ export const toHaveValue = (
     readonly value: string
   },
 ): string => {
-  return `expected selector ${printLocator(locator)} to have value ${value}`
+  const expectedValue = value === '' ? '<empty string>' : value
+  return `expected selector ${printLocator(locator)} to have value ${expectedValue}`
 }
 
 export const toHaveText = async (locator: ILocatorInternal, options: { readonly text: string }): Promise<string> => {
