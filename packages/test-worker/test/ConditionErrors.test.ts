@@ -40,6 +40,11 @@ test('toHaveValue', () => {
   expect(ConditionErrors.toHaveValue(locator, { value: 'test' })).toBe('expected selector .input to have value test')
 })
 
+test('toHaveValue - empty string', () => {
+  const locator = createLocator('.input')
+  expect(ConditionErrors.toHaveValue(locator, { value: '' })).toBe('expected selector .input to have value <empty string>')
+})
+
 test('toHaveText - element not found', async () => {
   const locator = createLocator('.text')
   using mockRpc = RendererWorker.registerMockRpc({
