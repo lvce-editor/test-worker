@@ -173,7 +173,16 @@ export const test = async () => {}
     'ActivityBar.resize'() {
       return undefined
     },
-    'Layout.reset'() {
+    'FileSystem.mkdir'() {
+      return undefined
+    },
+    'FileSystem.remove'() {
+      return undefined
+    },
+    'Layout.resetViewLocations'() {
+      return undefined
+    },
+    'Main.closeAllEditors'() {
       return undefined
     },
     'TestFrameWork.showOverlay'() {
@@ -201,14 +210,18 @@ export const test = async () => {}
     platform: 1,
     url: href,
   })
-  expect(mockRpc.invocations).toHaveLength(6)
-  expect(mockRpc.invocations[0]).toEqual(['Layout.reset'])
-  expect(mockRpc.invocations[1]).toEqual(['ActivityBar.resize', { height: 336, width: 48, x: 0, y: 0 }])
-  expect(mockRpc.invocations[2]).toEqual(['Layout.reset'])
-  expect(mockRpc.invocations[3]).toEqual(['ActivityBar.resize', { height: 336, width: 48, x: 0, y: 0 }])
-  expect(mockRpc.invocations[4]).toEqual(['TestFrameWork.showOverlay', 'fail', 'red', expect.stringMatching(allTestsMixedSummaryPattern)])
-  expect(mockRpc.invocations[5]?.[0]).toBe('TestFrameWork.showTestResults')
-  const results = JSON.parse(mockRpc.invocations[5]?.[1])
+  expect(mockRpc.invocations).toHaveLength(12)
+  expect(mockRpc.invocations.slice(0, 5)).toEqual([
+    ['FileSystem.remove', 'memfs:///workspace'],
+    ['FileSystem.mkdir', 'memfs:///workspace'],
+    ['Main.closeAllEditors'],
+    ['Layout.resetViewLocations'],
+    ['ActivityBar.resize', { height: 336, width: 48, x: 0, y: 0 }],
+  ])
+  expect(mockRpc.invocations.slice(5, 10)).toEqual(mockRpc.invocations.slice(0, 5))
+  expect(mockRpc.invocations[10]).toEqual(['TestFrameWork.showOverlay', 'fail', 'red', expect.stringMatching(allTestsMixedSummaryPattern)])
+  expect(mockRpc.invocations[11]?.[0]).toBe('TestFrameWork.showTestResults')
+  const results = JSON.parse(mockRpc.invocations[11]?.[1])
   expect(results).toMatchObject([
     {
       error: '',
@@ -265,7 +278,16 @@ export const test = async () => {
     'ActivityBar.resize'() {
       return undefined
     },
-    'Layout.reset'() {
+    'FileSystem.mkdir'() {
+      return undefined
+    },
+    'FileSystem.remove'() {
+      return undefined
+    },
+    'Layout.resetViewLocations'() {
+      return undefined
+    },
+    'Main.closeAllEditors'() {
       return undefined
     },
     'TestFrameWork.showOverlay'() {
@@ -301,7 +323,7 @@ export const test = async () => {
     'test-first-end',
     'test-second',
   ])
-  expect(mockRpc.invocations).toHaveLength(6)
+  expect(mockRpc.invocations).toHaveLength(12)
 })
 
 test('executeAll reports import errors in TestResults json', async () => {
@@ -346,7 +368,16 @@ export const test = async () => {}
     'ActivityBar.resize'() {
       return undefined
     },
-    'Layout.reset'() {
+    'FileSystem.mkdir'() {
+      return undefined
+    },
+    'FileSystem.remove'() {
+      return undefined
+    },
+    'Layout.resetViewLocations'() {
+      return undefined
+    },
+    'Main.closeAllEditors'() {
       return undefined
     },
     'TestFrameWork.showOverlay'() {
@@ -368,9 +399,15 @@ export const test = async () => {}
   )
 
   expect(mockRpc.invocations).toEqual([
-    ['Layout.reset'],
+    ['FileSystem.remove', 'memfs:///workspace'],
+    ['FileSystem.mkdir', 'memfs:///workspace'],
+    ['Main.closeAllEditors'],
+    ['Layout.resetViewLocations'],
     ['ActivityBar.resize', { height: 336, width: 48, x: 0, y: 0 }],
-    ['Layout.reset'],
+    ['FileSystem.remove', 'memfs:///workspace'],
+    ['FileSystem.mkdir', 'memfs:///workspace'],
+    ['Main.closeAllEditors'],
+    ['Layout.resetViewLocations'],
     ['ActivityBar.resize', { height: 336, width: 48, x: 0, y: 0 }],
     ['TestFrameWork.showOverlay', 'pass', 'green', expect.stringMatching(allTestsPassedSummaryPattern)],
     ['TestFrameWork.showTestResults', expect.any(String)],

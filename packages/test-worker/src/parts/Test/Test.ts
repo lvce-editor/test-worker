@@ -12,6 +12,7 @@ import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import { roundTestResults } from '../RoundTestResults/RoundTestResults.ts'
 import * as ShouldSkipTest from '../ShouldSkipTest/ShouldSkipTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
+import * as TestFrameWorkComponentFileSystem from '../TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import * as TestState from '../TestState/TestState.ts'
@@ -129,7 +130,10 @@ const executeAllTest = async (importedTest: ImportedExecuteAllTest, globals: any
     if (!test) {
       return getMissingTestResult(item.name)
     }
-    await RendererWorker.invoke('Layout.reset')
+    await TestFrameWorkComponentFileSystem.remove('memfs:///workspace')
+    await TestFrameWorkComponentFileSystem.mkdir('memfs:///workspace')
+    await RendererWorker.invoke('Main.closeAllEditors')
+    await RendererWorker.invoke('Layout.resetViewLocations')
     await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.resize', {
       height: 336,
       width: 48,
