@@ -2,6 +2,7 @@ import type { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
 import * as GetConditionLocator from '../GetConditionLocator/GetConditionLocator.ts'
 import { locatorInvoke } from '../LocatorInvoke/LocatorInvoke.ts'
 import { printLocator } from '../PrintLocator/PrintLocator.ts'
+import { stringifyString } from '../StringifyString/StringifyString.ts'
 
 export const toBeVisible = (locator: ILocatorInternal): string => {
   return `expected selector to be visible ${printLocator(locator)}`
@@ -15,8 +16,7 @@ export const toHaveValue = (
     readonly value: string
   },
 ): string => {
-  const expectedValue = value === '' ? '<empty string>' : value
-  return `expected selector ${printLocator(locator)} to have value ${expectedValue}`
+  return `expected selector ${printLocator(locator)} to have value ${stringifyString(value)}`
 }
 
 export const toHaveText = async (locator: ILocatorInternal, options: { readonly text: string }): Promise<string> => {
