@@ -1,6 +1,6 @@
 import type { Rpc } from '@lvce-editor/rpc'
 import { afterEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker, RpcId } from '@lvce-editor/rpc-registry'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 
 const directInvoke = jest.fn<(...params: readonly any[]) => Promise<any>>()
@@ -34,12 +34,7 @@ test('initialize creates a lazy direct rpc and sends its message port to the ren
 
   await expect(RendererProcess.invoke('TestFrameWork.checkSingleElementCondition', { selector: '.Editor' })).resolves.toBe(123)
   expect(mockRpc.invocations).toEqual([
-    [
-      'SendMessagePortToExtensionHostWorker.sendMessagePortToRendererProcess',
-      expect.anything(),
-      'HandleMessagePort.handleMessagePort',
-      RpcId.DebugWorker,
-    ],
+    ['SendMessagePortToExtensionHostWorker.sendMessagePortToRendererProcess', expect.anything(), 'HandleMessagePort.handleMessagePort', 'TestWorker'],
   ])
 })
 
