@@ -6,7 +6,7 @@ export const state: { rpc: Rpc | undefined } = {
 }
 
 const send = async (port: MessagePort): Promise<void> => {
-  await RendererWorker.sendMessagePortToRendererProcess(port)
+  await RendererWorker.sendMessagePortToRendererProcess(port, 'TestWorker')
 }
 
 export const initialize = async (): Promise<void> => {
