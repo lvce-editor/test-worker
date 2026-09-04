@@ -32,6 +32,16 @@ test('openConfigFolder', async () => {
   expect(mockRpc.invocations).toEqual([['Developer.openConfigFolder']])
 })
 
+test('openComponentState', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Developer.openComponentState'() {
+      return undefined
+    },
+  })
+  await Developer.openComponentState()
+  expect(mockRpc.invocations).toEqual([['Developer.openComponentState']])
+})
+
 test('openLogsFolder', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Developer.openLogsFolder'() {

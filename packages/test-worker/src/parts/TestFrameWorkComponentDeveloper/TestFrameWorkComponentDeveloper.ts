@@ -12,6 +12,10 @@ export const openConfigFolder = async (): Promise<void> => {
   return RendererWorker.invoke('Developer.openConfigFolder')
 }
 
+export const openComponentState = async (): Promise<void> => {
+  return RendererWorker.invoke('Developer.openComponentState')
+}
+
 export const openLogsFolder = async (): Promise<void> => {
   return RendererWorker.invoke('Developer.openLogsFolder')
 }
