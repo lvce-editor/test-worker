@@ -1,12 +1,11 @@
 import { defineConfig } from 'eslint/config'
-import config, { recommendedActions } from '@lvce-editor/eslint-config'
-import regex from '@lvce-editor/eslint-plugin-regex'
+import * as config from '@lvce-editor/eslint-config'
 import tsconfig from '@lvce-editor/eslint-plugin-tsconfig'
 
 export default defineConfig([
-  ...config,
-  ...recommendedActions,
-  ...regex,
+  ...config.default,
+  ...config.recommendedActions,
+  ...config.recommendedRegex,
   ...tsconfig,
   {
     ignores: ['src/testWorkerMain.ts'],
