@@ -9,6 +9,7 @@ import type * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWor
 import type * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import type * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkComponentColorTheme.ts'
 import type * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
+import type * as ComponentState from '../TestFrameWorkComponentComponentState/TestFrameWorkComponentComponentState.ts'
 import type * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 import type * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 import type * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
@@ -74,6 +75,7 @@ export interface Api {
   ColorPicker: typeof ColorPicker
   ColorTheme: typeof ColorTheme
   Command: typeof Command
+  ComponentState: typeof ComponentState
   ContextMenu: typeof ContextMenu
   Developer: typeof Developer
   Dialog: typeof Dialog

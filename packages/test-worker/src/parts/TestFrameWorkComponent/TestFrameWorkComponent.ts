@@ -7,6 +7,7 @@ export * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComp
 export * as ColorPicker from '../TestFrameWorkComponentColorPicker/TestFrameWorkComponentColorPicker.ts'
 export * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkComponentColorTheme.ts'
 export * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
+export * as ComponentState from '../TestFrameWorkComponentComponentState/TestFrameWorkComponentComponentState.ts'
 export * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 export * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 export * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
