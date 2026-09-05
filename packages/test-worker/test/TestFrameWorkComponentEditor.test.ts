@@ -1115,7 +1115,7 @@ test('shouldHaveText - reads from the active main area editor', async () => {
   Object.assign(mainAreaRpc, { dispose: async () => {} })
   MainAreaWorker.set(mainAreaRpc)
   using editorRpc = EditorWorker.registerMockRpc({
-    'Editor.executeViewletCommand'() {
+    'Editor.getText'() {
       return 'expected text'
     },
   })
@@ -1124,7 +1124,7 @@ test('shouldHaveText - reads from the active main area editor', async () => {
     await Editor.shouldHaveText('expected text')
     expect(rendererProcessRpc.invocations).toEqual([['DirectView.getUid', 'MainArea']])
     expect(mainAreaRpc.invocations).toEqual([['MainArea.getActiveEditorUid', 7]])
-    expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.getText']])
+    expect(editorRpc.invocations).toEqual([['Editor.getText', 42]])
   } finally {
     RendererProcess.state.rpc = undefined
     await MainAreaWorker.dispose()
