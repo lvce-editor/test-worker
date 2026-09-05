@@ -256,3 +256,7 @@ export const copyPath = async (): Promise<void> => {
 export const copyRelativePath = async (): Promise<void> => {
   await DirectViewWorker.invoke('MainArea', 'Main.copyRelativePath')
 }
+
+export const handleDrop = async (dropId: number): Promise<void> => {
+  await DirectViewWorker.invoke('MainArea', 'Main.handleDrop', dropId)
+}

@@ -390,6 +390,17 @@ export const shouldHaveText = async (expectedText: string): Promise<void> => {
   }
 }
 
+export const shouldContainText = async (expectedText: string): Promise<void> => {
+  let text = await getText()
+  for (let attempt = 1; attempt < editorTextReadAttempts && !text.includes(expectedText); attempt++) {
+    await new Promise((resolve) => globalThis.setTimeout(resolve, editorTextReadDelay))
+    text = await getText()
+  }
+  if (!text.includes(expectedText)) {
+    throw new Error(`Expected editor to contain text ${expectedText} but was ${text}`)
+  }
+}
+
 export const shouldHaveTokens = async (expectedTokens: readonly TokenRow[]): Promise<void> => {
   const key = await getEditorKey()
   const text = await EditorWorker.invoke('Editor.getTokens', key)

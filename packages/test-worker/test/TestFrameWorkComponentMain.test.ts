@@ -579,3 +579,26 @@ test('handleClickCloseTab', async () => {
 
   expect(mockRpc.invocations).toEqual([['Main.handleClickCloseTab', '2', '5']])
 })
+
+test('handleDrop waits for the drop command to finish', async () => {
+  const started = Promise.withResolvers<void>()
+  const dropped = Promise.withResolvers<void>()
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.handleDrop'() {
+      started.resolve()
+      return dropped.promise
+    },
+  })
+  let completed = false
+  const action = (async (): Promise<void> => {
+    await Main.handleDrop(42)
+    completed = true
+  })()
+
+  await started.promise
+  expect(completed).toBe(false)
+  expect(mockRpc.invocations).toEqual([['Main.handleDrop', 42]])
+  dropped.resolve()
+  await action
+  expect(completed).toBe(true)
+})
