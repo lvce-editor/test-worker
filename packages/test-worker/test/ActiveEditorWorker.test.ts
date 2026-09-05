@@ -85,7 +85,7 @@ test('invokes the main area editor even when another editor owns focus', async (
   Object.assign(mainAreaRpc, { dispose: async () => {} })
   MainAreaWorker.set(mainAreaRpc)
   using editorRpc = EditorWorker.registerMockRpc({
-    'Editor.executeViewletCommand'() {
+    'Editor.getText'() {
       return 'main area text'
     },
   })
@@ -95,7 +95,7 @@ test('invokes the main area editor even when another editor owns focus', async (
     expect(text).toBe('main area text')
     expect(rendererProcessRpc.invocations).toEqual([['DirectView.getUid', 'MainArea']])
     expect(mainAreaRpc.invocations).toEqual([['MainArea.getActiveEditorUid', 7]])
-    expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.getText']])
+    expect(editorRpc.invocations).toEqual([['Editor.getText', 42]])
   } finally {
     await MainAreaWorker.dispose()
   }

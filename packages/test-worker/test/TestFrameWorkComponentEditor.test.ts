@@ -917,6 +917,34 @@ test('getText - falls back to the editor registry when the direct editor is unav
   }
 })
 
+test('getText reads the active editor without falling back to a closing editor key', async () => {
+  RendererProcess.state.rpc = createMockRpc({
+    commandMap: { 'DirectView.getUid': () => 7 },
+  })
+  using mainAreaRpc = MainAreaWorker.registerMockRpc({
+    'MainArea.getActiveEditorUid': () => 42,
+  })
+  using editorRpc = EditorWorker.registerMockRpc({
+    // The real command dispatcher renders but does not return getter values.
+    'Editor.executeViewletCommand': async () => undefined,
+    'Editor.getKeys': () => ['42', '99'],
+    'Editor.getText': (uid: number) => {
+      if (uid === 99) {
+        throw new Error('editor 99 not found')
+      }
+      return 'active editor content'
+    },
+  })
+
+  try {
+    await expect(Editor.getText()).resolves.toBe('active editor content')
+    expect(mainAreaRpc.invocations).toEqual([['MainArea.getActiveEditorUid', 7]])
+    expect(editorRpc.invocations).toEqual([['Editor.getText', 42]])
+  } finally {
+    RendererProcess.state.rpc = undefined
+  }
+})
+
 test('rename', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.rename'() {
