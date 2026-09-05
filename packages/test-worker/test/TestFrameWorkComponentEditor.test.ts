@@ -1,6 +1,7 @@
-import { expect, test } from '@jest/globals'
-import { EditorWorker } from '@lvce-editor/rpc-registry'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { expect, jest, test } from '@jest/globals'
+import { createMockRpc } from '@lvce-editor/rpc'
+import { EditorWorker, ExtensionManagementWorker, MainAreaWorker, RendererWorker } from '@lvce-editor/rpc-registry'
+import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 import * as Editor from '../src/parts/TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 
 test('setCursor', async () => {
@@ -166,6 +167,17 @@ test('selectionGrow', async () => {
 
   await Editor.selectionGrow()
   expect(mockRpc.invocations).toEqual([['Editor.selectionGrow']])
+})
+
+test('selectionShrink', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectionShrink'() {
+      return undefined
+    },
+  })
+
+  await Editor.selectionShrink()
+  expect(mockRpc.invocations).toEqual([['Editor.selectionShrink']])
 })
 
 test('selectAllRight', async () => {
@@ -873,6 +885,38 @@ test('getText', async () => {
   expect(text).toBe('test text')
 })
 
+test('getText - falls back to the editor registry when the direct editor is unavailable', async () => {
+  RendererProcess.state.rpc = createMockRpc({
+    commandMap: {
+      'DirectView.getUid'() {
+        throw new Error('main area direct view not found')
+      },
+    },
+  })
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.getKeys'() {
+      return ['1']
+    },
+    'Editor.getText'() {
+      return 'fallback text'
+    },
+  })
+  using rendererRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return undefined
+    },
+  })
+
+  try {
+    const text = await Editor.getText()
+    expect(text).toBe('fallback text')
+    expect(rendererRpc.invocations).toEqual([['Editor.getText']])
+    expect(editorRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+  } finally {
+    RendererProcess.state.rpc = undefined
+  }
+})
+
 test('rename', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.rename'() {
@@ -915,6 +959,17 @@ test('growSelection', async () => {
 
   await Editor.growSelection()
   expect(mockRpc.invocations).toEqual([['Editor.selectionGrow']])
+})
+
+test('shrinkSelection', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.selectionShrink'() {
+      return undefined
+    },
+  })
+
+  await Editor.shrinkSelection()
+  expect(mockRpc.invocations).toEqual([['Editor.selectionShrink']])
 })
 
 test('executeTabCompletion', async () => {
@@ -961,31 +1016,91 @@ test('getSelections', async () => {
 })
 
 test('shouldHaveText - success case', async () => {
-  using mockRpc = EditorWorker.registerMockRpc({
-    'Editor.getKeys'() {
-      return ['1']
-    },
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.getText'() {
       return 'expected text'
     },
   })
 
   await Editor.shouldHaveText('expected text')
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
+})
+
+test('shouldHaveText - retries while the active editor is changing', async () => {
+  jest.useFakeTimers()
+  let invocationCount = 0
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      invocationCount++
+      return invocationCount === 1 ? 'previous text' : 'expected text'
+    },
+  })
+
+  try {
+    const assertion = Editor.shouldHaveText('expected text')
+    await jest.advanceTimersByTimeAsync(50)
+    await assertion
+    expect(mockRpc.invocations).toEqual([['Editor.getText'], ['Editor.getText']])
+  } finally {
+    jest.useRealTimers()
+  }
 })
 
 test('shouldHaveText - throws error when text does not match', async () => {
-  using mockRpc = EditorWorker.registerMockRpc({
-    'Editor.getKeys'() {
-      return ['1']
-    },
+  jest.useFakeTimers()
+  using mockRpc = RendererWorker.registerMockRpc({
     'Editor.getText'() {
       return 'wrong text'
     },
   })
 
-  await expect(Editor.shouldHaveText('expected text')).rejects.toThrow('Expected editor to have text expected text but was wrong text')
-  expect(mockRpc.invocations).toEqual([['Editor.getKeys'], ['Editor.getText', 1]])
+  try {
+    const assertion = Editor.shouldHaveText('expected text')
+    void assertion.catch(() => {})
+    await jest.runAllTimersAsync()
+    await expect(assertion).rejects.toThrow('Expected editor to have text expected text but was wrong text')
+    expect(mockRpc.invocations).toHaveLength(20)
+  } finally {
+    jest.useRealTimers()
+  }
+})
+
+test('shouldHaveText - reads from the active main area editor', async () => {
+  const rendererProcessRpc = createMockRpc({
+    commandMap: {
+      'DirectView.getFocusedUid'() {
+        throw new Error('focused direct view not found: Editor')
+      },
+      'DirectView.getUid'() {
+        return 7
+      },
+    },
+  })
+  RendererProcess.state.rpc = rendererProcessRpc
+  const mainAreaRpc = createMockRpc({
+    commandMap: {
+      'MainArea.getActiveEditorUid'() {
+        return 42
+      },
+    },
+  })
+  Object.assign(mainAreaRpc, { dispose: async () => {} })
+  MainAreaWorker.set(mainAreaRpc)
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.executeViewletCommand'() {
+      return 'expected text'
+    },
+  })
+
+  try {
+    await Editor.shouldHaveText('expected text')
+    expect(rendererProcessRpc.invocations).toEqual([['DirectView.getUid', 'MainArea']])
+    expect(mainAreaRpc.invocations).toEqual([['MainArea.getActiveEditorUid', 7]])
+    expect(editorRpc.invocations).toEqual([['Editor.executeViewletCommand', 42, 'Editor.getText']])
+  } finally {
+    RendererProcess.state.rpc = undefined
+    await MainAreaWorker.dispose()
+  }
 })
 
 test('shouldHaveTokens - success case', async () => {
@@ -1173,14 +1288,32 @@ test('shouldHaveDiagnosticProviderResult - success case', async () => {
     },
   ]
 
-  using mockRpc = RendererWorker.registerMockRpc({
-    'ExtensionHost.executeDiagnosticProvider'() {
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.getLanguageId'() {
+      return 'javascript'
+    },
+    'Editor.getText'() {
+      return 'const value = 1'
+    },
+    'Editor.getUri'() {
+      return 'file:///test.js'
+    },
+  })
+  using extensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeDiagnosticProvider'() {
       return expectedDiagnostics
     },
   })
 
   await Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics)
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 1]])
+  expect(editorRpc.invocations).toEqual([
+    ['Editor.getLanguageId', 1],
+    ['Editor.getText', 1],
+    ['Editor.getUri', 1],
+  ])
+  expect(extensionManagementRpc.invocations).toEqual([
+    ['Extensions.executeDiagnosticProvider', { documentId: 1, languageId: 'javascript', text: 'const value = 1', uri: 'file:///test.js' }],
+  ])
 })
 
 test('shouldHaveDiagnosticProviderResult - custom editor id', async () => {
@@ -1196,14 +1329,32 @@ test('shouldHaveDiagnosticProviderResult - custom editor id', async () => {
     },
   ]
 
-  using mockRpc = RendererWorker.registerMockRpc({
-    'ExtensionHost.executeDiagnosticProvider'() {
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.getLanguageId'() {
+      return 'javascript'
+    },
+    'Editor.getText'() {
+      return 'const value = 1'
+    },
+    'Editor.getUri'() {
+      return 'file:///test.js'
+    },
+  })
+  using extensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeDiagnosticProvider'() {
       return expectedDiagnostics
     },
   })
 
   await Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics, 2)
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 2]])
+  expect(editorRpc.invocations).toEqual([
+    ['Editor.getLanguageId', 2],
+    ['Editor.getText', 2],
+    ['Editor.getUri', 2],
+  ])
+  expect(extensionManagementRpc.invocations).toEqual([
+    ['Extensions.executeDiagnosticProvider', { documentId: 2, languageId: 'javascript', text: 'const value = 1', uri: 'file:///test.js' }],
+  ])
 })
 
 test('shouldHaveDiagnosticProviderResult - throws error when diagnostics do not match', async () => {
@@ -1230,14 +1381,32 @@ test('shouldHaveDiagnosticProviderResult - throws error when diagnostics do not 
     },
   ]
 
-  using mockRpc = RendererWorker.registerMockRpc({
-    'ExtensionHost.executeDiagnosticProvider'() {
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.getLanguageId'() {
+      return 'javascript'
+    },
+    'Editor.getText'() {
+      return 'const value = 1'
+    },
+    'Editor.getUri'() {
+      return 'file:///test.js'
+    },
+  })
+  using extensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeDiagnosticProvider'() {
       return actualDiagnostics
     },
   })
 
   await expect(Editor.shouldHaveDiagnosticProviderResult(expectedDiagnostics)).rejects.toThrow('Expected diagnostic provider result')
-  expect(mockRpc.invocations).toEqual([['ExtensionHost.executeDiagnosticProvider', 1]])
+  expect(editorRpc.invocations).toEqual([
+    ['Editor.getLanguageId', 1],
+    ['Editor.getText', 1],
+    ['Editor.getUri', 1],
+  ])
+  expect(extensionManagementRpc.invocations).toEqual([
+    ['Extensions.executeDiagnosticProvider', { documentId: 1, languageId: 'javascript', text: 'const value = 1', uri: 'file:///test.js' }],
+  ])
 })
 
 test('enableCompletionsOnType', async () => {

@@ -10,6 +10,10 @@ const applyKeyPart = (part: string, options: any): void => {
       options.ctrlKey = true
       return
     }
+    case Key.Shift: {
+      options.shiftKey = true
+      return
+    }
     case Key.Space: {
       options.key = ' '
       return
@@ -27,6 +31,7 @@ export const getKeyOptions = (rawKey: string): any => {
       altKey: false,
       ctrlKey: false,
       key: '',
+      shiftKey: false,
     }
     for (const part of parts) {
       applyKeyPart(part, options)
@@ -37,5 +42,6 @@ export const getKeyOptions = (rawKey: string): any => {
     altKey: false,
     ctrlKey: false,
     key: rawKey,
+    shiftKey: false,
   }
 }

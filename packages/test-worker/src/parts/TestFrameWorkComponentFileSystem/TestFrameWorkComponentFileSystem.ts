@@ -27,6 +27,18 @@ export const addFileHandle = async (file: File | FileSystemHandle): Promise<void
   return RendererWorker.invoke('FileSystem.addFileHandle', file)
 }
 
+export const registerFileHandle = async (fileHandle: FileSystemHandle): Promise<number> => {
+  return RendererWorker.invoke('FileSystemHandle.addFileHandle', fileHandle)
+}
+
+export const getDirectoryHandle = async (uri: string): Promise<FileSystemDirectoryHandle> => {
+  return RendererWorker.invoke('FileSystemHandle.getDirectoryHandle', uri)
+}
+
+export const removeFileHandle = async (id: number): Promise<void> => {
+  await RendererWorker.invoke('FileSystemHandle.removeFileHandle', id)
+}
+
 export const mkdir = async (uri: string): Promise<void> => {
   return RendererWorker.invoke('FileSystem.mkdir', uri)
 }
@@ -106,9 +118,46 @@ export const remove = async (uri: string): Promise<void> => {
   await RendererWorker.invoke('FileSystem.remove', uri)
 }
 
+export const deleteFile = async (uri: string): Promise<void> => {
+  await RendererWorker.invoke('FileSystem.deleteFile', uri)
+}
+
+export const rename = async (oldUri: string, newUri: string): Promise<void> => {
+  await RendererWorker.invoke('FileSystem.rename', oldUri, newUri)
+}
+
+export const setProviderError = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('FileSystemProvider.setError', enabled)
+}
+
+export const setProviderInvalidData = async (enabled: boolean): Promise<void> => {
+  await RendererWorker.invoke('FileSystemProvider.setInvalidData', enabled)
+}
+
+export const setReadOnly = async (uri: string, readOnly: boolean): Promise<void> => {
+  await RendererWorker.invoke('FileSystem.setReadOnly', uri, readOnly)
+}
+
+export const symlink = async (target: string, path: string): Promise<void> => {
+  await RendererWorker.invoke('FileSystem.symlink', target, path)
+}
+
+const windowsPathRegex = /^[A-Za-z]:\//
+
+const toFileUri = (path: string): string => {
+  if (path.startsWith('file://')) {
+    return path
+  }
+  const normalizedPath = path.replaceAll('\\', '/')
+  if (windowsPathRegex.test(normalizedPath)) {
+    return `file:///${normalizedPath}`
+  }
+  return `file://${normalizedPath}`
+}
+
 const getTmpDirFileScheme = async (): Promise<string> => {
   const tmpFolder = await RendererWorker.invoke('PlatformPaths.getTmpDir')
-  const tmpUri = tmpFolder.startsWith('file://') ? tmpFolder : `file://${tmpFolder}`
+  const tmpUri = toFileUri(tmpFolder)
   const uri = `${tmpUri}/test-${Date.now()}`
   await mkdir(uri)
   return uri

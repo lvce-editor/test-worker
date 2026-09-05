@@ -1,5 +1,5 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ILocator } from '../ILocator/ILocator.ts'
+import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import * as WebViewState from '../WebViewState/WebViewState.ts'
 
 interface Invoke {
@@ -14,5 +14,5 @@ export const getLocatorInvoke = (locator: ILocator): Invoke => {
     return module.invoke
   }
 
-  return RendererWorker.invoke
+  return RendererProcess.invoke
 }

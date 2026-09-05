@@ -1,7 +1,9 @@
+import type { ILocator } from '../ILocator/ILocator.ts'
 import type { ILocatorExternal } from '../ILocatorExternal/ILocatorExternal.ts'
 import type { LocatorExpect } from '../LocatorExpect/LocatorExpect.ts'
 import { AssertionError } from '../AssertionError/AssertionError.ts'
 import * as ConditionErrorMap from '../ConditionErrorMap/ConditionErrorMap.ts'
+import * as GetConditionLocator from '../GetConditionLocator/GetConditionLocator.ts'
 import * as LocatorInvoke from '../LocatorInvoke/LocatorInvoke.ts'
 import * as Assert from '../TestAssert/TestAssert.ts'
 
@@ -11,16 +13,17 @@ export const expect = (locator: ILocatorExternal): LocatorExpect => {
 
 class Expect {
   readonly negated: boolean = false
-  readonly locator: ILocatorExternal
+  readonly locator: ILocator
 
   constructor(locator: ILocatorExternal, negated: boolean = false) {
-    this.locator = locator
+    this.locator = locator as ILocator
     this.negated = negated
   }
 
   async checkSingleElementCondition(fnName: string, options?: any): Promise<void> {
     // TODO add rpcId property to locator instead
-    const result = await LocatorInvoke.locatorInvoke(this.locator, 'TestFrameWork.checkSingleElementCondition', this.locator, fnName, options)
+    const conditionLocator = GetConditionLocator.getConditionLocator(this.locator)
+    const result = await LocatorInvoke.locatorInvoke(this.locator, 'TestFrameWork.checkSingleElementCondition', conditionLocator, fnName, options)
     if (result && result.error) {
       const fn = ConditionErrorMap.getFunction(fnName)
       const errorInfo = await fn(this.locator, options)
@@ -28,7 +31,8 @@ class Expect {
     }
   }
   async checkMultiElementCondition(fnName: string, options: any): Promise<void> {
-    const result = await LocatorInvoke.locatorInvoke(this.locator, 'TestFrameWork.checkMultiElementCondition', this.locator, fnName, options)
+    const conditionLocator = GetConditionLocator.getConditionLocator(this.locator)
+    const result = await LocatorInvoke.locatorInvoke(this.locator, 'TestFrameWork.checkMultiElementCondition', conditionLocator, fnName, options)
     if (result && result.error) {
       const fn = ConditionErrorMap.getFunction(fnName)
       const errorInfo = await fn(this.locator, options)

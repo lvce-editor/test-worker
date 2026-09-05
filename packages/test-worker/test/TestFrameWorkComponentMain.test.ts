@@ -41,6 +41,80 @@ test('openUri', async () => {
   expect(mockRpc.invocations).toEqual([['Main.openUri', 'file:///test.txt']])
 })
 
+test('openUris', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.openUris'() {
+      return undefined
+    },
+  })
+
+  await Main.openUris(['file:///test-1.txt', 'file:///test-2.txt'])
+
+  expect(mockRpc.invocations).toEqual([['Main.openUris', ['file:///test-1.txt', 'file:///test-2.txt']]])
+})
+
+test('openInput', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.openInput'() {
+      return undefined
+    },
+  })
+
+  await Main.openInput({
+    editorInput: {
+      type: 'editor',
+      uri: 'file:///test.txt',
+    },
+    focu: false,
+    preview: false,
+  })
+
+  expect(mockRpc.invocations).toEqual([
+    [
+      'Main.openInput',
+      {
+        editorInput: {
+          type: 'editor',
+          uri: 'file:///test.txt',
+        },
+        focu: false,
+        preview: false,
+      },
+    ],
+  ])
+})
+
+test('openInput forwards diff editor input', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.openInput'() {
+      return undefined
+    },
+  })
+
+  await Main.openInput({
+    editorInput: {
+      type: 'diff-editor',
+      uriLeft: 'file:///left.txt',
+      uriRight: 'file:///right.txt',
+    },
+    focu: false,
+  })
+
+  expect(mockRpc.invocations).toEqual([
+    [
+      'Main.openInput',
+      {
+        editorInput: {
+          type: 'diff-editor',
+          uriLeft: 'file:///left.txt',
+          uriRight: 'file:///right.txt',
+        },
+        focu: false,
+      },
+    ],
+  ])
+})
+
 test('saveState', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.saveState'() {

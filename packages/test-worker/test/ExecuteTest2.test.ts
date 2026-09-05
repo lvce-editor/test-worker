@@ -1,6 +1,8 @@
 import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { ChatDebugShouldHavePayloadError } from '../src/parts/ChatDebugShouldHavePayloadError/ChatDebugShouldHavePayloadError.ts'
 import * as ExecuteTest2 from '../src/parts/ExecuteTest2/ExecuteTest2.ts'
+import * as ClipBoard from '../src/parts/TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import * as TestType from '../src/parts/TestType/TestType.ts'
 
 const timestampGenerator1 = (): number => 1000
@@ -41,6 +43,15 @@ const testFunction7 = async (globals: any): Promise<void> => {
 }
 
 const timestampGenerator8 = (): number => 6000
+
+const enableMemoryClipBoard = async (): Promise<void> => {
+  await ClipBoard.enableMemoryClipBoard()
+}
+
+const enableAndDisableMemoryClipBoard = async (): Promise<void> => {
+  await ClipBoard.enableMemoryClipBoard()
+  await ClipBoard.disableMemoryClipBoard()
+}
 
 test('executeTest2 with successful test function', async () => {
   const globals = {}
@@ -160,4 +171,56 @@ test('executeTest2 adds autofix action for chat debug shouldHavePayload failures
       label: 'Autofix',
     },
   ])
+})
+
+test('executeTest2 disables the memory clipboard after a successful test', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.disableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.enableMemoryClipBoard'() {
+      return undefined
+    },
+  })
+  const result = await ExecuteTest2.executeTest2('memory-clipboard-test', enableMemoryClipBoard, {}, timestampGenerator1)
+
+  expect(result.type).toBe(TestType.Pass)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.enableMemoryClipBoard'], ['ClipBoard.disableMemoryClipBoard']])
+})
+
+test('executeTest2 disables the memory clipboard after a failing test', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.disableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.enableMemoryClipBoard'() {
+      return undefined
+    },
+  })
+  const testError = new Error('Test failed')
+  const testFunction = async (): Promise<void> => {
+    await ClipBoard.enableMemoryClipBoard()
+    throw testError
+  }
+
+  const result = await ExecuteTest2.executeTest2('failing-memory-clipboard-test', testFunction, {}, timestampGenerator1)
+
+  expect(result.error).toBe(testError)
+  expect(result.type).toBe(TestType.Fail)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.enableMemoryClipBoard'], ['ClipBoard.disableMemoryClipBoard']])
+})
+
+test('executeTest2 does not disable the memory clipboard twice', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ClipBoard.disableMemoryClipBoard'() {
+      return undefined
+    },
+    'ClipBoard.enableMemoryClipBoard'() {
+      return undefined
+    },
+  })
+  const result = await ExecuteTest2.executeTest2('manual-memory-clipboard-cleanup-test', enableAndDisableMemoryClipBoard, {}, timestampGenerator1)
+
+  expect(result.type).toBe(TestType.Pass)
+  expect(mockRpc.invocations).toEqual([['ClipBoard.enableMemoryClipBoard'], ['ClipBoard.disableMemoryClipBoard']])
 })

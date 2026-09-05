@@ -7,10 +7,13 @@ import * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAud
 import * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 import * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
 import * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
+import * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkComponentColorTheme.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
+import * as ComponentState from '../TestFrameWorkComponentComponentState/TestFrameWorkComponentComponentState.ts'
 import * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
 import * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 import * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
+import * as DragAndDrop from '../TestFrameWorkComponentDragAndDrop/TestFrameWorkComponentDragAndDrop.ts'
 import * as Editor from '../TestFrameWorkComponentEditor/TestFrameWorkComponentEditor.ts'
 import * as EditorCompletion from '../TestFrameWorkComponentEditorCompletion/TestFrameWorkComponentEditorCompletion.ts'
 import * as EditorHover from '../TestFrameWorkComponentEditorHover/TestFrameWorkComponentEditorHover.ts'
@@ -36,10 +39,13 @@ import * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPan
 import * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
 import * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponentPreview.ts'
 import * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
+import * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 import * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 import * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 import * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
+import * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
 import * as Search from '../TestFrameWorkComponentSearch/TestFrameWorkComponentSearch.ts'
+import * as SecretsView from '../TestFrameWorkComponentSecretsView/TestFrameWorkComponentSecretsView.ts'
 import * as Settings from '../TestFrameWorkComponentSettings/TestFrameWorkComponentSettings.ts'
 import * as SettingsView from '../TestFrameWorkComponentSettingsView/TestFrameWorkComponentSettingsView.ts'
 import * as SideBar from '../TestFrameWorkComponentSideBar/TestFrameWorkComponentSideBar.ts'
@@ -64,11 +70,14 @@ export const createApi = (platform: number, assetDir: string): Api => {
     ChatDebug,
     ClipBoard,
     ColorPicker,
+    ColorTheme,
     Command,
+    ComponentState,
     ContextMenu,
     Developer,
     Dialog,
     DiffView,
+    DragAndDrop,
     Editor,
     EditorCompletion,
     EditorHover,
@@ -102,10 +111,13 @@ export const createApi = (platform: number, assetDir: string): Api => {
     Platform,
     Preview,
     Problems,
+    ProcessExplorer,
     QuickPick,
     References,
     RunAndDebug,
+    RunningExtensions,
     Search,
+    SecretsView,
     Settings,
     SettingsView,
     SideBar,

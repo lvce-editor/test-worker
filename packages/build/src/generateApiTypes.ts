@@ -6,7 +6,7 @@ import { getActualApiTypesContent } from './getActualApiTypesContent.ts'
 
 export const generateApiTypes = async (): Promise<void> => {
   const ext = process.platform === 'win32' ? '' : ''
-  const bundleGeneratorPath = join(root, 'packages', 'build', 'node_modules', '.bin', 'dts-bundle-generator' + ext)
+  const bundleGeneratorPath = join(root, 'node_modules', '.bin', 'dts-bundle-generator' + ext)
 
   await Promise.all([
     execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'], {

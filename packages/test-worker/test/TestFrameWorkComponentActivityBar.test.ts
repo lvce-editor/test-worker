@@ -35,6 +35,17 @@ test('setUserLoginState', async () => {
   expect(mockRpc.invocations).toEqual([['ActivityBar.setUserLoginState', 'logging in']])
 })
 
+test('setUserLoginState with user info', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.setUserLoginState'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.setUserLoginState('logged in', { provider: 'GitHub', userName: 'Test User' })
+  expect(mockRpc.invocations).toEqual([['ActivityBar.setUserLoginState', 'logged in', { provider: 'GitHub', userName: 'Test User' }]])
+})
+
 test('focusFirst', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ActivityBar.focusFirst'() {
@@ -97,8 +108,19 @@ test('handleClick', async () => {
     },
   })
 
-  await ActivityBar.handleClick(1)
-  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClick', 1]])
+  await ActivityBar.handleClick()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClick', 0, -1000, -1000, '']])
+})
+
+test('handleClickIndex', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleClickIndex'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleClickIndex()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickIndex', 0, 1, 0, 0]])
 })
 
 test('handleSideBarHidden', async () => {
@@ -119,8 +141,41 @@ test('handleContextMenu', async () => {
     },
   })
 
-  await ActivityBar.handleContextMenu()
-  expect(mockRpc.invocations).toEqual([['ActivityBar.handleContextMenu']])
+  await ActivityBar.handleContextMenu(300, 0, 100, 200)
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleContextMenu', 300, 0, 100, 200]])
+})
+
+test('handleExtensionsChanged', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleExtensionsChanged'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleExtensionsChanged()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleExtensionsChanged']])
+})
+
+test('handleBadgeCountChange', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleBadgeCountChange'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleBadgeCountChange()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleBadgeCountChange', {}]])
+})
+
+test('handleSettingsChanged', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleSettingsChanged'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleSettingsChanged()
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleSettingsChanged']])
 })
 
 test('setUpdateState', async () => {
@@ -165,6 +220,28 @@ test('handleClickSettings', async () => {
 
   await ActivityBar.handleClickSettings(100, 200)
   expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickSettings', 100, 200]])
+})
+
+test('handleClickAccount', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleClickAccount'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleClickAccount(100, 200)
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickAccount', 100, 200]])
+})
+
+test('handleClickAdditionalViews', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'ActivityBar.handleClickAdditionalViews'() {
+      return undefined
+    },
+  })
+
+  await ActivityBar.handleClickAdditionalViews(300, 300)
+  expect(mockRpc.invocations).toEqual([['ActivityBar.handleClickAdditionalViews', 300, 300]])
 })
 
 test('resize', async () => {

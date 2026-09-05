@@ -1,5 +1,5 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ActiveEditorWorker from '../ActiveEditorWorker/ActiveEditorWorker.ts'
 
 export const setRelativeX = async (x: number): Promise<void> => {
-  await RendererWorker.invoke('ColorPicker.setRelativeX', x)
+  await ActiveEditorWorker.invoke('ColorPicker.setRelativeX', x)
 }

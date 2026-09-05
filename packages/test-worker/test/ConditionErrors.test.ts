@@ -40,6 +40,11 @@ test('toHaveValue', () => {
   expect(ConditionErrors.toHaveValue(locator, { value: 'test' })).toBe('expected selector .input to have value test')
 })
 
+test('toHaveValue - empty string', () => {
+  const locator = createLocator('.input')
+  expect(ConditionErrors.toHaveValue(locator, { value: '' })).toBe('expected selector .input to have value <empty string>')
+})
+
 test('toHaveText - element not found', async () => {
   const locator = createLocator('.text')
   using mockRpc = RendererWorker.registerMockRpc({
@@ -49,7 +54,7 @@ test('toHaveText - element not found', async () => {
   })
   const result = await ConditionErrors.toHaveText(locator, { text: 'hello' })
   expect(result).toBe('expected selector .text to have text "hello" element was not found')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'hello' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator._parsed, { text: 'hello' }]])
 })
 
 test('toHaveText - wrong text', async () => {
@@ -61,7 +66,7 @@ test('toHaveText - wrong text', async () => {
   })
   const result = await ConditionErrors.toHaveText(locator, { text: 'hello' })
   expect(result).toBe('expected selector .text to have text "hello" but was "world"')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'hello' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator._parsed, { text: 'hello' }]])
 })
 
 test('toHaveText - with hasText selector', async () => {
@@ -73,7 +78,7 @@ test('toHaveText - with hasText selector', async () => {
   })
   const result = await ConditionErrors.toHaveText(locator, { text: 'test' })
   expect(result).toBe('expected selector .item "hello" to have text "test" but was "wrong"')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator, { text: 'test' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveText', locator._parsed, { text: 'test' }]])
 })
 
 test('toHaveAttribute - element not found', async () => {
@@ -89,7 +94,7 @@ test('toHaveAttribute - element not found', async () => {
     [
       'TestFrameWork.checkConditionError',
       'toHaveAttribute',
-      locator,
+      locator._parsed,
       {
         key: 'href',
         value: '#',
@@ -111,7 +116,7 @@ test('toHaveAttribute - wrong value', async () => {
     [
       'TestFrameWork.checkConditionError',
       'toHaveAttribute',
-      locator,
+      locator._parsed,
       {
         key: 'href',
         value: '#',
@@ -129,7 +134,7 @@ test('toHaveCount', async () => {
   })
   const result = await ConditionErrors.toHaveCount(locator, { count: 3 })
   expect(result).toBe('expected .items to have count 3 but was 1')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveCount', locator]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveCount', locator._parsed]])
 })
 
 test('toBeFocused', async () => {
@@ -141,7 +146,7 @@ test('toBeFocused', async () => {
   })
   const result = await ConditionErrors.toBeFocused(locator)
   expect(result).toBe('expected .input to be focused but active element is BUTTON')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toBeFocused', locator]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toBeFocused', locator._parsed]])
 })
 
 test('toBeFocused - with document.body', async () => {
@@ -153,7 +158,7 @@ test('toBeFocused - with document.body', async () => {
   })
   const result = await ConditionErrors.toBeFocused(locator)
   expect(result).toBe('expected .input to be focused but active element is document.body')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toBeFocused', locator]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toBeFocused', locator._parsed]])
 })
 
 test('toBeHidden', () => {
@@ -170,7 +175,7 @@ test('toHaveClass - element not found', async () => {
   })
   const result = await ConditionErrors.toHaveClass(locator, { className: 'active' })
   expect(result).toBe('expected .button to have class active but element was not found')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveClass', locator, { className: 'active' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveClass', locator._parsed, { className: 'active' }]])
 })
 
 test('toHaveClass - wrong class', async () => {
@@ -182,7 +187,7 @@ test('toHaveClass - wrong class', async () => {
   })
   const result = await ConditionErrors.toHaveClass(locator, { className: 'active' })
   expect(result).toBe('expected .button to have class active')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveClass', locator, { className: 'active' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveClass', locator._parsed, { className: 'active' }]])
 })
 
 test('toHaveId - element not found', async () => {
@@ -194,7 +199,7 @@ test('toHaveId - element not found', async () => {
   })
   const result = await ConditionErrors.toHaveId(locator, { id: 'submit' })
   expect(result).toBe('expected .button to have id submit but element was not found')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveId', locator, { id: 'submit' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveId', locator._parsed, { id: 'submit' }]])
 })
 
 test('toHaveId - wrong id', async () => {
@@ -206,7 +211,7 @@ test('toHaveId - wrong id', async () => {
   })
   const result = await ConditionErrors.toHaveId(locator, { id: 'submit' })
   expect(result).toBe('expected .button to have id submit but was cancel')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveId', locator, { id: 'submit' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toHaveId', locator._parsed, { id: 'submit' }]])
 })
 
 test('toHaveCss - element not found', async () => {
@@ -222,7 +227,7 @@ test('toHaveCss - element not found', async () => {
     [
       'TestFrameWork.checkConditionError',
       'toHaveCss',
-      locator,
+      locator._parsed,
       {
         key: 'display',
         value: 'flex',
@@ -244,7 +249,7 @@ test('toHaveCss - wrong value', async () => {
     [
       'TestFrameWork.checkConditionError',
       'toHaveCss',
-      locator,
+      locator._parsed,
       {
         key: 'display',
         value: 'flex',
@@ -262,7 +267,7 @@ test('toContainText - element not found', async () => {
   })
   const result = await ConditionErrors.toContainText(locator, { text: 'hello' })
   expect(result).toBe('expected selector .text to contain text "hello" element was not found')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toContainText', locator, { text: 'hello' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toContainText', locator._parsed, { text: 'hello' }]])
 })
 
 test('toContainText - wrong text', async () => {
@@ -274,7 +279,7 @@ test('toContainText - wrong text', async () => {
   })
   const result = await ConditionErrors.toContainText(locator, { text: 'hello' })
   expect(result).toBe('expected selector .text to contain text "hello" but was "world"')
-  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toContainText', locator, { text: 'hello' }]])
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.checkConditionError', 'toContainText', locator._parsed, { text: 'hello' }]])
 })
 
 test('toHaveJSProperty - element not found', async () => {
@@ -290,7 +295,7 @@ test('toHaveJSProperty - element not found', async () => {
     [
       'TestFrameWork.checkConditionError',
       'toHaveJSProperty',
-      locator,
+      locator._parsed,
       {
         key: 'disabled',
         value: 'true',
@@ -312,7 +317,7 @@ test('toHaveJSProperty - wrong value', async () => {
     [
       'TestFrameWork.checkConditionError',
       'toHaveJSProperty',
-      locator,
+      locator._parsed,
       {
         key: 'disabled',
         value: 'true',

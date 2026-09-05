@@ -11,16 +11,20 @@ export const getRemoteUrl = (path) => {
   return `/remote/${url}`
 }
 
-const nodeModulesPath = join(root, 'packages', 'server', 'node_modules')
+const nodeModulesPath = join(root, 'node_modules')
 
 const workerPath = join(root, '.tmp', 'dist', 'dist', 'testWorkerMain.js')
 
 const serverStaticPath = join(nodeModulesPath, '@lvce-editor', 'static-server', 'static')
+const serverConfigPath = join(nodeModulesPath, '@lvce-editor', 'static-server', 'config.json')
+const sharedProcessConfigPath = join(nodeModulesPath, '@lvce-editor', 'shared-process', 'config.json')
 
 const RE_COMMIT_HASH = /^[a-z\d]+$/
 const isCommitHash = (dirent) => {
   return dirent.length === 7 && dirent.match(RE_COMMIT_HASH)
 }
+
+await cp(serverConfigPath, sharedProcessConfigPath)
 
 const dirents = await readdir(serverStaticPath)
 const commitHash = dirents.find(isCommitHash) || ''

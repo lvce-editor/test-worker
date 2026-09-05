@@ -1,13 +1,18 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as AutoFixState from '../AutoFixState/AutoFixState.ts'
 import { createApi } from '../CreateApi/CreateApi.ts'
+import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 import * as ExecuteTest2 from '../ExecuteTest2/ExecuteTest2.ts'
 import * as ExecuteTest from '../ExecuteTest/ExecuteTest.ts'
 import { formatDuration } from '../FormatDuration/FormatDuration.ts'
 import { hotReloadEnabled } from '../HotReloadEnabled/HotReloadEnabled.ts'
 import * as ImportTest from '../ImportTest/ImportTest.ts'
 import { printTestError } from '../PrintTestError/PrintTestError.ts'
+import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
+import { roundTestResults } from '../RoundTestResults/RoundTestResults.ts'
+import * as ShouldSkipTest from '../ShouldSkipTest/ShouldSkipTest.ts'
 import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ts'
+import * as TestFrameWorkComponentFileSystem from '../TestFrameWorkComponentFileSystem/TestFrameWorkComponentFileSystem.ts'
 import * as TestFrameWorkComponentUrl from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
 import * as TestState from '../TestState/TestState.ts'
@@ -27,6 +32,18 @@ interface ExecuteAllTestResult {
   readonly start: number
   readonly status: string
 }
+
+type ImportedExecuteAllTest =
+  | {
+      readonly item: ExecuteAllTest
+      readonly module: any
+      readonly type: 'success'
+    }
+  | {
+      readonly error: unknown
+      readonly item: ExecuteAllTest
+      readonly type: 'error'
+    }
 
 const toErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {
@@ -79,19 +96,50 @@ const getExecutedResult = async (name: string, test: any, globals: any): Promise
   }
 }
 
-const executeAllTest = async (item: ExecuteAllTest, globals: any): Promise<ExecuteAllTestResult> => {
+const importExecuteAllTest = async (item: ExecuteAllTest): Promise<ImportedExecuteAllTest> => {
   try {
     const module = await ImportTest.importTest(item.url)
+    return {
+      item,
+      module,
+      type: 'success',
+    }
+  } catch (error) {
+    return {
+      error,
+      item,
+      type: 'error',
+    }
+  }
+}
+
+const executeAllTest = async (importedTest: ImportedExecuteAllTest, globals: any): Promise<ExecuteAllTestResult> => {
+  const { item } = importedTest
+  if (importedTest.type === 'error') {
+    return getImportErrorResult(item.name, importedTest.error)
+  }
+  try {
+    const { module } = importedTest
     const { mockRpc, skip, test } = module
     if (mockRpc) {
       TestState.setMockRpc(mockRpc)
     }
-    if (skip) {
+    if (ShouldSkipTest.shouldSkipTest(skip)) {
       return getSkippedResult(item.name)
     }
     if (!test) {
       return getMissingTestResult(item.name)
     }
+    await TestFrameWorkComponentFileSystem.remove('memfs:///workspace')
+    await TestFrameWorkComponentFileSystem.mkdir('memfs:///workspace')
+    await RendererWorker.invoke('Main.closeAllEditors')
+    await RendererWorker.invoke('Layout.resetViewLocations')
+    await DirectViewWorker.invoke('ActivityBar', 'ActivityBar.resize', {
+      height: 336,
+      width: 48,
+      x: 0,
+      y: 0,
+    })
     return getExecutedResult(item.name, test, globals)
   } catch (error) {
     return getImportErrorResult(item.name, error)
@@ -139,7 +187,7 @@ const showAllTestsOverlay = async (results: readonly ExecuteAllTestResult[], dur
     background = 'red'
   }
   const text = `${getSummaryParts(results).join(', ')} in ${formatDuration(duration)}`
-  await RendererWorker.invoke('TestFrameWork.showOverlay', type, background, text)
+  await RendererProcess.invoke('TestFrameWork.showOverlay', type, background, text)
 }
 
 // TODO move this into three steps:
@@ -167,7 +215,7 @@ export const execute = async (href: string, platform: number, assetDir: string):
       TestState.setMockRpc(mockRpc)
     }
     if (test) {
-      if (skip) {
+      if (ShouldSkipTest.shouldSkipTest(skip)) {
         await TestFrameWork.skipTest(name)
       } else {
         await ExecuteTest.executeTest(name, test, globals)
@@ -177,7 +225,7 @@ export const execute = async (href: string, platform: number, assetDir: string):
   } catch (error) {
     AutoFixState.clear()
     await printTestError(error)
-    await RendererWorker.invoke('TestFrameWork.showOverlay', TestType.Fail, 'red', `test failed: ${error}`)
+    await RendererProcess.invoke('TestFrameWork.showOverlay', TestType.Fail, 'red', `test failed: ${error}`)
     return
   } finally {
     TestInfoCache.push({
@@ -208,13 +256,14 @@ export const executeAll = async (tests: readonly ExecuteAllTest[], href: string,
   const globals = createApi(platform, assetDir)
   const results: ExecuteAllTestResult[] = []
   const start = Timestamp.now()
-  for (const test of tests) {
-    const result = await executeAllTest(test, globals)
+  const importedTests = await Promise.all(tests.map(importExecuteAllTest))
+  for (const importedTest of importedTests) {
+    const result = await executeAllTest(importedTest, globals)
     results.push(result)
   }
   const end = Timestamp.now()
   await showAllTestsOverlay(results, end - start)
-  await RendererWorker.invoke('TestFrameWork.showTestResults', JSON.stringify(results))
+  await RendererProcess.invoke('TestFrameWork.showTestResults', JSON.stringify(roundTestResults(results)))
   TestInfoCache.push({
     assetDir,
     inProgress: false,
