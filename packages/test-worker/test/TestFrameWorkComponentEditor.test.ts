@@ -1131,6 +1131,94 @@ test('shouldHaveText - reads from the active main area editor', async () => {
   }
 })
 
+test('shouldContainText - success case', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return 'prefix expected text suffix'
+    },
+  })
+
+  await Editor.shouldContainText('expected text')
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
+})
+
+test('shouldContainText - retries while the active editor is changing', async () => {
+  jest.useFakeTimers()
+  let invocationCount = 0
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      invocationCount++
+      return invocationCount === 1 ? 'previous text' : 'prefix expected text suffix'
+    },
+  })
+
+  try {
+    const assertion = Editor.shouldContainText('expected text')
+    await jest.advanceTimersByTimeAsync(50)
+    await assertion
+    expect(mockRpc.invocations).toEqual([['Editor.getText'], ['Editor.getText']])
+  } finally {
+    jest.useRealTimers()
+  }
+})
+
+test('shouldContainText - throws error when text does not match', async () => {
+  jest.useFakeTimers()
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return 'wrong text'
+    },
+  })
+
+  try {
+    const assertion = Editor.shouldContainText('expected text')
+    void assertion.catch(() => {})
+    await jest.runAllTimersAsync()
+    await expect(assertion).rejects.toThrow('Expected editor to contain text expected text but was wrong text')
+    expect(mockRpc.invocations).toHaveLength(20)
+  } finally {
+    jest.useRealTimers()
+  }
+})
+
+test('shouldContainText - reads from the active main area editor', async () => {
+  const rendererProcessRpc = createMockRpc({
+    commandMap: {
+      'DirectView.getFocusedUid'() {
+        throw new Error('focused direct view not found: Editor')
+      },
+      'DirectView.getUid'() {
+        return 7
+      },
+    },
+  })
+  RendererProcess.state.rpc = rendererProcessRpc
+  const mainAreaRpc = createMockRpc({
+    commandMap: {
+      'MainArea.getActiveEditorUid'() {
+        return 42
+      },
+    },
+  })
+  Object.assign(mainAreaRpc, { dispose: async () => {} })
+  MainAreaWorker.set(mainAreaRpc)
+  using editorRpc = EditorWorker.registerMockRpc({
+    'Editor.getText'() {
+      return 'prefix expected text suffix'
+    },
+  })
+
+  try {
+    await Editor.shouldContainText('expected text')
+    expect(rendererProcessRpc.invocations).toEqual([['DirectView.getUid', 'MainArea']])
+    expect(mainAreaRpc.invocations).toEqual([['MainArea.getActiveEditorUid', 7]])
+    expect(editorRpc.invocations).toEqual([['Editor.getText', 42]])
+  } finally {
+    RendererProcess.state.rpc = undefined
+    await MainAreaWorker.dispose()
+  }
+})
+
 test('shouldHaveTokens - success case', async () => {
   const expectedTokens = [['keyword', 'const']]
   using mockRpc = EditorWorker.registerMockRpc({
