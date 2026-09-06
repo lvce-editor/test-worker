@@ -195,3 +195,38 @@ test('failure assertion accepts the expected error', async () => {
   await Devcontainer.shouldFailToExec('cat', ['file.txt'], 'DEVCONTAINER_NOT_RUNNING')
   expect(_rpc.invocations).toEqual([['Extensions.executeCommand', 'devcontainer.exec', 'cat', ['file.txt']]])
 })
+
+test('waitForStatus returns an error result without throwing', async () => {
+  const state = { lastResult: { ok: false, stdout: '{"message":"spawn docker ENOENT"}' }, status: 'error' }
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand'() {
+      return state
+    },
+  })
+  await expect(Devcontainer.waitForStatus('running', 500)).resolves.toEqual({ errorResult: state, ok: false })
+})
+
+test.each(['start', 'stop'] as const)('%s throws a parsed DockerNotInstalledError', async (method) => {
+  using _quickPick = mockQuickPick()
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand'() {
+      return { lastResult: { stdout: '{"message":"spawn docker ENOENT"}' }, status: 'error' }
+    },
+  })
+  await expect(Devcontainer[method]()).rejects.toMatchObject({ code: 'E_DOCKER_NOT_INSTALLED', name: 'DockerNotInstalledError' })
+})
+
+test('setDockerPath forwards the override and uses it when parsing errors', async () => {
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand'(command: string) {
+      return command === 'devcontainer.exec' ? { errorMessage: 'spawn /missing/docker ENOENT', ok: false } : undefined
+    },
+  })
+  try {
+    await Devcontainer.setDockerPath('/missing/docker')
+    expect(_rpc.invocations[0]).toEqual(['Extensions.executeCommand', 'devcontainer.setDockerPath', '/missing/docker'])
+    await expect(Devcontainer.exec('pwd')).rejects.toMatchObject({ code: 'E_DOCKER_NOT_INSTALLED' })
+  } finally {
+    await Devcontainer.setDockerPath('docker')
+  }
+})
