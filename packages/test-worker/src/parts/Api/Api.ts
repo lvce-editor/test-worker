@@ -11,6 +11,7 @@ import type * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameW
 import type * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import type * as ComponentState from '../TestFrameWorkComponentComponentState/TestFrameWorkComponentComponentState.ts'
 import type * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
+import type * as Devcontainer from '../TestFrameWorkComponentDevcontainer/TestFrameWorkComponentDevcontainer.ts'
 import type * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 import type * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 import type * as DragAndDrop from '../TestFrameWorkComponentDragAndDrop/TestFrameWorkComponentDragAndDrop.ts'
@@ -77,6 +78,7 @@ export interface Api {
   Command: typeof Command
   ComponentState: typeof ComponentState
   ContextMenu: typeof ContextMenu
+  Devcontainer: typeof Devcontainer
   Developer: typeof Developer
   Dialog: typeof Dialog
   DiffView: typeof DiffView

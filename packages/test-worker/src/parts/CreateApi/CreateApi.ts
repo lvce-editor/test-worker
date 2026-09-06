@@ -11,6 +11,7 @@ import * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkCo
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import * as ComponentState from '../TestFrameWorkComponentComponentState/TestFrameWorkComponentComponentState.ts'
 import * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
+import * as Devcontainer from '../TestFrameWorkComponentDevcontainer/TestFrameWorkComponentDevcontainer.ts'
 import * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 import * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 import * as DragAndDrop from '../TestFrameWorkComponentDragAndDrop/TestFrameWorkComponentDragAndDrop.ts'
@@ -74,6 +75,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     Command,
     ComponentState,
     ContextMenu,
+    Devcontainer,
     Developer,
     Dialog,
     DiffView,

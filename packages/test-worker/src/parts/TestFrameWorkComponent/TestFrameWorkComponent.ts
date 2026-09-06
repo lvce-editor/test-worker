@@ -9,6 +9,7 @@ export * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkCo
 export * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 export * as ComponentState from '../TestFrameWorkComponentComponentState/TestFrameWorkComponentComponentState.ts'
 export * as ContextMenu from '../TestFrameWorkComponentContextMenu/TestFrameWorkComponentContextMenu.ts'
+export * as Devcontainer from '../TestFrameWorkComponentDevcontainer/TestFrameWorkComponentDevcontainer.ts'
 export * as Developer from '../TestFrameWorkComponentDeveloper/TestFrameWorkComponentDeveloper.ts'
 export * as Dialog from '../TestFrameWorkComponentDialog/TestFrameWorkComponentDialog.ts'
 export * as DiffView from '../TestFrameWorkComponentDiffView/TestFrameWorkComponentDiffView.ts'
