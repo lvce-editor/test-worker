@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-dead-store -- using bindings dispose RPC registrations after each test. */
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Devcontainer from '../src/parts/TestFrameWorkComponentDevcontainer/TestFrameWorkComponentDevcontainer.ts'
@@ -20,17 +19,17 @@ afterEach(() => {
 
 test('start selects the visible Quick Pick command and waits through startup', async () => {
   jest.useFakeTimers()
-  using quickPick = mockQuickPick()
+  using _quickPick = mockQuickPick()
   const states = [{ status: 'stopped' }, { status: 'starting' }, { containerId: 'container-1', status: 'running' }]
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return states.shift()
     },
   })
   await Promise.all([expect(Devcontainer.start()).resolves.toBeUndefined(), jest.advanceTimersByTimeAsync(200)])
-  expect(quickPick.invocations[0]).toEqual(['Viewlet.openWidget', 'QuickPick', 'everything'])
-  expect(quickPick.invocations[1]).toEqual(['QuickPick.setValue', '>Dev Containers: Start Current Workspace'])
-  expect(quickPick.invocations[2]).toEqual([
+  expect(_quickPick.invocations[0]).toEqual(['Viewlet.openWidget', 'QuickPick', 'everything'])
+  expect(_quickPick.invocations[1]).toEqual(['QuickPick.setValue', '>Dev Containers: Start Current Workspace'])
+  expect(_quickPick.invocations[2]).toEqual([
     'TestFrameWork.checkMultiElementCondition',
     [
       { selector: '.QuickPickItem', type: 'css' },
@@ -39,29 +38,29 @@ test('start selects the visible Quick Pick command and waits through startup', a
     'toHaveCount',
     { count: 1 },
   ])
-  expect(quickPick.invocations[3]).toEqual(['QuickPick.selectItem', 'Dev Containers: Start Current Workspace'])
-  expect(rpc.invocations).toEqual(Array.from({ length: 3 }, () => ['Extensions.executeCommand', 'devcontainer.getState']))
+  expect(_quickPick.invocations[3]).toEqual(['QuickPick.selectItem', 'Dev Containers: Start Current Workspace'])
+  expect(_rpc.invocations).toEqual(Array.from({ length: 3 }, () => ['Extensions.executeCommand', 'devcontainer.getState']))
 })
 
 test('stop waits for the asynchronous stop command', async () => {
   jest.useFakeTimers()
-  using quickPick = mockQuickPick()
+  using _quickPick = mockQuickPick()
   const states = [
     { containerId: 'container-1', status: 'running' },
     { containerId: 'container-1', status: 'stopped' },
   ]
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return states.shift()
     },
   })
   await Promise.all([expect(Devcontainer.stop({ timeout: 500 })).resolves.toBeUndefined(), jest.advanceTimersByTimeAsync(100)])
-  expect(quickPick.invocations.at(-1)).toEqual(['QuickPick.selectItem', 'Dev Containers: Stop Current Workspace'])
+  expect(_quickPick.invocations.at(-1)).toEqual(['QuickPick.selectItem', 'Dev Containers: Stop Current Workspace'])
 })
 
 test('start reports container failure immediately with CLI diagnostics', async () => {
-  using quickPick = mockQuickPick()
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _quickPick = mockQuickPick()
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return { lastResult: { stderr: 'Cannot connect to Docker' }, status: 'error' }
     },
@@ -71,8 +70,8 @@ test('start reports container failure immediately with CLI diagnostics', async (
 
 test('start times out with the last known state', async () => {
   jest.useFakeTimers()
-  using quickPick = mockQuickPick()
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _quickPick = mockQuickPick()
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return { status: 'starting' }
     },
@@ -84,8 +83,8 @@ test('start times out with the last known state', async () => {
 })
 
 test('start rejects running state without a container id', async () => {
-  using quickPick = mockQuickPick()
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _quickPick = mockQuickPick()
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return { status: 'running' }
     },
@@ -96,7 +95,7 @@ test('start rejects running state without a container id', async () => {
 test.each([undefined, null, 'invalid', {}, { status: 42 }, { containerId: 42, status: 'running' }])(
   'getState rejects malformed state %p',
   async (state) => {
-    using rpc = ExtensionManagementWorker.registerMockRpc({
+    using _rpc = ExtensionManagementWorker.registerMockRpc({
       'Extensions.executeCommand'() {
         return state
       },
@@ -106,21 +105,21 @@ test.each([undefined, null, 'invalid', {}, { status: 42 }, { containerId: 42, st
 )
 
 test('exec returns stdout and forwards command arguments', async () => {
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return { ok: true, stdout: 'v24.0.0\n' }
     },
   })
   await expect(Devcontainer.exec('node', ['--version'])).resolves.toBe('v24.0.0\n')
   await Devcontainer.exec('pwd')
-  expect(rpc.invocations).toEqual([
+  expect(_rpc.invocations).toEqual([
     ['Extensions.executeCommand', 'devcontainer.exec', 'node', ['--version']],
     ['Extensions.executeCommand', 'devcontainer.exec', 'pwd', []],
   ])
 })
 
 test('exec reports CLI failure even when stdout exists', async () => {
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return { ok: false, stderr: 'permission denied', stdout: 'partial output' }
     },
@@ -129,7 +128,7 @@ test('exec reports CLI failure even when stdout exists', async () => {
 })
 
 test('exec rejects success without stdout', async () => {
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return { ok: true }
     },
@@ -138,7 +137,7 @@ test('exec rejects success without stdout', async () => {
 })
 
 test('output assertions support exact text and reusable regular expressions', async () => {
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return { ok: true, stdout: 'hello\n' }
     },
@@ -155,7 +154,7 @@ test.each([
   { errorCode: 'OTHER', ok: false },
   { errorCode: 'DEVCONTAINER_NOT_RUNNING', ok: true },
 ])('failure assertions check both the outcome and error code: %p', async (result) => {
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return result
     },
@@ -165,7 +164,7 @@ test.each([
 })
 
 test('remove cleans up a stopped container and checks removal errors', async () => {
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'(command: string) {
       if (command === 'devcontainer.getState') {
         return { containerId: 'container-1', status: 'stopped' }
@@ -174,25 +173,25 @@ test('remove cleans up a stopped container and checks removal errors', async () 
     },
   })
   await expect(Devcontainer.remove()).rejects.toThrow('removal failed')
-  expect(rpc.invocations.at(-1)).toEqual(['Extensions.executeCommand', 'devcontainer.remove'])
+  expect(_rpc.invocations.at(-1)).toEqual(['Extensions.executeCommand', 'devcontainer.remove'])
 })
 
 test.each([undefined, 'container-1'])('remove tolerates absent containers and removes existing ones: %p', async (containerId) => {
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'(command: string) {
       return command === 'devcontainer.getState' ? { containerId, status: 'stopped' } : { ok: true }
     },
   })
   await Devcontainer.remove()
-  expect(rpc.invocations).toHaveLength(containerId ? 2 : 1)
+  expect(_rpc.invocations).toHaveLength(containerId ? 2 : 1)
 })
 
 test('failure assertion accepts the expected error', async () => {
-  using rpc = ExtensionManagementWorker.registerMockRpc({
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand'() {
       return { errorCode: 'DEVCONTAINER_NOT_RUNNING', ok: false }
     },
   })
   await Devcontainer.shouldFailToExec('cat', ['file.txt'], 'DEVCONTAINER_NOT_RUNNING')
-  expect(rpc.invocations).toEqual([['Extensions.executeCommand', 'devcontainer.exec', 'cat', ['file.txt']]])
+  expect(_rpc.invocations).toEqual([['Extensions.executeCommand', 'devcontainer.exec', 'cat', ['file.txt']]])
 })
