@@ -1,4 +1,5 @@
 import { AssertionError } from '../AssertionError/AssertionError.ts'
+import { parseDevcontainerError } from '../ParseDevcontainerError/ParseDevcontainerError.ts'
 import { expect, Locator } from '../TestFrameWork/TestFrameWork.ts'
 import { executeExtensionCommand } from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
 import * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
@@ -9,6 +10,7 @@ export interface DevcontainerOptions {
 
 export interface DevcontainerState {
   readonly containerId?: string
+  readonly lastResult?: unknown
   readonly status: string
 }
 
@@ -19,9 +21,16 @@ const getProperty = (value: unknown, property: string): unknown => {
   return value[property as keyof typeof value]
 }
 
+const configuration = { dockerPath: 'docker' }
+
+export const setDockerPath = async (path: string): Promise<void> => {
+  await executeExtensionCommand('devcontainer.setDockerPath', path)
+  configuration.dockerPath = path
+}
+
 const assertOk = (result: unknown): void => {
   if (getProperty(result, 'ok') !== true) {
-    throw new AssertionError(`Devcontainer command failed: ${JSON.stringify(result)}`)
+    throw parseDevcontainerError(result, configuration.dockerPath)
   }
 }
 
@@ -35,16 +44,19 @@ export const getState = async (): Promise<DevcontainerState> => {
   return state as DevcontainerState
 }
 
-const waitForStatus = async (expectedStatus: string, timeout: number): Promise<DevcontainerState> => {
+export type DevcontainerStatusResult =
+  { readonly ok: true; readonly state: DevcontainerState } | { readonly ok: false; readonly errorResult: DevcontainerState }
+
+export const waitForStatus = async (expectedStatus: string, timeout: number): Promise<DevcontainerStatusResult> => {
   const deadline = Date.now() + timeout
   let state: DevcontainerState | undefined
   while (Date.now() < deadline) {
     state = await getState()
-    if (state.status === expectedStatus) {
-      return state
-    }
     if (state.status === 'error') {
-      throw new AssertionError(`Devcontainer failed: ${JSON.stringify(state)}`)
+      return { errorResult: state, ok: false }
+    }
+    if (state.status === expectedStatus) {
+      return { ok: true, state }
     }
     await new Promise((resolve) => setTimeout(resolve, 100))
   }
@@ -62,7 +74,11 @@ const selectCommand = async (label: string): Promise<void> => {
 export const start = async ({ timeout = 120_000 }: DevcontainerOptions = {}): Promise<void> => {
   await selectCommand('Dev Containers: Start Current Workspace')
   // Quick Pick closes before the extension command finishes.
-  const state = await waitForStatus('running', timeout)
+  const result = await waitForStatus('running', timeout)
+  if (!result.ok) {
+    throw parseDevcontainerError(result.errorResult, configuration.dockerPath)
+  }
+  const { state } = result
   if (!state.containerId) {
     throw new AssertionError(`Missing devcontainer id: ${JSON.stringify(state)}`)
   }
@@ -70,7 +86,10 @@ export const start = async ({ timeout = 120_000 }: DevcontainerOptions = {}): Pr
 
 export const stop = async ({ timeout = 120_000 }: DevcontainerOptions = {}): Promise<void> => {
   await selectCommand('Dev Containers: Stop Current Workspace')
-  await waitForStatus('stopped', timeout)
+  const result = await waitForStatus('stopped', timeout)
+  if (!result.ok) {
+    throw parseDevcontainerError(result.errorResult, configuration.dockerPath)
+  }
 }
 
 export const exec = async (command: string, args: readonly string[] = []): Promise<string> => {
