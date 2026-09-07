@@ -37,6 +37,7 @@ export * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.
 export * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 export * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 export * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
+export * as Ports from '../TestFrameWorkComponentPorts/TestFrameWorkComponentPorts.ts'
 export * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponentPreview.ts'
 export * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 export * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
