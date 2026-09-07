@@ -46,6 +46,7 @@ test('createApi includes all expected components', () => {
   expect(api.Main).toBeDefined()
   expect(api.Output).toBeDefined()
   expect(api.Panel).toBeDefined()
+  expect(api.Ports.addPort).toBeDefined()
   expect(api.Problems).toBeDefined()
   expect(api.ProcessExplorer).toBeDefined()
   expect(api.QuickPick).toBeDefined()

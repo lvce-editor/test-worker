@@ -38,6 +38,7 @@ import type * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponent
 import type * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import type * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 import type * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
+import type * as Ports from '../TestFrameWorkComponentPorts/TestFrameWorkComponentPorts.ts'
 import type * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponentPreview.ts'
 import type * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 import type * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
@@ -109,6 +110,7 @@ export interface Api {
   Output: typeof Output
   Panel: typeof Panel
   Platform: typeof Platform
+  Ports: typeof Ports
   Preview: typeof Preview
   Problems: typeof Problems
   ProcessExplorer: typeof ProcessExplorer
