@@ -22,6 +22,10 @@ export const handleContextMenu = async (button: number, x: number, y: number): P
   await DirectViewWorker.invoke('SourceControl', 'Source Control.handleContextMenu', button, x, y)
 }
 
+export const revealInExplorer = async (uri: string): Promise<void> => {
+  await DirectViewWorker.invoke('SourceControl', 'Source Control.revealInExplorer', uri)
+}
+
 export interface ShowOptions {
   readonly waitUntilReady?: boolean
 }

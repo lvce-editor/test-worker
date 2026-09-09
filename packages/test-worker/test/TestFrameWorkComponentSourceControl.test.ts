@@ -82,9 +82,10 @@ test('show with waitUntilReady waits for opening and readiness', async () => {
     },
   })
   let completed = false
-  const showing = SourceControl.show({ waitUntilReady: true }).then(() => {
+  const showing = (async (): Promise<void> => {
+    await SourceControl.show({ waitUntilReady: true })
     completed = true
-  })
+  })()
   await Promise.resolve()
   expect(mockRpc.invocations).toEqual([['SideBar.openViewlet', 'Source Control']])
   expect(completed).toBe(false)
@@ -115,4 +116,12 @@ test('show propagates readiness failures', async () => {
   })
   await expect(SourceControl.show({ waitUntilReady: true })).rejects.toBe(error)
   expect(mockRpc.invocations).toHaveLength(2)
+})
+
+test('revealInExplorer', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Source Control.revealInExplorer'() {},
+  })
+  await SourceControl.revealInExplorer('/workspace/test.css')
+  expect(mockRpc.invocations).toEqual([['Source Control.revealInExplorer', '/workspace/test.css']])
 })
