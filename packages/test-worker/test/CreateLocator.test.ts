@@ -9,7 +9,7 @@ test('create locator with selector only', () => {
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -24,11 +24,11 @@ test('create locator with selector and hasText option', () => {
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
     {
       text: 'Submit',
-      type: 'has-text',
+      type: 3,
     },
   ])
 })
@@ -43,11 +43,11 @@ test('create locator with selector and nth option', () => {
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
     {
       index: 2,
-      type: 'nth',
+      type: 4,
     },
   ])
 })
@@ -63,15 +63,15 @@ test('create locator with all options', () => {
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
     {
       text: 'Submit',
-      type: 'has-text',
+      type: 3,
     },
     {
       index: 1,
-      type: 'nth',
+      type: 4,
     },
   ])
 })
@@ -84,7 +84,7 @@ test('create locator with empty options object', () => {
   expect(locator._parsed).toEqual([
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -95,11 +95,11 @@ test('create locator parses combined css and text selector', () => {
   expect(locator._parsed).toEqual([
     {
       selector: '.button',
-      type: 'css',
+      type: 1,
     },
     {
       text: 'Save',
-      type: 'text',
+      type: 2,
     },
   ])
 })

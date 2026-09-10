@@ -13,7 +13,7 @@ const createLocator = (selector: string, { hasText = '', nth = -1 }: { readonly 
         ? [
             {
               text: hasText,
-              type: 'has-text' as const,
+              type: 3 as const,
             },
           ]
         : []),
@@ -22,7 +22,7 @@ const createLocator = (selector: string, { hasText = '', nth = -1 }: { readonly 
         : [
             {
               index: nth,
-              type: 'nth' as const,
+              type: 4 as const,
             },
           ]),
     ],

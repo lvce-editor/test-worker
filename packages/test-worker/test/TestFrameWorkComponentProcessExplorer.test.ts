@@ -154,27 +154,27 @@ test('locator helpers use process explorer selectors', () => {
 test('indexed locator helpers keep nth selectors stable', () => {
   expect(getParsed(ProcessExplorer.headerCell(1))).toContainEqual({
     index: 1,
-    type: 'nth',
+    type: 4,
   })
   expect(getParsed(ProcessExplorer.row(2))).toContainEqual({
     index: 2,
-    type: 'nth',
+    type: 4,
   })
   expect(getParsed(ProcessExplorer.expandedRow())).toContainEqual({
     index: 0,
-    type: 'nth',
+    type: 4,
   })
   expect(getParsed(ProcessExplorer.collapsedRow())).toContainEqual({
     index: 0,
-    type: 'nth',
+    type: 4,
   })
   expect(getParsed(ProcessExplorer.pidCell(2))).toContainEqual({
     index: 1,
-    type: 'nth',
+    type: 4,
   })
   expect(getParsed(ProcessExplorer.memoryCell(2))).toContainEqual({
     index: 2,
-    type: 'nth',
+    type: 4,
   })
 })
 

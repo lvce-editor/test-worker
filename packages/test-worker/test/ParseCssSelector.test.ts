@@ -6,7 +6,7 @@ test('parseCssSelector: parses text selector', () => {
   expect(parseCssSelector('text=Save')).toEqual([
     {
       text: 'Save',
-      type: 'text',
+      type: 2,
     },
   ])
 })
@@ -15,7 +15,7 @@ test('parseCssSelector: parses css selector by class', () => {
   expect(parseCssSelector('.button')).toEqual([
     {
       selector: '.button',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -24,7 +24,7 @@ test('parseCssSelector: parses css selector by html element', () => {
   expect(parseCssSelector('button')).toEqual([
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -33,7 +33,7 @@ test('parseCssSelector: parses chained css selector', () => {
   expect(parseCssSelector('button:nth-of-type(3) span')).toEqual([
     {
       selector: 'button:nth-of-type(3) span',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -42,7 +42,7 @@ test('parseCssSelector: parses attribute selector', () => {
   expect(parseCssSelector('[aria-label="Save"]')).toEqual([
     {
       selector: '[aria-label="Save"]',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -51,7 +51,7 @@ test('parseCssSelector: parses pseudo selector', () => {
   expect(parseCssSelector(':root')).toEqual([
     {
       selector: ':root',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -60,11 +60,11 @@ test('parseCssSelector: parses css selector with text filter', () => {
   expect(parseCssSelector('.button text=Save')).toEqual([
     {
       selector: '.button',
-      type: 'css',
+      type: 1,
     },
     {
       text: 'Save',
-      type: 'text',
+      type: 2,
     },
   ])
 })
@@ -83,4 +83,18 @@ test('parseCssSelector: throws for unsupported css selector before text filter',
 
 test('parseCssSelector: throws for empty selector', () => {
   expect(() => parseCssSelector('')).toThrow(new CssParsingError('unsupported selector: '))
+})
+
+test('parseCssSelector: serializes compact numeric tags', () => {
+  const parsed = parseCssSelector('.button text=Save')
+  expect(JSON.parse(JSON.stringify(parsed))).toEqual([
+    { selector: '.button', type: 1 },
+    { text: 'Save', type: 2 },
+  ])
+  expect(JSON.stringify(parsed).length).toBeLessThan(
+    JSON.stringify([
+      { selector: '.button', type: 'css' },
+      { text: 'Save', type: 'text' },
+    ]).length,
+  )
 })
