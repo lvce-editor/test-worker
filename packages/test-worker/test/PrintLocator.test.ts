@@ -92,3 +92,16 @@ test('print locator with text has-text and nth', () => {
   ])
   expect(PrintLocator.printLocator(locator)).toBe('text=Submit "Now":nth(1)')
 })
+
+test('print empty locator', () => {
+  expect(PrintLocator.printLocator(createParsedLocator([]))).toBe('')
+})
+
+test('print locator after empty css selector', () => {
+  const locator = createParsedLocator([
+    { selector: '', type: 'css' },
+    { selector: 'button', type: 'css' },
+    { text: 'Submit', type: 'text' },
+  ])
+  expect(PrintLocator.printLocator(locator)).toBe('button text=Submit')
+})
