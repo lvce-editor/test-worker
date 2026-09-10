@@ -26,7 +26,12 @@ test('shouldHaveContentLeft', async () => {
   await DiffView.shouldHaveContentLeft('left content')
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', createLocator('.DiffEditorContentLeft')._parsed, ConditionType.ToHaveText, { text: 'left content' }],
+    [
+      'TestFrameWork.checkSingleElementCondition',
+      createLocator('.DiffEditorContentLeft')._parsed,
+      ConditionType.ToHaveText,
+      { text: 'left content' },
+    ],
   ])
 })
 
@@ -40,7 +45,12 @@ test('shouldHaveContentRight', async () => {
   await DiffView.shouldHaveContentRight('right content')
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', createLocator('.DiffEditorContentRight')._parsed, ConditionType.ToHaveText, { text: 'right content' }],
+    [
+      'TestFrameWork.checkSingleElementCondition',
+      createLocator('.DiffEditorContentRight')._parsed,
+      ConditionType.ToHaveText,
+      { text: 'right content' },
+    ],
   ])
 })
 
