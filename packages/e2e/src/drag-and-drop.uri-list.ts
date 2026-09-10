@@ -15,8 +15,11 @@ export const test: Test = async ({ DragAndDrop, Editor, expect, FileSystem, Loca
   ])
   await Main.handleDrop(dropId)
 
-  await expect(Locator('.MainTab')).toHaveCount(2)
-  await expect(Locator('.MainTab[title$="left.txt"]')).toBeVisible()
-  await expect(Locator('.MainTab[title$="right.txt"]')).toBeVisible()
+  const tabs = Locator('.MainTab')
+  const firstTab = Locator('.MainTab[title$="left.txt"]')
+  const secondTab = Locator('.MainTab[title$="right.txt"]')
+  await expect(tabs).toHaveCount(2)
+  await expect(firstTab).toBeVisible()
+  await expect(secondTab).toBeVisible()
   await Editor.shouldHaveText('right file\n')
 }
