@@ -107,12 +107,16 @@ test('create locator parses combined css and text selector', () => {
 test('create locator returns instance with expected methods', () => {
   const locator = createLocator('button')
 
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   expect(typeof locator.click).toBe('function')
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   expect(typeof locator.hover).toBe('function')
   expect(typeof locator.first).toBe('function')
   expect(typeof locator.locator).toBe('function')
   expect(typeof locator.nth).toBe('function')
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   expect(typeof locator.type).toBe('function')
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   expect(typeof locator.dispatchEvent).toBe('function')
 })
 
