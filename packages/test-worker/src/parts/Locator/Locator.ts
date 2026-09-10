@@ -1,6 +1,6 @@
 import type { ILocator } from '../ILocator/ILocator.ts'
 import type { ILocatorCreateOptions } from '../ILocatorCreateOptions/ILocatorCreateOptions.ts'
-import type { ParsedCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
+import type { ParsedCssSelector } from '../ParseCssSelector/ParsedCssSelector.ts'
 import { parseCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
 import { performAction } from '../PerformAction/PerformAction.ts'
 import * as Assert from '../TestAssert/TestAssert.ts'

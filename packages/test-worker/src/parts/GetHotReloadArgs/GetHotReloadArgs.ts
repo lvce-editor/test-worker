@@ -1,9 +1,9 @@
 import type { HotReloadArgs } from '../HotReloadArgs/HotReloadArgs.ts'
-import type * as TestInfoCache from '../TestInfoCache/TestInfoCache.ts'
+import type { TestInfoItem } from '../TestInfoCache/TestInfoItem.ts'
 import { createUrlWithQueryParameter } from '../CreateUrlWithQueryParameter/CreateUrlWithQueryParameter.ts'
 import { emptyHotReloadArgs } from '../EmptyHotReloadArgs/EmptyHotReloadArgs.ts'
 
-export const getHotReloadArgs = (latestItem: TestInfoCache.TestInfoItem | undefined, locationHref: string, time: number): HotReloadArgs => {
+export const getHotReloadArgs = (latestItem: TestInfoItem | undefined, locationHref: string, time: number): HotReloadArgs => {
   if (!latestItem) {
     return emptyHotReloadArgs
   }

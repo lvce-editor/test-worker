@@ -2,8 +2,6 @@ import type { ParsedCssSelector } from './ParsedCssSelector.ts'
 import { CssParsingError } from '../CssParsingError/CssParsingError.ts'
 import { isCssSelector } from '../IsCssSelector/IsCssSelector.ts'
 
-export { type ParsedCssSelector } from './ParsedCssSelector.ts'
-
 export const parseCssSelector = (selector: string): ParsedCssSelector => {
   if (typeof selector !== 'string') {
     throw new TypeError('selector must be of type string')
