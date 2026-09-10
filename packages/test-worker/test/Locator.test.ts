@@ -26,6 +26,7 @@ test('click', async () => {
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   await locator.click()
   expect(mockRpc.invocations).toEqual([
     [
@@ -51,6 +52,7 @@ test('hover', async () => {
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   await locator.hover()
   expect(mockRpc.invocations).toEqual([
     [
@@ -74,6 +76,7 @@ test('type', async () => {
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   await locator.type('a')
   expect(mockRpc.invocations).toEqual([
     [
@@ -164,6 +167,7 @@ test('dispatchEvent', async () => {
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   await locator.dispatchEvent('click', '{"bubbles": true}')
   expect(mockRpc.invocations).toEqual([
     [
