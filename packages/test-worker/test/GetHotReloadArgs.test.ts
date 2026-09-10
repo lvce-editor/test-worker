@@ -1,11 +1,11 @@
 import { expect, test } from '@jest/globals'
-import type * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
+import type { TestInfoItem } from '../src/parts/TestInfoCache/TestInfoItem.ts'
 import { getHotReloadArgs } from '../src/parts/GetHotReloadArgs/GetHotReloadArgs.ts'
 
 const mockLocationHref = 'http://localhost:3000'
 const mockTime = 1_234_567_890
 
-const createMockTestInfoItem = (overrides?: Partial<TestInfoCache.TestInfoItem>): TestInfoCache.TestInfoItem => ({
+const createMockTestInfoItem = (overrides?: Partial<TestInfoItem>): TestInfoItem => ({
   assetDir: '/assets',
   inProgress: false,
   platform: 1,
