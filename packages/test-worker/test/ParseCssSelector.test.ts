@@ -87,10 +87,7 @@ test('parseCssSelector: throws for empty selector', () => {
 
 test('parseCssSelector: serializes compact numeric tags', () => {
   const parsed = parseCssSelector('.button text=Save')
-  expect(JSON.parse(JSON.stringify(parsed))).toEqual([
-    { selector: '.button', type: 1 },
-    { text: 'Save', type: 2 },
-  ])
+  expect(JSON.stringify(parsed)).toBe('[{"selector":".button","type":1},{"text":"Save","type":2}]')
   expect(JSON.stringify(parsed).length).toBeLessThan(
     JSON.stringify([
       { selector: '.button', type: 'css' },
