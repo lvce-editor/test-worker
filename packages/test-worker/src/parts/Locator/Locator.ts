@@ -21,6 +21,9 @@ export class Locator implements ILocator {
     this._parsed = parsed || applyLocatorOptions(parseCssSelector(selector), options)
   }
 
+  /**
+   * @deprecated Use commands instead to avoid race conditions.
+   */
   async click({ button = 'left' }: { readonly button?: string } = {}): Promise<void> {
     const options = {
       bubbles: true,
@@ -31,6 +34,9 @@ export class Locator implements ILocator {
     return performAction(this, 'click', options)
   }
 
+  /**
+   * @deprecated Use commands instead to avoid race conditions.
+   */
   async hover(): Promise<void> {
     const options = {
       bubbles: true,
@@ -53,11 +59,17 @@ export class Locator implements ILocator {
     return new Locator(this._selector, {}, withNth(this._parsed, nth))
   }
 
+  /**
+   * @deprecated Use commands instead to avoid race conditions.
+   */
   async type(text: string): Promise<void> {
     const options = { text }
     return performAction(this, 'type', options)
   }
 
+  /**
+   * @deprecated Use commands instead to avoid race conditions.
+   */
   async dispatchEvent(type: string, init: any): Promise<void> {
     return performAction(this, 'dispatchEvent', { init, type })
   }
