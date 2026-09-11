@@ -13,3 +13,7 @@ export const executeMock = (id: number, ...args: readonly any[]): string => {
   const fn = mocks[id]
   return fn(...args)
 }
+
+export const unregisterMock = (id: number): void => {
+  delete mocks[id]
+}
