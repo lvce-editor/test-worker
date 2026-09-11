@@ -110,3 +110,17 @@ export {};
   assert.doesNotMatch(actual, /_selector/)
   assert.doesNotMatch(actual, /_parsed/)
 })
+
+test('getActualApiTypesContent preserves deprecated API documentation for aliased functions', () => {
+  const contentApi = `
+/** @deprecated Use setUri instead. */
+declare const setPath$1: (path: string) => Promise<void>;
+declare const setUri$1: (uri: string) => Promise<void>;
+declare namespace Workspace {
+\texport { setPath$1 as setPath, setUri$1 as setUri };
+}
+`
+  const actual = getActualApiTypesContent(contentApi, 'export {}\n', 'export {}\n')
+  assert.match(actual, /\/\*\* @deprecated Use setUri instead\. \*\/\n  readonly setPath:/)
+  assert.match(actual, /readonly setUri: \(uri: string\) => Promise<void>/)
+})

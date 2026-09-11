@@ -68,6 +68,10 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
   let inNamespace = false
   let inExport = false
   const functionSignatures: Record<string, string> = {}
+  const functionDocumentation: Record<string, string> = {}
+  for (const match of contentApi.matchAll(/(\/\*\*(?:(?!\*\/)[\s\S])*\*\/)\s*declare const ([\w$]+):/g)) {
+    functionDocumentation[match[2]] = match[1]
+  }
 
   // First pass: collect function signatures, namespace information, and exported interfaces
   let currentFunction: string | null = null
@@ -237,6 +241,10 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
       }
 
       if (signature) {
+        const documentation = functionDocumentation[actualName]
+        if (documentation) {
+          newLines.push(...documentation.split('\n').map((line) => `  ${line}`))
+        }
         // Special handling for FileSystem.loadFixture to remove platform parameter
         if (namespaceName === 'FileSystem' && alias === 'loadFixture') {
           // Transform the signature to remove the first parameter (platform: number)
