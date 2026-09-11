@@ -51,6 +51,4 @@ export const mockConfirm = async (
   }
 }
 
-export const executeMock = (id: number, ...args: readonly any[]): any => {
-  return Mock.executeMock(id, ...args)
-}
+export { executeMock } from '../Mock/Mock.ts'
