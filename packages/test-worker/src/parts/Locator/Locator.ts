@@ -78,7 +78,7 @@ export class Locator implements ILocator {
 const applyLocatorOptions = (parsed: ParsedCssSelector, { hasText = '', nth = -1 }: ILocatorCreateOptions): ParsedCssSelector => {
   let nextParsed = parsed
   if (hasText) {
-    nextParsed = [...nextParsed, { text: hasText, type: 'has-text' }]
+    nextParsed = [...nextParsed, { text: hasText, type: 3 }]
   }
   if (nth !== -1) {
     nextParsed = withNth(nextParsed, nth)
@@ -87,6 +87,6 @@ const applyLocatorOptions = (parsed: ParsedCssSelector, { hasText = '', nth = -1
 }
 
 const withNth = (parsed: ParsedCssSelector, nth: number): ParsedCssSelector => {
-  const filtered = parsed.filter((part) => part.type !== 'nth')
-  return [...filtered, { index: nth, type: 'nth' }]
+  const filtered = parsed.filter((part) => part.type !== 4)
+  return [...filtered, { index: nth, type: 4 }]
 }

@@ -10,7 +10,7 @@ test('create', () => {
     _parsed: [
       {
         selector: 'button',
-        type: 'css',
+        type: 1,
       },
     ],
     _selector: 'button',
@@ -98,11 +98,11 @@ test('first', () => {
     _parsed: [
       {
         selector: 'button',
-        type: 'css',
+        type: 1,
       },
       {
         index: 0,
-        type: 'nth',
+        type: 4,
       },
     ],
   })
@@ -117,15 +117,15 @@ test('locator with nth', () => {
   expect((subLocator as any)._parsed).toEqual([
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
     {
       index: 2,
-      type: 'nth',
+      type: 4,
     },
     {
       selector: 'span',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -147,11 +147,11 @@ test('nth', () => {
     _parsed: [
       {
         selector: 'button',
-        type: 'css',
+        type: 1,
       },
       {
         index: 1,
-        type: 'nth',
+        type: 4,
       },
     ],
     _selector: 'button',
@@ -199,11 +199,11 @@ test('constructor parses selector', () => {
     _parsed: [
       {
         selector: '.button',
-        type: 'css',
+        type: 1,
       },
       {
         text: 'Save',
-        type: 'text',
+        type: 2,
       },
     ],
   })
