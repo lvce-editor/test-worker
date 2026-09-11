@@ -6,7 +6,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Main, Workspace 
   // arrange
   const fixtureUrl = import.meta.resolve('../fixtures/workspace.basic')
   const workspaceUrl = await FileSystem.loadFixture(fixtureUrl)
-  await Workspace.setPath(workspaceUrl)
+  await Workspace.setUri(workspaceUrl)
   const oneUri = `${workspaceUrl}/one.txt`
   const twoUri = `${workspaceUrl}/two.txt`
   await Main.openUri(oneUri)

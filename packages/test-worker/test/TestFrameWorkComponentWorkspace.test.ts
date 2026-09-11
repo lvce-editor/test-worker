@@ -12,15 +12,25 @@ test('setPath forwards to rpc', async () => {
   expect(mockRpc.invocations).toEqual([['Workspace.setPath', '/tmp/workspace']])
 })
 
-test('openTmpDir sets workspace path and returns it', async () => {
+test.each(['file:///tmp/workspace%20folder', 'memfs:///workspace'])('setUri forwards %s to rpc', async (uri) => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.setPath'() {
+    'Workspace.setUri'() {
+      return undefined
+    },
+  })
+  await Workspace.setUri(uri)
+  expect(mockRpc.invocations).toEqual([['Workspace.setUri', uri]])
+})
+
+test('openTmpDir sets workspace uri and returns it', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.setUri'() {
       return undefined
     },
   })
   const result = await Workspace.openTmpDir()
   expect(result).toBe('memfs:///workspace')
-  expect(mockRpc.invocations).toEqual([['Workspace.setPath', 'memfs:///workspace']])
+  expect(mockRpc.invocations).toEqual([['Workspace.setUri', 'memfs:///workspace']])
 })
 
 test('close forwards to rpc', async () => {

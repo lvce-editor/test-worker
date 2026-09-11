@@ -6,7 +6,7 @@ export const test: Test = async ({ Command, DragAndDrop, Editor, expect, FileSys
   const workspaceUrl = await FileSystem.getTmpDir()
   const uri = `${workspaceUrl}/dragged.txt`
   await FileSystem.setFiles([{ content: 'dragged file content', uri }])
-  await Workspace.setPath(workspaceUrl)
+  await Workspace.setUri(workspaceUrl)
   await Main.closeAllEditors()
   const treeItems = Locator('.TreeItem')
   await expect(treeItems).toHaveCount(1)
