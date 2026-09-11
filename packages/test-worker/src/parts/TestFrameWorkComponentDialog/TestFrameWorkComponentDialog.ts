@@ -1,5 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ConfirmMock } from '../ConfirmMock/ConfirmMock.ts'
+import type { ConfirmMockOptions } from '../ConfirmMockOptions/ConfirmMockOptions.ts'
 import { AssertionError } from '../AssertionError/AssertionError.ts'
 import * as Mock from '../Mock/Mock.ts'
 
@@ -16,7 +17,7 @@ export const mockSaveFilePicker = async (fn: () => string): Promise<void> => {
 const confirmMocks: number[] = []
 
 export const mockConfirm = async (
-  options: { readonly mockReturnValue: boolean } | ((message: string, ...args: readonly unknown[]) => boolean),
+  options: ConfirmMockOptions | ((message: string, ...args: readonly unknown[]) => boolean),
 ): Promise<ConfirmMock> => {
   const messages: unknown[] = []
   const id = Mock.registerMock((message: string, ...args: readonly unknown[]) => {
