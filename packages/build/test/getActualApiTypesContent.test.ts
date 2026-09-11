@@ -111,9 +111,8 @@ export {};
   assert.doesNotMatch(actual, /_parsed/)
 })
 
-test('getActualApiTypesContent preserves deprecated API documentation for aliased functions', () => {
+test('getActualApiTypesContent marks the legacy workspace API deprecated', () => {
   const contentApi = `
-/** @deprecated Use setUri instead. */
 declare const setPath$1: (path: string) => Promise<void>;
 declare const setUri$1: (uri: string) => Promise<void>;
 declare namespace Workspace {
