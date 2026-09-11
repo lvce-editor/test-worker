@@ -7,16 +7,15 @@ export const parseCssSelector = (selector: string): ParsedCssSelector => {
   if (typeof selector !== 'string') {
     throw new TypeError('selector must be of type string')
   }
-  if (selector.startsWith('text=')) {
-    return [
-      {
-        text: selector.slice('text='.length),
-        type: SelectorType.Text,
-      },
-    ]
-  }
-  if (selector.includes('text=')) {
-    const index = selector.indexOf('text=')
+  const index = selector.indexOf('text=')
+  if (index !== -1) {
+    const textPart: ParsedCssSelector[number] = {
+      text: selector.slice(index + 'text='.length),
+      type: SelectorType.Text,
+    }
+    if (index === 0) {
+      return [textPart]
+    }
     const cssSelector = selector.slice(0, index).trimEnd()
     if (!isCssSelector(cssSelector)) {
       throw new CssParsingError(`unsupported selector: ${selector}`)
@@ -26,10 +25,7 @@ export const parseCssSelector = (selector: string): ParsedCssSelector => {
         selector: cssSelector,
         type: SelectorType.Css,
       },
-      {
-        text: selector.slice(index + 'text='.length),
-        type: SelectorType.Text,
-      },
+      textPart,
     ]
   }
   if (isCssSelector(selector)) {
