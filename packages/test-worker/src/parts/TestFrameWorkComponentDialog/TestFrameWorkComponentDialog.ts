@@ -32,6 +32,11 @@ export const mockConfirm = async (
   }
   confirmMocks.push(id)
   return {
+    async shouldHaveBeenCalledWith(expectedMessage: string): Promise<void> {
+      if (!messages.includes(expectedMessage)) {
+        throw new AssertionError(`Expected confirm to have been called with ${JSON.stringify(expectedMessage)}, received ${JSON.stringify(messages)}`)
+      }
+    },
     async [Symbol.asyncDispose](): Promise<void> {
       const index = confirmMocks.indexOf(id)
       if (index === -1) {
@@ -43,14 +48,9 @@ export const mockConfirm = async (
       confirmMocks.splice(index, 1)
       Mock.unregisterMock(id)
     },
-    async shouldHaveBeenCalledWith(expectedMessage: string): Promise<void> {
-      if (!messages.includes(expectedMessage)) {
-        throw new AssertionError(`Expected confirm to have been called with ${JSON.stringify(expectedMessage)}, received ${JSON.stringify(messages)}`)
-      }
-    },
   }
 }
 
-export const executeMock = (id: number, ...args: readonly any[]): string => {
+export const executeMock = (id: number, ...args: readonly any[]): any => {
   return Mock.executeMock(id, ...args)
 }
