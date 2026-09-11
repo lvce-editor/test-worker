@@ -8,6 +8,7 @@ test('setPath forwards to rpc', async () => {
       return undefined
     },
   })
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility for existing tests.
   await Workspace.setPath('/tmp/workspace')
   expect(mockRpc.invocations).toEqual([['Workspace.setPath', '/tmp/workspace']])
 })
