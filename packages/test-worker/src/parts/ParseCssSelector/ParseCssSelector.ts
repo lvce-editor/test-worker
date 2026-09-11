@@ -1,7 +1,6 @@
 import type { ParsedCssSelector } from './ParsedCssSelector.ts'
 import { CssParsingError } from '../CssParsingError/CssParsingError.ts'
 import { isCssSelector } from '../IsCssSelector/IsCssSelector.ts'
-import * as SelectorType from '../SelectorType/SelectorType.ts'
 
 export const parseCssSelector = (selector: string): ParsedCssSelector => {
   if (typeof selector !== 'string') {
@@ -11,7 +10,7 @@ export const parseCssSelector = (selector: string): ParsedCssSelector => {
   if (index !== -1) {
     const textPart: ParsedCssSelector[number] = {
       text: selector.slice(index + 'text='.length),
-      type: SelectorType.Text,
+      type: 2,
     }
     if (index === 0) {
       return [textPart]
@@ -23,7 +22,7 @@ export const parseCssSelector = (selector: string): ParsedCssSelector => {
     return [
       {
         selector: cssSelector,
-        type: SelectorType.Css,
+        type: 1,
       },
       textPart,
     ]
@@ -32,7 +31,7 @@ export const parseCssSelector = (selector: string): ParsedCssSelector => {
     return [
       {
         selector,
-        type: SelectorType.Css,
+        type: 1,
       },
     ]
   }

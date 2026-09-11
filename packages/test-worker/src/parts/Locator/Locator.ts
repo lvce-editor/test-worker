@@ -3,7 +3,6 @@ import type { ILocatorCreateOptions } from '../ILocatorCreateOptions/ILocatorCre
 import type { ParsedCssSelector } from '../ParseCssSelector/ParsedCssSelector.ts'
 import { parseCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
 import { performAction } from '../PerformAction/PerformAction.ts'
-import * as SelectorType from '../SelectorType/SelectorType.ts'
 import * as Assert from '../TestAssert/TestAssert.ts'
 import * as ToButtonNumber from '../ToButtonNumber/ToButtonNumber.ts'
 
@@ -79,7 +78,7 @@ export class Locator implements ILocator {
 const applyLocatorOptions = (parsed: ParsedCssSelector, { hasText = '', nth = -1 }: ILocatorCreateOptions): ParsedCssSelector => {
   let nextParsed = parsed
   if (hasText) {
-    nextParsed = [...nextParsed, { text: hasText, type: SelectorType.HasText }]
+    nextParsed = [...nextParsed, { text: hasText, type: 3 }]
   }
   if (nth !== -1) {
     nextParsed = withNth(nextParsed, nth)
@@ -88,6 +87,6 @@ const applyLocatorOptions = (parsed: ParsedCssSelector, { hasText = '', nth = -1
 }
 
 const withNth = (parsed: ParsedCssSelector, nth: number): ParsedCssSelector => {
-  const filtered = parsed.filter((part) => part.type !== SelectorType.Nth)
-  return [...filtered, { index: nth, type: SelectorType.Nth }]
+  const filtered = parsed.filter((part) => part.type !== 4)
+  return [...filtered, { index: nth, type: 4 }]
 }
