@@ -6,7 +6,7 @@ test('listen initializes the renderer worker using the supplied port', async () 
   const { port1, port2 } = new MessageChannel()
   await expect(listen(port1)).resolves.toBeUndefined()
   port2.onmessage = (event): void => {
-    port2.postMessage({ jsonrpc: '2.0', id: event.data.id, result: 'ready' })
+    port2.postMessage({ id: event.data.id, jsonrpc: '2.0', result: 'ready' })
   }
   await expect(RendererWorker.invoke('test')).resolves.toBe('ready')
   port1.close()

@@ -1,5 +1,5 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
 import type { Rpc } from '@lvce-editor/rpc'
+import { beforeEach, expect, jest, test } from '@jest/globals'
 
 const listen = jest.fn<(...args: any[]) => Promise<void>>()
 const create = jest.fn<(...args: any[]) => Promise<Rpc>>()
@@ -10,7 +10,7 @@ jest.unstable_mockModule('../src/parts/CommandMap/CommandMap.ts', () => ({ comma
 jest.unstable_mockModule('../src/parts/Listen/Listen.ts', () => ({ listen }))
 jest.unstable_mockModule('../src/parts/RendererProcess/RendererProcess.ts', () => ({ set }))
 
-const { main, initialize } = await import('../src/parts/Main/Main.ts')
+const { initialize, main } = await import('../src/parts/Main/Main.ts')
 
 beforeEach(() => {
   jest.resetAllMocks()
@@ -20,7 +20,7 @@ test('main registers the native worker rpc as the renderer process connection', 
   const rpc = {} as Rpc
   create.mockResolvedValue(rpc)
   await main()
-  expect(create).toHaveBeenCalledWith({ commandMap: { test: 'test', initialize } })
+  expect(create).toHaveBeenCalledWith({ commandMap: { initialize, test: 'test' } })
   expect(set).toHaveBeenCalledWith(rpc)
   expect(listen).not.toHaveBeenCalled()
 })
