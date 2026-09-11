@@ -5,13 +5,13 @@ import { initializeMainAreaWorker } from '../InitializeMainAreaWorker/Initialize
 import { initializeOpenerWorker } from '../InitializeOpenerWorker/InitializeOpenerWorker.ts'
 import { initializeRendererWorker } from '../InitializeRendererWorker/InitializeRendererWorker.ts'
 
-export const listen = async (): Promise<void> => {
+export const listen = async (port: MessagePort): Promise<void> => {
   await Promise.all([
     initializeEditorWorker(),
     initializeErrorWorker(),
     initializeExtensionManagementWorker(),
     initializeMainAreaWorker(),
     initializeOpenerWorker(),
-    initializeRendererWorker(),
+    initializeRendererWorker(port),
   ])
 }
