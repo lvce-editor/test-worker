@@ -32,8 +32,8 @@ test('start selects the visible Quick Pick command and waits through startup', a
   expect(_quickPick.invocations[2]).toEqual([
     'TestFrameWork.checkMultiElementCondition',
     [
-      { selector: '.QuickPickItem', type: 'css' },
-      { text: 'Dev Containers: Start Current Workspace', type: 'has-text' },
+      { selector: '.QuickPickItem', type: 1 },
+      { text: 'Dev Containers: Start Current Workspace', type: 3 },
     ],
     'toHaveCount',
     { count: 1 },

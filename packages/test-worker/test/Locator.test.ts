@@ -10,7 +10,7 @@ test('create', () => {
     _parsed: [
       {
         selector: 'button',
-        type: 'css',
+        type: 1,
       },
     ],
     _selector: 'button',
@@ -26,6 +26,7 @@ test('click', async () => {
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   await locator.click()
   expect(mockRpc.invocations).toEqual([
     [
@@ -51,6 +52,7 @@ test('hover', async () => {
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   await locator.hover()
   expect(mockRpc.invocations).toEqual([
     [
@@ -74,6 +76,7 @@ test('type', async () => {
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   await locator.type('a')
   expect(mockRpc.invocations).toEqual([
     [
@@ -95,11 +98,11 @@ test('first', () => {
     _parsed: [
       {
         selector: 'button',
-        type: 'css',
+        type: 1,
       },
       {
         index: 0,
-        type: 'nth',
+        type: 4,
       },
     ],
   })
@@ -114,15 +117,15 @@ test('locator with nth', () => {
   expect((subLocator as any)._parsed).toEqual([
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
     {
       index: 2,
-      type: 'nth',
+      type: 4,
     },
     {
       selector: 'span',
-      type: 'css',
+      type: 1,
     },
   ])
 })
@@ -144,11 +147,11 @@ test('nth', () => {
     _parsed: [
       {
         selector: 'button',
-        type: 'css',
+        type: 1,
       },
       {
         index: 1,
-        type: 'nth',
+        type: 4,
       },
     ],
     _selector: 'button',
@@ -164,6 +167,7 @@ test('dispatchEvent', async () => {
   const selector = 'button'
   const options = {}
   const locator = createLocator(selector, options)
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility of deprecated locator actions.
   await locator.dispatchEvent('click', '{"bubbles": true}')
   expect(mockRpc.invocations).toEqual([
     [
@@ -195,11 +199,11 @@ test('constructor parses selector', () => {
     _parsed: [
       {
         selector: '.button',
-        type: 'css',
+        type: 1,
       },
       {
         text: 'Save',
-        type: 'text',
+        type: 2,
       },
     ],
   })

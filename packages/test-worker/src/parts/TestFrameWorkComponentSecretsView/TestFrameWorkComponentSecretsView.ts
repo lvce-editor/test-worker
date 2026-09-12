@@ -29,25 +29,31 @@ export const key = (index: number): ILocatorExternal => row(index).locator('.Sec
 export const value = (index: number): ILocatorExternal => row(index).locator('.SecretsViewValue')
 
 export const edit = async (_index?: number): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Preserve legacy page object behavior until it migrates to commands.
   await root().locator('[name="edit"]').click()
 }
 
 export const save = async (_index?: number): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Preserve legacy page object behavior until it migrates to commands.
   await root().locator('[name="save"]').click()
 }
 
 export const cancel = async (_index?: number): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Preserve legacy page object behavior until it migrates to commands.
   await root().locator('[name="cancel"]').click()
 }
 
 export const toggleReveal = async (index: number): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Preserve legacy page object behavior until it migrates to commands.
   await row(index).locator(`[name="reveal:${index}"]`).click()
 }
 
 export const copy = async (index: number): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Preserve legacy page object behavior until it migrates to commands.
   await row(index).locator(`[name="copy:${index}"]`).click()
 }
 
 export const deleteSecret = async (index: number): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Preserve legacy page object behavior until it migrates to commands.
   await row(index).locator(`[name="delete:${index}"]`).click()
 }

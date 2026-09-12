@@ -99,5 +99,6 @@ export const defaultIcon = (index: number): ILocatorExternal => {
 }
 
 export const select = async (index: number): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Preserve legacy page object behavior until it migrates to commands.
   await row(index).click()
 }
