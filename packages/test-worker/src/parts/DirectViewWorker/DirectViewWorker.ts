@@ -2,34 +2,39 @@ import { LazyTransferMessagePortRpcParent, type Rpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
-const rendererWorkerCommands = new Set([
-  'ActivityBar.handleSideBarHidden',
-  'About.showAbout',
-  'Chat.handleInputCut',
-  'Chat.handleInputPaste',
-  'Chat.getComposerSelection',
-  'Chat.selectIndex',
-  'Chat.setNewChatModelPickerEnabled',
-  'ChatDebug.setIndexedDbSupportForTest',
-  'ChatDebug.getPayload',
-  'ChatDebug.getResponse',
-  'DiffView.setWordWrap',
-  'ExtensionDetail.selectFeature',
-  'Explorer.restoreState',
-  'LanguageModels.addModel',
-  'LanguageModels.clearFilterInput',
-  'LanguageModels.removeModel',
-  'Main.closeTabsLeft',
-  'Main.focusFirst',
-  'Main.focusLast',
-  'Main.openKeyBindings',
-  'Main.saveAll',
-  'QuickPick.showCommands',
-  'Search.focusPage',
-  'Search.handleInputConextMenu',
-  'Search.openDetails',
-  'StatusBar.updateStatusBarItems',
-])
+const isRendererWorkerCommand = (commandId: string): boolean => {
+  switch (commandId) {
+    case 'ActivityBar.handleSideBarHidden':
+    case 'About.showAbout':
+    case 'Chat.handleInputCut':
+    case 'Chat.handleInputPaste':
+    case 'Chat.getComposerSelection':
+    case 'Chat.selectIndex':
+    case 'Chat.setNewChatModelPickerEnabled':
+    case 'ChatDebug.setIndexedDbSupportForTest':
+    case 'ChatDebug.getPayload':
+    case 'ChatDebug.getResponse':
+    case 'DiffView.setWordWrap':
+    case 'ExtensionDetail.selectFeature':
+    case 'Explorer.restoreState':
+    case 'LanguageModels.addModel':
+    case 'LanguageModels.clearFilterInput':
+    case 'LanguageModels.removeModel':
+    case 'Main.closeTabsLeft':
+    case 'Main.focusFirst':
+    case 'Main.focusLast':
+    case 'Main.openKeyBindings':
+    case 'Main.saveAll':
+    case 'QuickPick.showCommands':
+    case 'Search.focusPage':
+    case 'Search.handleInputConextMenu':
+    case 'Search.openDetails':
+    case 'StatusBar.updateStatusBarItems':
+      return true
+    default:
+      return false
+  }
+}
 
 const rpcs = new Map<string, Promise<Rpc>>()
 
@@ -52,7 +57,7 @@ const getRpc = (rpcId: string): Promise<Rpc> => {
 }
 
 export const invoke = async (rpcId: string, commandId: string, ...args: readonly any[]): Promise<any> => {
-  if (!RendererProcess.isInitialized() || rendererWorkerCommands.has(commandId)) {
+  if (!RendererProcess.isInitialized() || isRendererWorkerCommand(commandId)) {
     return RendererWorker.invoke(commandId, ...args)
   }
   let uid: number

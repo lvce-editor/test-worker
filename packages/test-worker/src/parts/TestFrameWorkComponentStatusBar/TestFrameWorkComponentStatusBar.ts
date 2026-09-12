@@ -8,18 +8,6 @@ export const handleContextMenu = async (button: number, x: number, y: number): P
   await DirectViewWorker.invoke('StatusBar', 'StatusBar.handleContextMenu', button, x, y)
 }
 
-export const handleClick = async (name: string): Promise<void> => {
+export const click = async (name: string): Promise<void> => {
   await DirectViewWorker.invoke('StatusBar', 'StatusBar.handleClick', name)
-}
-
-export const handleExtensionsChanged = async (): Promise<void> => {
-  await DirectViewWorker.invoke('StatusBar', 'StatusBar.handleExtensionsChanged')
-}
-
-export const itemRightCreate = async (item: unknown): Promise<void> => {
-  await DirectViewWorker.invoke('StatusBar', 'StatusBar.itemRightCreate', item)
-}
-
-export const itemRightUpdate = async (item: unknown): Promise<void> => {
-  await DirectViewWorker.invoke('StatusBar', 'StatusBar.itemRightUpdate', item)
 }
