@@ -12,6 +12,7 @@
     "build:watch": "npm exec --workspace=packages/build -- esbuild --format=esm --bundle --external:node:buffer --external:electron --external:ws --external:node:worker_threads --watch packages/test-worker/src/testWorkerMain.ts --outfile=.tmp/dist/dist/testWorkerMain.js",
     "dev": "node packages/build/src/dev.ts",
     "format": "prettier --write .",
+    "link": "npm run link --workspace=packages/server",
     "lint": "eslint . && prettier --check . && knip --no-config-hints",
     "measure": "npm run measure --workspace=packages/memory",
     "test": "npm test --workspaces --if-present",
