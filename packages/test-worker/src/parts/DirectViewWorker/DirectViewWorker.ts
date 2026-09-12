@@ -4,19 +4,19 @@ import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
 const isRendererWorkerCommand = (commandId: string): boolean => {
   switch (commandId) {
-    case 'ActivityBar.handleSideBarHidden':
     case 'About.showAbout':
+    case 'ActivityBar.handleSideBarHidden':
+    case 'Chat.getComposerSelection':
     case 'Chat.handleInputCut':
     case 'Chat.handleInputPaste':
-    case 'Chat.getComposerSelection':
     case 'Chat.selectIndex':
     case 'Chat.setNewChatModelPickerEnabled':
-    case 'ChatDebug.setIndexedDbSupportForTest':
     case 'ChatDebug.getPayload':
     case 'ChatDebug.getResponse':
+    case 'ChatDebug.setIndexedDbSupportForTest':
     case 'DiffView.setWordWrap':
-    case 'ExtensionDetail.selectFeature':
     case 'Explorer.restoreState':
+    case 'ExtensionDetail.selectFeature':
     case 'LanguageModels.addModel':
     case 'LanguageModels.clearFilterInput':
     case 'LanguageModels.removeModel':
