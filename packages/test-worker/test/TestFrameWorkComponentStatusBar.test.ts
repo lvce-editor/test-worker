@@ -12,15 +12,14 @@ test('update calls StatusBar.updateStatusBarItems', async () => {
   expect(mockRpc.invocations).toEqual([['StatusBar.updateStatusBarItems']])
 })
 
-test.each([['handleContextMenu', [2, 120, 240]]] as const)('%s forwards arguments to the status bar', async (method, args) => {
+test('handleContextMenu forwards button and coordinates', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    [`StatusBar.${method}`]() {
+    'StatusBar.handleContextMenu'() {
       return undefined
     },
   })
-  const invoke = StatusBar[method] as (...args: readonly any[]) => Promise<void>
-  await invoke(...args)
-  expect(mockRpc.invocations).toEqual([[`StatusBar.${method}`, ...args]])
+  await StatusBar.handleContextMenu(2, 120, 240)
+  expect(mockRpc.invocations).toEqual([['StatusBar.handleContextMenu', 2, 120, 240]])
 })
 
 test('click invokes the item by name', async () => {
