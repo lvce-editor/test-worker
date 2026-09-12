@@ -51,7 +51,7 @@ test('getBrowserName returns unknown without navigator', () => {
     if (descriptor) {
       Object.defineProperty(globalThis, 'navigator', descriptor)
     } else {
-      Reflect.deleteProperty(globalThis, 'navigator')
+      Object.defineProperty(globalThis, 'navigator', { configurable: true, value: undefined })
     }
   }
 })

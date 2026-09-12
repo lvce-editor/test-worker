@@ -67,7 +67,7 @@ test('printTestError falls back to original error when preparing fails', async (
 
 test('printTestError accepts camel-case codeFrame and omits missing stack', async () => {
   using mockRpc = ErrorWorker.registerMockRpc({
-    'Errors.prepare': () => ({ message: 'boom', codeFrame: '> 1 | throw error' }),
+    'Errors.prepare': () => ({ codeFrame: '> 1 | throw error', message: 'boom' }),
   })
   using consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
