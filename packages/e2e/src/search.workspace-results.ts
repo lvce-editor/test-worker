@@ -17,5 +17,6 @@ export const test: Test = async ({ expect, FileSystem, Locator, Search, SideBar,
 
   // assert
   const searchView = Locator('.Search')
-  await expect(searchView.locator('[role="status"]')).toHaveText('2 results in 1 file')
+  const status = searchView.locator('[role="status"]')
+  await expect(status).toHaveText('2 results in 1 file')
 }

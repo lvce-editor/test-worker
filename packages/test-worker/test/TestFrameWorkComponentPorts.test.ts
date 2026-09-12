@@ -58,10 +58,10 @@ test('port actions preserve their arguments', async () => {
 test('port cells are indexed within body rows, excluding the header', () => {
   expect(Ports.portCell(2)).toMatchObject({
     _parsed: [
-      { selector: '.Ports', type: 'css' },
-      { selector: '.PortsTableBody .PortsTableRow', type: 'css' },
-      { index: 2, type: 'nth' },
-      { selector: '.PortsPortColumn', type: 'css' },
+      { selector: '.Ports', type: 1 },
+      { selector: '.PortsTableBody .PortsTableRow', type: 1 },
+      { index: 2, type: 4 },
+      { selector: '.PortsPortColumn', type: 1 },
     ],
   })
   for (const locator of [
@@ -74,8 +74,8 @@ test('port cells are indexed within body rows, excluding the header', () => {
   ]) {
     expect(locator).toMatchObject({
       _parsed: expect.arrayContaining([
-        { selector: '.PortsTableBody .PortsTableRow', type: 'css' },
-        { index: 2, type: 'nth' },
+        { selector: '.PortsTableBody .PortsTableRow', type: 1 },
+        { index: 2, type: 4 },
       ]),
     })
   }
@@ -84,7 +84,7 @@ test('port cells are indexed within body rows, excluding the header', () => {
 test('view and add editor locators stay scoped to Ports', () => {
   for (const locator of [Ports.headers(), Ports.focusedPort(), Ports.emptyMessage(), Ports.addInput(), Ports.addButton(), Ports.addError()]) {
     expect(locator).toMatchObject({
-      _parsed: expect.arrayContaining([{ selector: '.Ports', type: 'css' }]),
+      _parsed: expect.arrayContaining([{ selector: '.Ports', type: 1 }]),
     })
   }
 })
