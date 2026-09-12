@@ -70,13 +70,41 @@ test('uses renderer worker when direct view lookup is unavailable', async () => 
   expect(mockRpc.invocations).toEqual([['Explorer.focusIndex', 3]])
 })
 
-test('keeps renderer-worker-only commands on renderer worker', async () => {
+test.each([
+  'ActivityBar.handleSideBarHidden',
+  'About.showAbout',
+  'Chat.handleInputCut',
+  'Chat.handleInputPaste',
+  'Chat.getComposerSelection',
+  'Chat.selectIndex',
+  'Chat.setNewChatModelPickerEnabled',
+  'ChatDebug.setIndexedDbSupportForTest',
+  'ChatDebug.getPayload',
+  'ChatDebug.getResponse',
+  'DiffView.setWordWrap',
+  'ExtensionDetail.selectFeature',
+  'Explorer.restoreState',
+  'LanguageModels.addModel',
+  'LanguageModels.clearFilterInput',
+  'LanguageModels.removeModel',
+  'Main.closeTabsLeft',
+  'Main.focusFirst',
+  'Main.focusLast',
+  'Main.openKeyBindings',
+  'Main.saveAll',
+  'QuickPick.showCommands',
+  'Search.focusPage',
+  'Search.handleInputConextMenu',
+  'Search.openDetails',
+  'StatusBar.updateStatusBarItems',
+])('keeps %s on renderer worker', async (commandId) => {
   RendererProcess.state.rpc = {} as Rpc
   using mockRpc = RendererWorker.registerMockRpc({
-    'QuickPick.showCommands'() {},
+    [commandId]() {},
   })
 
-  await DirectViewWorker.invoke('QuickPick', 'QuickPick.showCommands')
+  const rpcId = commandId.slice(0, commandId.indexOf('.'))
+  await DirectViewWorker.invoke(rpcId, commandId, 'argument')
 
-  expect(mockRpc.invocations).toEqual([['QuickPick.showCommands']])
+  expect(mockRpc.invocations).toEqual([[commandId, 'argument']])
 })
