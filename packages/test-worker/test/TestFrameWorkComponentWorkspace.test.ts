@@ -43,3 +43,22 @@ test('close forwards to rpc', async () => {
   await Workspace.close()
   expect(mockRpc.invocations).toEqual([['Workspace.close']])
 })
+
+test('setUri rejects when rpc throws', async () => {
+  const error = new Error('Workspace unavailable')
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.setUri'() {
+      throw error
+    },
+  })
+  await expect(Workspace.setUri('memfs:///workspace')).rejects.toBe(error)
+})
+
+test('setUri discards the rpc result', async () => {
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.setUri'() {
+      return 'ignored'
+    },
+  })
+  await expect(Workspace.setUri('memfs:///workspace')).resolves.toBeUndefined()
+})
