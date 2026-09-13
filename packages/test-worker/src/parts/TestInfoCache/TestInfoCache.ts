@@ -1,7 +1,5 @@
 import type { TestInfoItem } from './TestInfoItem.ts'
 
-export type { TestInfoItem } from './TestInfoItem.ts'
-
 const state: { items: readonly TestInfoItem[] } = {
   items: [],
 }

@@ -6,7 +6,7 @@ export const test: Test = async ({ Editor, FileSystem, Main, Workspace }) => {
   // arrange
   const fixtureUrl = import.meta.resolve('../fixtures/workspace.basic')
   const workspaceUrl = await FileSystem.loadFixture(fixtureUrl)
-  await Workspace.setPath(workspaceUrl)
+  await Workspace.setUri(workspaceUrl)
   const fileUri = `${workspaceUrl}/alpha.txt`
   await Main.openUri(fileUri)
 

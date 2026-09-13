@@ -562,3 +562,19 @@ test('shouldHaveInvocations rejects when invocations do not match', async () => 
   )
   expect(mockRpc.invocations).toEqual([['Extensions.executeCommand', 'git.getInvocations']])
 })
+
+test('push without arguments uses default options', async () => {
+  using mockRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand'() {},
+  })
+  await gitPush()
+  expect(mockRpc.invocations).toEqual([['Extensions.executeCommand', 'git.push', {}]])
+})
+
+test('push with only a remote uses an empty upstream branch', async () => {
+  using mockRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand'() {},
+  })
+  await gitPush('origin')
+  expect(mockRpc.invocations).toEqual([['Extensions.executeCommand', 'git.push', { setUpstream: ['origin', ''] }]])
+})

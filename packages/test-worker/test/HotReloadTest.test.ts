@@ -1,8 +1,8 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import type * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
+import type { TestInfoItem } from '../src/parts/TestInfoCache/TestInfoItem.ts'
 
 const doHotReload = jest.fn(async (_url: string, _platform: number, _assetDir: string) => undefined)
-const getHotReloadArgs = jest.fn((_lastItem: TestInfoCache.TestInfoItem | undefined, _locationHref: string, _time: number) => undefined as any)
+const getHotReloadArgs = jest.fn((_lastItem: TestInfoItem | undefined, _locationHref: string, _time: number) => undefined as any)
 
 jest.unstable_mockModule('../src/parts/DoHotReload/DoHotReload.ts', () => ({
   doHotReload,
@@ -14,7 +14,7 @@ jest.unstable_mockModule('../src/parts/GetHotReloadArgs/GetHotReloadArgs.ts', ()
 
 const { hotReloadTest } = await import('../src/parts/HotReloadTest/HotReloadTest.ts')
 
-const latestItem: TestInfoCache.TestInfoItem = {
+const latestItem: TestInfoItem = {
   assetDir: 'memfs://assets',
   inProgress: false,
   platform: 1,

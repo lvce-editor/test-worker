@@ -237,6 +237,10 @@ export const getActualApiTypesContent = (contentApi: string, contentExpect: stri
       }
 
       if (signature) {
+        // Namespace-only exports lose their JSDoc during declaration bundling.
+        if (namespaceName === 'Workspace' && alias === 'setPath') {
+          newLines.push('  /** @deprecated Use setUri instead. */')
+        }
         // Special handling for FileSystem.loadFixture to remove platform parameter
         if (namespaceName === 'FileSystem' && alias === 'loadFixture') {
           // Transform the signature to remove the first parameter (platform: number)

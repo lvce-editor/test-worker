@@ -41,3 +41,17 @@ test('getBrowserNameFromUserAgent detects chromium', () => {
 test('getBrowserNameFromUserAgent detects webkit', () => {
   expect(GetBrowserName.getBrowserNameFromUserAgent('Mozilla/5.0 Version/18.0 Safari/605.1.15')).toBe('webkit')
 })
+
+test('getBrowserName returns unknown without navigator', () => {
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'navigator')
+  Object.defineProperty(globalThis, 'navigator', { configurable: true, value: undefined })
+  try {
+    expect(GetBrowserName.getBrowserName()).toBe('unknown')
+  } finally {
+    if (descriptor) {
+      Object.defineProperty(globalThis, 'navigator', descriptor)
+    } else {
+      Object.defineProperty(globalThis, 'navigator', { configurable: true, value: undefined })
+    }
+  }
+})

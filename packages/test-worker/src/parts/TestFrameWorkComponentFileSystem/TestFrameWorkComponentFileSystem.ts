@@ -57,9 +57,7 @@ export const writeFiles = async (files: readonly FileItem[]): Promise<void> => {
   )
 }
 
-export const setFiles = async (files: readonly FileItem[]): Promise<void> => {
-  await writeFiles(files)
-}
+export const setFiles: (files: readonly FileItem[]) => Promise<void> = writeFiles
 
 export interface Dirent {
   readonly name: string

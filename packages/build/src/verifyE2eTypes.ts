@@ -54,6 +54,7 @@ export const verifyE2eTypes = async (): Promise<void> => {
   const e2eTsconfig = JSON.parse(e2eTsconfigContent)
   e2eTsconfig.compilerOptions = e2eTsconfig.compilerOptions || {}
   e2eTsconfig.compilerOptions.skipLibCheck = false
+  delete e2eTsconfig.compilerOptions.paths
   await writeFile(join(tempDir, 'tsconfig.json'), JSON.stringify(e2eTsconfig, null, 2))
 
   // Run TypeScript compiler to check for errors

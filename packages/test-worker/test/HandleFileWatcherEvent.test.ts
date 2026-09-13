@@ -1,7 +1,8 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
+import type { TestInfoItem } from '../src/parts/TestInfoCache/TestInfoItem.ts'
 import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.ts'
 
-const hotReloadTest = jest.fn(async (_lastItem: TestInfoCache.TestInfoItem | undefined, _locationHref: string, _time: number) => undefined)
+const hotReloadTest = jest.fn(async (_lastItem: TestInfoItem | undefined, _locationHref: string, _time: number) => undefined)
 
 jest.unstable_mockModule('../src/parts/HotReloadTest/HotReloadTest.ts', () => ({
   hotReloadTest,

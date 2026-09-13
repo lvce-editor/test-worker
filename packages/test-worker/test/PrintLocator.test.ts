@@ -12,7 +12,7 @@ const createLocator = (selector: string, { hasText = '', nth = -1 }: { readonly 
         ? [
             {
               text: hasText,
-              type: 'has-text' as const,
+              type: 3 as const,
             },
           ]
         : []),
@@ -21,7 +21,7 @@ const createLocator = (selector: string, { hasText = '', nth = -1 }: { readonly 
         : [
             {
               index: nth,
-              type: 'nth' as const,
+              type: 4 as const,
             },
           ]),
     ],
@@ -65,11 +65,11 @@ test('print locator with multiple css selectors', () => {
   const locator = createParsedLocator([
     {
       selector: 'form',
-      type: 'css',
+      type: 1,
     },
     {
       selector: 'button',
-      type: 'css',
+      type: 1,
     },
   ])
   expect(PrintLocator.printLocator(locator)).toBe('form >> button')
@@ -79,16 +79,29 @@ test('print locator with text has-text and nth', () => {
   const locator = createParsedLocator([
     {
       text: 'Submit',
-      type: 'text',
+      type: 2,
     },
     {
       text: 'Now',
-      type: 'has-text',
+      type: 3,
     },
     {
       index: 1,
-      type: 'nth',
+      type: 4,
     },
   ])
   expect(PrintLocator.printLocator(locator)).toBe('text=Submit "Now":nth(1)')
+})
+
+test('print empty locator', () => {
+  expect(PrintLocator.printLocator(createParsedLocator([]))).toBe('')
+})
+
+test('print locator after empty css selector', () => {
+  const locator = createParsedLocator([
+    { selector: '', type: 1 },
+    { selector: 'button', type: 1 },
+    { text: 'Submit', type: 2 },
+  ])
+  expect(PrintLocator.printLocator(locator)).toBe('button text=Submit')
 })

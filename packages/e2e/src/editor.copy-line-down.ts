@@ -7,7 +7,7 @@ export const test: Test = async ({ Editor, FileSystem, Main, Workspace }) => {
   const workspaceUrl = await FileSystem.getTmpDir()
   const fileUri = `${workspaceUrl}/copy-line-down.txt`
   await FileSystem.writeFile(fileUri, 'one\ntwo\n')
-  await Workspace.setPath(workspaceUrl)
+  await Workspace.setUri(workspaceUrl)
   await Main.closeAllEditors()
   await Main.openUri(fileUri)
   await Editor.setCursor(0, 1)

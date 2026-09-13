@@ -86,7 +86,7 @@ test('indexed locator helpers keep nth selectors stable', () => {
   ]) {
     expect(getParsed(locator)).toContainEqual({
       index: 2,
-      type: 'nth',
+      type: 4,
     })
   }
 })
@@ -104,7 +104,7 @@ test('select clicks the requested row', async () => {
   expect(getSelector(locator)).toBe('.RunningExtension')
   expect(getParsed(locator)).toContainEqual({
     index: 2,
-    type: 'nth',
+    type: 4,
   })
   expect(action).toBe('click')
   expect(options).toEqual({

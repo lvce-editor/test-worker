@@ -1,5 +1,5 @@
 import type { ILocatorInternal } from '../ILocatorInternal/ILocatorInternal.ts'
-import type { ParsedCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
+import type { ParsedCssSelector } from '../ParseCssSelector/ParsedCssSelector.ts'
 
 interface WebViewLocator extends ILocatorInternal {
   readonly webViewId: string

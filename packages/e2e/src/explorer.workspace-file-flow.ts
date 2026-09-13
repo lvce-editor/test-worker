@@ -6,7 +6,7 @@ export const test: Test = async ({ Editor, Explorer, FileSystem, Workspace }) =>
   // arrange
   const fixtureUrl = import.meta.resolve('../fixtures/workspace.basic')
   const workspaceUrl = await FileSystem.loadFixture(fixtureUrl)
-  await Workspace.setPath(workspaceUrl)
+  await Workspace.setUri(workspaceUrl)
 
   // act
   await Explorer.expandAll()

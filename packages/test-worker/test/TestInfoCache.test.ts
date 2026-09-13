@@ -1,4 +1,5 @@
 import { expect, test, beforeEach } from '@jest/globals'
+import type { TestInfoItem } from '../src/parts/TestInfoCache/TestInfoItem.ts'
 import * as TestInfoCache from '../src/parts/TestInfoCache/TestInfoCache.js'
 
 beforeEach(() => {
@@ -10,7 +11,7 @@ test('hasItems returns false when no items exist', () => {
 })
 
 test('hasItems returns true when items exist', () => {
-  const testItem: TestInfoCache.TestInfoItem = {
+  const testItem: TestInfoItem = {
     assetDir: '/test/assets',
     inProgress: false,
     platform: 1,
@@ -21,7 +22,7 @@ test('hasItems returns true when items exist', () => {
 })
 
 test('push adds an item to the cache', () => {
-  const testItem: TestInfoCache.TestInfoItem = {
+  const testItem: TestInfoItem = {
     assetDir: '/test/assets',
     inProgress: false,
     platform: 1,
@@ -34,14 +35,14 @@ test('push adds an item to the cache', () => {
 })
 
 test('push adds multiple items to the cache', () => {
-  const testItem1: TestInfoCache.TestInfoItem = {
+  const testItem1: TestInfoItem = {
     assetDir: '/test/assets1',
     inProgress: false,
     platform: 1,
     url: 'http://localhost:3000',
   }
 
-  const testItem2: TestInfoCache.TestInfoItem = {
+  const testItem2: TestInfoItem = {
     assetDir: '/test/assets2',
     inProgress: true,
     platform: 2,
@@ -56,14 +57,14 @@ test('push adds multiple items to the cache', () => {
 })
 
 test('last returns the last added item', () => {
-  const testItem1: TestInfoCache.TestInfoItem = {
+  const testItem1: TestInfoItem = {
     assetDir: '/test/assets1',
     inProgress: false,
     platform: 1,
     url: 'http://localhost:3000',
   }
 
-  const testItem2: TestInfoCache.TestInfoItem = {
+  const testItem2: TestInfoItem = {
     assetDir: '/test/assets2',
     inProgress: true,
     platform: 2,
@@ -77,7 +78,7 @@ test('last returns the last added item', () => {
 })
 
 test('last returns the only item when only one exists', () => {
-  const testItem: TestInfoCache.TestInfoItem = {
+  const testItem: TestInfoItem = {
     assetDir: '/test/assets',
     inProgress: false,
     platform: 1,
@@ -93,14 +94,14 @@ test('last throws an error when no items exist', () => {
 })
 
 test('clear removes all items', () => {
-  const testItem1: TestInfoCache.TestInfoItem = {
+  const testItem1: TestInfoItem = {
     assetDir: '/test/assets1',
     inProgress: false,
     platform: 1,
     url: 'http://localhost:3000',
   }
 
-  const testItem2: TestInfoCache.TestInfoItem = {
+  const testItem2: TestInfoItem = {
     assetDir: '/test/assets2',
     inProgress: true,
     platform: 2,

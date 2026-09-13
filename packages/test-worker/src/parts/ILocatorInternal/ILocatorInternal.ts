@@ -1,4 +1,4 @@
-import type { ParsedCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
+import type { ParsedCssSelector } from '../ParseCssSelector/ParsedCssSelector.ts'
 
 export interface ILocatorInternal {
   readonly _parsed: ParsedCssSelector

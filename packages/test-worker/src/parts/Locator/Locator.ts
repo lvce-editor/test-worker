@@ -1,6 +1,6 @@
 import type { ILocator } from '../ILocator/ILocator.ts'
 import type { ILocatorCreateOptions } from '../ILocatorCreateOptions/ILocatorCreateOptions.ts'
-import type { ParsedCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
+import type { ParsedCssSelector } from '../ParseCssSelector/ParsedCssSelector.ts'
 import { parseCssSelector } from '../ParseCssSelector/ParseCssSelector.ts'
 import { performAction } from '../PerformAction/PerformAction.ts'
 import * as Assert from '../TestAssert/TestAssert.ts'
@@ -21,6 +21,9 @@ export class Locator implements ILocator {
     this._parsed = parsed || applyLocatorOptions(parseCssSelector(selector), options)
   }
 
+  /**
+   * @deprecated Use commands instead to avoid race conditions.
+   */
   async click({ button = 'left' }: { readonly button?: string } = {}): Promise<void> {
     const options = {
       bubbles: true,
@@ -31,6 +34,9 @@ export class Locator implements ILocator {
     return performAction(this, 'click', options)
   }
 
+  /**
+   * @deprecated Use commands instead to avoid race conditions.
+   */
   async hover(): Promise<void> {
     const options = {
       bubbles: true,
@@ -53,11 +59,17 @@ export class Locator implements ILocator {
     return new Locator(this._selector, {}, withNth(this._parsed, nth))
   }
 
+  /**
+   * @deprecated Use commands instead to avoid race conditions.
+   */
   async type(text: string): Promise<void> {
     const options = { text }
     return performAction(this, 'type', options)
   }
 
+  /**
+   * @deprecated Use commands instead to avoid race conditions.
+   */
   async dispatchEvent(type: string, init: any): Promise<void> {
     return performAction(this, 'dispatchEvent', { init, type })
   }
@@ -66,7 +78,7 @@ export class Locator implements ILocator {
 const applyLocatorOptions = (parsed: ParsedCssSelector, { hasText = '', nth = -1 }: ILocatorCreateOptions): ParsedCssSelector => {
   let nextParsed = parsed
   if (hasText) {
-    nextParsed = [...nextParsed, { text: hasText, type: 'has-text' }]
+    nextParsed = [...nextParsed, { text: hasText, type: 3 }]
   }
   if (nth !== -1) {
     nextParsed = withNth(nextParsed, nth)
@@ -75,6 +87,6 @@ const applyLocatorOptions = (parsed: ParsedCssSelector, { hasText = '', nth = -1
 }
 
 const withNth = (parsed: ParsedCssSelector, nth: number): ParsedCssSelector => {
-  const filtered = parsed.filter((part) => part.type !== 'nth')
-  return [...filtered, { index: nth, type: 'nth' }]
+  const filtered = parsed.filter((part) => part.type !== 4)
+  return [...filtered, { index: nth, type: 4 }]
 }

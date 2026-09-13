@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, FileSystem, Locator, Search, SideBar,
     { content: 'test-worker-e2e-search-token\ntest-worker-e2e-search-token\n', uri: `${workspaceUrl}/first.txt` },
     { content: 'green apple\n', uri: `${workspaceUrl}/second.txt` },
   ])
-  await Workspace.setPath(workspaceUrl)
+  await Workspace.setUri(workspaceUrl)
   await SideBar.open('Search')
 
   // act
@@ -17,5 +17,6 @@ export const test: Test = async ({ expect, FileSystem, Locator, Search, SideBar,
 
   // assert
   const searchView = Locator('.Search')
-  await expect(searchView.locator('[role="status"]')).toHaveText('2 results in 1 file')
+  const status = searchView.locator('[role="status"]')
+  await expect(status).toHaveText('2 results in 1 file')
 }
