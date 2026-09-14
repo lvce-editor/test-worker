@@ -46,6 +46,28 @@ test('setTitleTemplate', async () => {
   expect(mockRpc.invocations).toEqual([['TitleBar.setTitleTemplate', '{fileName} - {folderName}']])
 })
 
+test('setWidth', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TitleBar.setWidth'() {
+      return undefined
+    },
+  })
+
+  await TitleBar.setWidth(900)
+  expect(mockRpc.invocations).toEqual([['TitleBar.setWidth', 900]])
+})
+
+test('handleWorkspaceChange', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TitleBar.handleWorkspaceChange'() {
+      return undefined
+    },
+  })
+
+  await TitleBar.handleWorkspaceChange('/workspace/project')
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleWorkspaceChange', '/workspace/project']])
+})
+
 test('focusIndex', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.focusIndex'() {
