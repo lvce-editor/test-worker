@@ -156,17 +156,6 @@ test('handleKeyArrowUp', async () => {
   expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyArrowUp']])
 })
 
-test('handleKeyEnter', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
-    'TitleBar.handleKeyEnter'() {
-      return undefined
-    },
-  })
-
-  await TitleBar.handleKeyEnter()
-  expect(mockRpc.invocations).toEqual([['TitleBar.handleKeyEnter']])
-})
-
 test('handleKeyEnd', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'TitleBar.handleKeyEnd'() {
@@ -231,39 +220,6 @@ test('toggleMenu', async () => {
 
   await TitleBar.toggleMenu()
   expect(mockRpc.invocations).toEqual([['TitleBar.toggleMenu']])
-})
-
-test('handleMenuClick', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
-    'TitleBar.handleMenuClick'() {
-      return undefined
-    },
-  })
-
-  await TitleBar.handleMenuClick(1, 2)
-  expect(mockRpc.invocations).toEqual([['TitleBar.handleMenuClick', 1, 2]])
-})
-
-test('handleClick', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
-    'TitleBar.handleClick'() {
-      return undefined
-    },
-  })
-
-  await TitleBar.handleClick(0, 2)
-  expect(mockRpc.invocations).toEqual([['TitleBar.handleClick', 0, 2]])
-})
-
-test('handleMouseOver', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
-    'TitleBar.handleMouseOver'() {
-      return undefined
-    },
-  })
-
-  await TitleBar.handleMouseOver(2)
-  expect(mockRpc.invocations).toEqual([['TitleBar.handleMouseOver', 2]])
 })
 
 test('handleContextMenu', async () => {

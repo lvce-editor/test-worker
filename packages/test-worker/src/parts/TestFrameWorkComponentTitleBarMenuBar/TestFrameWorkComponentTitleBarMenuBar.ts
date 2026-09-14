@@ -56,10 +56,6 @@ export const handleKeyArrowUp = async (): Promise<void> => {
   await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowUp')
 }
 
-export const handleKeyEnter = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyEnter')
-}
-
 export const handleKeyEnd = async (): Promise<void> => {
   await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyEnd')
 }
@@ -82,18 +78,6 @@ export const toggleIndex = async (index: number): Promise<void> => {
 
 export const toggleMenu = async (): Promise<void> => {
   await DirectViewWorker.invoke('TitleBar', 'TitleBar.toggleMenu')
-}
-
-export const handleMenuClick = async (menuIndex: number, itemIndex: number): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleMenuClick', menuIndex, itemIndex)
-}
-
-export const handleClick = async (button: number, menuIndex: number): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleClick', button, menuIndex)
-}
-
-export const handleMouseOver = async (menuIndex: number): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleMouseOver', menuIndex)
 }
 
 export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
