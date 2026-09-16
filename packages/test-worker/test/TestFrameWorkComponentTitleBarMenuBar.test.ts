@@ -232,3 +232,33 @@ test('handleContextMenu', async () => {
   await TitleBar.handleContextMenu(1, 150, 50)
   expect(mockRpc.invocations).toEqual([['TitleBar.handleContextMenu', 1, 150, 50]])
 })
+
+test('setWidth waits for the command to complete', async () => {
+  const { promise, resolve } = Promise.withResolvers<void>()
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TitleBar.setWidth'() {
+      return promise
+    },
+  })
+  let completed = false
+  const pending = (async (): Promise<void> => {
+    await TitleBar.setWidth(900)
+    completed = true
+  })()
+  await Promise.resolve()
+  expect(completed).toBe(false)
+  resolve()
+  await pending
+  expect(completed).toBe(true)
+  expect(mockRpc.invocations).toEqual([['TitleBar.setWidth', 900]])
+})
+
+test('handleWorkspaceChange propagates command errors', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TitleBar.handleWorkspaceChange'() {
+      throw new Error('workspace change failed')
+    },
+  })
+  await expect(TitleBar.handleWorkspaceChange('/workspace/project')).rejects.toThrow('workspace change failed')
+  expect(mockRpc.invocations).toEqual([['TitleBar.handleWorkspaceChange', '/workspace/project']])
+})

@@ -1,85 +1,51 @@
 import * as DirectViewWorker from '../DirectViewWorker/DirectViewWorker.ts'
 
-export const closeMenu = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.closeMenu')
-}
+export const closeMenu: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.closeMenu')
 
-export const focus = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focus')
-}
+export const focus: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.focus')
 
-export const focusFirst = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusFirst')
-}
+export const focusFirst: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.focusFirst')
 
-export const setTitleTemplate = async (template: string): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.setTitleTemplate', template)
-}
+export const setTitleTemplate: (template: string) => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.setTitleTemplate')
 
-export const setWidth = async (width: number): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.setWidth', width)
-}
+export const setWidth: (width: number) => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.setWidth')
 
-export const handleWorkspaceChange = async (uri: string): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleWorkspaceChange', uri)
-}
+export const handleWorkspaceChange: (uri: string) => Promise<void> = DirectViewWorker.invoke.bind(
+  undefined,
+  'TitleBar',
+  'TitleBar.handleWorkspaceChange',
+)
 
-export const focusIndex = async (index: number): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusIndex', index)
-}
+export const focusIndex: (index: number) => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.focusIndex')
 
-export const focusLast = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusLast')
-}
+export const focusLast: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.focusLast')
 
-export const focusNext = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusNext')
-}
+export const focusNext: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.focusNext')
 
-export const focusPrevious = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusPrevious')
-}
+export const focusPrevious: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.focusPrevious')
 
-export const handleKeyArrowDown = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowDown')
-}
+export const handleKeyArrowDown: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.handleKeyArrowDown')
 
-export const handleKeyArrowLeft = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowLeft')
-}
+export const handleKeyArrowLeft: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.handleKeyArrowLeft')
 
-export const handleKeyArrowRight = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowRight')
-}
+export const handleKeyArrowRight: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.handleKeyArrowRight')
 
-export const handleKeyArrowUp = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyArrowUp')
-}
+export const handleKeyArrowUp: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.handleKeyArrowUp')
 
-export const handleKeyEnd = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyEnd')
-}
+export const handleKeyEnd: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.handleKeyEnd')
 
-export const handleKeyHome = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyHome')
-}
+export const handleKeyHome: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.handleKeyHome')
 
-export const handleKeySpace = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeySpace')
-}
+export const handleKeySpace: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.handleKeySpace')
 
-export const handleKeyEscape = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleKeyEscape')
-}
+export const handleKeyEscape: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.handleKeyEscape')
 
-export const toggleIndex = async (index: number): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.toggleIndex', index)
-}
+export const toggleIndex: (index: number) => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.toggleIndex')
 
-export const toggleMenu = async (): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.toggleMenu')
-}
+export const toggleMenu: () => Promise<void> = DirectViewWorker.invoke.bind(undefined, 'TitleBar', 'TitleBar.toggleMenu')
 
-export const handleContextMenu = async (button: number, x: number, y: number): Promise<void> => {
-  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleContextMenu', button, x, y)
-}
+export const handleContextMenu: (button: number, x: number, y: number) => Promise<void> = DirectViewWorker.invoke.bind(
+  undefined,
+  'TitleBar',
+  'TitleBar.handleContextMenu',
+)
