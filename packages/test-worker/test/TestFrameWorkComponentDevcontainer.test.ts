@@ -1,5 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ConditionType from '../src/parts/ConditionType/ConditionType.ts'
 import * as Devcontainer from '../src/parts/TestFrameWorkComponentDevcontainer/TestFrameWorkComponentDevcontainer.ts'
 
 const outputPattern = /hello/g
@@ -35,7 +36,7 @@ test('start selects the visible Quick Pick command and waits through startup', a
       { selector: '.QuickPickItem', type: 1 },
       { text: 'Dev Containers: Start Current Workspace', type: 3 },
     ],
-    'toHaveCount',
+    ConditionType.ToHaveCount,
     { count: 1 },
   ])
   expect(_quickPick.invocations[3]).toEqual(['QuickPick.selectItem', 'Dev Containers: Start Current Workspace'])

@@ -1,32 +1,33 @@
 import * as ConditionErrors from '../ConditionErrors/ConditionErrors.ts'
+import * as ConditionType from '../ConditionType/ConditionType.ts'
 
-export const getFunction = (fnName: string): any => {
-  switch (fnName) {
-    case 'toBeFocused':
+export const getFunction = (conditionType: number): any => {
+  switch (conditionType) {
+    case ConditionType.ToBeFocused:
       return ConditionErrors.toBeFocused
-    case 'toBeHidden':
+    case ConditionType.ToBeHidden:
       return ConditionErrors.toBeHidden
-    case 'toBeVisible':
+    case ConditionType.ToBeVisible:
       return ConditionErrors.toBeVisible
-    case 'toContainText':
+    case ConditionType.ToContainText:
       return ConditionErrors.toContainText
-    case 'toHaveAttribute':
+    case ConditionType.ToHaveAttribute:
       return ConditionErrors.toHaveAttribute
-    case 'toHaveClass':
+    case ConditionType.ToHaveClass:
       return ConditionErrors.toHaveClass
-    case 'toHaveCount':
+    case ConditionType.ToHaveCount:
       return ConditionErrors.toHaveCount
-    case 'toHaveCss':
+    case ConditionType.ToHaveCss:
       return ConditionErrors.toHaveCss
-    case 'toHaveId':
+    case ConditionType.ToHaveId:
       return ConditionErrors.toHaveId
-    case 'toHaveJSProperty':
+    case ConditionType.ToHaveJSProperty:
       return ConditionErrors.toHaveJSProperty
-    case 'toHaveText':
+    case ConditionType.ToHaveText:
       return ConditionErrors.toHaveText
-    case 'toHaveValue':
+    case ConditionType.ToHaveValue:
       return ConditionErrors.toHaveValue
     default:
-      throw new Error(`unexpected function name ${fnName}`)
+      throw new Error(`unexpected function name ${conditionType}`)
   }
 }
