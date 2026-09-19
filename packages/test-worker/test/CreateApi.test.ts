@@ -60,6 +60,7 @@ test('createApi includes all expected components', () => {
   expect(api.test).toBeDefined()
   expect(api.expect).toBeDefined()
   expect(api.Locator).toBeDefined()
+  expect(api.VideoPreview).toBeDefined()
 })
 
 test('createApi includes BaseUrl with correct implementation', () => {

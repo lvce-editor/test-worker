@@ -55,6 +55,7 @@ import * as SourceControl from '../TestFrameWorkComponentSourceControl/TestFrame
 import * as StatusBar from '../TestFrameWorkComponentStatusBar/TestFrameWorkComponentStatusBar.ts'
 import * as TitleBarMenuBar from '../TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
 import * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
+import * as VideoPreview from '../TestFrameWorkComponentVideoPreview/TestFrameWorkComponentVideoPreview.ts'
 import * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
 import * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
 
@@ -130,6 +131,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     test,
     TitleBarMenuBar,
     Url,
+    VideoPreview,
     WebView,
     Workspace,
   }

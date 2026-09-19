@@ -55,6 +55,7 @@ import type * as SourceControl from '../TestFrameWorkComponentSourceControl/Test
 import type * as StatusBar from '../TestFrameWorkComponentStatusBar/TestFrameWorkComponentStatusBar.ts'
 import type * as TitleBarMenuBar from '../TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
 import type * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
+import type * as VideoPreview from '../TestFrameWorkComponentVideoPreview/TestFrameWorkComponentVideoPreview.ts'
 import type * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
 import type * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
 
@@ -128,6 +129,7 @@ export interface Api {
   test: typeof test
   TitleBarMenuBar: typeof TitleBarMenuBar
   Url: typeof Url
+  VideoPreview: typeof VideoPreview
   WebView: typeof WebView
   Workspace: typeof Workspace
 }
