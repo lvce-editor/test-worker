@@ -54,5 +54,6 @@ export * as SourceControl from '../TestFrameWorkComponentSourceControl/TestFrame
 export * as StatusBar from '../TestFrameWorkComponentStatusBar/TestFrameWorkComponentStatusBar.ts'
 export * as TitleBarMenuBar from '../TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
 export * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
+export * as VideoPreview from '../TestFrameWorkComponentVideoPreview/TestFrameWorkComponentVideoPreview.ts'
 export * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
 export * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
