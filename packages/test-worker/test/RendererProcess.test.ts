@@ -40,7 +40,7 @@ test('initialize creates a lazy direct rpc and sends its message port to the ren
 
 test('invoke uses the direct renderer process rpc when initialized', async () => {
   directInvoke.mockResolvedValue({ error: false })
-  RendererProcess.state.rpc = directRpc
+  RendererProcess.set(directRpc)
 
   await expect(RendererProcess.invoke('TestFrameWork.checkSingleElementCondition', { selector: '.Editor' })).resolves.toEqual({ error: false })
 
