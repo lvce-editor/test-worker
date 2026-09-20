@@ -48,6 +48,30 @@ test('executeTest shows pass overlay when test succeeds', async () => {
   expect(mockRpc.invocations).toEqual([['TestFrameWork.showOverlay', 'pass', 'green', 'test passed in 1.00ms']])
 })
 
+test('executeTest prints generic pass message when test has no name', async () => {
+  executeTest2.mockResolvedValue({
+    autoFixError: undefined,
+    background: 'green',
+    error: undefined,
+    formattedDuration: '1.00ms',
+    overlayActions: undefined,
+    text: 'test passed in 1.00ms',
+    type: 'pass',
+  })
+  const consoleInfoSpy = jest.spyOn(console, 'info').mockImplementation(() => {})
+
+  using mockRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.showOverlay'() {
+      return undefined
+    },
+  })
+
+  await executeTest(undefined as any, async () => undefined)
+
+  expect(consoleInfoSpy).toHaveBeenCalledWith('Test passed')
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.showOverlay', 'pass', 'green', 'test passed in 1.00ms']])
+})
+
 test('executeTest prints failures and stores autofix state', async () => {
   const error = new Error('boom')
   const autoFixError = {

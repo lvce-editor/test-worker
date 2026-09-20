@@ -9,9 +9,12 @@ export const executeTest = async (name: string, fn: any, globals = {}): Promise<
   AutoFixState.set(autoFixError)
   if (error) {
     await printTestError(error)
-  } else {
+  } else if (name) {
     // eslint-disable-next-line no-console
     console.info(`PASS ${name} in ${formattedDuration}`)
+  } else {
+    // eslint-disable-next-line no-console
+    console.info('Test passed')
   }
 
   if (overlayActions && overlayActions.length > 0) {
