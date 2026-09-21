@@ -34,6 +34,7 @@ import * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkCompon
 import * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 import * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 import * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
+import * as MarkdownPreview from '../TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 import * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
 import * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
@@ -109,6 +110,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     Layout,
     Locator,
     Main,
+    MarkdownPreview,
     Open,
     Output,
     Panel,

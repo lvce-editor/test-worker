@@ -33,6 +33,7 @@ export * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkCompon
 export * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 export * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 export * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
+export * as MarkdownPreview from '../TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 export * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
 export * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 export * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'

@@ -44,6 +44,7 @@ test('createApi includes all expected components', () => {
   expect(api.FindWidget).toBeDefined()
   expect(api.Layout).toBeDefined()
   expect(api.Main).toBeDefined()
+  expect(api.MarkdownPreview).toBeDefined()
   expect(api.Output).toBeDefined()
   expect(api.Panel).toBeDefined()
   expect(api.Ports.addPort).toBeDefined()
