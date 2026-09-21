@@ -12,6 +12,26 @@ test('selectIndex', async () => {
   expect(mockRpc.invocations).toEqual([['EditorSourceAction.selectIndex', 3]])
 })
 
+test('selectItem', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'EditorSourceAction.selectItem'() {
+      return undefined
+    },
+  })
+  await EditorSourceAction.selectItem('Organize Imports')
+  expect(mockRpc.invocations).toEqual([['EditorSourceAction.selectItem', 'Organize Imports']])
+})
+
+test('selectItem propagates errors', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'EditorSourceAction.selectItem'() {
+      throw new Error('source action failed')
+    },
+  })
+  await expect(EditorSourceAction.selectItem('Organize Imports')).rejects.toThrow('source action failed')
+  expect(mockRpc.invocations).toEqual([['EditorSourceAction.selectItem', 'Organize Imports']])
+})
+
 test('selectCurrentIndex', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'EditorSourceAction.selectCurrentIndex'() {
