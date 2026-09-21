@@ -34,6 +34,7 @@ import type * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkC
 import type * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 import type * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 import type * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
+import type * as MarkdownPreview from '../TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 import type * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
 import type * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import type * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
@@ -107,6 +108,7 @@ export interface Api {
   Layout: typeof Layout
   Locator: typeof Locator
   Main: typeof Main
+  MarkdownPreview: typeof MarkdownPreview
   Open: typeof Open
   Output: typeof Output
   Panel: typeof Panel
