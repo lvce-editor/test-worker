@@ -65,7 +65,7 @@ test('openInput', async () => {
       type: 'editor',
       uri: 'file:///test.txt',
     },
-    focu: false,
+    focus: false,
     preview: false,
   })
 
@@ -77,7 +77,7 @@ test('openInput', async () => {
           type: 'editor',
           uri: 'file:///test.txt',
         },
-        focu: false,
+        focus: false,
         preview: false,
       },
     ],
@@ -97,7 +97,7 @@ test('openInput forwards diff editor input', async () => {
       uriLeft: 'file:///left.txt',
       uriRight: 'file:///right.txt',
     },
-    focu: false,
+    focus: false,
   })
 
   expect(mockRpc.invocations).toEqual([
@@ -109,7 +109,40 @@ test('openInput forwards diff editor input', async () => {
           uriLeft: 'file:///left.txt',
           uriRight: 'file:///right.txt',
         },
-        focu: false,
+        focus: false,
+      },
+    ],
+  ])
+})
+
+test('openInput forwards webview input', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Main.openInput'() {
+      return undefined
+    },
+  })
+
+  await Main.openInput({
+    editorInput: {
+      providerId: 'builtin.markdown-preview',
+      type: 'webview',
+      uri: 'file:///test.md',
+    },
+    focus: true,
+    preview: false,
+  })
+
+  expect(mockRpc.invocations).toEqual([
+    [
+      'Main.openInput',
+      {
+        editorInput: {
+          providerId: 'builtin.markdown-preview',
+          type: 'webview',
+          uri: 'file:///test.md',
+        },
+        focus: true,
+        preview: false,
       },
     ],
   ])
