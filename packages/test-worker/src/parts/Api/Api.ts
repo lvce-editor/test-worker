@@ -59,6 +59,7 @@ import type * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUr
 import type * as VideoPreview from '../TestFrameWorkComponentVideoPreview/TestFrameWorkComponentVideoPreview.ts'
 import type * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
 import type * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
+import type * as Wsl from '../TestFrameWorkComponentWsl/TestFrameWorkComponentWsl.ts'
 
 type IFileSystem = Omit<typeof FileSystem, 'loadFixture'> & {
   readonly loadFixture: (url: string) => Promise<string>
@@ -134,4 +135,5 @@ export interface Api {
   VideoPreview: typeof VideoPreview
   WebView: typeof WebView
   Workspace: typeof Workspace
+  Wsl: typeof Wsl
 }
