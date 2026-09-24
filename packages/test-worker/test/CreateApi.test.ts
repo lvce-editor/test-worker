@@ -62,6 +62,7 @@ test('createApi includes all expected components', () => {
   expect(api.expect).toBeDefined()
   expect(api.Locator).toBeDefined()
   expect(api.VideoPreview).toBeDefined()
+  expect(api.WorkersView.open).toBeDefined()
   expect(api.Wsl.enableExtension).toBeDefined()
 })
 
