@@ -58,6 +58,7 @@ import type * as TitleBarMenuBar from '../TestFrameWorkComponentTitleBarMenuBar/
 import type * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
 import type * as VideoPreview from '../TestFrameWorkComponentVideoPreview/TestFrameWorkComponentVideoPreview.ts'
 import type * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
+import type * as WorkersView from '../TestFrameWorkComponentWorkersView/TestFrameWorkComponentWorkersView.ts'
 import type * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
 import type * as Wsl from '../TestFrameWorkComponentWsl/TestFrameWorkComponentWsl.ts'
 
@@ -134,6 +135,7 @@ export interface Api {
   Url: typeof Url
   VideoPreview: typeof VideoPreview
   WebView: typeof WebView
+  WorkersView: typeof WorkersView
   Workspace: typeof Workspace
   Wsl: typeof Wsl
 }
