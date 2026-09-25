@@ -28,6 +28,7 @@ test('createApi includes all expected components', () => {
   expect(api.ActivityBar).toBeDefined()
   expect(api.Audio).toBeDefined()
   expect(api.ChatDebug).toBeDefined()
+  expect(api.ChatView2.show).toBeDefined()
   expect(api.ClipBoard).toBeDefined()
   expect(api.Command).toBeDefined()
   expect(api.ComponentState).toBeDefined()
