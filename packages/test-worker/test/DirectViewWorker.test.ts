@@ -3,6 +3,7 @@ import { createMockRpc, type Rpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as DirectViewWorker from '../src/parts/DirectViewWorker/DirectViewWorker.ts'
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
+import * as StatusBar from '../src/parts/TestFrameWorkComponentStatusBar/TestFrameWorkComponentStatusBar.ts'
 
 afterEach(async () => {
   await DirectViewWorker.dispose()
@@ -40,6 +41,48 @@ test('invokes a view command through a lazy direct worker rpc', async () => {
   expect(viewInvocations).toEqual([
     ['Viewlet.executeViewletCommand', 42, 'focusIndex', 3],
     ['Viewlet.executeViewletCommand', 42, 'focusNext'],
+  ])
+})
+
+test('invokes status bar item commands through the initialized direct view rpc', async () => {
+  const rendererProcessInvocations: any[] = []
+  const viewInvocations: any[] = []
+  RendererProcess.state.rpc = {
+    async invoke(method: string, ...args: readonly any[]) {
+      rendererProcessInvocations.push([method, ...args])
+      return 42
+    },
+  } as Rpc
+  using mockRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToViewWorker'(port: MessagePort): undefined {
+      port.onmessage = (event: any): void => {
+        const { data, target } = event
+        viewInvocations.push([data.method, ...data.params])
+        target.postMessage({ id: data.id, jsonrpc: '2.0', result: undefined })
+      }
+      return undefined
+    },
+  })
+  const item = {
+    ariaLabel: 'test.item',
+    elements: [{ type: 'text' as const, value: 'test.item' }],
+    name: 'test.item',
+    tooltip: 'test.item',
+  }
+
+  await StatusBar.createItemRight(item)
+  await StatusBar.updateItemRight(item)
+
+  expect(rendererProcessInvocations).toEqual([
+    ['DirectView.getUid', 'StatusBar'],
+    ['DirectView.getUid', 'StatusBar'],
+  ])
+  expect(mockRpc.invocations).toEqual([
+    ['SendMessagePortToExtensionHostWorker.sendMessagePortToViewWorker', expect.anything(), 'StatusBar'],
+  ])
+  expect(viewInvocations).toEqual([
+    ['Viewlet.executeViewletCommand', 42, 'itemRightCreate', item],
+    ['Viewlet.executeViewletCommand', 42, 'itemRightUpdate', item],
   ])
 })
 

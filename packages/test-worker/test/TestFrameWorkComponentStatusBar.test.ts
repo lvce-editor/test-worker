@@ -12,6 +12,38 @@ test('update calls StatusBar.updateStatusBarItems', async () => {
   expect(mockRpc.invocations).toEqual([['StatusBar.updateStatusBarItems']])
 })
 
+test('createItemRight forwards the item', async () => {
+  const item = {
+    ariaLabel: 'test.item',
+    elements: [{ type: 'text' as const, value: 'test.item' }],
+    name: 'test.item',
+    tooltip: 'test.item',
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'StatusBar.itemRightCreate'() {
+      return undefined
+    },
+  })
+  await StatusBar.createItemRight(item)
+  expect(mockRpc.invocations).toEqual([['StatusBar.itemRightCreate', item]])
+})
+
+test('updateItemRight forwards the item', async () => {
+  const item = {
+    ariaLabel: 'test.item',
+    elements: [{ type: 'text' as const, value: 'test.item' }],
+    name: 'test.item',
+    tooltip: 'test.item',
+  }
+  using mockRpc = RendererWorker.registerMockRpc({
+    'StatusBar.itemRightUpdate'() {
+      return undefined
+    },
+  })
+  await StatusBar.updateItemRight(item)
+  expect(mockRpc.invocations).toEqual([['StatusBar.itemRightUpdate', item]])
+})
+
 test('handleContextMenu forwards button and coordinates', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'StatusBar.handleContextMenu'() {
