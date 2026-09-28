@@ -17,8 +17,8 @@ test('open and refresh', async () => {
 })
 
 test('locators', () => {
-  expect(getSelector(WorkersView.root())).toBe('.workers-view')
-  expect(getSelector(WorkersView.heading())).toBe('.workers-view h1')
-  expect(getSelector(WorkersView.table())).toBe('.workers-view [role="table"][aria-label="Workers"]')
-  expect(getSelector(WorkersView.refreshButton())).toBe('.workers-view button')
+  expect(getSelector(WorkersView.root())).toBe('.WorkersView')
+  expect(getSelector(WorkersView.heading())).toBe('.WorkersView h1')
+  expect(getSelector(WorkersView.table())).toBe('.WorkersView [role="table"][aria-label="Workers"]')
+  expect(getSelector(WorkersView.refreshButton())).toBe('.WorkersView button')
 })
