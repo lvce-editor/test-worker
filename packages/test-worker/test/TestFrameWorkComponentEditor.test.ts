@@ -268,6 +268,21 @@ test('setText', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.setText', 'text']])
 })
 
+test('setJsonAsText', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.setText'() {
+      return undefined
+    },
+  })
+
+  await Editor.setJsonAsText({ count: 2, enabled: true })
+  expect(mockRpc.invocations).toEqual([['Editor.setText', '{\n  "count": 2,\n  "enabled": true\n}\n']])
+})
+
+test('setJsonAsText rejects values that cannot be serialized', async () => {
+  await expect(Editor.setJsonAsText(undefined)).rejects.toThrow('Value cannot be serialized as JSON')
+})
+
 test('deleteAll', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.deleteAll'() {
@@ -883,6 +898,39 @@ test('getText', async () => {
   const text = await Editor.getText()
   expect(mockRpc.invocations).toEqual([['Editor.getText']])
   expect(text).toBe('test text')
+})
+
+test('getTextAsJson', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return '{"enabled":true,"count":2}'
+    },
+  })
+
+  await expect(Editor.getTextAsJson<{ count: number; enabled: boolean }>()).resolves.toEqual({ count: 2, enabled: true })
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
+})
+
+test('getTextAsJson rejects invalid JSON', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return '{invalid'
+    },
+  })
+
+  await expect(Editor.getTextAsJson()).rejects.toThrow(SyntaxError)
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
+})
+
+test('getTextAsJson propagates editor errors', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      throw new Error('editor unavailable')
+    },
+  })
+
+  await expect(Editor.getTextAsJson()).rejects.toThrow('editor unavailable')
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
 })
 
 test('getText - falls back to the editor registry when the direct editor is unavailable', async () => {

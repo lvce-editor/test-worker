@@ -113,6 +113,14 @@ export const setText = async (text: string): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.setText', text)
 }
 
+export const setJsonAsText = async (value: unknown): Promise<void> => {
+  const text: string | undefined = JSON.stringify(value, null, 2)
+  if (!text) {
+    throw new TypeError('Value cannot be serialized as JSON')
+  }
+  await setText(`${text}\n`)
+}
+
 export const deleteAll = async (): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.deleteAll')
 }
@@ -343,6 +351,11 @@ export const getText = async (): Promise<string> => {
   }
   const key = await getEditorKey()
   return EditorWorker.invoke('Editor.getText', key)
+}
+
+export const getTextAsJson = async <T = any>(): Promise<T> => {
+  const text = await getText()
+  return JSON.parse(text) as T
 }
 
 export const rename = async (): Promise<void> => {
