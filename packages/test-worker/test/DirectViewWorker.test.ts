@@ -77,9 +77,7 @@ test('invokes status bar item commands through the initialized direct view rpc',
     ['DirectView.getUid', 'StatusBar'],
     ['DirectView.getUid', 'StatusBar'],
   ])
-  expect(mockRpc.invocations).toEqual([
-    ['SendMessagePortToExtensionHostWorker.sendMessagePortToViewWorker', expect.anything(), 'StatusBar'],
-  ])
+  expect(mockRpc.invocations).toEqual([['SendMessagePortToExtensionHostWorker.sendMessagePortToViewWorker', expect.anything(), 'StatusBar']])
   expect(viewInvocations).toEqual([
     ['Viewlet.executeViewletCommand', 42, 'itemRightCreate', item],
     ['Viewlet.executeViewletCommand', 42, 'itemRightUpdate', item],
