@@ -11,7 +11,7 @@ export const refresh = async (): Promise<void> => {
   await DirectViewWorker.invoke('Workers', 'Workers.refresh')
 }
 
-export const root = (): ILocatorExternal => createLocator('.workers-view')
+export const root = (): ILocatorExternal => createLocator('.WorkersView')
 
 export const heading = (): ILocatorExternal => root().locator('h1')
 
