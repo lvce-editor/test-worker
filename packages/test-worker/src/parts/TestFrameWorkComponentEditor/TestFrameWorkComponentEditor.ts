@@ -353,7 +353,7 @@ export const getText = async (): Promise<string> => {
   return EditorWorker.invoke('Editor.getText', key)
 }
 
-export const getTextAsJson = async <T = unknown>(): Promise<T> => {
+export const getTextAsJson = async <T = any>(): Promise<T> => {
   const text = await getText()
   return JSON.parse(text) as T
 }
