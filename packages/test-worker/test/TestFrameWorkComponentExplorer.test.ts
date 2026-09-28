@@ -2,6 +2,34 @@ import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Explorer from '../src/parts/TestFrameWorkComponentExplorer/TestFrameWorkComponentExplorer.ts'
 
+test('handleResize', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handleResize'() {
+      return undefined
+    },
+  })
+
+  const dimensions = { height: 506, width: 240 }
+
+  await Explorer.handleResize(dimensions)
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handleResize', dimensions]])
+})
+
+test('handleResize with coordinates', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handleResize'() {
+      return undefined
+    },
+  })
+
+  const dimensions = { height: 506, width: 240, x: 10, y: 20 }
+
+  await Explorer.handleResize(dimensions)
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handleResize', dimensions]])
+})
+
 test('openContextMenu', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleContextMenuKeyboard'() {
