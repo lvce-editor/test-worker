@@ -114,8 +114,8 @@ export const setText = async (text: string): Promise<void> => {
 }
 
 export const setJsonAsText = async (value: unknown): Promise<void> => {
-  const text = JSON.stringify(value, null, 2)
-  if (text === undefined) {
+  const text: string | undefined = JSON.stringify(value, null, 2)
+  if (!text) {
     throw new TypeError('Value cannot be serialized as JSON')
   }
   await setText(`${text}\n`)

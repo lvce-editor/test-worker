@@ -275,8 +275,8 @@ test('setJsonAsText', async () => {
     },
   })
 
-  await Editor.setJsonAsText({ enabled: true, count: 2 })
-  expect(mockRpc.invocations).toEqual([['Editor.setText', '{\n  "enabled": true,\n  "count": 2\n}\n']])
+  await Editor.setJsonAsText({ count: 2, enabled: true })
+  expect(mockRpc.invocations).toEqual([['Editor.setText', '{\n  "count": 2,\n  "enabled": true\n}\n']])
 })
 
 test('setJsonAsText rejects values that cannot be serialized', async () => {
@@ -907,7 +907,7 @@ test('getTextAsJson', async () => {
     },
   })
 
-  await expect(Editor.getTextAsJson<{ enabled: boolean; count: number }>()).resolves.toEqual({ enabled: true, count: 2 })
+  await expect(Editor.getTextAsJson<{ count: number; enabled: boolean }>()).resolves.toEqual({ count: 2, enabled: true })
   expect(mockRpc.invocations).toEqual([['Editor.getText']])
 })
 
