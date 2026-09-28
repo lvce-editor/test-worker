@@ -9,14 +9,14 @@ export interface ExplorerSavedState {
   readonly root: string
 }
 
-export interface Dimensions {
+export interface ExplorerResizeDimensions {
   readonly height: number
   readonly width: number
   readonly x?: number
   readonly y?: number
 }
 
-export const handleResize = async (dimensions: Dimensions): Promise<void> => {
+export const handleResize = async (dimensions: ExplorerResizeDimensions): Promise<void> => {
   await DirectViewWorker.invoke('Explorer', 'Explorer.handleResize', dimensions)
 }
 
