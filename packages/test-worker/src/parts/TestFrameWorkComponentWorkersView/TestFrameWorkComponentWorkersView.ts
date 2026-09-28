@@ -17,4 +17,16 @@ export const heading = (): ILocatorExternal => root().locator('h1')
 
 export const table = (): ILocatorExternal => root().locator('[role="table"][aria-label="Workers"]')
 
-export const refreshButton = (): ILocatorExternal => root().locator('button')
+export const error = (): ILocatorExternal => root().locator('[role="alert"]')
+
+export const headerCell = (index: number): ILocatorExternal => root().locator('.WorkersViewTableHeaderCell').nth(index)
+
+export const nameHeader = (): ILocatorExternal => headerCell(0)
+
+export const memoryHeader = (): ILocatorExternal => headerCell(1)
+
+export const headerButton = (index: number): ILocatorExternal => root().locator('.WorkersViewTableHeaderButton').nth(index)
+
+export const nameHeaderButton = (): ILocatorExternal => headerButton(0)
+
+export const memoryHeaderButton = (): ILocatorExternal => headerButton(1)
