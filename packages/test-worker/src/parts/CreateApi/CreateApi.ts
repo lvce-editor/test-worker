@@ -4,6 +4,7 @@ import { ColorPicker, DiffView } from '../TestFrameWorkComponent/TestFrameWorkCo
 import * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
+import * as CacheWorker from '../TestFrameWorkComponentCacheWorker/TestFrameWorkComponentCacheWorker.ts'
 import * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 import * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
 import * as ChatView2 from '../TestFrameWorkComponentChatView2/TestFrameWorkComponentChatView2.ts'
@@ -73,6 +74,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
         return assetDir
       },
     },
+    CacheWorker,
     Chat,
     ChatDebug,
     ChatView2,

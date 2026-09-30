@@ -4,6 +4,7 @@ import type { ColorPicker, DiffView } from '../TestFrameWorkComponent/TestFrameW
 import type * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import type * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import type * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
+import type * as CacheWorker from '../TestFrameWorkComponentCacheWorker/TestFrameWorkComponentCacheWorker.ts'
 import type * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 import type * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
 import type * as ChatView2 from '../TestFrameWorkComponentChatView2/TestFrameWorkComponentChatView2.ts'
@@ -76,6 +77,7 @@ export interface Api {
   ActivityBar: typeof ActivityBar
   Audio: typeof Audio
   BaseUrl: IBaseUrl
+  CacheWorker: typeof CacheWorker
   Chat: typeof Chat
   ChatDebug: typeof ChatDebug
   ChatView2: typeof ChatView2
