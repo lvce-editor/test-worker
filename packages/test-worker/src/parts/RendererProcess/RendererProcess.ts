@@ -9,11 +9,16 @@ const send = async (port: MessagePort): Promise<void> => {
   await RendererWorker.sendMessagePortToRendererProcess(port, 'TestWorker')
 }
 
+// Compatibility for launchers that detach the native worker RPC after startup.
 export const initialize = async (): Promise<void> => {
   state.rpc = await LazyTransferMessagePortRpcParent.create({
     commandMap: {},
     send,
   })
+}
+
+export const set = (rpc: Rpc): void => {
+  state.rpc = rpc
 }
 
 export const isInitialized = (): boolean => {
