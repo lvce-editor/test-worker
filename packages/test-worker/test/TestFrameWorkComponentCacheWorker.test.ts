@@ -8,7 +8,7 @@ jest.unstable_mockModule('@lvce-editor/rpc', () => ({
   ModuleWorkerRpcParent: { create },
 }))
 
-const CacheWorker = await import('../src/parts/TestFrameWorkComponentCacheWorker/TestFrameWorkComponentCacheWorker.ts')
+const CacheWorker = await import('../src/CacheWorker.ts')
 
 test('create wraps cache worker RPC commands and disposes the worker', async () => {
   const url = new URL('https://example.test/cacheWorkerMain.js')
