@@ -8,13 +8,26 @@ const getNth = (locator: any): number | undefined => locator._parsed.find((part:
 test('open and refresh', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Main.openUri'() {},
+    'Workers.autoRefresh'() {},
     'Workers.refresh'() {},
+    'Workers.resize'() {},
+    'Workers.setError'() {},
   })
 
+  const error = new Error('Workers view test error')
   await WorkersView.open()
+  await WorkersView.setError(error)
+  await WorkersView.autoRefresh()
   await WorkersView.refresh()
+  await WorkersView.resize(800, 600)
 
-  expect(mockRpc.invocations).toEqual([['Main.openUri', 'workers:///1'], ['Workers.refresh']])
+  expect(mockRpc.invocations).toEqual([
+    ['Main.openUri', 'workers:///1'],
+    ['Workers.setError', error],
+    ['Workers.autoRefresh'],
+    ['Workers.refresh'],
+    ['Workers.resize', 800, 600],
+  ])
 })
 
 test('locators', () => {
