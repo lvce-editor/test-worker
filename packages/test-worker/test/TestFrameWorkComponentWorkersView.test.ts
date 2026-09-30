@@ -26,7 +26,7 @@ test('open and refresh', async () => {
     ['Workers.setError', error],
     ['Workers.autoRefresh'],
     ['Workers.refresh'],
-    ['Workers.resize', 800, 600],
+    ['Workers.resize', 0, 0, 800, 600],
   ])
 })
 
