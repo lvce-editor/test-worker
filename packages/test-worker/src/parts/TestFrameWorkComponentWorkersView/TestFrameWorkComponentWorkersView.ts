@@ -16,7 +16,7 @@ export const autoRefresh = async (): Promise<void> => {
 }
 
 export const resize = async (width: number, height: number): Promise<void> => {
-  await DirectViewWorker.invoke('Workers', 'Workers.resize', width, height)
+  await DirectViewWorker.invoke('Workers', 'Workers.resize', 0, 0, width, height)
 }
 
 export const setError = async (error: Error): Promise<void> => {
