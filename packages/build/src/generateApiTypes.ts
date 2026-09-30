@@ -13,6 +13,10 @@ export const generateApiTypes = async (): Promise<void> => {
       cwd: join(root, 'packages', 'test-worker'),
       reject: false,
     }),
+    execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/cacheWorker.d.ts', 'src/CacheWorker.ts'], {
+      cwd: join(root, 'packages', 'test-worker'),
+      reject: false,
+    }),
     execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/expect.d.ts', 'src/parts/LocatorExpect/LocatorExpect.ts'], {
       cwd: join(root, 'packages', 'test-worker'),
       reject: false,
@@ -23,8 +27,10 @@ export const generateApiTypes = async (): Promise<void> => {
     }),
   ])
   const content = await readFile(join(root, '.tmp', 'api-types', 'api.d.ts'), 'utf8')
+  const contentCacheWorker = await readFile(join(root, '.tmp', 'api-types', 'cacheWorker.d.ts'), 'utf8')
   const contentExpect = await readFile(join(root, '.tmp', 'api-types', 'expect.d.ts'), 'utf8')
   const contentLocator = await readFile(join(root, '.tmp', 'api-types', 'locator.d.ts'), 'utf8')
   const actual = getActualApiTypesContent(content, contentExpect, contentLocator)
   await writeFile(join(root, '.tmp', 'dist', 'dist', 'api.d.ts'), actual)
+  await writeFile(join(root, '.tmp', 'dist', 'dist', 'cacheWorker.d.ts'), contentCacheWorker)
 }

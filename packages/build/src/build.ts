@@ -67,6 +67,17 @@ delete packageJson.jest
 packageJson.version = version
 packageJson.main = 'dist/testWorkerMain.js'
 packageJson.types = 'dist/api.d.ts'
+packageJson.exports = {
+  '.': {
+    types: './dist/api.d.ts',
+    import: './dist/testWorkerMain.js',
+  },
+  './cacheWorker': {
+    types: './dist/cacheWorker.d.ts',
+    import: './dist/cacheWorker.js',
+  },
+  './dist/*': './dist/*',
+}
 
 await writeJson(join(dist, 'package.json'), packageJson)
 
