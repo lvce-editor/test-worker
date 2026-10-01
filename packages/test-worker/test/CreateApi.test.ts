@@ -53,6 +53,7 @@ test('createApi includes all expected components', () => {
   expect(api.Problems).toBeDefined()
   expect(api.ProcessExplorer).toBeDefined()
   expect(api.QuickPick).toBeDefined()
+  expect(api.Randomization.getRandomUUID).toBeDefined()
   expect(api.References).toBeDefined()
   expect(api.RunAndDebug).toBeDefined()
   expect(api.RunningExtensions).toBeDefined()
