@@ -42,9 +42,20 @@ const cacheWorkerOptions: RollupOptions = {
   },
 }
 
+const randomizationOptions: RollupOptions = {
+  ...options,
+  input: join(root, 'packages/test-worker/src/Randomization.ts'),
+  output: {
+    ...options.output,
+    file: join(root, '.tmp/dist/dist/randomization.js'),
+  },
+}
+
 export const bundleJs = async (): Promise<void> => {
   const input = await rollup(options)
   await input.write(options.output as any)
   const cacheWorkerInput = await rollup(cacheWorkerOptions)
   await cacheWorkerInput.write(cacheWorkerOptions.output as any)
+  const randomizationInput = await rollup(randomizationOptions)
+  await randomizationInput.write(randomizationOptions.output as any)
 }
