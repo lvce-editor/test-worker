@@ -76,6 +76,10 @@ packageJson.exports = {
     types: './dist/cacheWorker.d.ts',
     import: './dist/cacheWorker.js',
   },
+  './randomization': {
+    types: './dist/randomization.d.ts',
+    import: './dist/randomization.js',
+  },
   './dist/*': './dist/*',
 }
 
