@@ -13,3 +13,29 @@ test('setIconTheme', async () => {
 
   expect(mockRpc.invocations).toEqual([['IconTheme.setIconTheme', 'vs-code-icon-theme']])
 })
+
+test('getFileIcon', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'(file: { name: string }) {
+      expect(file).toEqual({ name: 'test.xml' })
+      return 'file-icon.svg'
+    },
+  })
+
+  const result = await IconTheme.getFileIcon({ name: 'test.xml' })
+
+  expect(result).toBe('file-icon.svg')
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFileIcon', { name: 'test.xml' }]])
+})
+
+test('getFileIcon propagates rpc errors', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'IconTheme.getFileIcon'() {
+      throw new Error('icon lookup failed')
+    },
+  })
+
+  await expect(IconTheme.getFileIcon({ name: 'test.xml' })).rejects.toThrow('icon lookup failed')
+
+  expect(mockRpc.invocations).toEqual([['IconTheme.getFileIcon', { name: 'test.xml' }]])
+})
