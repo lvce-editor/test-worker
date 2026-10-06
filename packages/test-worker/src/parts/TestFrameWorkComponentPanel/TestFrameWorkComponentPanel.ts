@@ -23,6 +23,18 @@ export const select = async (name: string): Promise<void> => {
   await DirectViewWorker.invoke('Panel', 'Panel.selectName', name)
 }
 
+export const selectIndex = async (index: number): Promise<void> => {
+  await DirectViewWorker.invoke('Panel', 'Panel.selectIndex', index)
+}
+
+export const selectIndexRaw = async (rawIndex: string): Promise<void> => {
+  await DirectViewWorker.invoke('Panel', 'Panel.selectIndexRaw', rawIndex)
+}
+
+export const toggleView = async (name: string): Promise<void> => {
+  await DirectViewWorker.invoke('Panel', 'Panel.toggleView', name)
+}
+
 export const maximize = async (): Promise<void> => {
   await RendererWorker.invoke('Layout.maximizePanel')
 }
