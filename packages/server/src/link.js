@@ -32,12 +32,19 @@ const rendererWorkerMainPath = join(serverStaticPath, commitHash, 'packages', 'r
 
 const content = await readFile(rendererWorkerMainPath, 'utf-8')
 const remoteUrl = getRemoteUrl(workerPath)
-if (!content.includes('// const testWorkerUrl = ')) {
-  await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')
-  const occurrence = `const testWorkerUrl = \`\${assetDir}/packages/test-worker/dist/testWorkerMain.js\``
-  const replacement = `// const testWorkerUrl = \`\${assetDir}/packages/test-worker/dist/testWorkerMain.js\`
-const testWorkerUrl = \`${remoteUrl}\``
-
-  const newContent = content.replace(occurrence, replacement)
-  await writeFile(rendererWorkerMainPath, newContent)
+const fallback = '${assetDir}/packages/renderer-worker/node_modules/@lvce-editor/test-worker/dist/testWorkerMain.js'
+if (!content.includes(fallback) && !content.includes(remoteUrl)) {
+  throw new Error('test worker fallback not found')
 }
+await writeFile(rendererWorkerMainPath, content.replace(fallback, remoteUrl))
+
+const indexPath = join(serverStaticPath, 'index.html')
+const indexContent = await readFile(indexPath, 'utf8')
+const workerUrlPattern = /("develop\.testWorkerPath":\s*)"[^"\n]+"/
+if (!workerUrlPattern.test(indexContent)) {
+  throw new Error('test worker configuration not found')
+}
+await writeFile(
+  indexPath,
+  indexContent.replace(workerUrlPattern, (_, key) => `${key}${JSON.stringify(remoteUrl)}`),
+)
