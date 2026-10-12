@@ -1,6 +1,6 @@
 version: 1
 pages:
-  build_type: workflow
+  build_type: legacy
 requiredStatusChecks:
   - pr (ubuntu-24.04)
   - pr (macos-15)
