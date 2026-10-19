@@ -403,6 +403,17 @@ export const shouldHaveText = async (expectedText: string): Promise<void> => {
   }
 }
 
+export const shouldHaveUri = async (expectedUri: string): Promise<void> => {
+  let actualUri = await RendererWorker.invoke('GetActiveEditor.getActiveUri')
+  for (let attempt = 1; attempt < editorTextReadAttempts && actualUri !== expectedUri; attempt++) {
+    await new Promise((resolve) => globalThis.setTimeout(resolve, editorTextReadDelay))
+    actualUri = await RendererWorker.invoke('GetActiveEditor.getActiveUri')
+  }
+  if (actualUri !== expectedUri) {
+    throw new Error(`Expected active editor URI to be ${expectedUri} but was ${actualUri}`)
+  }
+}
+
 export const shouldContainText = async (expectedText: string): Promise<void> => {
   let text = await getText()
   for (let attempt = 1; attempt < editorTextReadAttempts && !text.includes(expectedText); attempt++) {
