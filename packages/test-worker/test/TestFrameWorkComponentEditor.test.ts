@@ -1179,6 +1179,59 @@ test('shouldHaveText - reads from the active main area editor', async () => {
   }
 })
 
+test('shouldHaveUri - reads the active editor URI', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'GetActiveEditor.getActiveUri'() {
+      return 'file:///expected.ts'
+    },
+  })
+
+  await Editor.shouldHaveUri('file:///expected.ts')
+  expect(mockRpc.invocations).toEqual([['GetActiveEditor.getActiveUri']])
+})
+
+test('shouldHaveUri - retries while navigation changes the active editor', async () => {
+  jest.useFakeTimers()
+  let invocationCount = 0
+  using mockRpc = RendererWorker.registerMockRpc({
+    'GetActiveEditor.getActiveUri'() {
+      invocationCount++
+      return invocationCount === 1 ? 'file:///previous.ts' : 'file:///expected.ts'
+    },
+  })
+
+  try {
+    const assertion = Editor.shouldHaveUri('file:///expected.ts')
+    await jest.advanceTimersByTimeAsync(50)
+    await assertion
+    expect(mockRpc.invocations).toEqual([
+      ['GetActiveEditor.getActiveUri'],
+      ['GetActiveEditor.getActiveUri'],
+    ])
+  } finally {
+    jest.useRealTimers()
+  }
+})
+
+test('shouldHaveUri - reports an absent or incorrect active editor', async () => {
+  jest.useFakeTimers()
+  using mockRpc = RendererWorker.registerMockRpc({
+    'GetActiveEditor.getActiveUri'() {
+      return ''
+    },
+  })
+
+  try {
+    const assertion = Editor.shouldHaveUri('file:///expected.ts')
+    void assertion.catch(() => {})
+    await jest.runAllTimersAsync()
+    await expect(assertion).rejects.toThrow('Expected active editor URI to be file:///expected.ts but was ')
+    expect(mockRpc.invocations).toHaveLength(20)
+  } finally {
+    jest.useRealTimers()
+  }
+})
+
 test('shouldContainText - success case', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.getText'() {
