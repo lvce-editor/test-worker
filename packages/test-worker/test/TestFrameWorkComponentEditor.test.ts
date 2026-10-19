@@ -1204,10 +1204,7 @@ test('shouldHaveUri - retries while navigation changes the active editor', async
     const assertion = Editor.shouldHaveUri('file:///expected.ts')
     await jest.advanceTimersByTimeAsync(50)
     await assertion
-    expect(mockRpc.invocations).toEqual([
-      ['GetActiveEditor.getActiveUri'],
-      ['GetActiveEditor.getActiveUri'],
-    ])
+    expect(mockRpc.invocations).toEqual([['GetActiveEditor.getActiveUri'], ['GetActiveEditor.getActiveUri']])
   } finally {
     jest.useRealTimers()
   }
