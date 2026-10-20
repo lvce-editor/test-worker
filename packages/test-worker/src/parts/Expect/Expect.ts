@@ -39,6 +39,14 @@ class Expect {
       throw new AssertionError(errorInfo)
     }
   }
+  async toMatchScreenShot(uri: string): Promise<void> {
+    Assert.string(uri, 'screenshot uri must be of type string')
+    if (this.negated) {
+      throw new Error('not.toMatchScreenShot is not supported')
+    }
+    const conditionLocator = GetConditionLocator.getConditionLocator(this.locator)
+    await LocatorInvoke.locatorInvoke(this.locator, 'TestFrameWork.toMatchScreenShot', conditionLocator, uri)
+  }
   async toBeVisible(): Promise<void> {
     if (this.negated) {
       throw new Error('use toBeHidden instead of not.toBeVisible')
