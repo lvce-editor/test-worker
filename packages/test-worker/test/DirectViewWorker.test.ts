@@ -172,10 +172,10 @@ test('reconnects after a view worker is recreated between commands', async () =>
       port.addEventListener('close', () => closed.resolve())
       port.onmessage = (event: any): void => {
         const { data, target } = event
-        if (connectedGeneration !== generation) {
-          target.postMessage({ error: { code: -32001, message: 'The previous view worker was disposed' }, id: data.id, jsonrpc: '2.0' })
-        } else {
+        if (connectedGeneration === generation) {
           target.postMessage({ id: data.id, jsonrpc: '2.0', result: connectedGeneration })
+        } else {
+          target.postMessage({ error: { code: -32_001, message: 'The previous view worker was disposed' }, id: data.id, jsonrpc: '2.0' })
         }
       }
       return undefined
@@ -195,16 +195,14 @@ test('finishing another command keeps the first command connection alive', async
       return 42
     },
   } as unknown as Rpc
-  const firstReceived = Promise.withResolvers<void>()
-  let completeFirst: () => void = () => {}
+  const firstReceived = Promise.withResolvers<() => void>()
   using mockRpc = RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToViewWorker'(port: MessagePort): undefined {
       port.onmessage = (event: any): void => {
         const { data, target } = event
         const reply = (): void => target.postMessage({ id: data.id, jsonrpc: '2.0', result: data.params[1] })
         if (data.params[1] === 'focusNext') {
-          completeFirst = reply
-          firstReceived.resolve()
+          firstReceived.resolve(reply)
         } else {
           reply()
         }
@@ -214,7 +212,7 @@ test('finishing another command keeps the first command connection alive', async
   })
 
   const first = DirectViewWorker.invoke('About', 'About.focusNext')
-  await firstReceived.promise
+  const completeFirst = await firstReceived.promise
   await expect(DirectViewWorker.invoke('About', 'About.focusPrevious')).resolves.toBe('focusPrevious')
   completeFirst()
   await expect(first).resolves.toBe('focusNext')

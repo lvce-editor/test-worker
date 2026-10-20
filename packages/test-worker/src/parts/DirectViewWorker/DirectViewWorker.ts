@@ -47,6 +47,16 @@ const createRpc = (rpcId: string): Promise<Rpc> => {
   })
 }
 
+const disposeRpc = async (pendingRpc: Promise<Rpc>): Promise<void> => {
+  let rpc: Rpc
+  try {
+    rpc = await pendingRpc
+  } catch {
+    return
+  }
+  await rpc.dispose()
+}
+
 export const invoke = async (rpcId: string, commandId: string, ...args: readonly any[]): Promise<any> => {
   if (!RendererProcess.isInitialized() || isRendererWorkerCommand(commandId)) {
     return RendererWorker.invoke(commandId, ...args)
@@ -68,8 +78,7 @@ export const invoke = async (rpcId: string, commandId: string, ...args: readonly
     return await rpc.invoke('Viewlet.executeViewletCommand', uid, command, ...args)
   } finally {
     if (rpcs.delete(pendingRpc)) {
-      const rpc = await pendingRpc.catch(() => undefined)
-      await rpc?.dispose()
+      await disposeRpc(pendingRpc)
     }
   }
 }
@@ -77,10 +86,5 @@ export const invoke = async (rpcId: string, commandId: string, ...args: readonly
 export const dispose = async (): Promise<void> => {
   const pendingRpcs = [...rpcs]
   rpcs.clear()
-  await Promise.all(
-    pendingRpcs.map(async (pendingRpc) => {
-      const rpc = await pendingRpc.catch(() => undefined)
-      await rpc?.dispose()
-    }),
-  )
+  await Promise.all(pendingRpcs.map(disposeRpc))
 }
