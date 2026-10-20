@@ -12,7 +12,6 @@ export interface LocatorExpect {
    */
   negated: boolean
   readonly not: LocatorExpect
-  readonly toMatchScreenShot: (uri: string) => Promise<void>
   readonly toBeFocused: () => Promise<void>
   readonly toBeHidden: () => Promise<void>
   readonly toBeVisible: () => Promise<void>
@@ -25,4 +24,5 @@ export interface LocatorExpect {
   readonly toHaveJSProperty: (key: string, value: any) => Promise<void>
   readonly toHaveText: (text: string) => Promise<void>
   readonly toHaveValue: (value: string) => Promise<void>
+  readonly toMatchScreenShot: (uri: string) => Promise<void>
 }
