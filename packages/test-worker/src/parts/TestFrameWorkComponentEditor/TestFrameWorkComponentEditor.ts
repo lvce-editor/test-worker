@@ -17,6 +17,14 @@ export const setCursor = async (rowIndex: number, columnIndex: number): Promise<
   await ActiveEditorWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)
 }
 
+export const handleFocus = async (): Promise<void> => {
+  await ActiveEditorWorker.invoke('Editor.handleFocus')
+}
+
+export const handleBlur = async (): Promise<void> => {
+  await ActiveEditorWorker.invoke('Editor.handleBlur')
+}
+
 export const cancelSelection = async (): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.cancelSelection')
 }
