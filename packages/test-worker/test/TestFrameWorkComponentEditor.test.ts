@@ -15,6 +15,28 @@ test('setCursor', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.cursorSet', 1, 2]])
 })
 
+test('handleFocus', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleFocus'() {
+      return undefined
+    },
+  })
+
+  await Editor.handleFocus()
+  expect(mockRpc.invocations).toEqual([['Editor.handleFocus']])
+})
+
+test('handleBlur', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleBlur'() {
+      return undefined
+    },
+  })
+
+  await Editor.handleBlur()
+  expect(mockRpc.invocations).toEqual([['Editor.handleBlur']])
+})
+
 test('cancelSelection', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cancelSelection'() {
