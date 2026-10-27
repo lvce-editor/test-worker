@@ -28,8 +28,7 @@ export const test: Test = async ({ Devcontainer }) => {
 git clone git@github.com:lvce-editor/test-worker.git &&
 cd test-worker &&
 npm ci &&
-npm run link &&
 npm test
 ```
 
-Run `npm run link` after installing dependencies to configure the development server to use the local test worker build.
+The development server uses `--link=.tmp/dist` to load the locally built test worker without modifying installed packages. `npm run dev` builds the package before starting watch mode.
