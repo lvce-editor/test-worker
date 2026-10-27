@@ -4,8 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "link": "node src/link.js",
-    "dev": "node ../../node_modules/@lvce-editor/server/bin/server.js --test-path=../e2e"
+    "dev": "node ../../node_modules/@lvce-editor/server/bin/server.js --test-path=../e2e --link=../../.tmp/dist",
+    "predev": "npm run build --prefix ../.."
   },
   "keywords": [],
   "author": "",

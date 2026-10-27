@@ -38,9 +38,6 @@
         "test/**/*.test.ts"
       ],
       "project": ["src/**/*.ts", "test/**/*.ts"]
-    },
-    "packages/server": {
-      "project": ["src/**/*.js"]
     }
   }
 }
