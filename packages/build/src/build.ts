@@ -72,15 +72,6 @@ packageJson.exports = {
     types: './dist/api.d.ts',
     import: './dist/testWorkerMain.js',
   },
-  './cacheWorker': {
-    types: './dist/cacheWorker.d.ts',
-    import: './dist/cacheWorker.js',
-  },
-  './randomization': {
-    types: './dist/randomization.d.ts',
-    import: './dist/randomization.js',
-  },
-  './dist/*': './dist/*',
 }
 
 await writeJson(join(dist, 'package.json'), packageJson)
