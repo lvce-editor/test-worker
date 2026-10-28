@@ -2,6 +2,18 @@ import { test, expect } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Explorer from '../src/parts/TestFrameWorkComponentExplorer/TestFrameWorkComponentExplorer.ts'
 
+test('handlePointerDown', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Explorer.handlePointerDown'() {
+      return undefined
+    },
+  })
+
+  await Explorer.handlePointerDown(0, 10, 20)
+
+  expect(mockRpc.invocations).toEqual([['Explorer.handlePointerDown', 0, 10, 20]])
+})
+
 test('handleResize', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Explorer.handleResize'() {

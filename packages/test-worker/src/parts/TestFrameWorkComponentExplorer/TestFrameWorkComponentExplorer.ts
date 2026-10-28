@@ -20,6 +20,10 @@ export const handleResize = async (dimensions: ExplorerResizeDimensions): Promis
   await DirectViewWorker.invoke('Explorer', 'Explorer.handleResize', dimensions)
 }
 
+export const handlePointerDown = async (button: number, x: number, y: number): Promise<void> => {
+  await DirectViewWorker.invoke('Explorer', 'Explorer.handlePointerDown', button, x, y)
+}
+
 export const openContextMenu = async (index: number): Promise<void> => {
   await DirectViewWorker.invoke('Explorer', 'Explorer.handleContextMenuKeyboard', index)
 }
