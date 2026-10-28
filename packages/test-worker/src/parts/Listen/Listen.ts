@@ -1,17 +1,13 @@
-import { initializeEditorWorker } from '../InitializeEditorWorker/InitializeEditorWorker.ts'
-import { initializeErrorWorker } from '../InitializeErrorWorker/InitializeErrorWorker.ts'
-import { initializeExtensionManagementWorker } from '../InitializeExtensionManagementWorker/InitializeExtensionManagementWorker.ts'
-import { initializeMainAreaWorker } from '../InitializeMainAreaWorker/InitializeMainAreaWorker.ts'
-import { initializeOpenerWorker } from '../InitializeOpenerWorker/InitializeOpenerWorker.ts'
-import { initializeRendererWorker } from '../InitializeRendererWorker/InitializeRendererWorker.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as CommandMap from '../CommandMap/CommandMap.ts'
 
 export const listen = async (): Promise<void> => {
   await Promise.all([
-    initializeEditorWorker(),
-    initializeErrorWorker(),
-    initializeExtensionManagementWorker(),
-    initializeMainAreaWorker(),
-    initializeOpenerWorker(),
-    initializeRendererWorker(),
+    RendererWorker.initializeEditorWorker(),
+    RendererWorker.initializeErrorWorkerForWorker(),
+    RendererWorker.initializeExtensionManagementWorker(),
+    RendererWorker.initializeMainAreaWorkerForWorker(),
+    RendererWorker.initializeOpenerWorkerForWorker(),
+    RendererWorker.initializeRendererWorkerForWorker(CommandMap.commandMap),
   ])
 }
