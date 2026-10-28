@@ -1,12 +1,14 @@
 import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { MainAreaWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import * as MarkdownPreview from '../src/parts/TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 
 test('open', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using mainAreaRpc = MainAreaWorker.registerMockRpc({
     'Main.openInput'() {
       return undefined
     },
+  })
+  using rendererRpc = RendererWorker.registerMockRpc({
     'TestFrameWork.checkSingleElementCondition'() {
       return undefined
     },
@@ -14,7 +16,7 @@ test('open', async () => {
 
   await MarkdownPreview.open('memfs:///workspace/test.md')
 
-  expect(mockRpc.invocations).toEqual([
+  expect(mainAreaRpc.invocations).toEqual([
     [
       'Main.openInput',
       {
@@ -27,6 +29,8 @@ test('open', async () => {
         preview: false,
       },
     ],
+  ])
+  expect(rendererRpc.invocations).toEqual([
     ['TestFrameWork.checkSingleElementCondition', [{ selector: '.WebViewIframe', type: 1 }], 'toBeVisible', {}],
     [
       'TestFrameWork.checkSingleElementCondition',
@@ -35,4 +39,21 @@ test('open', async () => {
       { key: 'title', value: 'Markdown Preview' },
     ],
   ])
+})
+
+test('open propagates main area failures before checking the webview', async () => {
+  using mainAreaRpc = MainAreaWorker.registerMockRpc({
+    'Main.openInput'() {
+      throw new Error('Failed to open markdown preview')
+    },
+  })
+  using rendererRpc = RendererWorker.registerMockRpc({
+    'TestFrameWork.checkSingleElementCondition'() {
+      return undefined
+    },
+  })
+
+  await expect(MarkdownPreview.open('memfs:///workspace/test.md')).rejects.toThrow('Failed to open markdown preview')
+  expect(mainAreaRpc.invocations).toHaveLength(1)
+  expect(rendererRpc.invocations).toEqual([])
 })
