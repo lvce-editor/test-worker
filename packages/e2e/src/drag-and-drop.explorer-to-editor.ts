@@ -2,9 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'drag-and-drop.explorer-to-editor'
 
-// The published test-worker API used by test-with-playwright needs a release before this can run.
-export const skip = 1
-
 export const test: Test = async ({ DragAndDrop, Editor, expect, Explorer, FileSystem, Locator, Main, Workspace }) => {
   const workspaceUrl = await FileSystem.getTmpDir()
   const uri = `${workspaceUrl}/dragged.txt`
