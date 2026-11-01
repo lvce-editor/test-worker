@@ -46,6 +46,7 @@ import * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponen
 import * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 import * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 import * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
+import * as RecentlyOpened from '../TestFrameWorkComponentRecentlyOpened/TestFrameWorkComponentRecentlyOpened.ts'
 import * as Randomization from '../TestFrameWorkComponentRandomization/TestFrameWorkComponentRandomization.ts'
 import * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 import * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
@@ -127,6 +128,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     Problems,
     ProcessExplorer,
     QuickPick,
+    RecentlyOpened,
     Randomization,
     References,
     RunAndDebug,
