@@ -47,6 +47,7 @@ import type * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkC
 import type * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 import type * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
 import type * as Randomization from '../TestFrameWorkComponentRandomization/TestFrameWorkComponentRandomization.ts'
+import type * as RecentlyOpened from '../TestFrameWorkComponentRecentlyOpened/TestFrameWorkComponentRecentlyOpened.ts'
 import type * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 import type * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 import type * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
@@ -126,6 +127,7 @@ export interface Api {
   ProcessExplorer: typeof ProcessExplorer
   QuickPick: typeof QuickPick
   Randomization: typeof Randomization
+  RecentlyOpened: typeof RecentlyOpened
   References: typeof References
   RunAndDebug: typeof RunAndDebug
   RunningExtensions: typeof RunningExtensions
