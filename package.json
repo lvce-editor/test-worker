@@ -13,7 +13,7 @@
     "dev": "node packages/build/src/dev.ts",
     "format": "prettier --write .",
     "lint": "eslint . && prettier --check . && knip --no-config-hints",
-    "measure": "npm run measure --workspace=packages/memory",
+    "measure": "npm run measure --workspace=packages/build",
     "predev": "npm run build",
     "test": "npm test --workspaces --if-present",
     "type-check": "tsc -b"

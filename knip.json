@@ -25,10 +25,6 @@
       "entry": ["src/**/*.ts"],
       "project": ["src/**/*.ts"]
     },
-    "packages/memory": {
-      "project": ["src/**/*.ts"],
-      "ignoreDependencies": ["playwright"]
-    },
     "packages/test-worker": {
       "entry": [
         "src/testWorkerMain.ts",
