@@ -4,6 +4,8 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
+    "measure": "node --experimental-strip-types src/measureMemory.ts",
+    "measure:visible": "node --experimental-strip-types src/measureMemory.ts --no-headless",
     "test": "node --experimental-strip-types --test test/*.test.ts",
     "test:integration": "node --test test-integration/*.test.ts"
   },
@@ -12,6 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/preset-typescript": "^7.29.7",
+    "@lvce-editor/measure-memory": "^3.11.0",
     "@lvce-editor/shared-process": "0.126.17",
     "@lvce-editor/verror": "^1.7.0",
     "@rollup/plugin-babel": "^7.1.0",

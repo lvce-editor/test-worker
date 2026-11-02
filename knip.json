@@ -19,15 +19,11 @@
     },
     "packages/build": {
       "project": ["src/**/*.js", "src/**/*.ts"],
-      "ignoreDependencies": ["@lvce-editor/verror", "dts-bundle-generator", "esbuild"]
+      "ignoreDependencies": ["@lvce-editor/verror", "dts-bundle-generator", "esbuild", "playwright"]
     },
     "packages/e2e": {
       "entry": ["src/**/*.ts"],
       "project": ["src/**/*.ts"]
-    },
-    "packages/memory": {
-      "project": ["src/**/*.ts"],
-      "ignoreDependencies": ["playwright"]
     },
     "packages/test-worker": {
       "entry": [
