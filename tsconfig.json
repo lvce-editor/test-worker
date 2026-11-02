@@ -10,9 +10,6 @@
     },
     {
       "path": "./packages/e2e"
-    },
-    {
-      "path": "./packages/memory"
     }
   ]
 }
