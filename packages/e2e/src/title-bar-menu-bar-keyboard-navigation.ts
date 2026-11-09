@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'viewlet.title-bar-menu-bar-keyboard-navigation'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Locator, TitleBarMenuBar }) => {
   // act
   await TitleBarMenuBar.focus()
@@ -43,10 +41,10 @@ export const test: Test = async ({ expect, Locator, TitleBarMenuBar }) => {
 
   // assert
   await expect(menu0).toBeVisible()
-  const menuItemCut = Locator('.MenuItem', {
-    hasText: 'Cut',
+  const menuItemUndo = Locator('.MenuItem', {
+    hasText: 'Undo',
   })
-  await expect(menuItemCut).toBeFocused()
+  await expect(menuItemUndo).toBeFocused()
 
   // act
   await TitleBarMenuBar.handleKeyEnd()
@@ -61,7 +59,7 @@ export const test: Test = async ({ expect, Locator, TitleBarMenuBar }) => {
   await TitleBarMenuBar.handleKeyHome()
 
   // assert
-  await expect(menuItemCut).toBeFocused()
+  await expect(menuItemUndo).toBeFocused()
 
   // act
   await TitleBarMenuBar.handleKeyEscape()
@@ -97,10 +95,10 @@ export const test: Test = async ({ expect, Locator, TitleBarMenuBar }) => {
   await TitleBarMenuBar.handleKeyEnd()
 
   // assert
-  const menuItemExit = Locator('.MenuItem', {
-    hasText: 'Save All',
+  const menuItemAutoSave = Locator('.MenuItem', {
+    hasText: 'Auto Save',
   })
-  await expect(menuItemExit).toBeFocused()
+  await expect(menuItemAutoSave).toBeFocused()
 
   // act
   await TitleBarMenuBar.handleKeyArrowUp()

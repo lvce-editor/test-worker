@@ -16,6 +16,14 @@ export const setTitleTemplate = async (template: string): Promise<void> => {
   await DirectViewWorker.invoke('TitleBar', 'TitleBar.setTitleTemplate', template)
 }
 
+export const setWidth = async (width: number): Promise<void> => {
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.setWidth', width)
+}
+
+export const handleWorkspaceChange = async (uri: string): Promise<void> => {
+  await DirectViewWorker.invoke('TitleBar', 'TitleBar.handleWorkspaceChange', uri)
+}
+
 export const focusIndex = async (index: number): Promise<void> => {
   await DirectViewWorker.invoke('TitleBar', 'TitleBar.focusIndex', index)
 }

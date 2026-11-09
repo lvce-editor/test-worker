@@ -14,7 +14,7 @@ export const test: Test = async ({ Editor, FileSystem, Main, Workspace }) => {
   await FileSystem.shouldHaveFile(fileUri, 'written through the e2e API\n')
 
   // act
-  await Workspace.setPath(workspaceUrl)
+  await Workspace.setUri(workspaceUrl)
   await Main.closeAllEditors()
   await Main.openUri(fileUri)
 

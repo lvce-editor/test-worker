@@ -13,7 +13,8 @@
     "dev": "node packages/build/src/dev.ts",
     "format": "prettier --write .",
     "lint": "eslint . && prettier --check . && knip --no-config-hints",
-    "measure": "npm run measure --workspace=packages/memory",
+    "measure": "npm run measure --workspace=packages/build",
+    "predev": "npm run build",
     "test": "npm test --workspaces --if-present",
     "type-check": "tsc -b"
   },
@@ -23,12 +24,12 @@
     "printWidth": 150
   },
   "devDependencies": {
-    "@lvce-editor/eslint-config": "^18.11.0",
-    "@lvce-editor/eslint-plugin-tsconfig": "^18.11.0",
+    "@lvce-editor/eslint-config": "^18.17.0",
+    "@lvce-editor/eslint-plugin-tsconfig": "^18.17.0",
     "@types/node": "^25.9.3",
-    "eslint": "^10.10.0",
-    "knip": "^6.35.1",
-    "prettier": "^3.9.6",
+    "eslint": "^10.14.0",
+    "knip": "^6.44.2",
+    "prettier": "^3.9.10",
     "typescript": "^6.0.3"
   },
   "engines": {

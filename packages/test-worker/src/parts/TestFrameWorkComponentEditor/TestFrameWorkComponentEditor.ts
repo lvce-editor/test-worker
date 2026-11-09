@@ -17,6 +17,14 @@ export const setCursor = async (rowIndex: number, columnIndex: number): Promise<
   await ActiveEditorWorker.invoke('Editor.cursorSet', rowIndex, columnIndex)
 }
 
+export const handleFocus = async (): Promise<void> => {
+  await ActiveEditorWorker.invoke('Editor.handleFocus')
+}
+
+export const handleBlur = async (): Promise<void> => {
+  await ActiveEditorWorker.invoke('Editor.handleBlur')
+}
+
 export const cancelSelection = async (): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.cancelSelection')
 }
@@ -111,6 +119,14 @@ export const selectWordRight = async (): Promise<void> => {
 
 export const setText = async (text: string): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.setText', text)
+}
+
+export const setJsonAsText = async (value: unknown): Promise<void> => {
+  const text: string | undefined = JSON.stringify(value, null, 2)
+  if (!text) {
+    throw new TypeError('Value cannot be serialized as JSON')
+  }
+  await setText(`${text}\n`)
 }
 
 export const deleteAll = async (): Promise<void> => {
@@ -345,6 +361,11 @@ export const getText = async (): Promise<string> => {
   return EditorWorker.invoke('Editor.getText', key)
 }
 
+export const getTextAsJson = async <T = any>(): Promise<T> => {
+  const text = await getText()
+  return JSON.parse(text) as T
+}
+
 export const rename = async (): Promise<void> => {
   await ActiveEditorWorker.invoke('Editor.rename')
 }
@@ -387,6 +408,17 @@ export const shouldHaveText = async (expectedText: string): Promise<void> => {
   }
   if (text !== expectedText) {
     throw new Error(`Expected editor to have text ${expectedText} but was ${text}`)
+  }
+}
+
+export const shouldHaveUri = async (expectedUri: string): Promise<void> => {
+  let actualUri = await RendererWorker.invoke('GetActiveEditor.getActiveUri')
+  for (let attempt = 1; attempt < editorTextReadAttempts && actualUri !== expectedUri; attempt++) {
+    await new Promise((resolve) => globalThis.setTimeout(resolve, editorTextReadDelay))
+    actualUri = await RendererWorker.invoke('GetActiveEditor.getActiveUri')
+  }
+  if (actualUri !== expectedUri) {
+    throw new Error(`Expected active editor URI to be ${expectedUri} but was ${actualUri}`)
   }
 }
 

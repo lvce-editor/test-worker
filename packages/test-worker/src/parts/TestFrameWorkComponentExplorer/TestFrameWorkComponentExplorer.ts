@@ -9,6 +9,21 @@ export interface ExplorerSavedState {
   readonly root: string
 }
 
+export interface ExplorerResizeDimensions {
+  readonly height: number
+  readonly width: number
+  readonly x?: number
+  readonly y?: number
+}
+
+export const handleResize = async (dimensions: ExplorerResizeDimensions): Promise<void> => {
+  await DirectViewWorker.invoke('Explorer', 'Explorer.handleResize', dimensions)
+}
+
+export const handlePointerDown = async (button: number, x: number, y: number): Promise<void> => {
+  await DirectViewWorker.invoke('Explorer', 'Explorer.handlePointerDown', button, x, y)
+}
+
 export const openContextMenu = async (index: number): Promise<void> => {
   await DirectViewWorker.invoke('Explorer', 'Explorer.handleContextMenuKeyboard', index)
 }

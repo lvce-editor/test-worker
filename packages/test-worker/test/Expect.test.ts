@@ -457,3 +457,25 @@ test('toBeHidden: error path', async () => {
 
   expect(mockRpc.invocations).toEqual([['TestFrameWork.checkMultiElementCondition', locator._parsed, 'toBeHidden', {}]])
 })
+
+test('screenshot matcher awaits the runner and forwards chained locator and fixture URI', async () => {
+  const locator = createRealLocator('form', { hasText: 'About' }).locator('button').nth(1) as ILocator
+  using mockRpc = RendererWorker.registerMockRpc({
+    async 'TestFrameWork.toMatchScreenShot'() {
+      throw new Error('SVG screenshot is missing: about/dialog.svg')
+    },
+  })
+  await expect(ExpectMod.expect(locator).toMatchScreenShot('about/dialog.svg')).rejects.toThrow('SVG screenshot is missing: about/dialog.svg')
+  expect(mockRpc.invocations).toEqual([['TestFrameWork.toMatchScreenShot', locator._parsed, 'about/dialog.svg']])
+})
+
+test('screenshot matcher passes when the runner resolves', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({ 'TestFrameWork.toMatchScreenShot': async () => {} })
+  await ExpectMod.expect(createLocator()).toMatchScreenShot('about.svg')
+  expect(mockRpc.invocations).toHaveLength(1)
+})
+
+test('screenshot matcher rejects invalid types and unsupported negation', async () => {
+  await expect(ExpectMod.expect(createLocator()).toMatchScreenShot(42 as any)).rejects.toThrow('screenshot uri must be of type string')
+  await expect(ExpectMod.expect(createLocator()).not.toMatchScreenShot('about.svg')).rejects.toThrow('not.toMatchScreenShot is not supported')
+})

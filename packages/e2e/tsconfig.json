@@ -20,7 +20,10 @@
     "noUncheckedSideEffectImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
-    "exactOptionalPropertyTypes": true
+    "exactOptionalPropertyTypes": true,
+    "paths": {
+      "@lvce-editor/test-with-playwright": ["../../.tmp/dist/dist/api.d.ts"]
+    }
   },
   "include": ["src", "test"]
 }

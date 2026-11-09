@@ -8,19 +8,30 @@ test('setPath forwards to rpc', async () => {
       return undefined
     },
   })
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- Verify backward compatibility for existing tests.
   await Workspace.setPath('/tmp/workspace')
   expect(mockRpc.invocations).toEqual([['Workspace.setPath', '/tmp/workspace']])
 })
 
-test('openTmpDir sets workspace path and returns it', async () => {
+test.each(['file:///tmp/workspace%20folder', 'memfs:///workspace'])('setUri forwards %s to rpc', async (uri) => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Workspace.setPath'() {
+    'Workspace.setUri'() {
+      return undefined
+    },
+  })
+  await Workspace.setUri(uri)
+  expect(mockRpc.invocations).toEqual([['Workspace.setUri', uri]])
+})
+
+test('openTmpDir sets workspace uri and returns it', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.setUri'() {
       return undefined
     },
   })
   const result = await Workspace.openTmpDir()
   expect(result).toBe('memfs:///workspace')
-  expect(mockRpc.invocations).toEqual([['Workspace.setPath', 'memfs:///workspace']])
+  expect(mockRpc.invocations).toEqual([['Workspace.setUri', 'memfs:///workspace']])
 })
 
 test('close forwards to rpc', async () => {
@@ -31,4 +42,23 @@ test('close forwards to rpc', async () => {
   })
   await Workspace.close()
   expect(mockRpc.invocations).toEqual([['Workspace.close']])
+})
+
+test('setUri rejects when rpc throws', async () => {
+  const error = new Error('Workspace unavailable')
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.setUri'() {
+      throw error
+    },
+  })
+  await expect(Workspace.setUri('memfs:///workspace')).rejects.toBe(error)
+})
+
+test('setUri discards the rpc result', async () => {
+  using _mockRpc = RendererWorker.registerMockRpc({
+    'Workspace.setUri'() {
+      return 'ignored'
+    },
+  })
+  await expect(Workspace.setUri('memfs:///workspace')).resolves.toBeUndefined()
 })

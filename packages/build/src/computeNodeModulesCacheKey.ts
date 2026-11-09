@@ -6,11 +6,11 @@ import { root } from './root.ts'
 const locations: string[] = [
   'package.json',
   'package-lock.json',
+  '.nvmrc',
   '.github/workflows/pr.yml',
   '.github/workflows/ci.yml',
   '.github/workflows/release.yml',
   'packages/build/src/computeNodeModulesCacheKey.ts',
-  'packages/server/src/postinstall.js',
 ]
 
 const getAbsolutePath = (relativePath: string): string => {

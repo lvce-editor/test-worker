@@ -5,7 +5,7 @@ export const name = 'drag-and-drop.uri-list'
 export const test: Test = async ({ DragAndDrop, Editor, expect, FileSystem, Locator, Main, Workspace }) => {
   const fixtureUrl = import.meta.resolve('../fixtures/workspace.basic')
   const workspaceUrl = await FileSystem.loadFixture(fixtureUrl)
-  await Workspace.setPath(workspaceUrl)
+  await Workspace.setUri(workspaceUrl)
   await Main.closeAllEditors()
   const first = `${workspaceUrl}/left.txt`
   const second = `${workspaceUrl}/right.txt`

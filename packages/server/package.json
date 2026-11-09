@@ -4,13 +4,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "postinstall": "node src/postinstall.js",
-    "dev": "node ../../node_modules/@lvce-editor/server/bin/server.js --test-path=../e2e"
+    "dev": "node ../../node_modules/@lvce-editor/server/bin/server.js --test-path=../e2e --link=../../.tmp/dist",
+    "predev": "npm run build --prefix ../.."
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@lvce-editor/server": "^0.114.6"
+    "@lvce-editor/server": "^0.127.18"
   }
 }

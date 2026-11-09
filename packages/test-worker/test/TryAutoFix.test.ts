@@ -407,3 +407,45 @@ export const test = async ({ ChatDebug }) => {
     ['FileSystem.writeFile', fileUrl, writtenContent],
   ])
 })
+
+test.each(['running test', 'no error', 'missing actual payload'])('tryAutoFixWith leaves files untouched for %s', async (scenario) => {
+  using mockRpc = RendererWorker.registerMockRpc({})
+  TestInfoCache.push({
+    assetDir: 'memfs://assets',
+    inProgress: scenario === 'running test',
+    platform: PlatformType.Remote,
+    url: 'file:///test.ts',
+  })
+  if (scenario !== 'no error') {
+    setAutoFixError(false, scenario === 'missing actual payload' ? undefined : true)
+  }
+  const originalError = AutoFixState.get()
+
+  await tryAutoFixWith()
+
+  expect(mockRpc.invocations).toEqual([])
+  expect(executeMock).not.toHaveBeenCalled()
+  expect(AutoFixState.get()).toBe(originalError)
+})
+
+test.each(['export const test = () => {}', 'await ChatDebug.shouldHavePayload(true)'])(
+  'tryAutoFixWith does not write or rerun when no edit is needed: %s',
+  async (content) => {
+    const { fileUrl } = createMemoryFsTestFile(content)
+    using mockRpc = RendererWorker.registerMockRpc({
+      'FileSystem.readFile': () => content,
+    })
+    const restoreLocation = setLocation('http://localhost:3000')
+    setAutoFixError(true, true)
+    pushLatestTestInfo(fileUrl)
+    const originalError = AutoFixState.get()
+    try {
+      await tryAutoFixWith()
+      expect(mockRpc.invocations).toEqual([['FileSystem.readFile', fileUrl]])
+      expect(executeMock).not.toHaveBeenCalled()
+      expect(AutoFixState.get()).toBe(originalError)
+    } finally {
+      restoreLocation()
+    }
+  },
+)

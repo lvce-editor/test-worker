@@ -15,6 +15,28 @@ test('setCursor', async () => {
   expect(mockRpc.invocations).toEqual([['Editor.cursorSet', 1, 2]])
 })
 
+test('handleFocus', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleFocus'() {
+      return undefined
+    },
+  })
+
+  await Editor.handleFocus()
+  expect(mockRpc.invocations).toEqual([['Editor.handleFocus']])
+})
+
+test('handleBlur', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.handleBlur'() {
+      return undefined
+    },
+  })
+
+  await Editor.handleBlur()
+  expect(mockRpc.invocations).toEqual([['Editor.handleBlur']])
+})
+
 test('cancelSelection', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Editor.cancelSelection'() {
@@ -266,6 +288,21 @@ test('setText', async () => {
 
   await Editor.setText('text')
   expect(mockRpc.invocations).toEqual([['Editor.setText', 'text']])
+})
+
+test('setJsonAsText', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.setText'() {
+      return undefined
+    },
+  })
+
+  await Editor.setJsonAsText({ count: 2, enabled: true })
+  expect(mockRpc.invocations).toEqual([['Editor.setText', '{\n  "count": 2,\n  "enabled": true\n}\n']])
+})
+
+test('setJsonAsText rejects values that cannot be serialized', async () => {
+  await expect(Editor.setJsonAsText(undefined)).rejects.toThrow('Value cannot be serialized as JSON')
 })
 
 test('deleteAll', async () => {
@@ -885,6 +922,39 @@ test('getText', async () => {
   expect(text).toBe('test text')
 })
 
+test('getTextAsJson', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return '{"enabled":true,"count":2}'
+    },
+  })
+
+  await expect(Editor.getTextAsJson<{ count: number; enabled: boolean }>()).resolves.toEqual({ count: 2, enabled: true })
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
+})
+
+test('getTextAsJson rejects invalid JSON', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      return '{invalid'
+    },
+  })
+
+  await expect(Editor.getTextAsJson()).rejects.toThrow(SyntaxError)
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
+})
+
+test('getTextAsJson propagates editor errors', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Editor.getText'() {
+      throw new Error('editor unavailable')
+    },
+  })
+
+  await expect(Editor.getTextAsJson()).rejects.toThrow('editor unavailable')
+  expect(mockRpc.invocations).toEqual([['Editor.getText']])
+})
+
 test('getText - falls back to the editor registry when the direct editor is unavailable', async () => {
   RendererProcess.state.rpc = createMockRpc({
     commandMap: {
@@ -1128,6 +1198,56 @@ test('shouldHaveText - reads from the active main area editor', async () => {
   } finally {
     RendererProcess.state.rpc = undefined
     await MainAreaWorker.dispose()
+  }
+})
+
+test('shouldHaveUri - reads the active editor URI', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'GetActiveEditor.getActiveUri'() {
+      return 'file:///expected.ts'
+    },
+  })
+
+  await Editor.shouldHaveUri('file:///expected.ts')
+  expect(mockRpc.invocations).toEqual([['GetActiveEditor.getActiveUri']])
+})
+
+test('shouldHaveUri - retries while navigation changes the active editor', async () => {
+  jest.useFakeTimers()
+  let invocationCount = 0
+  using mockRpc = RendererWorker.registerMockRpc({
+    'GetActiveEditor.getActiveUri'() {
+      invocationCount++
+      return invocationCount === 1 ? 'file:///previous.ts' : 'file:///expected.ts'
+    },
+  })
+
+  try {
+    const assertion = Editor.shouldHaveUri('file:///expected.ts')
+    await jest.advanceTimersByTimeAsync(50)
+    await assertion
+    expect(mockRpc.invocations).toEqual([['GetActiveEditor.getActiveUri'], ['GetActiveEditor.getActiveUri']])
+  } finally {
+    jest.useRealTimers()
+  }
+})
+
+test('shouldHaveUri - reports an absent or incorrect active editor', async () => {
+  jest.useFakeTimers()
+  using mockRpc = RendererWorker.registerMockRpc({
+    'GetActiveEditor.getActiveUri'() {
+      return ''
+    },
+  })
+
+  try {
+    const assertion = Editor.shouldHaveUri('file:///expected.ts')
+    void assertion.catch(() => {})
+    await jest.runAllTimersAsync()
+    await expect(assertion).rejects.toThrow('Expected active editor URI to be file:///expected.ts but was ')
+    expect(mockRpc.invocations).toHaveLength(20)
+  } finally {
+    jest.useRealTimers()
   }
 })
 

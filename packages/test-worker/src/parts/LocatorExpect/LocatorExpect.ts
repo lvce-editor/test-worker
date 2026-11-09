@@ -24,4 +24,5 @@ export interface LocatorExpect {
   readonly toHaveJSProperty: (key: string, value: any) => Promise<void>
   readonly toHaveText: (text: string) => Promise<void>
   readonly toHaveValue: (value: string) => Promise<void>
+  readonly toMatchScreenShot: (uri: string) => Promise<void>
 }
