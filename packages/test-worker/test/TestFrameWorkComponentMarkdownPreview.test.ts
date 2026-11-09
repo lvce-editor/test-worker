@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { MainAreaWorker, RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ConditionType from '../src/parts/ConditionType/ConditionType.ts'
 import * as MarkdownPreview from '../src/parts/TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 
 test('open', async () => {
@@ -31,11 +32,11 @@ test('open', async () => {
     ],
   ])
   expect(rendererRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', [{ selector: '.WebViewIframe', type: 1 }], 'toBeVisible', {}],
+    ['TestFrameWork.checkSingleElementCondition', [{ selector: '.WebViewIframe', type: 1 }], ConditionType.ToBeVisible, {}],
     [
       'TestFrameWork.checkSingleElementCondition',
       [{ selector: '.WebViewIframe', type: 1 }],
-      'toHaveAttribute',
+      ConditionType.ToHaveAttribute,
       { key: 'title', value: 'Markdown Preview' },
     ],
   ])

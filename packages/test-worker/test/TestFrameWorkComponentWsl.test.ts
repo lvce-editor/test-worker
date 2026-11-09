@@ -1,5 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ConditionType from '../src/parts/ConditionType/ConditionType.ts'
 import * as Wsl from '../src/parts/TestFrameWorkComponentWsl/TestFrameWorkComponentWsl.ts'
 
 afterEach(() => {
@@ -39,7 +40,7 @@ test('connect confirms the command is visible before selecting it', async () => 
         { selector: '.QuickPickItem', type: 1 },
         { text: 'WSL: Connect to WSL', type: 3 },
       ],
-      'toBeVisible',
+      ConditionType.ToBeVisible,
       {},
     ],
     ['QuickPick.selectItem', 'WSL: Connect to WSL'],

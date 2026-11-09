@@ -1,5 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ConditionType from '../src/parts/ConditionType/ConditionType.ts'
 import { createLocator } from '../src/parts/CreateLocator/CreateLocator.ts'
 import * as VideoPreview from '../src/parts/TestFrameWorkComponentVideoPreview/TestFrameWorkComponentVideoPreview.ts'
 
@@ -18,7 +19,7 @@ test('waitForMediaPreviewReady resolves when media is ready', async () => {
   await VideoPreview.waitForMediaPreviewReady(media)
 
   expect(mockRpc.invocations).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', media._parsed, 'toHaveJSProperty', { key: 'readyState', value: 4 }],
+    ['TestFrameWork.checkSingleElementCondition', media._parsed, ConditionType.ToHaveJSProperty, { key: 'readyState', value: 4 }],
   ])
 })
 
@@ -42,14 +43,19 @@ test('waitForMediaPreviewReady retries until media is ready', async () => {
   expect(mockRpc.invocations[0]).toEqual([
     'TestFrameWork.checkSingleElementCondition',
     media._parsed,
-    'toHaveJSProperty',
+    ConditionType.ToHaveJSProperty,
     { key: 'readyState', value: 4 },
   ])
-  expect(mockRpc.invocations[1]).toEqual(['TestFrameWork.checkConditionError', 'toHaveJSProperty', media._parsed, { key: 'readyState', value: 4 }])
+  expect(mockRpc.invocations[1]).toEqual([
+    'TestFrameWork.checkConditionError',
+    ConditionType.ToHaveJSProperty,
+    media._parsed,
+    { key: 'readyState', value: 4 },
+  ])
   expect(mockRpc.invocations[2]).toEqual([
     'TestFrameWork.checkSingleElementCondition',
     media._parsed,
-    'toHaveJSProperty',
+    ConditionType.ToHaveJSProperty,
     { key: 'readyState', value: 4 },
   ])
 })

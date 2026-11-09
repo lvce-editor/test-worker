@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ConditionType from '../src/parts/ConditionType/ConditionType.ts'
 import * as ProcessExplorer from '../src/parts/TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 
 const getSelector = (locator: any): string => {
@@ -188,8 +189,8 @@ test('shouldBeOpen checks root and table visibility', async () => {
   await ProcessExplorer.shouldBeOpen()
 
   expect(normalizeConditionInvocations(mockRpc.invocations)).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorer', 'toBeVisible', {}],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerTable', 'toBeVisible', {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorer', ConditionType.ToBeVisible, {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerTable', ConditionType.ToBeVisible, {}],
   ])
 })
 
@@ -206,8 +207,8 @@ test('shouldBeHealthy checks table visibility and hidden error', async () => {
   await ProcessExplorer.shouldBeHealthy()
 
   expect(normalizeConditionInvocations(mockRpc.invocations)).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerTable', 'toBeVisible', {}],
-    ['TestFrameWork.checkMultiElementCondition', '.ProcessExplorerError', 'toBeHidden', {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerTable', ConditionType.ToBeVisible, {}],
+    ['TestFrameWork.checkMultiElementCondition', '.ProcessExplorerError', ConditionType.ToBeHidden, {}],
   ])
 })
 
@@ -221,9 +222,9 @@ test('shouldHaveHeaders checks header text', async () => {
   await ProcessExplorer.shouldHaveHeaders()
 
   expect(normalizeConditionInvocations(mockRpc.invocations)).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorer .ProcessExplorerHeaderCell', 'toHaveText', { text: 'Name' }],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorer .ProcessExplorerHeaderCell', 'toHaveText', { text: 'PID' }],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorer .ProcessExplorerHeaderCell', 'toHaveText', { text: 'Memory' }],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorer .ProcessExplorerHeaderCell', ConditionType.ToHaveText, { text: 'Name' }],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorer .ProcessExplorerHeaderCell', ConditionType.ToHaveText, { text: 'PID' }],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorer .ProcessExplorerHeaderCell', ConditionType.ToHaveText, { text: 'Memory' }],
   ])
 })
 
@@ -240,12 +241,12 @@ test('row assertion helpers check expected row locators', async () => {
   await ProcessExplorer.shouldHaveExpandedRow()
 
   expect(normalizeConditionInvocations(mockRpc.invocations)).toEqual([
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow', 'toBeVisible', {}],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow .ProcessExplorerNameCell', 'toBeVisible', {}],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow .ProcessExplorerCell', 'toBeVisible', {}],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow .ProcessExplorerCell', 'toBeVisible', {}],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRowFocused', 'toBeVisible', {}],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow[aria-expanded="false"]', 'toBeVisible', {}],
-    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow[aria-expanded="true"]', 'toBeVisible', {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow', ConditionType.ToBeVisible, {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow .ProcessExplorerNameCell', ConditionType.ToBeVisible, {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow .ProcessExplorerCell', ConditionType.ToBeVisible, {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow .ProcessExplorerCell', ConditionType.ToBeVisible, {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRowFocused', ConditionType.ToBeVisible, {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow[aria-expanded="false"]', ConditionType.ToBeVisible, {}],
+    ['TestFrameWork.checkSingleElementCondition', '.ProcessExplorerRow[aria-expanded="true"]', ConditionType.ToBeVisible, {}],
   ])
 })
