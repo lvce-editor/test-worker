@@ -11,7 +11,7 @@ export const test: Test = async ({ Editor, Explorer, FileSystem, Workspace }) =>
   // act
   await Explorer.focusFirst()
   await Explorer.expandAll()
-  await Explorer.focusIndex(6)
+  await Explorer.focusIndex(7)
   await Explorer.clickCurrent()
 
   // assert
