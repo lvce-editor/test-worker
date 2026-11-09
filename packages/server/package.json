@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "link": "node src/link.js",
-    "dev": "node ../../node_modules/@lvce-editor/server/bin/server.js --test-path=../e2e"
+    "dev": "node ../../node_modules/@lvce-editor/server/bin/server.js --test-path=../e2e --link=../../.tmp/dist",
+    "predev": "npm run build --prefix ../.."
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@lvce-editor/server": "^0.115.7"
+    "@lvce-editor/server": "^0.127.18"
   }
 }
