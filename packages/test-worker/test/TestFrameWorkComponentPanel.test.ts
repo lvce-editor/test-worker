@@ -63,6 +63,39 @@ test('select', async () => {
   expect(mockRpc.invocations).toEqual([['Panel.selectName', 'Output']])
 })
 
+test('selectIndex', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Panel.selectIndex'() {
+      return undefined
+    },
+  })
+
+  await Panel.selectIndex(2)
+  expect(mockRpc.invocations).toEqual([['Panel.selectIndex', 2]])
+})
+
+test('selectIndexRaw', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Panel.selectIndexRaw'() {
+      return undefined
+    },
+  })
+
+  await Panel.selectIndexRaw('2')
+  expect(mockRpc.invocations).toEqual([['Panel.selectIndexRaw', '2']])
+})
+
+test('toggleView', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Panel.toggleView'() {
+      return undefined
+    },
+  })
+
+  await Panel.toggleView('Output')
+  expect(mockRpc.invocations).toEqual([['Panel.toggleView', 'Output']])
+})
+
 test('maximize', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.maximizePanel'() {

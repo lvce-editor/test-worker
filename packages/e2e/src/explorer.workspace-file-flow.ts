@@ -9,6 +9,7 @@ export const test: Test = async ({ Editor, Explorer, FileSystem, Workspace }) =>
   await Workspace.setUri(workspaceUrl)
 
   // act
+  await Explorer.focusFirst()
   await Explorer.expandAll()
   await Explorer.focusIndex(6)
   await Explorer.clickCurrent()

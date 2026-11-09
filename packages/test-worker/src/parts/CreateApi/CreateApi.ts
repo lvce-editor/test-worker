@@ -4,8 +4,10 @@ import { ColorPicker, DiffView } from '../TestFrameWorkComponent/TestFrameWorkCo
 import * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
+import * as CacheWorker from '../TestFrameWorkComponentCacheWorker/TestFrameWorkComponentCacheWorker.ts'
 import * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 import * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
+import * as ChatView2 from '../TestFrameWorkComponentChatView2/TestFrameWorkComponentChatView2.ts'
 import * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkComponentColorTheme.ts'
 import * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
@@ -34,6 +36,7 @@ import * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkCompon
 import * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 import * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 import * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
+import * as MarkdownPreview from '../TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 import * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
 import * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
@@ -43,6 +46,8 @@ import * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkComponen
 import * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 import * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 import * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
+import * as Randomization from '../TestFrameWorkComponentRandomization/TestFrameWorkComponentRandomization.ts'
+import * as RecentlyOpened from '../TestFrameWorkComponentRecentlyOpened/TestFrameWorkComponentRecentlyOpened.ts'
 import * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 import * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 import * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
@@ -55,8 +60,11 @@ import * as SourceControl from '../TestFrameWorkComponentSourceControl/TestFrame
 import * as StatusBar from '../TestFrameWorkComponentStatusBar/TestFrameWorkComponentStatusBar.ts'
 import * as TitleBarMenuBar from '../TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
 import * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
+import * as VideoPreview from '../TestFrameWorkComponentVideoPreview/TestFrameWorkComponentVideoPreview.ts'
 import * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
+import * as WorkersView from '../TestFrameWorkComponentWorkersView/TestFrameWorkComponentWorkersView.ts'
 import * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
+import * as Wsl from '../TestFrameWorkComponentWsl/TestFrameWorkComponentWsl.ts'
 
 export const createApi = (platform: number, assetDir: string): Api => {
   return {
@@ -68,8 +76,10 @@ export const createApi = (platform: number, assetDir: string): Api => {
         return assetDir
       },
     },
+    CacheWorker,
     Chat,
     ChatDebug,
+    ChatView2,
     ClipBoard,
     ColorPicker,
     ColorTheme,
@@ -108,6 +118,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     Layout,
     Locator,
     Main,
+    MarkdownPreview,
     Open,
     Output,
     Panel,
@@ -117,6 +128,8 @@ export const createApi = (platform: number, assetDir: string): Api => {
     Problems,
     ProcessExplorer,
     QuickPick,
+    Randomization,
+    RecentlyOpened,
     References,
     RunAndDebug,
     RunningExtensions,
@@ -130,7 +143,10 @@ export const createApi = (platform: number, assetDir: string): Api => {
     test,
     TitleBarMenuBar,
     Url,
+    VideoPreview,
     WebView,
+    WorkersView,
     Workspace,
+    Wsl,
   }
 }

@@ -56,6 +56,11 @@ type EditorInput =
       readonly uri: string
     }
   | {
+      readonly providerId: string
+      readonly type: 'webview'
+      readonly uri: string
+    }
+  | {
       readonly type: 'diff-editor'
       readonly uriLeft: string
       readonly uriRight: string
@@ -67,7 +72,7 @@ type EditorInput =
 
 export interface OpenInputOptions {
   readonly editorInput: EditorInput
-  readonly focu: boolean
+  readonly focus: boolean
   readonly preview?: boolean
 }
 

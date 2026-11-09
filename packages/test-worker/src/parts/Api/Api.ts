@@ -4,8 +4,10 @@ import type { ColorPicker, DiffView } from '../TestFrameWorkComponent/TestFrameW
 import type * as About from '../TestFrameWorkComponentAbout/TestFrameWorkComponentAbout.ts'
 import type * as ActivityBar from '../TestFrameWorkComponentActivityBar/TestFrameworkComponentActivityBar.ts'
 import type * as Audio from '../TestFrameWorkComponentAudio/TestFrameWorkComponentAudio.ts'
+import type * as CacheWorker from '../TestFrameWorkComponentCacheWorker/TestFrameWorkComponentCacheWorker.ts'
 import type * as Chat from '../TestFrameWorkComponentChat/TestFrameWorkComponentChat.ts'
 import type * as ChatDebug from '../TestFrameWorkComponentChatDebug/TestFrameWorkComponentChatDebug.ts'
+import type * as ChatView2 from '../TestFrameWorkComponentChatView2/TestFrameWorkComponentChatView2.ts'
 import type * as ClipBoard from '../TestFrameWorkComponentClipBoard/TestFrameworkComponentClipBoard.ts'
 import type * as ColorTheme from '../TestFrameWorkComponentColorTheme/TestFrameWorkComponentColorTheme.ts'
 import type * as Command from '../TestFrameWorkComponentCommand/TestFrameWorkComponentCommand.ts'
@@ -34,6 +36,7 @@ import type * as KeyBoard from '../TestFrameWorkComponentKeyBoard/TestFrameWorkC
 import type * as LanguageModels from '../TestFrameWorkComponentLanguageModels/TestFrameWorkComponentLanguageModels.ts'
 import type * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkComponentLayout.ts'
 import type * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
+import type * as MarkdownPreview from '../TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 import type * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
 import type * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import type * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
@@ -43,6 +46,8 @@ import type * as Preview from '../TestFrameWorkComponentPreview/TestFrameWorkCom
 import type * as Problems from '../TestFrameWorkComponentProblems/TestFrameWorkComponentProblems.ts'
 import type * as ProcessExplorer from '../TestFrameWorkComponentProcessExplorer/TestFrameWorkComponentProcessExplorer.ts'
 import type * as QuickPick from '../TestFrameWorkComponentQuickPick/TestFrameWorkComponentQuickPick.ts'
+import type * as Randomization from '../TestFrameWorkComponentRandomization/TestFrameWorkComponentRandomization.ts'
+import type * as RecentlyOpened from '../TestFrameWorkComponentRecentlyOpened/TestFrameWorkComponentRecentlyOpened.ts'
 import type * as References from '../TestFrameWorkComponentReferences/TestFrameWorkComponentReferences.ts'
 import type * as RunAndDebug from '../TestFrameWorkComponentRunAndDebug/TestFrameWorkComponentRunAndDebug.ts'
 import type * as RunningExtensions from '../TestFrameWorkComponentRunningExtensions/TestFrameWorkComponentRunningExtensions.ts'
@@ -55,8 +60,11 @@ import type * as SourceControl from '../TestFrameWorkComponentSourceControl/Test
 import type * as StatusBar from '../TestFrameWorkComponentStatusBar/TestFrameWorkComponentStatusBar.ts'
 import type * as TitleBarMenuBar from '../TestFrameWorkComponentTitleBarMenuBar/TestFrameWorkComponentTitleBarMenuBar.ts'
 import type * as Url from '../TestFrameWorkComponentUrl/TestFrameWorkComponentUrl.ts'
+import type * as VideoPreview from '../TestFrameWorkComponentVideoPreview/TestFrameWorkComponentVideoPreview.ts'
 import type * as WebView from '../TestFrameWorkComponentWebView/TestFrameWorkComponentWebView.ts'
+import type * as WorkersView from '../TestFrameWorkComponentWorkersView/TestFrameWorkComponentWorkersView.ts'
 import type * as Workspace from '../TestFrameWorkComponentWorkspace/TestFrameWorkComponentWorkspace.ts'
+import type * as Wsl from '../TestFrameWorkComponentWsl/TestFrameWorkComponentWsl.ts'
 
 type IFileSystem = Omit<typeof FileSystem, 'loadFixture'> & {
   readonly loadFixture: (url: string) => Promise<string>
@@ -71,8 +79,10 @@ export interface Api {
   ActivityBar: typeof ActivityBar
   Audio: typeof Audio
   BaseUrl: IBaseUrl
+  CacheWorker: typeof CacheWorker
   Chat: typeof Chat
   ChatDebug: typeof ChatDebug
+  ChatView2: typeof ChatView2
   ClipBoard: typeof ClipBoard
   ColorPicker: typeof ColorPicker
   ColorTheme: typeof ColorTheme
@@ -106,6 +116,7 @@ export interface Api {
   Layout: typeof Layout
   Locator: typeof Locator
   Main: typeof Main
+  MarkdownPreview: typeof MarkdownPreview
   Open: typeof Open
   Output: typeof Output
   Panel: typeof Panel
@@ -115,6 +126,8 @@ export interface Api {
   Problems: typeof Problems
   ProcessExplorer: typeof ProcessExplorer
   QuickPick: typeof QuickPick
+  Randomization: typeof Randomization
+  RecentlyOpened: typeof RecentlyOpened
   References: typeof References
   RunAndDebug: typeof RunAndDebug
   RunningExtensions: typeof RunningExtensions
@@ -128,6 +141,9 @@ export interface Api {
   test: typeof test
   TitleBarMenuBar: typeof TitleBarMenuBar
   Url: typeof Url
+  VideoPreview: typeof VideoPreview
   WebView: typeof WebView
+  WorkersView: typeof WorkersView
   Workspace: typeof Workspace
+  Wsl: typeof Wsl
 }
