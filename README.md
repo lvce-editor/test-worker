@@ -30,5 +30,3 @@ cd test-worker &&
 npm ci &&
 npm test
 ```
-
-The development server uses `--link=.tmp/dist` to load the locally built test worker without modifying installed packages. `npm run dev` builds the package before starting watch mode.
