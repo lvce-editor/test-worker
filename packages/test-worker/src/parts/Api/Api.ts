@@ -38,6 +38,7 @@ import type * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkCompo
 import type * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 import type * as MarkdownPreview from '../TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 import type * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
+import type * as OriginPrivateFileSystem from '../TestFrameWorkComponentOriginPrivateFileSystem/TestFrameWorkComponentOriginPrivateFileSystem.ts'
 import type * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import type * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 import type * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
@@ -118,6 +119,7 @@ export interface Api {
   Main: typeof Main
   MarkdownPreview: typeof MarkdownPreview
   Open: typeof Open
+  OriginPrivateFileSystem: typeof OriginPrivateFileSystem
   Output: typeof Output
   Panel: typeof Panel
   Platform: typeof Platform

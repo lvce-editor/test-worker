@@ -38,6 +38,7 @@ import * as Layout from '../TestFrameWorkComponentLayout/TestFrameWorkComponentL
 import * as Main from '../TestFrameWorkComponentMain/TestFrameWorkComponentMain.ts'
 import * as MarkdownPreview from '../TestFrameWorkComponentMarkdownPreview/TestFrameWorkComponentMarkdownPreview.ts'
 import * as Open from '../TestFrameWorkComponentOpen/TestFrameworkComponentOpen.ts'
+import * as OriginPrivateFileSystem from '../TestFrameWorkComponentOriginPrivateFileSystem/TestFrameWorkComponentOriginPrivateFileSystem.ts'
 import * as Output from '../TestFrameWorkComponentOutput/TestFrameWorkComponentOutput.ts'
 import * as Panel from '../TestFrameWorkComponentPanel/TestFrameWorkComponentPanel.ts'
 import * as Platform from '../TestFrameWorkComponentPlatform/TestFrameWorkComponentPlatform.ts'
@@ -120,6 +121,7 @@ export const createApi = (platform: number, assetDir: string): Api => {
     Main,
     MarkdownPreview,
     Open,
+    OriginPrivateFileSystem,
     Output,
     Panel,
     Platform,
