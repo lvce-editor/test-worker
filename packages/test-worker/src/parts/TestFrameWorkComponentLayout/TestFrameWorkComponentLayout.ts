@@ -37,6 +37,10 @@ export const hideSecondarySideBar = async (): Promise<void> => {
   await Command.execute('Layout.hideSecondarySideBar')
 }
 
+export const setBadgeCount = async (itemName: string, count: number): Promise<void> => {
+  await Command.execute('Layout.setBadgeCount', itemName, count)
+}
+
 export const handleWorkspaceRefresh = async (): Promise<void> => {
   await RendererWorker.invoke('Layout.handleWorkspaceRefresh')
 }
