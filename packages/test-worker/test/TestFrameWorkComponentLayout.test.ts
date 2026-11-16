@@ -105,6 +105,17 @@ test('hideSecondarySideBar', async () => {
   expect(mockRpc.invocations).toEqual([['Layout.hideSecondarySideBar']])
 })
 
+test('setBadgeCount', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.setBadgeCount'() {
+      return undefined
+    },
+  })
+
+  await Layout.setBadgeCount('Source Control', 2)
+  expect(mockRpc.invocations).toEqual([['Layout.setBadgeCount', 'Source Control', 2]])
+})
+
 test('handleWorkspaceRefresh', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.handleWorkspaceRefresh'() {
