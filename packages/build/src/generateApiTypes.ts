@@ -1,23 +1,27 @@
 import { execa } from 'execa'
 import { readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { root } from './root.ts'
 import { getActualApiTypesContent } from './getActualApiTypesContent.ts'
 
 export const generateApiTypes = async (): Promise<void> => {
-  const ext = process.platform === 'win32' ? '' : ''
-  const bundleGeneratorPath = join(root, 'node_modules', '.bin', 'dts-bundle-generator' + ext)
+  const bundleGeneratorPath = fileURLToPath(import.meta.resolve('dts-bundle-generator/dist/bin/dts-bundle-generator.js'))
 
   await Promise.all([
-    execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'], {
+    execa(
+      process.execPath,
+      [bundleGeneratorPath, '-o', '../../.tmp/api-types/api.d.ts', 'src/parts/TestFrameWorkComponent/TestFrameWorkComponent.ts'],
+      {
+        cwd: join(root, 'packages', 'test-worker'),
+        reject: false,
+      },
+    ),
+    execa(process.execPath, [bundleGeneratorPath, '-o', '../../.tmp/api-types/expect.d.ts', 'src/parts/LocatorExpect/LocatorExpect.ts'], {
       cwd: join(root, 'packages', 'test-worker'),
       reject: false,
     }),
-    execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/expect.d.ts', 'src/parts/LocatorExpect/LocatorExpect.ts'], {
-      cwd: join(root, 'packages', 'test-worker'),
-      reject: false,
-    }),
-    execa(bundleGeneratorPath, ['-o', '../../.tmp/api-types/locator.d.ts', 'src/parts/Locator/Locator.ts'], {
+    execa(process.execPath, [bundleGeneratorPath, '-o', '../../.tmp/api-types/locator.d.ts', 'src/parts/Locator/Locator.ts'], {
       cwd: join(root, 'packages', 'test-worker'),
       reject: false,
     }),
